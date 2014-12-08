@@ -1,0 +1,181 @@
+------------------------
+| E0: "intro" [Content]|
+------------------------
+    |
+    |
+    v
+-------------------------
+| E1: "personal" [Form] |
+-------------------------
+    |______________________________________
+    |                                      |
+    v                                      |
+-------------------------                  |
+| E2: "purchase" [Form] |                  |
+-------------------------                  |
+    |           |__________________        |
+    |                              |       |
+    v                              v       v
+------------------------       ------------------------
+| E3-1: "fork1" [Form] |       | E3-2: "fork2" [Form] |
+------------------------       ------------------------
+    |    __________________________|
+    |   |
+    v   v
+-----------------------
+| E4: "end" [Content] |
+-----------------------
+
+
+// In a controller
+
+$step = $this
+    ->get("step.factory")
+    ->createBuilder("step", $data, $options)
+    ->add("intro"|null, "content", array(
+        "content" => "<h1>My content</h1>",
+    ))
+    ->add("personal|null", "form", array(
+        "builder"   => ..., // FromBuilderInterface
+        "listeners" => array(
+            array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+            array("on" => "POST", "priority" => 1, "method" => "service.id"),
+        )
+    ))
+    ->add("purchase|null", "form", array(
+        "builder"   => ..., // FromBuilderInterface
+        "listeners" => array(
+            array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+            array("on" => "POST", "priority" => 1, "method" => "service.id"),
+        )
+    ))
+    ->add("fork1|null", "form", array(
+        "builder"   => ..., // FromBuilderInterface
+        "listeners" => array(
+            array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+            array("on" => "POST", "priority" => 1, "method" => "service.id"),
+        )
+    ))
+    ->add("fork2|null", "form", array(
+        "builder"   => ..., // FromBuilderInterface
+        "listeners" => array(
+            array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+            array("on" => "POST", "priority" => 1, "method" => "service.id"),
+        )
+    ))
+    ->add("end"|null, "content", array(
+        "content" => "<h1>The end</h1>",
+    ))
+    ->addPath(
+        "intro",
+        array(
+            "personal" => array(
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+        ),
+        array(
+            "label" => "next",
+        )
+    )
+    ->addPath(
+        "personal",
+        array(
+            "purchase" => array(
+                "rules"     => array(...), 
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+            "fork2" => array(
+                "rules"     => array(...),
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+        ),
+        array(
+            "label" => "next",
+        )
+    )
+    ->addPath(
+        "purchase",
+        array(
+            "fork1" => array(
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+        ),
+        array(
+            "label" => "next",
+        )
+    )
+    ->addPath(
+        "purchase",
+        array(
+            "fork2" => array(
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+        ),
+        array(
+            "label" => "next",
+        )
+    )
+    ->addPath(
+        "fork1",
+        array(
+            "end" => array(
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+        ),
+        array(
+            "label" => "next",
+        )
+    )
+    ->addPath(
+        "fork2",
+        array(
+            "end" => array(
+                "listeners" => array(
+                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                )
+            ),
+        ),
+        array(
+            "label" => "next",
+        )
+    )
+    ->addEnd("end", array(
+        "storageProvider" => "step.storage.provider.participation",
+    ))
+    ->setRecorder("step.recorder.session|step.recorder.localStorage|...")
+    ->getStep()
+;
+
+return array("step" => $step->createView());
+
+
+// In view
+
+{{ step(step) }}
+
+----------------
+
+{{ step_start(step) }}        #-
+{{ step_errors(step) }}      /  {{ step_label(step.intro) }}
+{{ step_row(step.intro) }} -{   {{ step_errors(step.intro) }}
+{{ step_end(step) }}         \  {{ step_widget(step.intro) }}
+                              #-
