@@ -9,8 +9,10 @@ namespace IDCI\Bundle\StepBundle\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use IDCI\Bundle\StepBundle\Builder\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Factory\StepFactoryInterface;
+use IDCI\Bundle\StepBundle\Builder\StepBuilder;
 use IDCI\Bundle\StepBundle\View\StepView;
 use IDCI\Bundle\StepBundle\StepInterface;
 
@@ -42,7 +44,7 @@ abstract class AbstractType implements StepTypeInterface
     {
         $options = $this->getOptionsResolver()->resolve($options);
 
-        $builder = $this->newBuilder($name, $factory, $options);
+        $builder = new StepBuilder($name, new EventDispatcher(), $factory, $options);
         $builder->setType($this);
 
         $this->buildStep($builder, $options);

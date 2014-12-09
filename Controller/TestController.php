@@ -29,5 +29,7 @@ class TestController extends Controller
             ->createBuilder('flow')
             ->add('intro', 'content', array())
         ;
+
+        var_dump($flow->getStep());die;
     }
 }

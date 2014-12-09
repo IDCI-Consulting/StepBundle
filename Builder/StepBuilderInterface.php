@@ -31,7 +31,7 @@ interface StepBuilderInterface extends \Traversable, \Countable
      * @param string|StepTypeInterface $type    The type of the step
      * @param array                    $options The options
      *
-     * @return FormBuilderInterface The created builder.
+     * @return StepBuilderInterface The created builder.
      */
     public function create($name, $type = null, array $options = array());
 
