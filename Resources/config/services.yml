@@ -1,1 +1,31 @@
 services:
+
+    # StepRegistry
+
+    idci_step.registry:
+        class: IDCI\Bundle\StepBundle\Registry\StepRegistry
+
+
+    # StepFactory
+
+    idci_step.factory:
+        class: IDCI\Bundle\StepBundle\Factory\StepFactory
+        arguments: [@idci_step.registry]
+
+
+    # Step
+
+    idci_step.type.flow:
+        class: IDCI\Bundle\StepBundle\Type\FlowType
+        tags:
+            - { name: idci_step.type, alias: flow }
+
+    idci_step.type.content:
+        class: IDCI\Bundle\StepBundle\Type\ContentType
+        tags:
+            - { name: idci_step.type, alias: content }
+
+    idci_step.type.form:
+        class: IDCI\Bundle\StepBundle\Type\FormType
+        tags:
+            - { name: idci_step.type, alias: form }

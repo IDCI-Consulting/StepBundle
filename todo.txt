@@ -31,7 +31,7 @@
 
 $step = $this
     ->get("step.factory")
-    ->createBuilder("step", $data, $options)
+    ->createBuilder("flow", $data, $options)
     ->add("intro"|null, "content", array(
         "content" => "<h1>My content</h1>",
     ))
