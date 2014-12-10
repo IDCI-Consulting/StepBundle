@@ -29,143 +29,153 @@
 
 // In a controller
 
-$step = $this
-    ->get("step.factory")
-    ->createBuilder("flow", $data, $options)
-    ->add("intro"|null, "content", array(
+$map = $this
+    ->get("idci_step.map.factory")
+    ->createMapBuilder("flow", $data, $options)
+    ->addStep("intro"|null, "content", array(
         "content" => "<h1>My content</h1>",
     ))
-    ->add("personal|null", "form", array(
+    ->addStep("personal|null", "form", array(
         "builder"   => ..., // FromBuilderInterface
         "listeners" => array(
             array("on" => "PRE", "priority" => 1, "method" => "service.id"),
             array("on" => "POST", "priority" => 1, "method" => "service.id"),
         )
     ))
-    ->add("purchase|null", "form", array(
+    ->addStep("purchase|null", "form", array(
         "builder"   => ..., // FromBuilderInterface
         "listeners" => array(
             array("on" => "PRE", "priority" => 1, "method" => "service.id"),
             array("on" => "POST", "priority" => 1, "method" => "service.id"),
         )
     ))
-    ->add("fork1|null", "form", array(
+    ->addStep("fork1|null", "form", array(
         "builder"   => ..., // FromBuilderInterface
         "listeners" => array(
             array("on" => "PRE", "priority" => 1, "method" => "service.id"),
             array("on" => "POST", "priority" => 1, "method" => "service.id"),
         )
     ))
-    ->add("fork2|null", "form", array(
+    ->addStep("fork2|null", "form", array(
         "builder"   => ..., // FromBuilderInterface
         "listeners" => array(
             array("on" => "PRE", "priority" => 1, "method" => "service.id"),
             array("on" => "POST", "priority" => 1, "method" => "service.id"),
         )
     ))
-    ->add("end"|null, "content", array(
+    ->addStep("end"|null, "content", array(
         "content" => "<h1>The end</h1>",
     ))
     ->addPath(
-        "intro",
+        "single",
         array(
-            "personal" => array(
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+            "label"         => "next",
+            "source"        => "intro",
+            "destinations"  => array(
+                "personal" => array(
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
                 )
-            ),
-        ),
-        array(
-            "label" => "next",
+            )
         )
     )
     ->addPath(
-        "personal",
+        "multiple",
         array(
-            "purchase" => array(
-                "rules"     => array(...), 
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+            "label"         => "next",
+            "source"        => "personal",
+            "destinations"  => array(
+                "purchase" => array(
+                    "rules"     => array(...), 
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
+                ),
+                "fork2" => array(
+                    "rules"     => array(...),
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
                 )
-            ),
-            "fork2" => array(
-                "rules"     => array(...),
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
-                )
-            ),
-        ),
-        array(
-            "label" => "next",
+            )
         )
     )
     ->addPath(
-        "purchase",
+        "single",
         array(
-            "fork1" => array(
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+            "label"         => "next",
+            "source"        => purchase",
+            "destinations"  => array(
+                "fork1" => array(
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
                 )
-            ),
-        ),
-        array(
-            "label" => "next",
+            )
         )
     )
     ->addPath(
-        "purchase",
+        "single",
         array(
-            "fork2" => array(
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+            "label"         => "next",
+            "source"        => "purchase",
+            "destinations"  => array(
+                "fork2" => array(
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
                 )
-            ),
-        ),
-        array(
-            "label" => "next",
+            )
         )
     )
     ->addPath(
-        "fork1",
+        "single",
         array(
-            "end" => array(
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+            "label"         => "next",
+            "source"        => "fork1",
+            "destinations"  => array(
+                "end" => array(
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
                 )
-            ),
-        ),
-        array(
-            "label" => "next",
+            )
         )
     )
     ->addPath(
-        "fork2",
+        "single",
         array(
-            "end" => array(
-                "listeners" => array(
-                    array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                    array("on" => "POST", "priority" => 1, "method" => "service.id"),
+            "label"         => "next",
+            "source"        => "fork2",
+            "destinations"  => array(
+                "end" => array(
+                    "listeners" => array(
+                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
+                    )
                 )
-            ),
-        ),
-        array(
-            "label" => "next",
+            )
         )
     )
-    ->addEnd("end", array(
-        "storageProvider" => "step.storage.provider.participation",
-    ))
-    ->setRecorder("step.recorder.session|step.recorder.localStorage|...")
-    ->getStep()
+    ->addPath(
+        "end",
+        array(
+            "label"           => "Fin",
+            "source"          => "end",
+            "storageProvider" => "step.storage.provider.participation",
+        )
+    )
+    ->getMap() // ou buildMap()
 ;
 
-return array("step" => $step->createView());
+return array("map" => $map->createView());
 
 
 // In view
