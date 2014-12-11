@@ -24,12 +24,14 @@ class TestController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $flow = $this
-            ->get('idci_step.factory')
-            ->createBuilder('flow')
-            ->add('intro', 'content', array())
+        $map = $this
+            ->get('idci_step.map.factory')
+            ->createBuilder()
+            ->addStep("intro", "content", array(
+                "content" => "<h1>My content</h1>",
+            ))
         ;
 
-        var_dump($flow->getStep());die;
+        var_dump($map);die;
     }
 }

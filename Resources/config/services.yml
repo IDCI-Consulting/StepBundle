@@ -9,6 +9,13 @@ services:
         class: IDCI\Bundle\StepBundle\Path\PathRegistry
 
 
+    # Factory
+
+    idci_step.map.factory:
+        class: IDCI\Bundle\StepBundle\Map\MapFactory
+        arguments: [@idci_step.step.registry, @idci_step.path.registry]
+
+
     # Step
 
     idci_step.step.type.content:
