@@ -24,6 +24,8 @@ class ContentStepType extends AbstractStepType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver
             ->setDefaults(array('content' => null))
             ->setAllowedTypes('content', array('null', 'string'))

@@ -24,6 +24,8 @@ class FormStepType extends AbstractStepType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver
             ->setDefaults(array('builder' => null))
             ->setAllowedTypes('builder', array('null', 'Symfony\Component\Form\FormBuilderInterface'))

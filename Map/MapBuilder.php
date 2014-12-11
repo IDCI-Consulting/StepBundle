@@ -69,6 +69,8 @@ class MapBuilder implements MapBuilderInterface
         $this->options      = $options;
         $this->stepRegistry = $stepRegistry;
         $this->pathRegistry = $pathRegistry;
+        $this->steps        = array();
+        $this->paths        = array();
     }
 
     /**
@@ -116,7 +118,12 @@ class MapBuilder implements MapBuilderInterface
      */
     public function addStep($name, $type, array $options = array())
     {
-        //TODO
+        $this->steps[$name] = array(
+            'type'      => $type,
+            'options'   => $options
+        );
+
+        return $this;
     }
 
     /**
@@ -124,7 +131,16 @@ class MapBuilder implements MapBuilderInterface
      */
     public function addPath($source, $type, array $options = array())
     {
-        //TODO
+        if (!isset($this->paths[$source])) {
+            $this->paths[$source] = array();
+        }
+
+        $this->paths[$source][] = array(
+            'type'      => $type,
+            'options'   => $options
+        );
+
+        return $this;
     }
 
     /**

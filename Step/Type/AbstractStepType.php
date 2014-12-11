@@ -16,5 +16,13 @@ abstract class AbstractStepType implements StepTypeInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver
+            ->setDefaults(array(
+                'name'        => null,
+                'description' => null
+            ))
+            ->setAllowedTypes('name', array('null', 'string'))
+            ->setAllowedTypes('description', array('null', 'string'))
+        ;
     }
 }
