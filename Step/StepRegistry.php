@@ -5,10 +5,10 @@
  * @license: MIT
  */
  
-namespace IDCI\Bundle\StepBundle\Registry;
+namespace IDCI\Bundle\StepBundle\Step;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-use IDCI\Bundle\StepBundle\Type\StepTypeInterface;
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
 class StepRegistry implements StepRegistryInterface
 {

@@ -1,31 +1,45 @@
 services:
 
-    # StepRegistry
+    # Registry
 
-    idci_step.registry:
-        class: IDCI\Bundle\StepBundle\Registry\StepRegistry
+    idci_step.step.registry:
+        class: IDCI\Bundle\StepBundle\Step\StepRegistry
 
-
-    # StepFactory
-
-    idci_step.factory:
-        class: IDCI\Bundle\StepBundle\Factory\StepFactory
-        arguments: [@idci_step.registry]
+    idci_step.path.registry:
+        class: IDCI\Bundle\StepBundle\Path\PathRegistry
 
 
     # Step
 
-    idci_step.type.flow:
-        class: IDCI\Bundle\StepBundle\Type\FlowType
+    idci_step.step.type.content:
+        class: IDCI\Bundle\StepBundle\Step\Type\ContentStepType
         tags:
-            - { name: idci_step.type, alias: flow }
+            - { name: idci_step.step.type, alias: content }
 
-    idci_step.type.content:
-        class: IDCI\Bundle\StepBundle\Type\ContentType
+    idci_step.step.type.form:
+        class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
         tags:
-            - { name: idci_step.type, alias: content }
+            - { name: idci_step.step.type, alias: form }
 
-    idci_step.type.form:
-        class: IDCI\Bundle\StepBundle\Type\FormType
+
+    # Path
+
+    idci_step.path.type.single:
+        class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
         tags:
-            - { name: idci_step.type, alias: form }
+            - { name: idci_step.path.type, alias: single }
+
+    idci_step.path.type.conditional:
+        class: IDCI\Bundle\StepBundle\Path\Type\ConditionalPathType
+        tags:
+            - { name: idci_step.path.type, alias: conditional }
+
+    idci_step.path.type.random:
+        class: IDCI\Bundle\StepBundle\Path\Type\RandomPathType
+        tags:
+            - { name: idci_step.path.type, alias: random }
+
+    idci_step.path.type.end:
+        class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
+        tags:
+            - { name: idci_step.path.type, alias: end }
