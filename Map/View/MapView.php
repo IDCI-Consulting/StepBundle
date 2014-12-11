@@ -5,8 +5,8 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Step\View;
+namespace IDCI\Bundle\StepBundle\Map\View;
 
-class StepView
+class MapView
 {
 }
