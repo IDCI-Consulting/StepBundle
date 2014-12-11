@@ -8,21 +8,21 @@
 namespace IDCI\Bundle\StepBundle\Registry;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-use IDCI\Bundle\StepBundle\Type\StepTypeInterface;
+use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
 
-class StepRegistry implements StepRegistryInterface
+class PathRegistry implements PathRegistryInterface
 {
     /**
-     * @var StepTypeInterface[]
+     * @var PathTypeInterface[]
      */
     private $types = array();
 
     /**
      * {@inheritdoc}
      */
-    public function setType($name, StepTypeInterface $step)
+    public function setType($name, PathTypeInterface $path)
     {
-        $this->types[$name] = $step;
+        $this->types[$name] = $path;
 
         return $this;
     }

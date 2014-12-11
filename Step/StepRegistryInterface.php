@@ -5,9 +5,9 @@
  * @license: MIT
  */
  
-namespace IDCI\Bundle\StepBundle\Registry;
+namespace IDCI\Bundle\StepBundle\Step;
 
-use IDCI\Bundle\StepBundle\Type\StepTypeInterface;
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
 interface StepRegistryInterface
 {
@@ -16,6 +16,8 @@ interface StepRegistryInterface
      *
      * @param string            $name   The step name
      * @param StepTypeInterface $step   The step
+     *
+     * @return StepRegistryInterface
      */
     public function setType($name, StepTypeInterface $step);
 

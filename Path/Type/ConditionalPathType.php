@@ -5,20 +5,17 @@
  * @license: MIT
  */
  
-namespace IDCI\Bundle\StepBundle\Type;
+namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Builder\StepBuilderInterface;
-use IDCI\Bundle\StepBundle\View\StepView;
-use IDCI\Bundle\StepBundle\StepInterface;
 
-class ContentType extends AbstractType
+class ConditionalPathType extends MultiplePathType
 {
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return 'content';
+        return 'conditional';
     }
 }

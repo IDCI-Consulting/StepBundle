@@ -5,26 +5,28 @@
  * @license: MIT
  */
  
-namespace IDCI\Bundle\StepBundle\Registry;
+namespace IDCI\Bundle\StepBundle\Path;
 
-use IDCI\Bundle\StepBundle\Type\StepTypeInterface;
+use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
 
-interface StepRegistryInterface
+interface PathRegistryInterface
 {
     /**
-     * Sets a step type identify by a name
+     * Sets a path type identify by a name
      *
-     * @param string            $name   The step name
-     * @param StepTypeInterface $step   The step
+     * @param string            $name   The path name
+     * @param PathTypeInterface $path   The path
+     *
+     * @return PathRegistryInterface
      */
-    public function setType($name, StepTypeInterface $step);
+    public function setType($name, PathTypeInterface $path);
 
     /**
-     * Returns a step type by name.
+     * Returns a path type by name.
      *
      * @param string $name The name of the type
      *
-     * @return StepTypeInterface The type
+     * @return PathTypeInterface The type
      *
      * @throws Exception\UnexpectedTypeException  if the passed name is not a string
      * @throws Exception\InvalidArgumentException if the type can not be retrieved
@@ -32,7 +34,7 @@ interface StepRegistryInterface
     public function getType($name);
 
     /**
-     * Returns whether the given step type is supported.
+     * Returns whether the given path type is supported.
      *
      * @param string $name The name of the type
      *

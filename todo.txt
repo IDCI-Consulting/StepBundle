@@ -71,13 +71,10 @@ $map = $this
         array(
             "label"         => "next",
             "source"        => "intro",
-            "destinations"  => array(
-                "personal" => array(
-                    "listeners" => array(
-                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
-                    )
-                )
+            "destination"   => "personal",
+            "listeners"     => array(
+                array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                array("on" => "POST", "priority" => 1, "method" => "service.id"),
             )
         )
     )
@@ -109,13 +106,10 @@ $map = $this
         array(
             "label"         => "next",
             "source"        => purchase",
-            "destinations"  => array(
-                "fork1" => array(
-                    "listeners" => array(
-                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
-                    )
-                )
+            "destination"   => "fork1",
+            "listeners"     => array(
+                array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                array("on" => "POST", "priority" => 1, "method" => "service.id"),
             )
         )
     )
@@ -124,13 +118,10 @@ $map = $this
         array(
             "label"         => "next",
             "source"        => "purchase",
-            "destinations"  => array(
-                "fork2" => array(
-                    "listeners" => array(
-                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
-                    )
-                )
+            "destination"   => "fork2",
+            "listeners" => array(
+                array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                array("on" => "POST", "priority" => 1, "method" => "service.id"),
             )
         )
     )
@@ -139,13 +130,10 @@ $map = $this
         array(
             "label"         => "next",
             "source"        => "fork1",
-            "destinations"  => array(
-                "end" => array(
-                    "listeners" => array(
-                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
-                    )
-                )
+            "destination"   => "end",
+            "listeners"     => array(
+                array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                array("on" => "POST", "priority" => 1, "method" => "service.id"),
             )
         )
     )
@@ -154,13 +142,10 @@ $map = $this
         array(
             "label"         => "next",
             "source"        => "fork2",
-            "destinations"  => array(
-                "end" => array(
-                    "listeners" => array(
-                        array("on" => "PRE", "priority" => 1, "method" => "service.id"),
-                        array("on" => "POST", "priority" => 1, "method" => "service.id"),
-                    )
-                )
+            "destination"   =>  "end",
+            "listeners"     => array(
+                array("on" => "PRE", "priority" => 1, "method" => "service.id"),
+                array("on" => "POST", "priority" => 1, "method" => "service.id"),
             )
         )
     )
