@@ -25,12 +25,12 @@ interface MapInterface
     /**
      * Add a new path.
      *
-     * @param string        $name The identifier name of the path.
-     * @param PathInterface $path The path.
+     * @param string        $source The identifier name of the source step.
+     * @param PathInterface $path   The path.
      *
      * @return MapInterface This.
      */
-    public function addPath(PathInterface $path);
+    public function addPath($source, PathInterface $path);
 
     /**
      * Check if a step is registered.
@@ -42,15 +42,6 @@ interface MapInterface
     public function hasStep($name);
 
     /**
-     * Check if a path is registered.
-     *
-     * @param string $name The identifier name of the path.
-     *
-     * @return boolean True if the path is registered, false otherwise.
-     */
-    public function hasPath($name);
-
-    /**
      * Get a step.
      *
      * @param string $name The identifier name of the step.
@@ -60,27 +51,20 @@ interface MapInterface
     public function getStep($name);
 
     /**
-     * Get a path.
-     *
-     * @param string $name The identifier name of the path.
-     *
-     * @return PathInterface The path.
-     */
-    public function getPath($name);
-
-    /**
-     * Get a step.
+     * Get the steps.
      *
      * @return array The steps.
      */
     public function getSteps();
 
     /**
-     * Get a path.
+     * Get the paths.
+     *
+     * @param string $source The identifier name of the source step.
      *
      * @return array The paths.
      */
-    public function getPaths();
+    public function getPaths($source);
 
     /**
      * Create a view.

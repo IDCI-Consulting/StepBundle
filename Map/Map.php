@@ -40,9 +40,13 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function addPath($name, PathInterface $path)
+    public function addPath($source, PathInterface $path)
     {
-        $this->paths[$name] = $path;
+        if (!isset($this->paths[$source])) {
+            $this->paths[$source] = array();
+        }
+
+        $this->paths[$source][] = $path;
 
         return $this;
     }
@@ -53,14 +57,6 @@ class Map implements MapInterface
     public function hasStep($name)
     {
         return isset($this->steps[$name]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasPath($name)
-    {
-        return isset($this->paths[$name]);
     }
 
     /**
@@ -81,21 +77,6 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getPath($name)
-    {
-        if (!$this->hasPath($name)) {
-            throw new \LogicException(sprintf(
-                'No path "%s" found.',
-                $name
-            ));
-        }
-
-        return $this->paths[$name];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getSteps()
     {
         return $this->steps;
@@ -104,9 +85,12 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getPaths()
+    public function getPaths($source)
     {
-        return $this->paths;
+        return isset($this->paths[$source])
+            ? $this->paths[$source]
+            : array()
+        ;
     }
 
     /**
