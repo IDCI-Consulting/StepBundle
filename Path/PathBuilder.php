@@ -7,6 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Path;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
+
 class PathBuilder implements PathBuilderInterface
 {
     /**
@@ -27,11 +31,30 @@ class PathBuilder implements PathBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build($type, array $options = array())
+    public static function createPath($typeAlias, array $options = array())
     {
-        $type = $this->registry->getType($type);
-        // Resolved options
+        // TODO: Use a PathConfig
+        return new Path(array(
+            'type'    => $typeAlias,
+            'options' => $options
+        ));
+    }
 
-        return new Path($type, $options);
+    /**
+     * {@inheritdoc}
+     */
+    public function build($typeAlias, array $options = array(), MapInterface & $map)
+    {
+        $type = $this->registry->getType($typeAlias);
+
+        $resolver = new OptionsResolver();
+        $type->setDefaultOptions($resolver);
+        $resolvedOptions = $resolver->resolve($options);
+
+        return $type->buildPath(
+            self::createPath($typeAlias, $resolvedOptions),
+            $map,
+            $resolvedOptions
+        );
     }
 }

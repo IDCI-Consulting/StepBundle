@@ -12,33 +12,33 @@ use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 interface StepRegistryInterface
 {
     /**
-     * Sets a step type identify by a name
+     * Sets a step type identify by a alias.
      *
-     * @param string            $name   The step name
-     * @param StepTypeInterface $step   The step
+     * @param string            $alias  The alias type.
+     * @param StepTypeInterface $step   The type.
      *
      * @return StepRegistryInterface
      */
-    public function setType($name, StepTypeInterface $step);
+    public function setType($alias, StepTypeInterface $step);
 
     /**
-     * Returns a step type by name.
+     * Returns a step type by alias.
      *
-     * @param string $name The name of the type
+     * @param string $alias The alias of the type.
      *
-     * @return StepTypeInterface The type
+     * @return StepTypeInterface The type.
      *
-     * @throws Exception\UnexpectedTypeException  if the passed name is not a string
-     * @throws Exception\InvalidArgumentException if the type can not be retrieved
+     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
+     * @throws Exception\InvalidArgumentException if the type can not be retrieved.
      */
-    public function getType($name);
+    public function getType($alias);
 
     /**
      * Returns whether the given step type is supported.
      *
-     * @param string $name The name of the type
+     * @param string $alias The alias of the type.
      *
-     * @return bool Whether the type is supported
+     * @return bool Whether the type is supported.
      */
-    public function hasType($name);
+    public function hasType($alias);
 }

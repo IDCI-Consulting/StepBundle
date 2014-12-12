@@ -28,43 +28,43 @@ class TestController extends Controller
             ->get('idci_step.map.builder.factory')
             ->createBuilder()
             ->addStep('intro', 'content', array(
-                'name'        => 'Introduction',
+                'title'       => 'Introduction',
                 'description' => 'The first step',
                 'content'     => '<h1>My content</h1>',
             ))
             ->addStep('personal', 'form', array(
-                'name'        => 'Personal information',
+                'title'       => 'Personal information',
                 'description' => 'The personal data step',
             ))
             ->addStep('purchase', 'form', array(
-                'name'        => 'Purchase information',
+                'title'       => 'Purchase information',
                 'description' => 'The purchase data step',
             ))
             ->addStep('fork1', 'form', array(
-                'name'        => 'Fork1 information',
+                'title'       => 'Fork1 information',
                 'description' => 'The fork1 data step',
             ))
             ->addStep('fork2', 'form', array(
-                'name'        => 'Fork2 information',
+                'title'       => 'Fork2 information',
                 'description' => 'The fork2 data step',
             ))
             ->addStep('end', 'content', array(
-                'name'        => 'The end',
+                'title'       => 'The end',
                 'description' => 'The last data step',
                 'content'     => '<h1>The end</h1>',
             ))
             ->addPath(
-                'intro',
                 'single',
                 array(
+                    'source'        => 'intro',
                     'label'         => 'next',
                     'destination'   => 'personal'
                 )
             )
             ->addPath(
-                'personal',
-                'conditional',
+                'conditional_destination',
                 array(
+                    'source'        => 'personal',
                     'label'         => 'next',
                     'destinations'  => array(
                         'purchase'  => array(
@@ -77,41 +77,41 @@ class TestController extends Controller
                 )
             )
             ->addPath(
-                'purchase',
                 'single',
                 array(
+                    'source'        => 'purchase',
                     'label'         => 'next',
                     'destination'   => 'fork1'
                 )
             )
             ->addPath(
-                'purchase',
                 'single',
                 array(
+                    'source'        => 'purchase',
                     'label'         => 'next',
                     'destination'   => 'fork2',
                 )
             )
             ->addPath(
-                'fork1',
                 'single',
                 array(
+                    'source'        => 'fork1',
                     'label'         => 'next',
                     'destination'   => 'end'
                 )
             )
             ->addPath(
-                'fork2',
                 'single',
                 array(
+                    'source'        => 'fork2',
                     'label'         => 'next',
                     'destination'   => 'end'
                 )
             )
             ->addPath(
                 'end',
-                'end',
                 array(
+                    'source'        => 'end',
                     'label'           => 'Fin',
                     'storageProvider' => 'step.storage.provider.participation',
                 )

@@ -13,45 +13,36 @@ use IDCI\Bundle\StepBundle\Step\View\StepView;
 class Step implements StepInterface
 {
     /**
-     * The type of the step.
-     *
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * The options.
+     * The configuration of the step.
      *
      * @var array
      */
-    protected $options;
+    protected $configuration;
 
     /**
      * Constructor.
      *
-     * @param StepInterface $type    The type of the step.
-     * @param array         $options The options.
+     * @param array $configuration The configuration.
      */
-    public function __construct($type, array $options = array())
+    public function __construct(array $configuration = array())
     {
-        $this->type = $type;
-        $this->options = $options;
+        $this->configuration = $configuration;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getConfiguration()
     {
-        return $this->type;
+        return $this->configuration;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getName()
     {
-        return $this->options;
+        return $this->configuration['name'];
     }
 
     /**

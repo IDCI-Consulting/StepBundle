@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 
-class EndPathType extends AbstractPathType
+abstract class MultipleDestinationPathType extends AbstractPathType
 {
     /**
      * {@inheritdoc}
@@ -19,12 +19,12 @@ class EndPathType extends AbstractPathType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setRequired(array('source', 'label', 'storageProvider'))
-            ->setDefaults(array('label' => 'end'))
+            ->setRequired(array('source', 'label', 'destinations'))
+            ->setDefaults(array('label' => 'next'))
             ->setAllowedTypes(array(
-                'source'          => 'string',
-                'label'           => 'string',
-                'storageProvider' => 'string',
+                'source'        => 'string',
+                'label'         => 'string',
+                'destinations'  => 'array',
             ))
         ;
     }
@@ -34,6 +34,12 @@ class EndPathType extends AbstractPathType
      */
     public function buildPath(PathInterface $path, MapInterface $map, array $options = array())
     {
-        return $path->setSource($map->getStep($options['source']));
+        $path->setSource($map->getStep($options['source']));
+
+        foreach ($options['destinations'] as $destName => $destOptions) {
+            $path->addDestination($map->getStep($destName));
+        }
+
+        return $path;
     }
 }

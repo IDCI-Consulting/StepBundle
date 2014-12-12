@@ -14,21 +14,17 @@ class ContentStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'content';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setDefaults(array('content' => null))
-            ->setAllowedTypes('content', array('null', 'string'))
+            ->setDefaults(array(
+                'content' => null
+            ))
+            ->setAllowedTypes(array(
+                'content' => array('null', 'string')
+            ))
         ;
     }
 }

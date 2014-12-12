@@ -8,6 +8,8 @@
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 abstract class AbstractStepType implements StepTypeInterface
 {
@@ -18,11 +20,21 @@ abstract class AbstractStepType implements StepTypeInterface
     {
         $resolver
             ->setDefaults(array(
-                'name'        => null,
+                'title'       => null,
                 'description' => null
             ))
-            ->setAllowedTypes('name', array('null', 'string'))
-            ->setAllowedTypes('description', array('null', 'string'))
+            ->setAllowedTypes(array(
+                'title'         => array('null', 'string'),
+                'description'   => array('null', 'string'),
+            ))
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildStep(StepInterface $step, MapInterface $map, array $options = array())
+    {
+        return $step;
     }
 }

@@ -9,13 +9,6 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ConditionalPathType extends MultiplePathType
+class RandomDestinationPathType extends MultipleDestinationPathType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'conditional';
-    }
 }

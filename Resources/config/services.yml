@@ -11,8 +11,8 @@ parameters:
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
     idci_step.path.type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
-    idci_step.path.type.conditional.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalPathType
-    idci_step.path.type.random.class: IDCI\Bundle\StepBundle\Path\Type\RandomPathType
+    idci_step.path.type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
+    idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
     idci_step.flow.provider: IDCI\Bundle\StepBundle\Flow\FlowProvider
@@ -67,15 +67,15 @@ services:
         tags:
             - { name: idci_step.path.type, alias: single }
 
-    idci_step.path.type.conditional:
-        class: %idci_step.path.type.conditional.class%
+    idci_step.path.type.conditional_destination:
+        class: %idci_step.path.type.conditional_destination.class%
         tags:
-            - { name: idci_step.path.type, alias: conditional }
+            - { name: idci_step.path.type, alias: conditional_destination }
 
-    idci_step.path.type.random:
-        class: %idci_step.path.type.random.class%
+    idci_step.path.type.random_destination:
+        class: %idci_step.path.type.random_destination.class%
         tags:
-            - { name: idci_step.path.type, alias: random }
+            - { name: idci_step.path.type, alias: random_destination }
 
     idci_step.path.type.end:
         class: %idci_step.path.type.end.class%

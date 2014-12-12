@@ -135,13 +135,9 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function addPath($source, $type, array $options = array())
+    public function addPath($type, array $options = array())
     {
-        if (!isset($this->paths[$source])) {
-            $this->paths[$source] = array();
-        }
-
-        $this->paths[$source][] = array(
+        $this->paths[] = array(
             'type'      => $type,
             'options'   => $options
         );
@@ -162,37 +158,49 @@ class MapBuilder implements MapBuilderInterface
     }
 
     /**
-     * Init the map
+     * Init the map.
      */
-    public function initMap()
+    private function initMap()
     {
         $this->builtMap = new Map();
     }
 
     /**
-     * Build steps into the map
+     * Build steps into the map.
      */
-    public function buildSteps()
+    private function buildSteps()
     {
         foreach ($this->steps as $name => $parameters) {
-            $this->builtMap->addStep($name, $this->stepBuilder->build(
+            $step = $this->stepBuilder->build(
+                $name,
                 $parameters['type'],
-                $parameters['options']
-            ));
+                $parameters['options'],
+                $this->builtMap
+            );
+
+            if (null !== $step) {
+                $this->builtMap->addStep($name, $step);
+            }
         }
     }
 
     /**
-     * Build paths into the map
+     * Build paths into the map.
      */
-    public function buildPaths()
+    private function buildPaths()
     {
-        foreach ($this->paths as $source => $sourcePaths) {
-            foreach ($sourcePaths as $parameters) {
-                    $this->builtMap->addPath($source, $this->pathBuilder->build(
-                        $parameters['type'],
-                        $parameters['options']
-                ));
+        foreach ($this->paths as $parameters) {
+            $path = $this->pathBuilder->build(
+                $parameters['type'],
+                $parameters['options'],
+                $this->builtMap
+            );
+
+            if (null !== $path) {
+                $this->builtMap->addPath(
+                    $path->getSource()->getName(),
+                    $path
+                );
             }
         }
     }

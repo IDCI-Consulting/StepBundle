@@ -12,18 +12,11 @@ use IDCI\Bundle\StepBundle\Step\StepInterface;
 interface StepInterface
 {
     /**
-     * Get the type of the step.
+     * Get the configuration.
      *
-     * @return string The type.
+     * @return array The configuration.
      */
-    public function getType();
-
-    /**
-     * Get the options.
-     *
-     * @return array The options.
-     */
-    public function getOptions();
+    public function getConfiguration();
 
     /**
      * Create a view.

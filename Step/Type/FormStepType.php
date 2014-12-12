@@ -14,21 +14,17 @@ class FormStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function getName()
-    {
-        return 'form';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setDefaults(array('builder' => null))
-            ->setAllowedTypes('builder', array('null', 'Symfony\Component\Form\FormBuilderInterface'))
+            ->setDefaults(array(
+                'builder' => null
+            ))
+            ->setAllowedTypes(array(
+                'builder' => array('null', 'Symfony\Component\Form\FormBuilderInterface'),
+            ))
         ;
     }
 }

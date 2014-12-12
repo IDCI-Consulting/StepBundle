@@ -20,9 +20,9 @@ class PathRegistry implements PathRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function setType($name, PathTypeInterface $path)
+    public function setType($alias, PathTypeInterface $path)
     {
-        $this->types[$name] = $path;
+        $this->types[$alias] = $path;
 
         return $this;
     }
@@ -30,25 +30,25 @@ class PathRegistry implements PathRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getType($name)
+    public function getType($alias)
     {
-        if (!is_string($name)) {
-            throw new UnexpectedTypeException($name, 'string');
+        if (!is_string($alias)) {
+            throw new UnexpectedTypeException($alias, 'string');
         }
 
-        if (!isset($this->types[$name])) {
-            throw new \InvalidArgumentException(sprintf('Could not load type "%s"', $name));
+        if (!isset($this->types[$alias])) {
+            throw new \InvalidArgumentException(sprintf('Could not load type "%s"', $alias));
         }
 
-        return $this->types[$name];
+        return $this->types[$alias];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function hasType($name)
+    public function hasType($alias)
     {
-        if (!isset($this->types[$name])) {
+        if (!isset($this->types[$alias])) {
             return true;
         }
 

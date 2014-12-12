@@ -10,39 +10,39 @@ namespace IDCI\Bundle\StepBundle\Map;
 interface MapBuilderInterface
 {
     /**
-     * Get the map name
+     * Get the map name.
      *
-     * @return string The map name
+     * @return string The map name.
      */
     public function getName();
 
     /**
-     * Get the map data
+     * Get the map data.
      *
-     * @return array The map data
+     * @return array The map data.
      */
     public function getData();
 
     /**
-     * Get the map options
+     * Get the map options.
      *
-     * @return array The map options
+     * @return array The map options.
      */
     public function getOptions();
 
     /**
-     * Checks if the map contains the given options name
+     * Checks if the map contains the given options name.
      *
-     * @param string $name The searching option name
+     * @param string $name The searching option name.
      *
      * @return boolean
      */
     public function hasOption($name);
 
     /**
-     * Retrieve the given options name
+     * Retrieve the given options name.
      *
-     * @param string $name The searching option name
+     * @param string $name The searching option name.
      *
      * @return mixed
      */
@@ -61,15 +61,14 @@ interface MapBuilderInterface
     public function addStep($name, $type, array $options = array());
 
     /**
-     * Adds a new path to this map. A path must have a source step within the map.
+     * Adds a new path to this map.
      *
-     * @param string    $source
      * @param string    $type
      * @param array     $options
      *
      * @return MapBuilderInterface The builder object.
      */
-    public function addPath($source, $type, array $options = array());
+    public function addPath($type, array $options = array());
 
     /**
      * Get the building map.

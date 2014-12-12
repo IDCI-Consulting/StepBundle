@@ -12,18 +12,11 @@ use IDCI\Bundle\StepBundle\Step\StepInterface;
 class Path implements PathInterface
 {
     /**
-     * The type of the path.
-     *
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * The options.
+     * The configuration.
      *
      * @var array
      */
-    protected $options;
+    protected $configuration;
 
     /**
      * The source step.
@@ -42,13 +35,19 @@ class Path implements PathInterface
     /**
      * Constructor.
      *
-     * @param StepInterface $type    The type of the path.
-     * @param array         $options The options.
+     * @param array $configuration  The configuration.
      */
-    public function __construct($type, array $options = array())
+    public function __construct(array $configuration = array())
     {
-        $this->type = $type;
-        $this->options = $options;
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
     }
 
     /**
@@ -57,30 +56,8 @@ class Path implements PathInterface
     public function setSource(StepInterface $step)
     {
         $this->source = $step;
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addDestination(StepInterface $step)
-    {
-        $this->destinations[] = $step;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getOptions()
-    {
-        return $this->options;
+        return $this;
     }
 
     /**
@@ -89,6 +66,16 @@ class Path implements PathInterface
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addDestination(StepInterface $step)
+    {
+        $this->destinations[] = $step;
+
+        return $this;
     }
 
     /**

@@ -8,29 +8,39 @@
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 class SinglePathType extends AbstractPathType
 {
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return 'single';
+        $resolver
+            ->setRequired(array('source', 'label', 'destination', 'listeners'))
+            ->setDefaults(array(
+                'label'     => 'next',
+                'listeners' => array()
+            ))
+            ->setAllowedTypes(array(
+                'source'        => 'string',
+                'label'         => 'string',
+                'destination'   => 'string',
+                'listeners'     => 'array',
+            ))
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function buildPath(PathInterface $path, MapInterface $map, array $options = array())
     {
-        $resolver
-            ->setRequired(array('label', 'source', 'destination', 'listeners'))
-            ->setDefaults(array('lablel' => 'next'))
-            ->setAllowedTypes('label', 'string')
-            ->setAllowedTypes('source', 'string')
-            ->setAllowedTypes('destination', 'string')
-            ->setAllowedTypes('listeners', 'array')
+        return $path
+            ->setSource($map->getStep($options['source']))
+            ->addDestination($map->getStep($options['destination']))
         ;
     }
 }

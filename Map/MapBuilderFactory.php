@@ -25,8 +25,8 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     /**
      * Constructor
      *
-     * @param StepBuilderInterface $stepBuilder The step builder
-     * @param PathBuilderInterface $pathBuilder The path builder
+     * @param StepBuilderInterface $stepBuilder The step builder.
+     * @param PathBuilderInterface $pathBuilder The path builder.
      */
     public function __construct(
         StepBuilderInterface $stepBuilder,

@@ -12,13 +12,27 @@ use IDCI\Bundle\StepBundle\Step\StepInterface;
 interface PathInterface
 {
     /**
+     * Get the configuration.
+     *
+     * @return array The configuration.
+     */
+    public function getConfiguration();
+
+    /**
      * Set the source step.
      *
-     * @param StepInterface $step The step.
+     * @param StepInterface $step The source step.
      *
      * @return PathInterface This.
      */
     public function setSource(StepInterface $step);
+
+    /**
+     * Get the source step.
+     *
+     * @return StepInterface The source step.
+     */
+    public function getSource();
 
     /**
      * Add a destination step.
@@ -28,27 +42,6 @@ interface PathInterface
      * @return PathInterface This.
      */
     public function addDestination(StepInterface $step);
-
-    /**
-     * Get the type of the path.
-     *
-     * @return string The type.
-     */
-    public function getType();
-
-    /**
-     * Get the options.
-     *
-     * @return array The options.
-     */
-    public function getOptions();
-
-    /**
-     * Get the source step.
-     *
-     * @return StepInterface The source step.
-     */
-    public function getSource();
 
     /**
      * Get the destination steps.
