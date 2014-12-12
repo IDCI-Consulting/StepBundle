@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-interface MapFactoryInterface
+interface MapBuilderFactoryInterface
 {
     /**
      * Returns a map builder.

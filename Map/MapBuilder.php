@@ -7,8 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use IDCI\Bundle\StepBundle\Step\StepRegistryInterface;
-use IDCI\Bundle\StepBundle\Path\PathRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
+use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
 class MapBuilder implements MapBuilderInterface
 {
@@ -38,39 +38,45 @@ class MapBuilder implements MapBuilderInterface
     private $paths = array();
 
     /**
-     * @var StepRegistry
+     * @var StepBuilderInterface
      */
-    private $stepRegistry;
+    private $stepBuilder;
 
     /**
-     * @var PathRegistry
+     * @var PathBuilderInterface
      */
-    private $pathRegistry;
+    private $pathBuilder;
+
+    /**
+     * @var MapInterface
+     */
+    private $builtMap;
 
     /**
      * Creates a new map builder.
      *
-     * @param string        $name
-     * @param array         $data
-     * @param array         $options
-     * @param StepRegistry  $stepRegistry
-     * @param PathRegistry  $pathRegistry
+     * @param string                $name
+     * @param array                 $data
+     * @param array                 $options
+     * @param StepBuilderInterface  $stepBuilder
+     * @param PathBuilderInterface  $pathBuilder
      */
     public function __construct(
         $name,
         $data = array(),
         $options = array(),
-        StepRegistryInterface $stepRegistry,
-        PathRegistryInterface $pathRegistry
+        StepBuilderInterface $stepBuilder,
+        PathBuilderInterface $pathBuilder
     )
     {
-        $this->name         = (string) $name;
-        $this->data         = $data;
-        $this->options      = $options;
-        $this->stepRegistry = $stepRegistry;
-        $this->pathRegistry = $pathRegistry;
-        $this->steps        = array();
-        $this->paths        = array();
+        $this->name        = (string) $name;
+        $this->data        = $data;
+        $this->options     = $options;
+        $this->stepBuilder = $stepBuilder;
+        $this->pathBuilder = $pathBuilder;
+        $this->steps       = array();
+        $this->paths       = array();
+        $this->builtMap    = null;
     }
 
     /**
@@ -148,6 +154,46 @@ class MapBuilder implements MapBuilderInterface
      */
     public function getMap()
     {
-        //TODO
+        $this->initMap();
+        $this->buildSteps();
+        $this->buildPaths();
+
+        return $this->builtMap;
+    }
+
+    /**
+     * Init the map
+     */
+    public function initMap()
+    {
+        $this->builtMap = new Map();
+    }
+
+    /**
+     * Build steps into the map
+     */
+    public function buildSteps()
+    {
+        foreach ($this->steps as $name => $parameters) {
+            $this->builtMap->addStep($name, $this->stepBuilder->build(
+                $parameters['type'],
+                $parameters['options']
+            ));
+        }
+    }
+
+    /**
+     * Build paths into the map
+     */
+    public function buildPaths()
+    {
+        foreach ($this->paths as $source => $sourcePaths) {
+            foreach ($sourcePaths as $parameters) {
+                    $this->builtMap->addPath($source, $this->pathBuilder->build(
+                        $parameters['type'],
+                        $parameters['options']
+                ));
+            }
+        }
     }
 }

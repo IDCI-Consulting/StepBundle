@@ -2,6 +2,11 @@ parameters:
     idci_step.step.registry.class: IDCI\Bundle\StepBundle\Step\StepRegistry
     idci_step.path.registry.class: IDCI\Bundle\StepBundle\Path\PathRegistry
 
+    idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
+    idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
+
+    idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
+
     idci_step.step.type.content.class: IDCI\Bundle\StepBundle\Step\Type\ContentStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
@@ -13,7 +18,9 @@ parameters:
     idci_step.flow.provider: IDCI\Bundle\StepBundle\Flow\FlowProvider
     idci_step.flow.data_store.session: IDCI\Bundle\StepBundle\Flow\FlowProvider
 
+
 services:
+
     # Registry
 
     idci_step.step.registry:
@@ -23,11 +30,21 @@ services:
         class: %idci_step.path.registry.class%
 
 
-    # Factory
+    # Builder
 
-    idci_step.map.factory:
-        class: IDCI\Bundle\StepBundle\Map\MapFactory
-        arguments: [@idci_step.step.registry, @idci_step.path.registry]
+    idci_step.step.builder:
+        class: %idci_step.step.builder.class%
+        arguments: [@idci_step.step.registry]
+
+    idci_step.path.builder:
+        class: %idci_step.path.builder.class%
+        arguments: [@idci_step.path.registry]
+
+
+    # Factory
+    idci_step.map.builder.factory:
+        class: %idci_step.map.builder.factory.class%
+        arguments: [@idci_step.step.builder, @idci_step.path.builder]
 
 
     # Step

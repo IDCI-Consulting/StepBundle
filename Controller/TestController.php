@@ -25,7 +25,7 @@ class TestController extends Controller
     public function indexAction(Request $request)
     {
         $map = $this
-            ->get('idci_step.map.factory')
+            ->get('idci_step.map.builder.factory')
             ->createBuilder()
             ->addStep('intro', 'content', array(
                 'name'        => 'Introduction',
@@ -63,7 +63,7 @@ class TestController extends Controller
             )
             ->addPath(
                 'personal',
-                'multiple',
+                'conditional',
                 array(
                     'label'         => 'next',
                     'destinations'  => array(
@@ -116,6 +116,7 @@ class TestController extends Controller
                     'storageProvider' => 'step.storage.provider.participation',
                 )
             )
+            ->getMap()
         ;
 
         var_dump($map);die;
