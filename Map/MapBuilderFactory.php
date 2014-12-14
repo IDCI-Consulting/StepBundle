@@ -40,7 +40,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createBuilder($data = null, array $options = array())
+    public function createBuilder(array $data = array(), array $options = array())
     {
         return $this->createNamedBuilder($name = 'map', $data, $options);
     }
@@ -48,7 +48,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNamedBuilder($name, $data = null, array $options = array())
+    public function createNamedBuilder($name, array $data = array(), array $options = array())
     {
         return new MapBuilder(
             $name,

@@ -28,11 +28,17 @@ class StepBuilder implements StepBuilderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Create a Step.
+     *
+     * @param string $name      The step name.
+     * @param string $typeAlias The type alias.
+     * @param array  $options   The options.
+     *
+     * @return StepInterface The created Step.
      */
-    public static function createStep($name, $typeAlias, array $options = array())
+    protected static function createStep($name, $typeAlias, array $options = array())
     {
-        // TODO: Use a StepConfig
+        // TODO: Use a StepConfig as argument instead of an array.
         return new Step(array(
             'name'      => $name,
             'type'      => $typeAlias,

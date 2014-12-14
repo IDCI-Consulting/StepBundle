@@ -58,13 +58,20 @@ interface MapInterface
     public function getSteps();
 
     /**
+     * Count the steps.
+     *
+     * @return integer The step count
+     */
+    public function countSteps();
+
+    /**
      * Get the paths.
      *
      * @param string $source The identifier name of the source step.
      *
      * @return array The paths.
      */
-    public function getPaths($source);
+    public function getPaths($source = null);
 
     /**
      * Create a view.

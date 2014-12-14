@@ -85,8 +85,20 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getPaths($source)
+    public function countSteps()
     {
+        return count($this->steps);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPaths($source = null)
+    {
+        if (null === $source) {
+            return $this->paths;
+        }
+
         return isset($this->paths[$source])
             ? $this->paths[$source]
             : array()

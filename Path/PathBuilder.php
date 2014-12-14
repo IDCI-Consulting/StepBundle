@@ -29,11 +29,16 @@ class PathBuilder implements PathBuilderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Create a Path.
+     *
+     * @param string $typeAlias The type alias.
+     * @param array  $options   The options.
+     *
+     * @return PathInterface The created Path.
      */
-    public static function createPath($typeAlias, array $options = array())
+    protected static function createPath($typeAlias, array $options = array())
     {
-        // TODO: Use a PathConfig
+        // TODO: Use a PathConfig as argument instead of an array.
         return new Path(array(
             'type'    => $typeAlias,
             'options' => $options

@@ -42,7 +42,8 @@ interface MapBuilderInterface
     /**
      * Retrieve the given options name.
      *
-     * @param string $name The searching option name.
+     * @param string $name      The searching option name.
+     * @param mixed  $default   The default return value if the searching option not found.
      *
      * @return mixed
      */
