@@ -88,7 +88,11 @@ class MapBuilder implements MapBuilderInterface
     }
 
     /**
+     * Resolve options
      *
+     * @param array $options The options to resolve.
+     *
+     * @return array The resolved options.
      */
     public static function resolveOptions(array $options = array())
     {
