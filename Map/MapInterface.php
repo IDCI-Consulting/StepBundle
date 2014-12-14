@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @author:  Thomas Prelot <tprelot@gmail.com>
  * @license: MIT
  */
@@ -12,6 +13,13 @@ use IDCI\Bundle\StepBundle\Path\PathInterface;
 
 interface MapInterface
 {
+    /**
+     * Get the configuration.
+     *
+     * @return array The configuration.
+     */
+    public function getConfiguration();
+
     /**
      * Add a new step.
      *

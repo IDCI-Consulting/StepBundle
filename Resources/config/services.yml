@@ -91,3 +91,5 @@ services:
 
     idci_step.flow.data_store.session:
         class: %idci_step.flow.data_store.session%
+        tags:
+            - { name: idci_step.flow.data_store, alias: session }

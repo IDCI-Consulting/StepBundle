@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @author:  Thomas Prelot <tprelot@gmail.com>
  * @license: MIT
  */
@@ -14,6 +15,13 @@ use IDCI\Bundle\StepBundle\Map\View\MapView;
 class Map implements MapInterface
 {
     /**
+     * The configuration.
+     *
+     * @var array
+     */
+    protected $configuration;
+
+    /**
      * The steps.
      *
      * @var array
@@ -26,6 +34,24 @@ class Map implements MapInterface
      * @var array
      */
     protected $paths = array();
+
+    /**
+     * Constructor.
+     *
+     * @param array $configuration  The configuration.
+     */
+    public function __construct(array $configuration = array())
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
 
     /**
      * {@inheritdoc}

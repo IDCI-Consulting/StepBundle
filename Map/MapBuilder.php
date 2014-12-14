@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -71,12 +72,31 @@ class MapBuilder implements MapBuilderInterface
     {
         $this->name        = (string) $name;
         $this->data        = $data;
-        $this->options     = $options;
+        $this->options     = self::resolveOptions($options);
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
         $this->steps       = array();
         $this->paths       = array();
         $this->builtMap    = null;
+    }
+
+    /**
+     *
+     */
+    public static function resolveOptions(array $options = array())
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefaults(array(
+                'browsing'      => 'linear',
+                'flowDataStore' => 'session',
+            ))
+            ->setAllowedValues(array(
+                'browsing' => array('linear', 'free')
+            ))
+        ;
+
+        return $resolver->resolve($options);
     }
 
     /**
@@ -162,7 +182,12 @@ class MapBuilder implements MapBuilderInterface
      */
     private function initMap()
     {
-        $this->builtMap = new Map();
+        // TODO: Use a MapConfig as argument instead of an array.
+        $this->builtMap = new Map(array(
+            'name'      => $this->name,
+            'data'      => $this->data,
+            'options'   => $this->options
+        ));
     }
 
     /**
