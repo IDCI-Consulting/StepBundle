@@ -1,0 +1,8 @@
+IDCI\Bundle\StepBundle\Flow\DataFlow:
+    exclusion_policy: ALL
+
+    properties:
+        id:
+            expose: true
+            groups: [idci_step.flow]
+            serialized_name: id
