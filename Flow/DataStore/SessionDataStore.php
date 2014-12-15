@@ -10,22 +10,18 @@ namespace IDCI\Bundle\StepBundle\Flow\DataStore;
 class SessionDataStore implements FlowDataStoreInterface
 {
     /**
-     * Save.
-     *
-     * @param string        $name The identifier name of the step.
-     * @param StepInterface $step The step.
-     *
-     * @return MapInterface This.
+     * {@inheritdoc}
      */
-    public function save($name, StepInterface $step);
+    public function save($name, StepInterface $step)
+    {
+
+    }
 
     /**
-     * Retrieve.
-     *
-     * @param string        $name The identifier name of the step.
-     * @param StepInterface $step The step.
-     *
-     * @return MapInterface This.
+     * {@inheritdoc}
      */
-    public function retrieve($name, StepInterface $step);
+    public function retrieve($name, StepInterface $step)
+    {
+
+    }
 }
