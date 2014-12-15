@@ -7,6 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-interface FlowInterface
+class DataFlow implements DataFlowInterface
 {
 }

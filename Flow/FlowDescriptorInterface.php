@@ -7,6 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-class Flow implements FlowInterface
+interface FlowDescriptorInterface
 {
 }

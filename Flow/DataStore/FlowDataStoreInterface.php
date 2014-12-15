@@ -9,4 +9,23 @@ namespace IDCI\Bundle\StepBundle\Flow\DataStore;
 
 interface FlowDataStoreInterface
 {
+    /**
+     * Save.
+     *
+     * @param string        $name The identifier name of the step.
+     * @param StepInterface $step The step.
+     *
+     * @return MapInterface This.
+     */
+    public function save($name, StepInterface $step);
+
+    /**
+     * Retrieve.
+     *
+     * @param string        $name The identifier name of the step.
+     * @param StepInterface $step The step.
+     *
+     * @return MapInterface This.
+     */
+    public function retrieve($name, StepInterface $step);
 }
