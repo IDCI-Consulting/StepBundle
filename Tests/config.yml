@@ -1,0 +1,5 @@
+parameters:
+    kernel.secret: test
+
+imports:
+    - { resource: @IDCIStepBundle/Resources/config/config.yml }

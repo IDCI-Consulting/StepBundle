@@ -33,3 +33,7 @@
 # Composer
 /composer.phar
 composer.lock
+
+# Tests
+/Tests/cache
+/Tests/logs
