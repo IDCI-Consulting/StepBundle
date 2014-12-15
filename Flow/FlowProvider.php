@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-use IDCI\Bundle\StepBundle\Flow\FlowDataStoreInterface;
+use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 
 class FlowProvider implements FlowProviderInterface
 {

@@ -16,7 +16,7 @@ parameters:
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
     idci_step.flow.provider: IDCI\Bundle\StepBundle\Flow\FlowProvider
-    idci_step.flow.data_store.session: IDCI\Bundle\StepBundle\Flow\FlowProvider
+    idci_step.flow.data_store.session: IDCI\Bundle\StepBundle\Flow\DataStore\SessionDataStore
 
 
 services:
