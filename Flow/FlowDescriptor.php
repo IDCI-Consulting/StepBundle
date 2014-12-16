@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-class FlowDescriptor implements FlowInterface
+class FlowDescriptor implements FlowDescriptorInterface
 {
+    public $id = 3;
 }

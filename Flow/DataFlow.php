@@ -9,4 +9,5 @@ namespace IDCI\Bundle\StepBundle\Flow;
 
 class DataFlow implements DataFlowInterface
 {
+    public $id = 2;
 }

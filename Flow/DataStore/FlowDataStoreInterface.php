@@ -12,20 +12,17 @@ interface FlowDataStoreInterface
     /**
      * Save.
      *
-     * @param string        $name The identifier name of the step.
-     * @param StepInterface $step The step.
-     *
-     * @return MapInterface This.
+     * @param string $name The identifier name of the flow.
+     * @param string $step The serialized value of the flow.
      */
-    public function save($name, StepInterface $step);
+    public function save($name, $step);
 
     /**
      * Retrieve.
      *
-     * @param string        $name The identifier name of the step.
-     * @param StepInterface $step The step.
+     * @param string $name The identifier name of the flow.
      *
-     * @return MapInterface This.
+     * @return string|null The serialized value of the flow or null if there is no corresponding saved flow.
      */
-    public function retrieve($name, StepInterface $step);
+    public function retrieve($name);
 }

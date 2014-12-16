@@ -34,12 +34,19 @@ class FlowProviderTest extends WebTestCase
     }
 
     /**
-     * @covers IDCI\Bundle\StepBundle\Flow\FlowProvider::process
+     * @covers IDCI\Bundle\StepBundle\Flow\FlowProvider::initialize
+     * @covers IDCI\Bundle\StepBundle\Flow\FlowProvider::save
      * @dataProvider getData
      */
     public function testProcess($plop, $plip)
     {
         $flowProvider = $this->container->get('idci_step.flow.provider');
-        $this->assertEquals(1, $plop);
+        $session = $this->container->get('session');
+
+        $flowProvider->initialize();
+        $flowProvider->persist();
+
+        $data = json_decode($session->get('idci_step.flow_data'), true);
+        $this->assertEquals('2', $data['id']);
     }
 }

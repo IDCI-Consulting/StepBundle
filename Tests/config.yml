@@ -1,5 +1,7 @@
-parameters:
-    kernel.secret: test
-
 imports:
     - { resource: @IDCIStepBundle/Resources/config/config.yml }
+
+framework:
+    secret: test
+    session:
+        storage_id: session.storage.mock_file

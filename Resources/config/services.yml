@@ -15,8 +15,10 @@ parameters:
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
-    idci_step.flow.provider: IDCI\Bundle\StepBundle\Flow\FlowProvider
-    idci_step.flow.data_store.session: IDCI\Bundle\StepBundle\Flow\DataStore\SessionDataStore
+    idci_step.flow.provider.class: IDCI\Bundle\StepBundle\Flow\FlowProvider
+    idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionDataStore
+    idci_step.flow.data.class: IDCI\Bundle\StepBundle\Flow\DataFlow
+    idci_step.flow.descriptor.class: IDCI\Bundle\StepBundle\Flow\FlowDescriptor
 
 
 services:
@@ -86,10 +88,15 @@ services:
     # Flow
 
     idci_step.flow.provider:
-        class: %idci_step.flow.provider%
-        arguments: [@idci_step.flow.data_store.session]
+        class: %idci_step.flow.provider.class%
+        arguments:
+            - @idci_step.flow.data_store.session
+            - @jms_serializer
+            - %idci_step.flow.data.class%
+            - %idci_step.flow.descriptor.class%
 
     idci_step.flow.data_store.session:
-        class: %idci_step.flow.data_store.session%
+        class: %idci_step.flow.data_store.session.class%
+        arguments: [@session]
         tags:
             - { name: idci_step.flow.data_store, alias: session }
