@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
+use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
+
 interface FlowNavigatorInterface
 {
     /**
