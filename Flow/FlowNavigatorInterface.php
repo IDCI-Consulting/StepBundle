@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-interface FlowProviderInterface
+interface FlowNavigatorInterface
 {
     /**
      * Set the data store.
@@ -17,12 +17,10 @@ interface FlowProviderInterface
     public function setDataStore(FlowDataStoreInterface $dataStore);
 
     /**
-     * Initialize the flows.
+     * Navigate in the steps.
+     *
+     * @param string $destination The identifier name of the destination step.
+     * @param array  $data        The data for the previous step.
      */
-    public function initialize();
-
-    /**
-     * Persist the flows.
-     */
-    public function persist();
+    public function navigate($destination, array $data = null);
 }

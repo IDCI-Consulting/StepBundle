@@ -15,6 +15,7 @@ parameters:
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
+    idci_step.flow.provider.class: IDCI\Bundle\StepBundle\Flow\FlowNavigator
     idci_step.flow.provider.class: IDCI\Bundle\StepBundle\Flow\FlowProvider
     idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionDataStore
     idci_step.flow.data.class: IDCI\Bundle\StepBundle\Flow\DataFlow
@@ -86,6 +87,10 @@ services:
 
 
     # Flow
+
+    idci_step.flow.navigator:
+        class: %idci_step.flow.navigator.class%
+        arguments: [@idci_step.flow.provider]
 
     idci_step.flow.provider:
         class: %idci_step.flow.provider.class%

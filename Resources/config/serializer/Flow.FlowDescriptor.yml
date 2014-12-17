@@ -1,8 +1,8 @@
-IDCI\Bundle\StepBundle\Flow\DataFlow:
+IDCI\Bundle\StepBundle\Flow\FlowDescriptor:
     exclusion_policy: ALL
 
     properties:
-        steps:
+        takenPaths:
             expose: true
             groups: [idci_step.flow]
-            serialized_name: steps
+            serialized_name: takenPaths

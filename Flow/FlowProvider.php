@@ -64,9 +64,7 @@ class FlowProvider implements FlowProviderInterface
     }
 
     /**
-     * Set the data store.
-     *
-     * @param FlowDataStoreInterface $dataStore The data store.
+     * {@inheritdoc}
      */
     public function setDataStore(FlowDataStoreInterface $dataStore)
     {
@@ -94,7 +92,7 @@ class FlowProvider implements FlowProviderInterface
     }
 
     /**
-     * Initialize the flows.
+     * {@inheritdoc}
      */
     public function initialize()
     {
@@ -120,7 +118,7 @@ class FlowProvider implements FlowProviderInterface
     }
 
     /**
-     * Persist the flows.
+     * {@inheritdoc}
      */
     public function persist()
     {
