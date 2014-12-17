@@ -21,7 +21,7 @@ class DataFlow implements DataFlowInterface
      */
     public function hasStep($name)
     {
-        return isset($this->steps[$name]));
+        return isset($this->steps[$name]);
     }
 
     /**
