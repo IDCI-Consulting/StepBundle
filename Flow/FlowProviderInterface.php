@@ -19,12 +19,36 @@ interface FlowProviderInterface
     public function setDataStore(FlowDataStoreInterface $dataStore);
 
     /**
-     * Initialize the flows.
+     * Retrieve the data flow.
+     *
+     * @param string $mapName The identifier name of the map.
+     *
+     * @return DataFlowInterface The data flow object.
      */
-    public function initialize();
+    public function retrieveDataFlow($mapName);
 
     /**
-     * Persist the flows.
+     * Persist the data flow.
+     *
+     * @param string            $mapName  The identifier name of the map.
+     * @param DataFlowInterface $dataFlow The data flow object.
      */
-    public function persist();
+    public function persistDataFlow($mapName, DataFlowInterface $dataFlow);
+
+    /**
+     * Retrieve the flow descriptor.
+     *
+     * @param string $mapName The identifier name of the map.
+     *
+     * @return FlowDescriptorInterface The flow descriptor object.
+     */
+    public function retrieveFlowDescriptor($mapName);
+
+    /**
+     * Persist the flow descriptor.
+     *
+     * @param string                  $mapName        The identifier name of the map.
+     * @param FlowDescriptorInterface $flowDescriptor The flow descriptor object.
+     */
+    public function persistFlowDescriptor($mapName, FlowDescriptorInterface $flowDescriptor);
 }

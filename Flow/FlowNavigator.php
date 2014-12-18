@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Flow;
 
 use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 class FlowNavigator implements FlowNavigatorInterface
 {
@@ -41,12 +42,15 @@ class FlowNavigator implements FlowNavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function navigate($destination, array $data = null)
+    public function navigate(MapInterface $map, $destination, array $data = null)
     {
-        $this->flowProvider->initialize();
+        $mapName = $map->getName();
+        $dataFlow = $this->flowProvider->retrieveDataFlow($mapName);
+        $flowDescriptor = $this->flowProvider->retrieveFlowDescriptor($mapName);
 
         // TODO
 
-        $this->flowProvider->persist();
+        $this->flowProvider->persistDataFlow($mapName, $dataFlow);
+        $this->flowProvider->retrieveFlowDescriptor($mapName, $flowDescriptor);
     }
 }

@@ -29,18 +29,18 @@ class FlowProvider implements FlowProviderInterface
     protected $serializer;
 
     /**
-     * The data flow.
+     * The class for the data flow.
      *
-     * @var FlowDataStoreInterface
+     * @var string
      */
-    protected $dataFlow;
+    protected $dataFlowClass;
 
     /**
-     * The flow descriptor.
+     * The class for the flow descriptor.
      *
      * @var FlowDataStoreInterface
      */
-    protected $flowDescriptor;
+    protected $flowDescriptorClass;
 
     /**
      * Constructor.
@@ -59,8 +59,8 @@ class FlowProvider implements FlowProviderInterface
     {
         $this->dataStore = $dataStore;
         $this->serializer = $serializer;
-        $this->setDataFlow(new $dataFlowClass());
-        $this->setFlowDescriptor(new $flowDescriptorClass());
+        $this->dataFlowClass = $dataFlowClass;
+        $this->flowDescriptorClass = $flowDescriptorClass;
     }
 
     /**
@@ -72,60 +72,72 @@ class FlowProvider implements FlowProviderInterface
     }
 
     /**
-     * Set the data flow.
-     *
-     * @param DataFlowInterface $dataFlow The data flow.
-     */
-    public function setDataFlow(DataFlowInterface $dataFlow)
-    {
-        $this->dataFlow = $dataFlow;
-    }
-
-    /**
-     * Set the flow descriptor.
-     *
-     * @param FlowDescriptorInterface $flowDescriptor The flow descriptor.
-     */
-    public function setFlowDescriptor(FlowDescriptorInterface $flowDescriptor)
-    {
-        $this->flowDescriptor = $flowDescriptor;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function initialize()
+    public function retrieveDataFlow($mapName)
     {
-        $data = $this->dataStore->retrieve('data');
+        $data = $this->dataStore->retrieve($mapName, 'data');
 
         if ($data) {
-            $this->dataFlow = $this->serializer->deserialize(
+            $dataFlow = $this->serializer->deserialize(
                 $data,
-                get_class($this->dataFlow),
+                $dataFlowClass,
                 'json'
+            );
+        } else {
+            $dataFlow = new $dataFlowClass();
+        }
+
+        if (!($dataFlow instanceof DataFlowInterface)) {
+            throw new \InvalidArgumentException(
+                'The class for the flow descriptor must be an instance of "IDCI\Bundle\StepBundle\Flow\DataFlowInterface".'
             );
         }
 
-        $descriptor = $this->dataStore->retrieve('descriptor');
-
-        if ($descriptor) {
-            $this->flowDescriptor = $this->serializer->deserialize(
-                $descriptor,
-                get_class($this->flowDescriptor),
-                'json'
-            );
-        }
+        return $dataFlow;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function persist()
+    public function retrieveFlowDescriptor($mapName)
     {
-        $data = $this->serializer->serialize($this->dataFlow, 'json');
-        $this->dataStore->save('data', $data);
+        $data = $this->dataStore->retrieve($mapName, 'descriptor');
 
-        $descriptor = $this->serializer->serialize($this->flowDescriptor, 'json');
-        $this->dataStore->save('descriptor', $descriptor);
+        if ($data) {
+            $flowDescriptor = $this->serializer->deserialize(
+                $data,
+                $flowDescriptorClass,
+                'json'
+            );
+        } else {
+            $flowDescriptor = new $flowDescriptorClass();
+        }
+
+        if (!($flowDescriptor instanceof FlowDescriptorInterface)) {
+            throw new \InvalidArgumentException(
+                'The class for the flow descriptor must be an instance of "IDCI\Bundle\StepBundle\Flow\FlowDescriptorInterface".'
+            );
+        }
+
+        return $flowDescriptor;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function persistDataFlow($mapName, DataFlowInterface $dataFlow)
+    {
+        $data = $this->serializer->serialize($dataFlow, 'json');
+        $this->dataStore->save($mapName, 'data', $data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function persistFlowDescriptor($mapName, FlowDescriptorInterface $flowDescriptor)
+    {
+        $descriptor = $this->serializer->serialize($flowDescriptor, 'json');
+        $this->dataStore->save($mapName, 'descriptor', $descriptor);
     }
 }
