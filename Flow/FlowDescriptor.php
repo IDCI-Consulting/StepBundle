@@ -10,37 +10,77 @@ namespace IDCI\Bundle\StepBundle\Flow;
 class FlowDescriptor implements FlowDescriptorInterface
 {
     /**
-     * The taken paths.
+     * The current step identifier name.
+     *
+     * @var string
+     */
+    protected $currentStep = '';
+
+    /**
+     * The done steps.
      *
      * @var array
      */
-    protected $takenPaths = array();
+    protected $doneSteps = array();
 
     /**
-     * Add a taken path.
-     *
-     * @param string $name The identifier name of the step.
+     * {@inheritdoc}
      */
-    public function addTakenPath($name)
+    public function addDoneStep($name)
     {
-        $this->takenPaths[] = $name;
+        $this->doneSteps[] = $name;
     }
 
     /**
-     * Retrace to a step.
-     *
-     * @param string $name The identifier name of the step.
+     * {@inheritdoc}
      */
-    public function retraceSteps($name)
+    public function hasDoneStep($name)
     {
-        $remove = false;
-
-        foreach ($this->takenPaths as $i => $path) {
-            if ($remove) {
-                unset($this->takenPaths[$i]);
-            } elseif ($path === $name) {
-                $remove = true;
+        foreach ($this->doneSteps as $step) {
+            if ($step === $name) {
+                return true;
             }
         }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retraceDoneStep($name)
+    {
+        $remove = false;
+        $removedSteps = array();
+
+        foreach ($this->doneSteps as $i => $step) {
+            if (!$remove && $step === $name) {
+                $remove = true;
+            }
+
+            if ($remove) {
+                $this->currentStep = $step;
+                $removedSteps[] = $step;
+                unset($this->doneSteps[$i]);
+            }
+        }
+
+        return $removedSteps;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentStep()
+    {
+        return $this->currentStep;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCurrentStep($name)
+    {
+        $this->currentStep = $name;
     }
 }
