@@ -15,6 +15,13 @@ use IDCI\Bundle\StepBundle\Map\View\MapView;
 class Map implements MapInterface
 {
     /**
+     * The identifier name of the map.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * The configuration.
      *
      * @var array
@@ -40,9 +47,17 @@ class Map implements MapInterface
      *
      * @param array $configuration  The configuration.
      */
-    public function __construct(array $configuration = array())
+    public function __construct($name, array $configuration = array())
     {
         $this->configuration = $configuration;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

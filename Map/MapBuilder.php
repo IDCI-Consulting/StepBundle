@@ -183,11 +183,13 @@ class MapBuilder implements MapBuilderInterface
     private function initMap()
     {
         // TODO: Use a MapConfig as argument instead of an array.
-        $this->builtMap = new Map(array(
-            'name'      => $this->name,
-            'data'      => $this->data,
-            'options'   => $this->options
-        ));
+        $this->builtMap = new Map(
+            $this->name,
+            array(
+                'data'      => $this->data,
+                'options'   => $this->options
+            )
+        );
     }
 
     /**

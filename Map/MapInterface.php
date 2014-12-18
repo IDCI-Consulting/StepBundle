@@ -14,6 +14,13 @@ use IDCI\Bundle\StepBundle\Path\PathInterface;
 interface MapInterface
 {
     /**
+     * Get the identifier name of the map.
+     *
+     * @return string The name.
+     */
+    public function getName();
+
+    /**
      * Get the configuration.
      *
      * @return array The configuration.
