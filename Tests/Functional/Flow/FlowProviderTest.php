@@ -1,6 +1,6 @@
 <?php
 
-namespace IDCI\Bundle\StepBundle\Flow;
+namespace IDCI\Bundle\StepBundle\Tests\Functional\Flow;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -13,7 +13,7 @@ class FlowProviderTest extends WebTestCase
 
     protected function setUp()
     {
-        require_once __DIR__.'/../AppKernel.php';
+        require_once __DIR__.'/../../AppKernel.php';
 
         $kernel = new \AppKernel('test', true);
         $kernel->boot();
@@ -42,9 +42,6 @@ class FlowProviderTest extends WebTestCase
     {
         $flowProvider = $this->container->get('idci_step.flow.provider');
         $session = $this->container->get('session');
-
-        $flowProvider->initialize();
-        $flowProvider->persist();
 
         $data = json_decode($session->get('idci_step.flow_data'), true);
         $this->assertEquals('2', $data['id']);
