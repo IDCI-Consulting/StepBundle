@@ -74,7 +74,7 @@ interface MapBuilderInterface
     /**
      * Get the building map.
      *
-     * @return MapInterface The map.
+     * @return MapNavigationInterface The map.
      */
     public function getMap();
 }

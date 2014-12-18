@@ -9,6 +9,7 @@ namespace IDCI\Bundle\StepBundle\Map;
 
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
+use IDCI\Bundle\StepBundle\Map\MapNavigatorInterface;
 
 class MapBuilderFactory implements MapBuilderFactoryInterface
 {
@@ -23,18 +24,26 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $pathBuilder;
 
     /**
+     * @var MapNavigatorInterface
+     */
+    private $mapNavigator;
+
+    /**
      * Constructor
      *
-     * @param StepBuilderInterface $stepBuilder The step builder.
-     * @param PathBuilderInterface $pathBuilder The path builder.
+     * @param StepBuilderInterface  $stepBuilder  The step builder.
+     * @param PathBuilderInterface  $pathBuilder  The path builder.
+     * @param MapNavigatorInterface $mapNavigator The map navigator.
      */
     public function __construct(
         StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder
+        PathBuilderInterface $pathBuilder,
+        MapNavigatorInterface $mapNavigator
     )
     {
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
+        $this->mapNavigator = $mapNavigator;
     }
 
     /**
@@ -55,7 +64,8 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
             $data,
             $options,
             $this->stepBuilder,
-            $this->pathBuilder
+            $this->pathBuilder,
+            $this->mapNavigator
         );
     }
 }

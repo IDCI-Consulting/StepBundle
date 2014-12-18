@@ -7,6 +7,8 @@ parameters:
 
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
 
+    idci_step.map.navigator.class: IDCI\Bundle\StepBundle\Flow\FlowNavigator
+
     idci_step.step.type.content.class: IDCI\Bundle\StepBundle\Step\Type\ContentStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
@@ -15,7 +17,6 @@ parameters:
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
-    idci_step.flow.navigator.class: IDCI\Bundle\StepBundle\Flow\FlowNavigator
     idci_step.flow.provider.class: IDCI\Bundle\StepBundle\Flow\FlowProvider
     idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionDataStore
     idci_step.flow.data.class: IDCI\Bundle\StepBundle\Flow\DataFlow
@@ -45,9 +46,20 @@ services:
 
 
     # Factory
+
     idci_step.map.builder.factory:
         class: %idci_step.map.builder.factory.class%
-        arguments: [@idci_step.step.builder, @idci_step.path.builder]
+        arguments:
+            - @idci_step.step.builder
+            - @idci_step.path.builder
+            - @idci_step.map.navigator
+
+
+    # Map
+
+    idci_step.map.navigator:
+        class: %idci_step.map.navigator.class%
+        arguments: [@idci_step.flow.provider]
 
 
     # Step
@@ -87,10 +99,6 @@ services:
 
 
     # Flow
-
-    idci_step.flow.navigator:
-        class: %idci_step.flow.navigator.class%
-        arguments: [@idci_step.flow.provider]
 
     idci_step.flow.provider:
         class: %idci_step.flow.provider.class%

@@ -15,6 +15,13 @@ use IDCI\Bundle\StepBundle\Map\View\MapView;
 class Map implements MapInterface
 {
     /**
+     * The map navigator.
+     *
+     * @var MapNavigatorInterface
+     */
+    protected $mapNavigator;
+
+    /**
      * The identifier name of the map.
      *
      * @var string
@@ -45,10 +52,18 @@ class Map implements MapInterface
     /**
      * Constructor.
      *
-     * @param array $configuration  The configuration.
+     * @param MapNavigatorInterface $mapNavigator  The map navigator.
+     * @param string                $name          The identifier name of the map.
+     * @param array                 $configuration The configuration.
      */
-    public function __construct($name, array $configuration = array())
+    public function __construct(
+        MapNavigatorInterface $mapNavigator,
+        $name,
+        array $configuration = array()
+    )
     {
+        $this->mapNavigator = $mapNavigator;
+        $this->name = $name;
         $this->configuration = $configuration;
     }
 
@@ -149,8 +164,16 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function createView()
+    public function createView($stepName)
     {
         return new MapView();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function navigate($destination, array $data = null)
+    {
+        return $this->mapNavigator->navigate($this, $destination, $data);
     }
 }

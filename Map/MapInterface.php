@@ -11,7 +11,7 @@ namespace IDCI\Bundle\StepBundle\Map;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 
-interface MapInterface
+interface MapInterface extends MapNavigationInterface
 {
     /**
      * Get the identifier name of the map.
@@ -91,7 +91,9 @@ interface MapInterface
     /**
      * Create a view.
      *
+     * @param string $stepName The identifier name of the step to focus on.
+     *
      * @return IDCI\Bundle\StepBundle\Map\View\MapView The view.
      */
-    public function createView();
+    public function createView($stepName);
 }

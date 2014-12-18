@@ -49,6 +49,11 @@ class MapBuilder implements MapBuilderInterface
     private $pathBuilder;
 
     /**
+     * @var MapNavigatorInterface
+     */
+    private $mapNavigator;
+
+    /**
      * @var MapInterface
      */
     private $builtMap;
@@ -67,17 +72,19 @@ class MapBuilder implements MapBuilderInterface
         $data = array(),
         $options = array(),
         StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder
+        PathBuilderInterface $pathBuilder,
+        MapNavigatorInterface $mapNavigator
     )
     {
-        $this->name        = (string) $name;
-        $this->data        = $data;
-        $this->options     = self::resolveOptions($options);
-        $this->stepBuilder = $stepBuilder;
-        $this->pathBuilder = $pathBuilder;
-        $this->steps       = array();
-        $this->paths       = array();
-        $this->builtMap    = null;
+        $this->name         = (string) $name;
+        $this->data         = $data;
+        $this->options      = self::resolveOptions($options);
+        $this->stepBuilder  = $stepBuilder;
+        $this->pathBuilder  = $pathBuilder;
+        $this->mapNavigator = $mapNavigator;
+        $this->steps        = array();
+        $this->paths        = array();
+        $this->builtMap     = null;
     }
 
     /**
@@ -184,6 +191,7 @@ class MapBuilder implements MapBuilderInterface
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $this->builtMap = new Map(
+            $this->mapNavigator,
             $this->name,
             array(
                 'data'      => $this->data,
