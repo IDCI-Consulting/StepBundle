@@ -31,26 +31,27 @@ class SessionDataStore implements FlowDataStoreInterface
     /**
      * {@inheritdoc}
      */
-    public function save($name, $value)
+    public function save($mapName, $flowName, $value)
     {
-        $this->session->set($this->formatFlowName($name), $value);
+        $this->session->set($this->formatFlowName($mapName, $flowName), $value);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function retrieve($name)
+    public function retrieve($mapName, $flowName)
     {
-        return $this->session->get($this->formatFlowName($name), null);
+        return $this->session->get($this->formatFlowName($mapName, $flowName), null);
     }
 
     /**
      * Format the saved identifier name of the flow.
      *
-     * @param string $name The identifier name of the flow.
+     * @param string $mapName  The identifier name of the map.
+     * @param string $flowName The identifier name of the flow.
      */
-    protected function formatFlowName($name)
+    protected function formatFlowName($mapName, $flowName)
     {
-        return sprintf('idci_step.flow_%s', $name);
+        return sprintf('idci_step.flow_%s_%s', $mapName, $flowName);
     }
 }
