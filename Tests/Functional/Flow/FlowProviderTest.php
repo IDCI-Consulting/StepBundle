@@ -43,7 +43,15 @@ class FlowProviderTest extends WebTestCase
         $flowProvider = $this->container->get('idci_step.flow.provider');
         $session = $this->container->get('session');
 
-        $data = json_decode($session->get('idci_step.flow_data'), true);
-        $this->assertEquals('2', $data['id']);
+        $flowDescriptor = $flowProvider->retrieveFlowDescriptor('map');
+        $dataFlow = $flowProvider->retrieveDataFlow('map');
+
+        $flowDescriptor->setCurrentStep('plop');
+
+        $flowDescriptor = $flowProvider->persistFlowDescriptor('map', $flowDescriptor);
+        $dataFlow = $flowProvider->persistDataFlow('map', $dataFlow);
+
+        $data = json_decode($session->get('idci_step.flow_map_descriptor'), true);
+        $this->assertEquals('plop', $data['currentStep']);
     }
 }
