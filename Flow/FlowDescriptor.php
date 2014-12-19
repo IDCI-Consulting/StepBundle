@@ -56,14 +56,16 @@ class FlowDescriptor implements FlowDescriptorInterface
         foreach ($this->doneSteps as $i => $step) {
             if (!$remove && $step === $name) {
                 $remove = true;
+                $this->currentStep = $step;
             }
 
             if ($remove) {
-                $this->currentStep = $step;
                 $removedSteps[] = $step;
                 unset($this->doneSteps[$i]);
             }
         }
+
+        $this->doneSteps = array_values($this->doneSteps);
 
         return $removedSteps;
     }

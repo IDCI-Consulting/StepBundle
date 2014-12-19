@@ -46,4 +46,12 @@ class DataFlow implements DataFlowInterface
     {
         $this->steps[$name] = $data;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unsetStep($name)
+    {
+        unset($this->steps[$name]);
+    }
 }
