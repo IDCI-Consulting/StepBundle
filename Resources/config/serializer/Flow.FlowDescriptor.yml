@@ -2,7 +2,11 @@ IDCI\Bundle\StepBundle\Flow\FlowDescriptor:
     exclusion_policy: ALL
 
     properties:
-        takenPaths:
+        doneSteps:
             expose: true
             groups: [idci_step.flow]
-            serialized_name: takenPaths
+            serialized_name: doneSteps
+        currentStep:
+            expose: true
+            groups: [idci_step.flow]
+            serialized_name: currentStep
