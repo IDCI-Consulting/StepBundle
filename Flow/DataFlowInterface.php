@@ -36,4 +36,11 @@ interface DataFlowInterface
      * @param array  $data The associated data.
      */
     public function setStep($name, array $data);
+
+    /**
+     * Unset the data for a step.
+     *
+     * @param string $name The identifier name of the step.
+     */
+    public function unsetStep($name);
 }
