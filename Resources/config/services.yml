@@ -7,7 +7,7 @@ parameters:
 
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
 
-    idci_step.map.navigator.class: IDCI\Bundle\StepBundle\Flow\FlowNavigator
+    idci_step.map.navigator.class: IDCI\Bundle\StepBundle\Map\MapNavigator
 
     idci_step.step.type.content.class: IDCI\Bundle\StepBundle\Step\Type\ContentStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
