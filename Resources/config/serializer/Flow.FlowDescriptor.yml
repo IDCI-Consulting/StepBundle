@@ -6,7 +6,9 @@ IDCI\Bundle\StepBundle\Flow\FlowDescriptor:
             expose: true
             groups: [idci_step.flow]
             serialized_name: doneSteps
+            type: array
         currentStep:
             expose: true
             groups: [idci_step.flow]
             serialized_name: currentStep
+            type: string

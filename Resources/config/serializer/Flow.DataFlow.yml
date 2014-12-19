@@ -6,3 +6,4 @@ IDCI\Bundle\StepBundle\Flow\DataFlow:
             expose: true
             groups: [idci_step.flow]
             serialized_name: steps
+            type: array
