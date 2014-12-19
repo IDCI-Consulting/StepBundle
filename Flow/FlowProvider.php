@@ -81,11 +81,11 @@ class FlowProvider implements FlowProviderInterface
         if ($data) {
             $dataFlow = $this->serializer->deserialize(
                 $data,
-                $dataFlowClass,
+                $this->dataFlowClass,
                 'json'
             );
         } else {
-            $dataFlow = new $dataFlowClass();
+            $dataFlow = new $this->dataFlowClass();
         }
 
         if (!($dataFlow instanceof DataFlowInterface)) {
@@ -107,11 +107,11 @@ class FlowProvider implements FlowProviderInterface
         if ($data) {
             $flowDescriptor = $this->serializer->deserialize(
                 $data,
-                $flowDescriptorClass,
+                $this->flowDescriptorClass,
                 'json'
             );
         } else {
-            $flowDescriptor = new $flowDescriptorClass();
+            $flowDescriptor = new $this->flowDescriptorClass();
         }
 
         if (!($flowDescriptor instanceof FlowDescriptorInterface)) {
