@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Flow;
+namespace IDCI\Bundle\StepBundle\Map;
 
 use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 

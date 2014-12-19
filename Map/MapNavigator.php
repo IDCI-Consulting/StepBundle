@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
+use IDCI\Bundle\StepBundle\Flow\FlowProviderInterface;
 use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 use IDCI\Bundle\StepBundle\Exception\InvalidDestinationException;
 use IDCI\Bundle\StepBundle\Exception\WrongStepRequestedException;
