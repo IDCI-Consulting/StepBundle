@@ -113,3 +113,12 @@ services:
         arguments: [@session]
         tags:
             - { name: idci_step.flow.data_store, alias: session }
+
+
+    ## Twig Extensions ##
+
+    idci_step.twig.step_extension:
+        class: IDCI\Bundle\StepBundle\Twig\StepExtension
+        arguments: []
+        tags:
+            - { name: twig.extension }
