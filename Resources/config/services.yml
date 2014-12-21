@@ -45,6 +45,30 @@ services:
         arguments: [@idci_step.path.registry]
 
 
+    # Flow
+
+    idci_step.flow.provider:
+        class: %idci_step.flow.provider.class%
+        arguments:
+            - @idci_step.flow.data_store.session
+            - @jms_serializer
+            - %idci_step.flow.data.class%
+            - %idci_step.flow.descriptor.class%
+
+    idci_step.flow.data_store.session:
+        class: %idci_step.flow.data_store.session.class%
+        arguments: [@session]
+        tags:
+            - { name: idci_step.flow.data_store, alias: session }
+
+
+    # Navigator
+
+    idci_step.map.navigator:
+        class: %idci_step.map.navigator.class%
+        arguments: [@idci_step.flow.provider]
+
+
     # Factory
 
     idci_step.map.builder.factory:
@@ -53,13 +77,6 @@ services:
             - @idci_step.step.builder
             - @idci_step.path.builder
             - @idci_step.map.navigator
-
-
-    # Map
-
-    idci_step.map.navigator:
-        class: %idci_step.map.navigator.class%
-        arguments: [@idci_step.flow.provider]
 
 
     # Step
@@ -96,23 +113,6 @@ services:
         class: %idci_step.path.type.end.class%
         tags:
             - { name: idci_step.path.type, alias: end }
-
-
-    # Flow
-
-    idci_step.flow.provider:
-        class: %idci_step.flow.provider.class%
-        arguments:
-            - @idci_step.flow.data_store.session
-            - @jms_serializer
-            - %idci_step.flow.data.class%
-            - %idci_step.flow.descriptor.class%
-
-    idci_step.flow.data_store.session:
-        class: %idci_step.flow.data_store.session.class%
-        arguments: [@session]
-        tags:
-            - { name: idci_step.flow.data_store, alias: session }
 
 
     ## Twig Extensions ##
