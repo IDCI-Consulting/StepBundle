@@ -49,4 +49,22 @@ interface PathInterface
      * @return array The steps.
      */
     public function getDestinations();
+
+    /**
+     * Has the destination step.
+     *
+     * @param  string $name A step name to test.
+     *
+     * @return boolean True if the step has been defined as one of the path destinations.
+     */
+    public function hasDestination($name);
+
+    /**
+     * Get the destination step.
+     *
+     * @param  string $name The destination step name to retrieve.
+     *
+     * @return StepInterface|null The destination step if exists.
+     */
+    public function getDestination($name);
 }

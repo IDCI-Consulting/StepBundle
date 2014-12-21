@@ -73,7 +73,7 @@ class Path implements PathInterface
      */
     public function addDestination(StepInterface $step)
     {
-        $this->destinations[] = $step;
+        $this->destinations[$step->getName()] = $step;
 
         return $this;
     }
@@ -84,5 +84,24 @@ class Path implements PathInterface
     public function getDestinations()
     {
         return $this->destinations;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasDestination($name)
+    {
+        return isset($this->destinations[$name]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDestination($name)
+    {
+        return $this->hasDestination($name) ?
+            $this->destinations[$name] :
+            null
+        ;
     }
 }
