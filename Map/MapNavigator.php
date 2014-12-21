@@ -55,6 +55,7 @@ class MapNavigator implements MapNavigatorInterface
             $isValidDestination = false;
             $paths = $map->getPaths($currentStep);
 
+            // TODO: Use has and get Destination on Path !
             foreach ($paths as $path) {
                 $destinations = $path->getDestinations();
 
