@@ -195,8 +195,8 @@ class MapBuilder implements MapBuilderInterface
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $this->builtMap = new Map(
-            $this->mapNavigator,
             $this->name,
+            $this->mapNavigator,
             array(
                 'data'      => $this->data,
                 'options'   => $this->options
