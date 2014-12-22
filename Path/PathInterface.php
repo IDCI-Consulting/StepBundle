@@ -67,4 +67,11 @@ interface PathInterface
      * @return StepInterface|null The destination step if exists.
      */
     public function getDestination($name);
+
+    /**
+     * Get the link label.
+     *
+     * @return string The link label.
+     */
+    public function getLabel();
 }

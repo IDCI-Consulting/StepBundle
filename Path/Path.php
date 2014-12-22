@@ -104,4 +104,12 @@ class Path implements PathInterface
             null
         ;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLabel()
+    {
+        return $this->configuration['options']['label'];
+    }
 }

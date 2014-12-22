@@ -21,9 +21,8 @@ interface MapNavigatorInterface
     /**
      * Navigate to a step.
      *
-     * @param MapInterface $map         The map.
-     * @param string       $destination The identifier name of the destination step.
-     * @param array        $data        The data for the previous step.
+     * @param MapInterface $map      The map.
+     * @param string       $stepName The destination step name.
      */
-    public function navigate(MapInterface $map, $destination, array $data = null);
+    public function navigate(MapInterface $map, $stepName);
 }

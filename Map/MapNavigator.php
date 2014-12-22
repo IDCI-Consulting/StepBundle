@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
+use Symfony\Component\Form\FormFactoryInterface;
+use IDCI\Bundle\StepBundle\Form\MapStepType;
 use IDCI\Bundle\StepBundle\Flow\FlowProviderInterface;
 use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 use IDCI\Bundle\StepBundle\Exception\InvalidDestinationException;
@@ -25,12 +27,15 @@ class MapNavigator implements MapNavigatorInterface
      * Constructor.
      *
      * @param FlowProviderInterface $flowProvider The flow provider.
+     * @param FormFactoryInterface  $formFactory  The form factory.
      */
     public function __construct(
-        FlowProviderInterface $flowProvider
+        FlowProviderInterface $flowProvider,
+        FormFactoryInterface $formFactory
     )
     {
         $this->flowProvider = $flowProvider;
+        $this->formFactory  = $formFactory;
     }
 
     /**
@@ -44,8 +49,12 @@ class MapNavigator implements MapNavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function navigate(MapInterface $map, $destination, array $data = null)
+    public function navigate(MapInterface $map, $stepName)
     {
+        // TODO: Check if the step is accessible from the current step
+        return $map->getStep($stepName);
+        // WTF
+        /*
         $mapName = $map->getName();
         $currentStep = $flowDescriptor->getCurrentStep();
 
@@ -100,5 +109,14 @@ class MapNavigator implements MapNavigatorInterface
 
         // Return the view for the destination step.
         return $map->createView($destination);
+        */
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createStepFormBuilder(MapStepType $type)
+    {
+        return $this->formFactory->createBuilder($type);
     }
 }

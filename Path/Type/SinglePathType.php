@@ -18,15 +18,15 @@ class SinglePathType extends AbstractPathType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver
-            ->setRequired(array('source', 'label', 'destination', 'listeners'))
+            ->setRequired(array('source', 'destination', 'listeners'))
             ->setDefaults(array(
-                'label'     => 'next',
                 'listeners' => array()
             ))
             ->setAllowedTypes(array(
                 'source'        => 'string',
-                'label'         => 'string',
                 'destination'   => 'string',
                 'listeners'     => 'array',
             ))

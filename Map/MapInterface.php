@@ -11,7 +11,7 @@ namespace IDCI\Bundle\StepBundle\Map;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 
-interface MapInterface extends MapNavigationInterface
+interface MapInterface
 {
     /**
      * Get the identifier name of the map.
@@ -89,11 +89,21 @@ interface MapInterface extends MapNavigationInterface
     public function getPaths($source = null);
 
     /**
-     * Create a view.
+     * Get a path.
      *
-     * @param string $stepName The identifier name of the step to focus on.
+     * @param string  $source The identifier name of the source step.
+     * @param integer $index  The path index for the step.
      *
-     * @return IDCI\Bundle\StepBundle\Map\View\MapView The view.
+     * @return PathInterface The path.
      */
-    public function createView($stepName);
+    public function getPath($source, $index);
+
+    /**
+     * Create a view for a step.
+     *
+     * @param string $stepName The step name.
+     *
+     * @return Symfony\Component\Form\FormView The step form view.
+     */
+    public function createStepView($stepName);
 }

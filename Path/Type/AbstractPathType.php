@@ -18,6 +18,11 @@ abstract class AbstractPathType implements PathTypeInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver
+            ->setRequired(array('label'))
+            ->setDefaults(array('label' => 'next'))
+            ->setAllowedTypes(array('label' => 'string'))
+        ;
     }
 
     /**

@@ -11,6 +11,7 @@ namespace IDCI\Bundle\StepBundle\Map;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Map\View\MapView;
+use IDCI\Bundle\StepBundle\Form\MapStepType;
 
 class Map implements MapInterface
 {
@@ -63,7 +64,7 @@ class Map implements MapInterface
     )
     {
         $this->name          = $name;
-        //$this->mapNavigator  = $mapNavigator;
+        $this->mapNavigator  = $mapNavigator;
         $this->configuration = $configuration;
     }
 
@@ -164,16 +165,21 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function createView($stepName)
+    public function getPath($source, $index)
     {
-        return new MapView();
+        return $this->paths[$source][$index];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function navigate($destination, array $data = null)
+    public function createStepView($stepName = null)
     {
-        return $this->mapNavigator->navigate($this, $destination, $data);
+        $formBuilder = $this
+            ->mapNavigator
+            ->createStepFormBuilder(new MapStepType($this, $stepName))
+        ;
+
+        return $formBuilder->getForm()->createView();
     }
 }

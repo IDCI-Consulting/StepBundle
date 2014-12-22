@@ -111,7 +111,7 @@ class TestController extends Controller
             ->addPath(
                 'end',
                 array(
-                    'source'        => 'end',
+                    'source'          => 'end',
                     'label'           => 'Fin',
                     'storageProvider' => 'step.storage.provider.participation',
                 )
@@ -119,6 +119,6 @@ class TestController extends Controller
             ->getMap()
         ;
 
-        var_dump($map);die;
+        return array('map' => $map);
     }
 }

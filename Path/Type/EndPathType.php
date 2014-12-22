@@ -18,12 +18,13 @@ class EndPathType extends AbstractPathType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver
-            ->setRequired(array('source', 'label', 'storageProvider'))
+            ->setRequired(array('source', 'storageProvider'))
             ->setDefaults(array('label' => 'end'))
             ->setAllowedTypes(array(
                 'source'          => 'string',
-                'label'           => 'string',
                 'storageProvider' => 'string',
             ))
         ;

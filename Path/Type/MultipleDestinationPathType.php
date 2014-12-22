@@ -18,12 +18,12 @@ abstract class MultipleDestinationPathType extends AbstractPathType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver
-            ->setRequired(array('source', 'label', 'destinations'))
-            ->setDefaults(array('label' => 'next'))
+            ->setRequired(array('source', 'destinations'))
             ->setAllowedTypes(array(
                 'source'        => 'string',
-                'label'         => 'string',
                 'destinations'  => 'array',
             ))
         ;
