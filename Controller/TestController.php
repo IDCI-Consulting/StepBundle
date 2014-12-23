@@ -57,7 +57,7 @@ class TestController extends Controller
                 'single',
                 array(
                     'source'        => 'intro',
-                    'label'         => 'Next step',
+                    'label'         => 'next',
                     'destination'   => 'personal'
                 )
             )

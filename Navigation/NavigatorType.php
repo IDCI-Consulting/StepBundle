@@ -36,8 +36,8 @@ class NavigatorType extends AbstractType
     public function buildSubmit(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['navigator']->getAvailablePaths() as $i => $path) {
-            $builder->add($i, 'submit', array(
-                'label' => $path->getLabel()
+            $builder->add(sprintf('_path#%d', $i), 'submit', array(
+                'label' => $path->getLabel(),
             ));
         }
     }

@@ -32,13 +32,6 @@ interface NavigatorInterface
     public function createStepView();
 
     /**
-     * Returns the position name
-     *
-     * @return string
-     */
-    public function getPositionName();
-
-    /**
      * Returns the current step
      *
      * @return StepInterface
