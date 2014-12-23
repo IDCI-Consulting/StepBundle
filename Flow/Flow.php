@@ -30,7 +30,7 @@ class Flow implements FlowInterface
      */
     public function __construct()
     {
-        // TODO
+        $this->currentStep = 'intro';
     }
 
     /**
