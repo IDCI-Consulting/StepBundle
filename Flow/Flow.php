@@ -13,7 +13,7 @@ class Flow implements FlowInterface
     /**
      * @var string
      */
-    private $currentStep;
+    private $currentStep = 'intro';
 
     /**
      * @var FlowHistoryInterface
@@ -26,19 +26,21 @@ class Flow implements FlowInterface
     private $data;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->currentStep = 'intro';
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getCurrentStep()
     {
         return $this->currentStep;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCurrentStep()
+    {
+        $this->currentStep = $step;
+
+        return $this;
     }
 
     /**
@@ -52,8 +54,28 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
+    public function setHistory(FlowHistoryInterface $history)
+    {
+        $this->history = $history;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setData(FlowDataInterface $data)
+    {
+        $this->data = $data;
+
+        return $this;
     }
 }

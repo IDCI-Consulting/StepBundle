@@ -18,6 +18,15 @@ interface FlowInterface
     public function getCurrentStep();
 
     /**
+     * Set the current flow step
+     *
+     * @param string $step
+     *
+     * @return FlowInterface This
+     */
+    public function setCurrentStep($step);
+
+    /**
      * Returns the flow navigation history
      *
      * @return FlowHistoryInterface
@@ -25,9 +34,27 @@ interface FlowInterface
     public function getHistory();
 
     /**
+     * Set the flow navigation history
+     *
+     * @param FlowHistoryInterface $history
+     *
+     * @return FlowInterface This
+     */
+    public function setHistory(FlowHistoryInterface $history);
+
+    /**
      * Returns the flow navigation data
      *
      * @return FlowDataInterface
      */
     public function getData();
+
+    /**
+     * Set the flow navigation data
+     *
+     * @return FlowDataInterface
+     *
+     * @return FlowInterface This
+     */
+    public function setData(FlowDataInterface $data);
 }
