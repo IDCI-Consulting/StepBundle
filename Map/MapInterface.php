@@ -97,13 +97,4 @@ interface MapInterface
      * @return PathInterface The path.
      */
     public function getPath($source, $index);
-
-    /**
-     * Create a view for a step.
-     *
-     * @param string $stepName The step name.
-     *
-     * @return Symfony\Component\Form\FormView The step form view.
-     */
-    public function createStepView($stepName);
 }

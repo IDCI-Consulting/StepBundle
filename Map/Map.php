@@ -16,20 +16,6 @@ use IDCI\Bundle\StepBundle\Form\MapStepType;
 class Map implements MapInterface
 {
     /**
-     * The identifier name of the map.
-     *
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * The map navigator.
-     *
-     * @var MapNavigatorInterface
-     */
-    protected $mapNavigator;
-
-    /**
      * The configuration.
      *
      * @var array
@@ -53,18 +39,10 @@ class Map implements MapInterface
     /**
      * Constructor.
      *
-     * @param string                $name          The name identifier.
-     * @param MapNavigatorInterface $mapNavigator  The map navigator.
-     * @param array                 $configuration The configuration.
+     * @param array $configuration The configuration.
      */
-    public function __construct(
-        $name,
-        MapNavigatorInterface $mapNavigator,
-        array $configuration = array()
-    )
+    public function __construct(array $configuration = array())
     {
-        $this->name          = $name;
-        $this->mapNavigator  = $mapNavigator;
         $this->configuration = $configuration;
     }
 
@@ -73,7 +51,7 @@ class Map implements MapInterface
      */
     public function getName()
     {
-        return $this->name;
+        return $this->configuration['name'];
     }
 
     /**
@@ -168,18 +146,5 @@ class Map implements MapInterface
     public function getPath($source, $index)
     {
         return $this->paths[$source][$index];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createStepView($stepName = null)
-    {
-        $formBuilder = $this
-            ->mapNavigator
-            ->createStepFormBuilder(new MapStepType($this, $stepName))
-        ;
-
-        return $formBuilder->getForm()->createView();
     }
 }

@@ -24,26 +24,18 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $pathBuilder;
 
     /**
-     * @var MapNavigatorInterface
-     */
-    private $mapNavigator;
-
-    /**
      * Constructor
      *
      * @param StepBuilderInterface  $stepBuilder  The step builder.
      * @param PathBuilderInterface  $pathBuilder  The path builder.
-     * @param MapNavigatorInterface $mapNavigator The map navigator.
      */
     public function __construct(
         StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder,
-        MapNavigatorInterface $mapNavigator
+        PathBuilderInterface $pathBuilder
     )
     {
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
-        $this->mapNavigator = $mapNavigator;
     }
 
     /**
@@ -64,8 +56,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
             $data,
             $options,
             $this->stepBuilder,
-            $this->pathBuilder,
-            $this->mapNavigator
+            $this->pathBuilder
         );
     }
 }
