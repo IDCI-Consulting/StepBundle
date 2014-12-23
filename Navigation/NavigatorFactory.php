@@ -61,8 +61,6 @@ class NavigatorFactory implements NavigatorFactoryInterface
      */
     private function guessDataStore(MapInterface $map)
     {
-        return null;
-
         $mapConfig = $map->getConfiguration();
 
         return $this->registry->get($mapConfig['options']['data_store']);
