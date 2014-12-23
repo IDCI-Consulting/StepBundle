@@ -111,22 +111,20 @@ class TestController extends Controller
             ->addPath(
                 'end',
                 array(
-                    'source'          => 'end',
-                    'label'           => 'Fin',
-                    'storageProvider' => 'step.storage.provider.participation',
+                    'source'           => 'end',
+                    'label'            => 'Fin',
+                    'storage_provider' => 'step.storage.provider.participation',
                 )
             )
             ->getMap()
         ;
-/*
+
         $navigator = $this
             ->get('idci_step.navigator.factory')
             ->createNavigator($map, $request)
         ;
 
-        if ($map->isValid()
-*/
-        var_dump($map);die;
-        return array('map' => $map);
+        //var_dump($navigator->getMap());die;
+        return array('navigator' => $navigator);
     }
 }

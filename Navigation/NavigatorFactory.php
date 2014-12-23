@@ -31,7 +31,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
      * @param DataStoreRegistryInterface $registry The data store registry.
      */
     public function __construct(
-        DataStoreRegistryInterface $registry,
+        DataStoreRegistryInterface $registry = null,
         FormFactoryInterface $formFactory
     )
     {
@@ -44,13 +44,27 @@ class NavigatorFactory implements NavigatorFactoryInterface
      */
     public function createNavigator(MapInterface $map, Request $request)
     {
-        $mapConfig = $map->getConfiguration();
-
-        return new FormNavigator(
+        return new Navigator(
             $this->formFactory,
-            $this->registry->get($mapConfig['options']['data_store']),
+            $this->guessDataStore($map),
             $map,
             $request
         );
+    }
+
+    /**
+     * Guess a data store based on a map configuration
+     *
+     * @param MapInterface $map The map.
+     *
+     * @return DataStoreInterface
+     */
+    private function guessDataStore(MapInterface $map)
+    {
+        return null;
+
+        $mapConfig = $map->getConfiguration();
+
+        return $this->registry->get($mapConfig['options']['data_store']);
     }
 }

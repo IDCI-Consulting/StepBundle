@@ -6,8 +6,7 @@ parameters:
     idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
 
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
-
-    idci_step.map.navigator.class: IDCI\Bundle\StepBundle\Map\MapNavigator
+    idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
 
     idci_step.step.type.content.class: IDCI\Bundle\StepBundle\Step\Type\ContentStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
@@ -45,30 +44,6 @@ services:
         arguments: [@idci_step.path.registry]
 
 
-    # Flow
-
-    idci_step.flow.provider:
-        class: %idci_step.flow.provider.class%
-        arguments:
-            - @idci_step.flow.data_store.session
-            - @jms_serializer
-            - %idci_step.flow.data.class%
-            - %idci_step.flow.descriptor.class%
-
-    idci_step.flow.data_store.session:
-        class: %idci_step.flow.data_store.session.class%
-        arguments: [@session]
-        tags:
-            - { name: idci_step.flow.data_store, alias: session }
-
-
-    # Navigator
-
-    idci_step.map.navigator:
-        class: %idci_step.map.navigator.class%
-        arguments: [@idci_step.flow.provider, @form.factory]
-
-
     # Factory
 
     idci_step.map.builder.factory:
@@ -77,6 +52,11 @@ services:
             - @idci_step.step.builder
             - @idci_step.path.builder
 
+    idci_step.navigator.factory:
+        class: %idci_step.navigator.factory.class%
+        arguments:
+            - null # ICI Mr Thomas peux ajouter le registry si il le souhaite
+            - @form.factory
 
     # Step
 

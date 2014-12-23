@@ -14,7 +14,7 @@ use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 
-class FormNavigator implements NavigatorInterface
+class Navigator implements NavigatorInterface
 {
     /**
      * @var FormFactoryInterface
@@ -51,7 +51,7 @@ class FormNavigator implements NavigatorInterface
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        DataStoreInterface   $dataStore,
+        DataStoreInterface   $dataStore = null,
         MapInterface         $map,
         Request              $request
     )
@@ -62,6 +62,16 @@ class FormNavigator implements NavigatorInterface
         $this->request     = $request;
 
         $this->initFlow();
+    }
+
+    /**
+     * Init flow
+     *
+     * @TODO
+     */
+    private function initFlow()
+    {
+        $this->flow = new Flow();
     }
 
     /**
@@ -81,12 +91,41 @@ class FormNavigator implements NavigatorInterface
     }
 
     /**
-     * Init flow
-     *
-     * @TODO
+     * {@inheritdoc}
      */
-    private function initFlow()
+    public function createStepView($stepName = null)
     {
-        $this->flow = new Flow();
+        $formBuilder = $this->formFactory->createBuilder(
+            new NavigatorType($this, $stepName)
+        );
+
+        return $formBuilder->getForm()->createView();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPositionName()
+    {
+        return sprintf('%s_%s',
+            $this->getMap()->getName(),
+            $this->getCurrentStep()->getName()
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentStep()
+    {
+        return $this->getMap()->getStep('intro');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAvailablePaths()
+    {
+        return $this->getMap()->getPaths('intro');
     }
 }

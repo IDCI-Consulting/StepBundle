@@ -25,19 +25,32 @@ interface NavigatorInterface
     public function getFlow();
 
     /**
-     * Get the data store
+     * Create step view
      *
-     * @return DataStoreInterface
-     * /
-    public function getDataStore();
+     * @param string $stepName The step name to display
+     *
+     * @return Symfony\Component\Form\FormView
+     */
+    public function createStepView($stepName = null);
 
     /**
-     * Get the HTTP request
+     * Returns the position name
      *
-     * @return Symfony\Component\HttpFoundation\Request
-     * /
-    public function getRequest();
+     * @return string
+     */
+    public function getPositionName();
 
+    /**
+     * Returns the current step
+     *
+     * @return StepInterface
+     */
+    public function getCurrentStep();
 
-    // TODO: add createStepView
+    /**
+     * Returns the available paths
+     *
+     * @return array
+     */
+    public function getAvailablePaths();
 }

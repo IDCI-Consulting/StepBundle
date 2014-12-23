@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    {#{ form(map.createStepView('purchase')) }#}
+    {{ form(navigator.createStepView()) }}
     {#{ step() }#}
 {% endblock %}
