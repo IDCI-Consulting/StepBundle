@@ -1,4 +1,4 @@
-IDCI\Bundle\StepBundle\Flow\DataFlow:
+IDCI\Bundle\StepBundle\Flow\FlowData:
     exclusion_policy: ALL
 
     properties:

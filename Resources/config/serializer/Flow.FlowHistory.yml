@@ -1,4 +1,4 @@
-IDCI\Bundle\StepBundle\Flow\FlowDescriptor:
+IDCI\Bundle\StepBundle\Flow\FlowHistory:
     exclusion_policy: ALL
 
     properties:
