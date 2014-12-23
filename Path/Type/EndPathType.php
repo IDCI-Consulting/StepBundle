@@ -21,11 +21,11 @@ class EndPathType extends AbstractPathType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setRequired(array('source', 'storageProvider'))
+            ->setRequired(array('source', 'storage_provider'))
             ->setDefaults(array('label' => 'end'))
             ->setAllowedTypes(array(
-                'source'          => 'string',
-                'storageProvider' => 'string',
+                'source'           => 'string',
+                'storage_provider' => 'string',
             ))
         ;
     }

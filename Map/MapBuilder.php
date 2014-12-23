@@ -93,7 +93,7 @@ class MapBuilder implements MapBuilderInterface
         $resolver
             ->setDefaults(array(
                 'browsing'      => 'linear',
-                'flowDataStore' => 'session',
+                'data_store' => 'session',
             ))
             ->setAllowedValues(array(
                 'browsing' => array('linear', 'free')
