@@ -22,7 +22,7 @@ class Navigator extends AbstractNavigator
     {
         return $this->formFactory->createBuilder(
             new NavigatorType(),
-            null, 
+            null,
             array('navigator' => $this)
         );
     }
@@ -45,6 +45,7 @@ class Navigator extends AbstractNavigator
     protected function initFlow()
     {
         $this->flow = new Flow();
+        $this->flow->setCurrentStep('intro');
 
         if ($this->request->isMethod('POST')) {
             var_dump($this->request->request->get(self::getName()));

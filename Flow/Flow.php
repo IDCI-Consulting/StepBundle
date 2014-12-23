@@ -13,7 +13,7 @@ class Flow implements FlowInterface
     /**
      * @var string
      */
-    private $currentStep = 'intro';
+    private $currentStep;
 
     /**
      * @var FlowHistoryInterface
@@ -36,7 +36,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStep()
+    public function setCurrentStep($step)
     {
         $this->currentStep = $step;
 
