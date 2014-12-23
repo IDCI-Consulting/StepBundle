@@ -71,8 +71,9 @@ services:
     idci_step.navigator.factory:
         class: %idci_step.navigator.factory.class%
         arguments:
-            - null # ICI Mr Thomas peux ajouter le registry si il le souhaite
+            - @idci_step.data_store.registry
             - @form.factory
+
 
     # Step
 
