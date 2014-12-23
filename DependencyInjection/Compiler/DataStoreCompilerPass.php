@@ -13,26 +13,26 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
-class PathCompilerPass implements CompilerPassInterface
+class DataStoreCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.path.registry')) {
+        if (!$container->hasDefinition('idci_step.data_store.registry')) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.path.registry');
-        foreach ($container->findTaggedServiceIds('idci_step.path.type') as $id => $tag) {
+        $registryDefinition = $container->getDefinition('idci_step.data_store.registry');
+        foreach ($container->findTaggedServiceIds('idci_step.data_store') as $id => $tag) {
             $alias = isset($tag[0]['alias'])
                 ? $tag[0]['alias']
                 : $id
             ;
 
             $registryDefinition->addMethodCall(
-                'setType',
+                'set',
                 array($alias, new Reference($id))
             );
         }

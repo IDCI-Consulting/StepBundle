@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\DataStoreCompilerPass;
 
 class IDCIStepBundle extends Bundle
 {
@@ -20,5 +21,6 @@ class IDCIStepBundle extends Bundle
 
         $container->addCompilerPass(new StepCompilerPass());
         $container->addCompilerPass(new PathCompilerPass());
+        $container->addCompilerPass(new DataStoreCompilerPass());
     }
 }

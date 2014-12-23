@@ -25,7 +25,6 @@ class StepCompilerPass implements CompilerPassInterface
         }
 
         $registryDefinition = $container->getDefinition('idci_step.step.registry');
-        $types = array();
         foreach ($container->findTaggedServiceIds('idci_step.step.type') as $id => $tag) {
             $alias = isset($tag[0]['alias'])
                 ? $tag[0]['alias']
