@@ -19,7 +19,7 @@ class TestController extends Controller
      * Test.
      *
      * @Route("/", name="idci_step")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function indexAction(Request $request)
@@ -57,7 +57,7 @@ class TestController extends Controller
                 'single',
                 array(
                     'source'        => 'intro',
-                    'label'         => 'next',
+                    'label'         => 'Next step',
                     'destination'   => 'personal'
                 )
             )
@@ -118,7 +118,15 @@ class TestController extends Controller
             )
             ->getMap()
         ;
+/*
+        $navigator = $this
+            ->get('idci_step.navigator.factory')
+            ->createNavigator($map, $request)
+        ;
 
+        if ($map->isValid()
+*/
+        var_dump($map);die;
         return array('map' => $map);
     }
 }
