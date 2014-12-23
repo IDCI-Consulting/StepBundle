@@ -31,7 +31,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
      * @param DataStoreRegistryInterface $registry The data store registry.
      */
     public function __construct(
-        DataStoreRegistryInterface $registry = null,
+        DataStoreRegistryInterface $registry,
         FormFactoryInterface $formFactory
     )
     {

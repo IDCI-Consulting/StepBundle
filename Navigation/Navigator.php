@@ -14,7 +14,7 @@ use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 
-class Navigator implements NavigatorInterface
+class Navigator extends AbstractNavigator
 {
     /**
      * @var FormFactoryInterface
@@ -51,7 +51,7 @@ class Navigator implements NavigatorInterface
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        DataStoreInterface   $dataStore = null,
+        DataStoreInterface   $dataStore,
         MapInterface         $map,
         Request              $request
     )
@@ -72,6 +72,34 @@ class Navigator implements NavigatorInterface
     private function initFlow()
     {
         $this->flow = new Flow();
+
+        if ($this->request->isMethod('POST')) {
+            var_dump($this->request->request->get(self::getName()));
+        }
+    }
+
+    /**
+     * Returns the navigation form builder
+     *
+     * @return Symfony\Component\Form\FormBuilderInterface
+     */
+    private function getFormBuilder()
+    {
+        return $this->formFactory->createBuilder(
+            new NavigatorType(),
+            null, 
+            array('navigator' => $this)
+        );
+    }
+
+    /**
+     * Returns the navigation form
+     *
+     * @return Symfony\Component\Form\FormInterface
+     */
+    private function getForm()
+    {
+        return $this->getFormBuilder()->getForm();
     }
 
     /**
@@ -93,13 +121,9 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function createStepView($stepName = null)
+    public function createStepView()
     {
-        $formBuilder = $this->formFactory->createBuilder(
-            new NavigatorType($this, $stepName)
-        );
-
-        return $formBuilder->getForm()->createView();
+        return $this->getForm()->createView();
     }
 
     /**
@@ -118,7 +142,7 @@ class Navigator implements NavigatorInterface
      */
     public function getCurrentStep()
     {
-        return $this->getMap()->getStep('intro');
+        return $this->getMap()->getStep($this->getFlow()->getCurrentStep());
     }
 
     /**
@@ -126,6 +150,6 @@ class Navigator implements NavigatorInterface
      */
     public function getAvailablePaths()
     {
-        return $this->getMap()->getPaths('intro');
+        return $this->getMap()->getPaths($this->getFlow()->getCurrentStep());
     }
 }

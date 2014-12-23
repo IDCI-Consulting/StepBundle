@@ -14,28 +14,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class NavigatorType extends AbstractType
 {
     /**
-     * The navigator.
-     *
-     * @var NavigatorInterface
-     */
-    protected $navigator;
-
-    /**
-     * Constructor
-     *
-     * @param NavigatorInterface $navigator The navigator.
-     */
-    public function __construct(NavigatorInterface $navigator)
-    {
-        $this->navigator = $navigator;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO
+        $builder
+            ->add('_map', 'hidden', array(
+                'data' => $options['navigator']->getMap()->getName())
+            )
+            ->add('_step', 'hidden', array(
+                'data' => $options['navigator']->getCurrentStep()->getName())
+            )
+        ;
+
         $this->buildSubmit($builder, $options);
     }
 
@@ -44,7 +35,7 @@ class NavigatorType extends AbstractType
      */
     public function buildSubmit(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->navigator->getAvailablePaths() as $i => $path) {
+        foreach ($options['navigator']->getAvailablePaths() as $i => $path) {
             $builder->add($i, 'submit', array(
                 'label' => $path->getLabel()
             ));
@@ -56,7 +47,12 @@ class NavigatorType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver;
+        $resolver
+            ->setRequired(array('navigator'))
+            ->setAllowedTypes(array(
+                'navigator'=> array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface')
+            ))
+        ;
     }
 
     /**
@@ -64,6 +60,6 @@ class NavigatorType extends AbstractType
      */
     public function getName()
     {
-        return sprintf('idci_step_%s', $this->navigator->getPositionName());
+        return AbstractNavigator::getName();
     }
 }

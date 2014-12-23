@@ -124,7 +124,6 @@ class TestController extends Controller
             ->createNavigator($map, $request)
         ;
 
-        //var_dump($navigator->getMap());die;
         return array('navigator' => $navigator);
     }
 }

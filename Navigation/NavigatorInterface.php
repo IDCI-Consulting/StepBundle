@@ -27,11 +27,9 @@ interface NavigatorInterface
     /**
      * Create step view
      *
-     * @param string $stepName The step name to display
-     *
      * @return Symfony\Component\Form\FormView
      */
-    public function createStepView($stepName = null);
+    public function createStepView();
 
     /**
      * Returns the position name
