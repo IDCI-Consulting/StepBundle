@@ -18,9 +18,10 @@ parameters:
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
     idci_step.flow.provider.class: IDCI\Bundle\StepBundle\Flow\FlowProvider
-    idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionDataStore
     idci_step.flow.data.class: IDCI\Bundle\StepBundle\Flow\DataFlow
     idci_step.flow.descriptor.class: IDCI\Bundle\StepBundle\Flow\FlowDescriptor
+
+    idci_step.data_store.session.class: IDCI\Bundle\StepBundle\DataStore\SessionDataStore
 
 
 services:
@@ -45,28 +46,18 @@ services:
         arguments: [@idci_step.path.registry]
 
 
-    # Flow
+    # Navigation
 
-    idci_step.flow.provider:
-        class: %idci_step.flow.provider.class%
+
+    # DataStore
+
+    idci_step.data_store.session:
+        class: %idci_step.data_store.session.class%
         arguments:
-            - @idci_step.flow.data_store.session
             - @jms_serializer
-            - %idci_step.flow.data.class%
-            - %idci_step.flow.descriptor.class%
-
-    idci_step.flow.data_store.session:
-        class: %idci_step.flow.data_store.session.class%
-        arguments: [@session]
+            - @session
         tags:
-            - { name: idci_step.flow.data_store, alias: session }
-
-
-    # Navigator
-
-    idci_step.map.navigator:
-        class: %idci_step.map.navigator.class%
-        arguments: [@idci_step.flow.provider, @form.factory]
+            - { name: idci_step.data_store, alias: session }
 
 
     # Factory
