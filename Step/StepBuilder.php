@@ -13,7 +13,7 @@ use IDCI\Bundle\StepBundle\Map\MapInterface;
 class StepBuilder implements StepBuilderInterface
 {
     /**
-     * @var StepRegistry
+     * @var StepRegistryInterface
      */
     private $registry;
 

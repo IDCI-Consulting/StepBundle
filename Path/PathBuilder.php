@@ -14,7 +14,7 @@ use IDCI\Bundle\StepBundle\Map\MapInterface;
 class PathBuilder implements PathBuilderInterface
 {
     /**
-     * @var StepRegistry
+     * @var PathRegistryInterface
      */
     private $registry;
 
