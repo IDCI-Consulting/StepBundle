@@ -20,6 +20,7 @@ parameters:
     idci_step.flow.data.class: IDCI\Bundle\StepBundle\Flow\DataFlow
     idci_step.flow.descriptor.class: IDCI\Bundle\StepBundle\Flow\FlowDescriptor
 
+    idci_step.data_store.registry.class: IDCI\Bundle\StepBundle\DataStore\DataStoreRegistry
     idci_step.data_store.session.class: IDCI\Bundle\StepBundle\DataStore\SessionDataStore
 
 
@@ -46,6 +47,9 @@ services:
 
 
     # DataStore
+
+    idci_step.data_store.registry:
+        class: %idci_step.data_store.registry.class%
 
     idci_step.data_store.session:
         class: %idci_step.data_store.session.class%
