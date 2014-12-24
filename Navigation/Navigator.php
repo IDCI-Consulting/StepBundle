@@ -12,7 +12,6 @@ use IDCI\Bundle\StepBundle\Flow\Flow;
 
 class Navigator extends AbstractNavigator
 {
-
     /**
      * Returns the navigation form builder
      *
@@ -39,8 +38,6 @@ class Navigator extends AbstractNavigator
 
     /**
      * Init flow
-     *
-     * @TODO
      */
     protected function initFlow()
     {
@@ -51,6 +48,11 @@ class Navigator extends AbstractNavigator
         }
     }
 
+    /**
+     * Retrieve the flow
+     *
+     * @return FlowInterface
+     */
     protected function retrieveFlow()
     {
         $flow = new Flow();
