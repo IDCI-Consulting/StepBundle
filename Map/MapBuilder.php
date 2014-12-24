@@ -63,14 +63,14 @@ class MapBuilder implements MapBuilderInterface
      * @param PathBuilderInterface  $pathBuilder
      */
     public function __construct(
-        $name,
+        $name = null,
         $data = array(),
         $options = array(),
         StepBuilderInterface $stepBuilder,
         PathBuilderInterface $pathBuilder
     )
     {
-        $this->name         = (string) $name;
+        $this->name         = $name;
         $this->data         = $data;
         $this->options      = self::resolveOptions($options);
         $this->stepBuilder  = $stepBuilder;
@@ -188,10 +188,23 @@ class MapBuilder implements MapBuilderInterface
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $this->builtMap = new Map(array(
-            'name'      => $this->name,
+            'name'      => $this->generateName(),
             'data'      => $this->data,
             'options'   => $this->options
         ));
+    }
+
+    /**
+     * Generate a unique name for the map.
+     *
+     * @return string
+     */
+    private function generateName()
+    {
+        return sprintf('%s_%s',
+            strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $this->name)),
+            md5(json_encode($this->steps).json_encode($this->paths))
+        );
     }
 
     /**

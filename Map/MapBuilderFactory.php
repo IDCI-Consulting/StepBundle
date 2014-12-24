@@ -43,13 +43,13 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
      */
     public function createBuilder(array $data = array(), array $options = array())
     {
-        return $this->createNamedBuilder($name = 'map', $data, $options);
+        return $this->createNamedBuilder('map', $data, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createNamedBuilder($name, array $data = array(), array $options = array())
+    public function createNamedBuilder($name = null, array $data = array(), array $options = array())
     {
         return new MapBuilder(
             $name,
