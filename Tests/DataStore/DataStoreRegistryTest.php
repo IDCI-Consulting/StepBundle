@@ -2,13 +2,12 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\DataStore;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreRegistry;
 
 /**
  * @author Thomas Prelot <thomas.prelot@tessi.fr>
  */
-class DataStoreRegistryTest extends WebTestCase
+class DataStoreRegistryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers IDCI\Bundle\StepBundle\DataStore\SessionDataStore::get

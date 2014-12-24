@@ -2,12 +2,10 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Functional\DataStore;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 /**
  * @author Thomas Prelot <thomas.prelot@tessi.fr>
  */
-class SessionDataStoreTest extends WebTestCase
+class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
 {
     private static $dataStore;
 

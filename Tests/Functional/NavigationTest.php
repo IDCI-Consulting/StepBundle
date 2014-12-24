@@ -2,12 +2,10 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Functional\Flow;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 /**
  * @author Thomas Prelot <thomas.prelot@tessi.fr>
  */
-class NavigationTest extends WebTestCase
+class NavigationTest extends \PHPUnit_Framework_TestCase
 {
     private static $map;
 

@@ -2,12 +2,10 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Functional\Flow;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 /**
  * @author Thomas Prelot <thomas.prelot@tessi.fr>
  */
-class FlowProviderTest extends WebTestCase
+class FlowProviderTest extends \PHPUnit_Framework_TestCase
 {
     private static $flowProvider;
     private static $session;
