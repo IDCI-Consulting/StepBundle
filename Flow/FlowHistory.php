@@ -69,20 +69,4 @@ class FlowHistory implements FlowHistoryInterface
 
         return $removedSteps;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentStep()
-    {
-        return $this->currentStep;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCurrentStep($name)
-    {
-        $this->currentStep = $name;
-    }
 }
