@@ -44,11 +44,24 @@ class Navigator extends AbstractNavigator
      */
     protected function initFlow()
     {
-        $this->flow = new Flow();
-        $this->flow->setCurrentStep('intro');
+        $this->flow = $this->retrieveFlow();
 
         if ($this->request->isMethod('POST')) {
             var_dump($this->request->request->get(self::getName()));
         }
+    }
+
+    protected function retrieveFlow()
+    {
+        $flow = new Flow();
+        $flowRaw = $this->dataStore->get($this->map->getName());
+
+        if (empty($flowRaw)) {
+            $flow->setCurrentStep($this->map->getFirstStepName());
+
+            return $flow;
+        }
+
+        var_dump($flowRaw);die;
     }
 }

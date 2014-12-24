@@ -37,6 +37,13 @@ class Map implements MapInterface
     protected $paths = array();
 
     /**
+     * The first step name.
+     *
+     * @var string
+     */
+    protected $firstStepName;
+
+    /**
      * Constructor.
      *
      * @param array $configuration The configuration.
@@ -44,6 +51,30 @@ class Map implements MapInterface
     public function __construct(array $configuration = array())
     {
         $this->configuration = $configuration;
+    }
+
+    /**
+     * Set the first step name.
+     *
+     * @param string $name The first step name.
+     *
+     * @return MapInterface
+     */
+    public function setFirstStepName($name)
+    {
+        $this->configuration['options']['first_step_name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Returns the first step name.
+     *
+     * @return string
+     */
+    public function getFirstStepName()
+    {
+        return $this->configuration['options']['first_step_name'];
     }
 
     /**
@@ -123,6 +154,14 @@ class Map implements MapInterface
     public function countSteps()
     {
         return count($this->steps);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFirstStep()
+    {
+        return $this->getStep($this->getFirstStepName());
     }
 
     /**

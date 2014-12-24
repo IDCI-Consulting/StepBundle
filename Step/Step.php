@@ -52,4 +52,12 @@ class Step implements StepInterface
     {
         return new StepView();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFirst()
+    {
+        return $this->configuration['options']['is_first'];
+    }
 }

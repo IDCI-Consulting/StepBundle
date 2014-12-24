@@ -80,6 +80,13 @@ interface MapInterface
     public function countSteps();
 
     /**
+     * Get the first step.
+     *
+     * @return StepInterface The step.
+     */
+    public function getFirstStep();
+
+    /**
      * Get the paths.
      *
      * @param string $source The identifier name of the source step.

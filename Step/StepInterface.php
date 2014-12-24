@@ -24,4 +24,11 @@ interface StepInterface
      * @return IDCI\Bundle\StepBundle\Step\View\StepView The view.
      */
     public function createView();
+
+    /**
+     * Returns a boolean to indicate That this step was define as a first step
+     *
+     * @return boolean.
+     */
+    public function isFirst();
 }

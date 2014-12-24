@@ -92,11 +92,12 @@ class MapBuilder implements MapBuilderInterface
         $resolver = new OptionsResolver();
         $resolver
             ->setDefaults(array(
-                'browsing'      => 'linear',
-                'data_store' => 'session',
+                'browsing'        => 'linear',
+                'data_store'      => 'session',
+                'first_step_name' => null,
             ))
             ->setAllowedValues(array(
-                'browsing' => array('linear', 'free')
+                'browsing' => array('linear', 'free'),
             ))
         ;
 
@@ -195,7 +196,7 @@ class MapBuilder implements MapBuilderInterface
     }
 
     /**
-     * Generate a unique name for the map.
+     * Generate a unique name for the map based on its steps and paths.
      *
      * @return string
      */
@@ -222,6 +223,10 @@ class MapBuilder implements MapBuilderInterface
 
             if (null !== $step) {
                 $this->builtMap->addStep($name, $step);
+            }
+
+            if (null === $this->builtMap->getFirstStepName() || $step->isFirst()) {
+                $this->builtMap->setFirstStepName($name);
             }
         }
     }
