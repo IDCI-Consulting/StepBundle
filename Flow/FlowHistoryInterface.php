@@ -7,62 +7,43 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
+use IDCI\Bundle\StepBundle\Step\Step;
+
 interface FlowHistoryInterface
 {
     /**
-     * Add a done step.
-     *
-     * @param string $step The identifier name of the step.
-     */
-    public function addDoneStep($step);
-
-    /**
-     * Whether or not a step has been done.
-     *
-     * @param string $step The identifier name of the step.
-     *
-     * @return boolean True if the step has been done, false otherwise.
-     */
-    public function hasDoneStep($step);
-
-    /**
-     * Retrace to a done step.
-     *
-     * @param string $step The identifier name of the step.
-     *
-     * @return array The removed done steps.
-     */
-    public function retraceDoneStep($step);
-
-    /**
-     * Whether or not a step has been done then canceled.
-     *
-     * @param string $step The identifier name of the step.
-     *
-     * @return boolean True if the step has been done, false otherwise.
-     */
-    public function hasCanceledStep($step);
-
-    /**
      * Add a taken path.
      *
-     * @param string $path The identifier name of the path.
+     * @param StepInterface $step The step.
+     * @param string        $path The identifier of the path.
      */
-    public function addTakenPath($path);
+    public function addTakenPath(StepInterface $step, $pathId = 0);
 
     /**
-     * Whether or not a path has been taken.
+     * Retrace to a step.
      *
-     * @param string $path The identifier name of the path.
-     *
-     * @return boolean True if the step has been done, false otherwise.
+     * @param StepInterface $step The step.
      */
-    public function hasTakenPath($path);
+    public function retraceTakenPath(StepInterface $step);
 
     /**
-     * Retrace to a taken path.
+     * Get the last taken path.
      *
-     * @param string $path The identifier name of the path.
+     * @return array The last taken path under the form array('step' => ..., 'path' => ...).
      */
-    public function retraceTakenPath($path);
+    public function getLastTakenPath();
+
+    /**
+     * Get the taken paths.
+     *
+     * @return array The taken paths.
+     */
+    public function getTakenPaths();
+
+    /**
+     * Get the full taken paths.
+     *
+     * @return array The full taken paths.
+     */
+    public function getFullTakenPaths();
 }

@@ -7,22 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
+use IDCI\Bundle\StepBundle\Step\Step;
+
 class FlowHistory implements FlowHistoryInterface
 {
-    /**
-     * The done steps.
-     *
-     * @var array
-     */
-    protected $doneSteps = array();
-
-    /**
-     * The full done steps.
-     *
-     * @var array
-     */
-    protected $fullDoneSteps = array();
-
     /**
      * The taken paths.
      *
@@ -31,93 +19,79 @@ class FlowHistory implements FlowHistoryInterface
     protected $takenPaths = array();
 
     /**
+     * The full taken paths.
+     *
+     * @var array
+     */
+    protected $fullTakenPaths = array();
+
+    /**
      * {@inheritdoc}
      */
-    public function addDoneStep($step)
+    public function addTakenPath(StepInterface $step, $pathId = 0)
     {
-        $this->doneSteps[] = $step;
-        $this->fullDoneSteps[] = $step;
+        $stepName = $path->getName();
+
+        $this->takenPaths[] = array(
+            'step' => $stepName,
+            'path' => $pathId
+        );
+        $this->fullTakenPaths[] = array(
+            'step' => $stepName,
+            'path' => $pathId
+        );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function hasDoneStep($step)
+    public function retraceTakenPath(StepInterface $step)
     {
-        return in_array($step, $this->doneSteps);
-    }
+        $stepName = $step->getName();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function retraceDoneStep($step)
-    {
-        $remove = false;
-        $removedSteps = array();
+        $this->fullTakenPaths[] = array(
+            'step' => $stepName,
+            'path' => '__back'
+        );
 
-        foreach ($this->doneSteps as $i => $name) {
-            if (!$remove && $step === $name) {
-                $remove = true;
-            }
-
-            if ($remove) {
-                $removedSteps[] = $name;
-                unset($this->doneSteps[$i]);
-            }
-        }
-
-        $this->doneSteps = array_values($this->doneSteps);
-
-        return $removedSteps;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasCanceledStep($step)
-    {
-        return !$this->hasDoneStep($step)
-            && in_array($step, $this->fullDoneSteps)
-        ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addTakenPath($path)
-    {
-        $this->takenPaths[] = $path;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasTakenPath($path)
-    {
-        return in_array($path, $this->takenPaths);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function retraceTakenPath($path)
-    {
         $remove = false;
         $removedPaths = array();
 
-        foreach ($this->takenPaths as $i => $name) {
-            if (!$remove && $path === $name) {
+        foreach ($this->takenPaths as $i => $path) {
+            if (!$remove && $stepName === $path['step']) {
                 $remove = true;
             }
 
             if ($remove) {
-                $removedPaths[] = $name;
+                $removedPaths[$name] = $path;
                 unset($this->takenPaths[$i]);
             }
         }
 
-        $this->takenPaths = array_values($this->takenPaths);
-
         return $removedPaths;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastTakenPath()
+    {
+        return $this->takenPaths[count($this->takenPaths) - 1];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTakenPaths()
+    {
+        return $this->takenPaths;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFullTakenPaths()
+    {
+        return $this->fullTakenPaths;
     }
 }
