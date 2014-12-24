@@ -19,8 +19,11 @@ class NavigatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('_map', 'hidden', array(
+            ->add('_map_name', 'hidden', array(
                 'data' => $options['navigator']->getMap()->getName())
+            )
+            ->add('_map_finger_print', 'hidden', array(
+                'data' => $options['navigator']->getMap()->getFingerPrint())
             )
             ->add('_step', 'hidden', array(
                 'data' => $options['navigator']->getCurrentStep()->getName())

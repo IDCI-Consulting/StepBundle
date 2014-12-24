@@ -88,6 +88,14 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
+    public function getFingerPrint()
+    {
+        return $this->configuration['finger_print'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getConfiguration()
     {
         return $this->configuration;

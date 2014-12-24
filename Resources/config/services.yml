@@ -129,7 +129,7 @@ services:
         arguments: [@idci_step.navigation.logger]
         public:    false
         tags:
-            - { name: data_collector, template: 'IDCIStepBundle:Collector:navigation', id: navigation }
+            - { name: data_collector, template: 'IDCIStepBundle:Collector:navigation', id: idci_step.navigation }
 
 
     ## Twig Extensions ##

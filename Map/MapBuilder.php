@@ -189,23 +189,21 @@ class MapBuilder implements MapBuilderInterface
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $this->builtMap = new Map(array(
-            'name'      => $this->generateName(),
-            'data'      => $this->data,
-            'options'   => $this->options
+            'name'         => $this->name,
+            'finger_print' => $this->generateFingerPrint(),
+            'data'         => $this->data,
+            'options'      => $this->options
         ));
     }
 
     /**
-     * Generate a unique name for the map based on its steps and paths.
+     * Generate a map unique finger print based on its steps and paths.
      *
      * @return string
      */
-    private function generateName()
+    private function generateFingerPrint()
     {
-        return sprintf('%s_%s',
-            strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $this->name)),
-            md5(json_encode($this->steps).json_encode($this->paths))
-        );
+        return md5(json_encode($this->steps).json_encode($this->paths));
     }
 
     /**

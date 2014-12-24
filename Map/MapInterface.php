@@ -14,11 +14,18 @@ use IDCI\Bundle\StepBundle\Path\PathInterface;
 interface MapInterface
 {
     /**
-     * Get the identifier name of the map.
+     * Get the name of the map.
      *
      * @return string The name.
      */
     public function getName();
+
+    /**
+     * Get the map finger print.
+     *
+     * @return string The map finger print.
+     */
+    public function getFingerPrint();
 
     /**
      * Get the configuration.

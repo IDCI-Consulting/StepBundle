@@ -34,7 +34,9 @@ class NavigationDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->data['navigation'] = $this->logger->getNavigation();
+        if ($this->logger->hasNavigation()) {
+            $this->data['idci_step.navigation'] = $this->logger->getNavigation();
+        }
     }
 
     /**
@@ -42,16 +44,58 @@ class NavigationDataCollector extends DataCollector
      */
     public function getName()
     {
-        return 'navigation';
+        return 'idci_step.navigation';
     }
 
     /**
-     * Get navigation
+     * Has navigation
      *
-     * @return array
+     * @return boolean
      */
-    public function getNavigation()
+    public function hasNavigation()
     {
-        return $this->data['navigation'];
+        return isset($this->data['idci_step.navigation']);
+    }
+
+    /**
+     * Get map
+     *
+     * @return MapInterface
+     */
+    public function getMap()
+    {
+        if (!$this->hasNavigation()) {
+            return null;
+        }
+
+        return $this->data['idci_step.navigation']['map'];
+    }
+
+    /**
+     * Get flow
+     *
+     * @return FlowInterface
+     */
+    public function getFlow()
+    {
+        if (!$this->hasNavigation()) {
+            return null;
+        }
+
+        return $this->data['idci_step.navigation']['flow'];
+    }
+
+    /**
+     * Get current step
+     *
+     * @return StepInterface
+     */
+    public function getCurrentStep()
+    {
+        if (!$this->hasNavigation()) {
+            return null;
+        }
+
+        return $this->data['idci_step.navigation']['current_step'];
     }
 }

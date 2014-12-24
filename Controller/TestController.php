@@ -26,7 +26,7 @@ class TestController extends Controller
     {
         $map = $this
             ->get('idci_step.map.builder.factory')
-            ->createBuilder()
+            ->createNamedBuilder('test map')
             ->addStep('intro', 'content', array(
                 'title'       => 'Introduction',
                 'description' => 'The first step',

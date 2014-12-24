@@ -13,8 +13,19 @@ use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class NavigationLogger implements NavigationLoggerInterface
 {
+    /**
+     * @var Symfony\Component\HttpKernel\Log\LoggerInterface
+     */
     protected $logger;
+
+    /**
+     * @var Symfony\Component\Stopwatch\Stopwatch
+     */
     protected $stopwatch;
+
+    /**
+     *@var IDCI\Bundle\StepBundle\Navigation\NavigatorInterface
+     */
     protected $navigator;
 
     /**
@@ -24,7 +35,8 @@ class NavigationLogger implements NavigationLoggerInterface
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->logger = null;
+        $this->navigator = null;
+        $this->logger    = null;
         $this->stopwatch = null;
 
         if ($container->has('logger')) {
@@ -74,12 +86,24 @@ class NavigationLogger implements NavigationLoggerInterface
     /**
      * {@inheritdoc}
      */
+    public function hasNavigation()
+    {
+        return null !== $this->navigator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getNavigation()
     {
+        if (!$this->hasNavigation()) {
+            return array();
+        }
+
         return array(
-            'map'         => $this->navigator->getMap(),
-            'currentStep' => $this->navigator->getCurrentStep(),
-            'flow'        => $this->navigator->getFlow(),
+            'map'          => $this->navigator->getMap(),
+            'current_step' => $this->navigator->getCurrentStep(),
+            'flow'         => $this->navigator->getFlow()
         );
     }
 }
