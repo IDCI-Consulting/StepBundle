@@ -23,7 +23,7 @@ parameters:
     idci_step.data_store.registry.class: IDCI\Bundle\StepBundle\DataStore\DataStoreRegistry
     idci_step.data_store.session.class: IDCI\Bundle\StepBundle\DataStore\SessionDataStore
 
-    idci_step.logger.class: IDCI\Bundle\StepBundle\Logger\NavigationLogger
+    idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
     idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
 
 services:
@@ -75,6 +75,7 @@ services:
         arguments:
             - @idci_step.data_store.registry
             - @form.factory
+            - @idci_step.navigation.logger
 
 
     # Step
@@ -115,8 +116,8 @@ services:
 
     # Logger
 
-    idci_step.logger:
-        class:     %idci_step.logger.class%
+    idci_step.navigation.logger:
+        class:     %idci_step.navigation.logger.class%
         arguments: [@service_container]
         public:    false
 
@@ -125,7 +126,7 @@ services:
 
     idci_step.data_collector:
         class:     %idci_step.data_collector.class%
-        arguments: [@idci_step.logger]
+        arguments: [@idci_step.navigation.logger]
         public:    false
         tags:
             - { name: data_collector, template: 'IDCIStepBundle:Collector:navigation', id: navigation }

@@ -36,6 +36,11 @@ abstract class AbstractNavigator implements NavigatorInterface
     protected $request;
 
     /**
+     * @var NavigationLoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @var FlowInterface
      */
     protected $flow;
@@ -43,24 +48,35 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * Constructor
      *
-     * @param FormFactoryInterface  $formFactory    The form factory.
-     * @param DataStoreInterface    $dataStore      The data store using to keep the flow.
-     * @param MapInterface          $map            The map to navigate.
-     * @param Request               $request        The HTTP request.
+     * @param FormFactoryInterface      $formFactory    The form factory.
+     * @param DataStoreInterface        $dataStore      The data store using to keep the flow.
+     * @param MapInterface              $map            The map to navigate.
+     * @param Request                   $request        The HTTP request.
+     * @param NavigationLoggerInterface $logger         The logger.
      */
     public function __construct(
-        FormFactoryInterface $formFactory,
-        DataStoreInterface   $dataStore,
-        MapInterface         $map,
-        Request              $request
+        FormFactoryInterface      $formFactory,
+        DataStoreInterface        $dataStore,
+        MapInterface              $map,
+        Request                   $request,
+        NavigationLoggerInterface $logger = null
     )
     {
         $this->formFactory = $formFactory;
         $this->dataStore   = $dataStore;
         $this->map         = $map;
         $this->request     = $request;
+        $this->logger      = $logger;
+
+        if ($logger) {
+            $this->logger->startInit();
+        }
 
         $this->initFlow();
+
+        if ($logger) {
+            $this->logger->stopInit($this);
+        }
     }
 
     /**

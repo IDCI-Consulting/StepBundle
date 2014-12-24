@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\DataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use IDCI\Bundle\StepBundle\Logger\NavigationLoggerInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface;
 
 class NavigationDataCollector extends DataCollector
 {
@@ -34,7 +34,7 @@ class NavigationDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        // Todo:
+        $this->data['navigation'] = $this->logger->getNavigation();
     }
 
     /**
@@ -43,5 +43,15 @@ class NavigationDataCollector extends DataCollector
     public function getName()
     {
         return 'navigation';
+    }
+
+    /**
+     * Get navigation
+     *
+     * @return array
+     */
+    public function getNavigation()
+    {
+        return $this->data['navigation'];
     }
 }

@@ -26,17 +26,26 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $formFactory;
 
     /**
+     * @var NavigationLoggerInterface
+     */
+    private $logger;
+
+    /**
      * Constructor
      *
-     * @param DataStoreRegistryInterface $registry The data store registry.
+     * @param DataStoreRegistryInterface $registry    The data store registry.
+     * @param FormFactoryInterface       $formFactory The form factory.
+     * @param NavigationLoggerInterface  $logger      The data store registry.
      */
     public function __construct(
         DataStoreRegistryInterface $registry,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface       $formFactory,
+        NavigationLoggerInterface  $logger
     )
     {
         $this->registry    = $registry;
         $this->formFactory = $formFactory;
+        $this->logger      = $logger;
     }
 
     /**
@@ -48,7 +57,8 @@ class NavigatorFactory implements NavigatorFactoryInterface
             $this->formFactory,
             $this->guessDataStore($map),
             $map,
-            $request
+            $request,
+            $this->logger
         );
     }
 

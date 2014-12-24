@@ -16,8 +16,8 @@ interface NavigatorFactoryInterface
     /**
      * Create a Navigator
      *
-     * @param MapInterface  $map      The map to navigate.
-     * @param Request       $request  The HTTP request.
+     * @param MapInterface $map     The map to navigate.
+     * @param Request      $request The HTTP request.
      *
      * @return NavigatorInterface
      */
