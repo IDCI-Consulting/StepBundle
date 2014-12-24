@@ -7,8 +7,13 @@ IDCI\Bundle\StepBundle\Flow\FlowHistory:
             groups: [idci_step.flow]
             serialized_name: doneSteps
             type: array
-        currentStep:
+        fullDoneSteps:
             expose: true
             groups: [idci_step.flow]
-            serialized_name: currentStep
-            type: string
+            serialized_name: fullDoneSteps
+            type: array
+        takenPaths:
+            expose: true
+            groups: [idci_step.flow]
+            serialized_name: takenPaths
+            type: array
