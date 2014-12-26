@@ -9,6 +9,7 @@ namespace IDCI\Bundle\StepBundle\Step;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
 class StepBuilder implements StepBuilderInterface
 {
@@ -30,18 +31,18 @@ class StepBuilder implements StepBuilderInterface
     /**
      * Create a Step.
      *
-     * @param string $name      The step name.
-     * @param string $typeAlias The type alias.
-     * @param array  $options   The options.
+     * @param string            $name    The step name.
+     * @param StepTypeInterface $type    The type.
+     * @param array             $options The options.
      *
      * @return StepInterface The created Step.
      */
-    protected static function createStep($name, $typeAlias, array $options = array())
+    protected static function createStep($name, StepTypeInterface $type, array $options = array())
     {
         // TODO: Use a StepConfig as argument instead of an array.
         return new Step(array(
             'name'      => $name,
-            'type'      => $typeAlias,
+            'type'      => $type,
             'options'   => $options
         ));
     }
@@ -58,7 +59,7 @@ class StepBuilder implements StepBuilderInterface
         $resolvedOptions = $resolver->resolve($options);
 
         return $type->buildStep(
-            self::createStep($name, $typeAlias, $resolvedOptions),
+            self::createStep($name, $type, $resolvedOptions),
             $map,
             $resolvedOptions
         );

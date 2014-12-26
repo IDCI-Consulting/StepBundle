@@ -31,4 +31,11 @@ interface StepInterface
      * @return boolean.
      */
     public function isFirst();
+
+    /**
+     * Returns the step types used to construct the step.
+     *
+     * @return StepTypeInterface The step's type.
+     */
+    public function getType();
 }

@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class SinglePathType extends AbstractPathType
 {
@@ -42,5 +43,13 @@ class SinglePathType extends AbstractPathType
             ->setSource($map->getStep($options['source']))
             ->addDestination($map->getStep($options['destination']))
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveDestination(array $options, NavigatorInterface $navigator)
+    {
+        return $options['destination'];
     }
 }

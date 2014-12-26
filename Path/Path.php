@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Path;
 
 use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class Path implements PathInterface
 {
@@ -108,8 +109,29 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
+    public function resolveDestination(NavigatorInterface $navigator)
+    {
+        $destinationName = $this
+            ->getType()
+            ->resolveDestination($this->configuration['options'], $navigator)
+        ;
+
+        return $this->getDestination($destinationName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getLabel()
     {
         return $this->configuration['options']['label'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return $this->configuration['type'];
     }
 }

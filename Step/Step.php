@@ -60,4 +60,12 @@ class Step implements StepInterface
     {
         return $this->configuration['options']['is_first'];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return $this->configuration['type'];
+    }
 }

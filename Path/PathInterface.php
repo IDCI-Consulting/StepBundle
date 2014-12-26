@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Path;
 
 use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 interface PathInterface
 {
@@ -53,7 +54,7 @@ interface PathInterface
     /**
      * Has the destination step.
      *
-     * @param  string $name A step name to test.
+     * @param string $name A step name to test.
      *
      * @return boolean True if the step has been defined as one of the path destinations.
      */
@@ -62,11 +63,20 @@ interface PathInterface
     /**
      * Get the destination step.
      *
-     * @param  string $name The destination step name to retrieve.
+     * @param string $name The destination step name to retrieve.
      *
      * @return StepInterface|null The destination step if exists.
      */
     public function getDestination($name);
+
+    /**
+     * Resolve the destination step.
+     *
+     * @param NavigatorInterface $navigator.
+     *
+     * @return StepInterface|null The resolved destination step if exists.
+     */
+    public function resolveDestination(NavigatorInterface $navigator);
 
     /**
      * Get the link label.
@@ -74,4 +84,11 @@ interface PathInterface
      * @return string The link label.
      */
     public function getLabel();
+
+    /**
+     * Returns the path types used to construct the path.
+     *
+     * @return PathTypeInterface The path's type.
+     */
+    public function getType();
 }
