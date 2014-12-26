@@ -55,6 +55,15 @@ class Navigator extends AbstractNavigator
     }
 
     /**
+     * Resets form.
+     */
+    private function resetForm()
+    {
+        $this->formBuilder = null;
+        $this->form        = null;
+    }
+
+    /**
      * Init the flow.
      */
     protected function initFlow()
@@ -67,7 +76,9 @@ class Navigator extends AbstractNavigator
                 $path = $this->getChoosenPath();
                 $destination = $path->resolveDestination($this);
 
-                var_dump($destination);die;
+                //$this->goTo($destination);
+                $this->resetForm();
+                $this->flow->setCurrentStep($destination->getName());
             }
 
             //var_dump($this->request->request->get(self::getName()));
@@ -98,7 +109,7 @@ class Navigator extends AbstractNavigator
      *
      * @return PathInterface
      */
-    public function getChoosenPath()
+    private function getChoosenPath()
     {
         foreach ($this->getAvailablePaths() as $i => $path) {
             if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
