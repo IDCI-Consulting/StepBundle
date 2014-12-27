@@ -25,10 +25,16 @@ class NavigatorType extends AbstractType
             ->add('_map_finger_print', 'hidden', array(
                 'data' => $options['navigator']->getMap()->getFingerPrint())
             )
-            ->add('_step', 'hidden', array(
+            ->add('_current_step', 'hidden', array(
                 'data' => $options['navigator']->getCurrentStep()->getName())
             )
         ;
+
+        if (null !== $options['navigator']->getPreviousStep()) {
+            $builder->add('_previous_step', 'hidden', array(
+                'data' => $options['navigator']->getPreviousStep()->getName()
+            ));
+        }
 
         $this->buildStep($builder, $options);
         $this->buildSubmit($builder, $options);
@@ -67,7 +73,10 @@ class NavigatorType extends AbstractType
             $builder->add(
                 '_back',
                 'submit',
-                $configuration['options']['previous_options']
+                array_merge(
+                    $configuration['options']['previous_options'],
+                    array('attr' => array('formnovalidate' => 'true'))
+                )
             );
         }
 

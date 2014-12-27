@@ -37,13 +37,6 @@ class Map implements MapInterface
     protected $paths = array();
 
     /**
-     * The first step name.
-     *
-     * @var string
-     */
-    protected $firstStepName;
-
-    /**
      * Constructor.
      *
      * @param array $configuration The configuration.
@@ -138,14 +131,10 @@ class Map implements MapInterface
      */
     public function getStep($name)
     {
-        if (!$this->hasStep($name)) {
-            throw new \LogicException(sprintf(
-                'No step "%s" found.',
-                $name
-            ));
-        }
-
-        return $this->steps[$name];
+        return $this->hasStep($name) ?
+            $this->steps[$name] :
+            null
+        ;
     }
 
     /**
@@ -193,5 +182,13 @@ class Map implements MapInterface
     public function getPath($source, $index)
     {
         return $this->paths[$source][$index];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __sleep()
+    {
+        return array('configuration');
     }
 }

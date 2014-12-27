@@ -8,7 +8,7 @@ parameters:
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
     idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
 
-    idci_step.step.type.content.class: IDCI\Bundle\StepBundle\Step\Type\ContentStepType
+    idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
     idci_step.path.type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
@@ -80,10 +80,10 @@ services:
 
     # Step
 
-    idci_step.step.type.content:
-        class: %idci_step.step.type.content.class%
+    idci_step.step.type.html:
+        class: %idci_step.step.type.html.class%
         tags:
-            - { name: idci_step.step.type, alias: content }
+            - { name: idci_step.step.type, alias: html }
 
     idci_step.step.type.form:
         class: %idci_step.step.type.form.class%

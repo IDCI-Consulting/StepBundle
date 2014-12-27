@@ -20,11 +20,9 @@ class FormStepType extends AbstractStepType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setDefaults(array(
-                'builder' => null
-            ))
+            ->setRequired(array('builder'))
             ->setAllowedTypes(array(
-                'builder' => array('null', 'Symfony\Component\Form\FormBuilderInterface'),
+                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
             ))
         ;
     }
@@ -34,6 +32,12 @@ class FormStepType extends AbstractStepType
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-    
+        foreach ($options['builder']->all() as $fieldName => $subBuilder) {
+            $builder->add(
+                $fieldName,
+                $subBuilder->getType()->getInnerType(),
+                $subBuilder->getOptions()
+            );
+        }
     }
 }

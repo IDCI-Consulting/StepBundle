@@ -52,11 +52,12 @@ class Navigator extends AbstractNavigator
     /**
      * Returns the choosen path.
      *
-     * @return PathInterface | null
+     * @return PathInterface|null
      */
     private function getChoosenPath()
     {
         if ($this->getForm()->isValid()) {
+            var_dump($this->getForm()->isEmpty());
             foreach ($this->getAvailablePaths() as $i => $path) {
                 if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
                     $this->flow->getHistory()->addTakenPath($path->getSource(), $i);
@@ -76,7 +77,7 @@ class Navigator extends AbstractNavigator
     /**
      * Retrieve the destination.
      *
-     * @return StepInterface | null The destination step to reached.
+     * @return StepInterface|null The destination step to reached.
      */
     private function retrieveDestination()
     {

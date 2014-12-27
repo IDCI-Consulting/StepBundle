@@ -64,11 +64,11 @@ interface MapInterface
     public function hasStep($name);
 
     /**
-     * Get a step.
+     * Get a step by its name if exists.
      *
      * @param string $name The identifier name of the step.
      *
-     * @return StepInterface The step.
+     * @return StepInterface|null The step.
      */
     public function getStep($name);
 

@@ -27,7 +27,7 @@ class TestController extends Controller
         $map = $this
             ->get('idci_step.map.builder.factory')
             ->createNamedBuilder('test map')
-            ->addStep('intro', 'content', array(
+            ->addStep('intro', 'html', array(
                 'title'       => 'Introduction',
                 'description' => 'The first step',
                 'content'     => '<h1>My content</h1>',
@@ -36,22 +36,36 @@ class TestController extends Controller
                 'title'            => 'Personal information',
                 'description'      => 'The personal data step',
                 'previous_options' => array(
-                    'label' => 'Retour au début'
+                    'label' => 'Retour au début',
                 ),
+                'builder' => $this->get('form.factory')->createBuilder()
+                    ->add('first_name', 'text')
+                    ->add('last_name', 'text')
+                ,
             ))
             ->addStep('purchase', 'form', array(
                 'title'       => 'Purchase information',
                 'description' => 'The purchase data step',
+                'builder' => $this->get('form.factory')->createBuilder()
+                    ->add('item', 'text')
+                    ->add('purchase_date', 'datetime')
+                ,
             ))
             ->addStep('fork1', 'form', array(
                 'title'       => 'Fork1 information',
                 'description' => 'The fork1 data step',
+                'builder' => $this->get('form.factory')->createBuilder()
+                    ->add('fork1_data', 'textarea')
+                ,
             ))
             ->addStep('fork2', 'form', array(
                 'title'       => 'Fork2 information',
                 'description' => 'The fork2 data step',
+                'builder' => $this->get('form.factory')->createBuilder()
+                    ->add('fork2_data', 'textarea')
+                ,
             ))
-            ->addStep('end', 'content', array(
+            ->addStep('end', 'html', array(
                 'title'       => 'The end',
                 'description' => 'The last data step',
                 'content'     => '<h1>The end</h1>',

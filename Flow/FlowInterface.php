@@ -29,7 +29,7 @@ interface FlowInterface
     /**
      * Returns the previous flow step if exists
      *
-     * @return string | null
+     * @return string|null
      */
     public function getPreviousStep();
 

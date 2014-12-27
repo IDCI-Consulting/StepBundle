@@ -29,7 +29,7 @@ interface FlowHistoryInterface
     /**
      * Get the last taken path.
      *
-     * @return array | null The last taken path under the form array('source' => ..., 'index' => ...).
+     * @return array|null The last taken path under the form array('source' => ..., 'index' => ...).
      */
     public function getLastTakenPath();
 

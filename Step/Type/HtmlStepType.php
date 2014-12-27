@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ContentStepType extends AbstractStepType
+class HtmlStepType extends AbstractStepType
 {
     /**
      * {@inheritdoc}
@@ -20,12 +20,8 @@ class ContentStepType extends AbstractStepType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setDefaults(array(
-                'content' => null
-            ))
-            ->setAllowedTypes(array(
-                'content' => array('null', 'string')
-            ))
+            ->setDefaults(array('content' => null))
+            ->setAllowedTypes(array('content' => array('null', 'string')))
         ;
     }
 
