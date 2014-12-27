@@ -9,7 +9,7 @@
 namespace IDCI\Bundle\StepBundle\Navigation;
 
 use IDCI\Bundle\StepBundle\Flow\Flow;
-use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
 
 class Navigator extends AbstractNavigator
 {
@@ -73,10 +73,13 @@ class Navigator extends AbstractNavigator
 
         if ($this->request->isMethod('POST')) {
             $this->getForm()->handleRequest($this->request);
-            if ($this->getForm()->isValid()) {
-                $path = $this->getChoosenPath();
-                $this->moveTo($path->resolveDestination($this));
+            $destination = $this->navigate();
+            if (null !== $destination) {
+                $this->hasNavigated = true;
+                $this->flow->setCurrentStep($destination->getName());
+                $this->saveFlow();
             }
+            $this->resetForm();
         }
     }
 
@@ -115,37 +118,56 @@ class Navigator extends AbstractNavigator
     /**
      * Returns the choosen path.
      *
-     * @return PathInterface
+     * @return PathInterface | null
      */
     private function getChoosenPath()
     {
-        foreach ($this->getAvailablePaths() as $i => $path) {
-            if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
-                return $path;
+        if ($this->getForm()->isValid()) {
+            foreach ($this->getAvailablePaths() as $i => $path) {
+                if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
+                    $this->flow->getHistory()->addTakenPath($path->getSource(), $i);
+
+                    return $path;
+                }
             }
+
+            throw new \LogicException(sprintf(
+                'The choosen path seem to disapear magically'
+            ));
         }
 
-        throw new \LogicException(sprintf(
-            'The choosen path seem to disapear magically'
-        ));
+        return null;
     }
 
     /**
-     * Move to the given step destination.
+     * Navigate using the given path.
      *
-     * @param StepInterface $destination The step destination.
+     * @return StepInterface | null The reached step.
      */
-    private function moveTo(StepInterface $destination = null)
+    private function navigate()
     {
-        $this->resetForm();
+        if ($this->getForm()->has('_back') && $this->getForm()->get('_back')->isClicked()) {
+            $lastTakenPath = $this->flow->getHistory()->getLastTakenPath();
+            $previousStep = $this->getMap()->getStep($lastTakenPath['source']);
+            $this->flow->getHistory()->retraceTakenPath($previousStep);
+
+            return $previousStep;
+        }
+
+        $path = $this->getChoosenPath();
+
+        if (null === $path) {
+            return null;
+        }
+
+        $destination = $path->resolveDestination($this);
 
         if (null === $destination) {
             $this->hasFinished = true;
-        } else {
-            $this->flow->setCurrentStep($destination->getName());
-            $this->saveFlow();
-            $this->isMoving = true;
+
+            return null;
         }
 
+        return $destination;
     }
 }

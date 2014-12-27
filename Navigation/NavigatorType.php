@@ -38,6 +38,15 @@ class NavigatorType extends AbstractType
      */
     public function buildSubmit(FormBuilderInterface $builder, array $options)
     {
+        $currentStep = $options['navigator']->getCurrentStep();
+        $map = $options['navigator']->getMap();
+
+        if ($currentStep->getName() !== $map->getFirstStepName()) {
+            $builder->add('_back', 'submit', array(
+                'label' => $currentStep->getPreviousLabel(),
+            ));
+        }
+
         foreach ($options['navigator']->getAvailablePaths() as $i => $path) {
             $builder->add(sprintf('_path#%d', $i), 'submit', array(
                 'label' => $path->getLabel(),

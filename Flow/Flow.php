@@ -26,6 +26,16 @@ class Flow implements FlowInterface
     private $data;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->currentStep = null;
+        $this->history     = new FlowHistory();
+        $this->data        = new FlowData();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getCurrentStep()

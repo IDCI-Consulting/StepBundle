@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 interface FlowHistoryInterface
 {

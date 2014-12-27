@@ -48,7 +48,7 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * @var boolean
      */
-    protected $isMoving;
+    protected $hasNavigated;
 
     /**
      * @var boolean
@@ -72,13 +72,13 @@ abstract class AbstractNavigator implements NavigatorInterface
         NavigationLoggerInterface $logger = null
     )
     {
-        $this->formFactory = $formFactory;
-        $this->dataStore   = $dataStore;
-        $this->map         = $map;
-        $this->request     = $request;
-        $this->logger      = $logger;
-        $this->isMoving    = false;
-        $this->hasFinished = false;
+        $this->formFactory  = $formFactory;
+        $this->dataStore    = $dataStore;
+        $this->map          = $map;
+        $this->request      = $request;
+        $this->logger       = $logger;
+        $this->hasNavigated = false;
+        $this->hasFinished  = false;
 
         if ($logger) {
             $this->logger->startInit();
@@ -156,9 +156,9 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function isMoving()
+    public function hasNavigated()
     {
-        return $this->isMoving;
+        return $this->hasNavigated;
     }
 
     /**

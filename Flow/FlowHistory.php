@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 class FlowHistory implements FlowHistoryInterface
 {
@@ -30,15 +30,13 @@ class FlowHistory implements FlowHistoryInterface
      */
     public function addTakenPath(StepInterface $step, $pathId = 0)
     {
-        $stepName = $path->getName();
-
         $this->takenPaths[] = array(
-            'step' => $stepName,
-            'path' => $pathId
+            'source' => $step->getName(),
+            'index'  => $pathId
         );
         $this->fullTakenPaths[] = array(
-            'step' => $stepName,
-            'path' => $pathId
+            'source' => $step->getName(),
+            'index'  => $pathId
         );
     }
 
@@ -47,23 +45,21 @@ class FlowHistory implements FlowHistoryInterface
      */
     public function retraceTakenPath(StepInterface $step)
     {
-        $stepName = $step->getName();
-
         $this->fullTakenPaths[] = array(
-            'step' => $stepName,
-            'path' => '__back'
+            'source' => $step->getName(),
+            'index'  => '_back'
         );
 
         $remove = false;
         $removedPaths = array();
 
         foreach ($this->takenPaths as $i => $path) {
-            if (!$remove && $stepName === $path['step']) {
+            if (!$remove && $step->getName() === $path['source']) {
                 $remove = true;
             }
 
             if ($remove) {
-                $removedPaths[$name] = $path;
+                $removedPaths[$step->getName()] = $path;
                 unset($this->takenPaths[$i]);
             }
         }

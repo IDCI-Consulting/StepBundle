@@ -2,6 +2,7 @@ IDCI\Bundle\StepBundle\Flow\Flow:
     exclusion_policy: ALL
 
     properties:
+
         currentStep:
             expose: true
             groups: [idci_step.navigation]
@@ -11,7 +12,9 @@ IDCI\Bundle\StepBundle\Flow\Flow:
         history:
             expose: true
             groups: [idci_step.navigation]
+            type: IDCI\Bundle\StepBundle\Flow\FlowHistory
 
         data:
             expose: true
             groups: [idci_step.navigation]
+            type: IDCI\Bundle\StepBundle\Flow\FlowData

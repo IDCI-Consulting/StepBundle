@@ -21,7 +21,7 @@ abstract class AbstractPathType implements PathTypeInterface
     {
         $resolver
             ->setRequired(array('label'))
-            ->setDefaults(array('label' => 'next'))
+            ->setDefaults(array('label' => 'Next >'))
             ->setAllowedTypes(array('label' => 'string'))
         ;
     }

@@ -20,14 +20,16 @@ abstract class AbstractStepType implements StepTypeInterface
     {
         $resolver
             ->setDefaults(array(
-                'title'       => null,
-                'description' => null,
-                'is_first'    => false,
+                'title'          => null,
+                'description'    => null,
+                'is_first'       => false,
+                'previous_label' => '< Previous'
             ))
             ->setAllowedTypes(array(
-                'title'       => array('null', 'string'),
-                'description' => array('null', 'string'),
-                'is_first'    => array('bool'),
+                'title'          => array('null', 'string'),
+                'description'    => array('null', 'string'),
+                'is_first'       => array('bool'),
+                'previous_label' => array('string'),
             ))
         ;
     }

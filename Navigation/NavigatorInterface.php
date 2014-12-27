@@ -46,11 +46,11 @@ interface NavigatorInterface
     public function getAvailablePaths();
 
     /**
-     * Returns true if the navigator is moving.
+     * Returns true if the navigator has navigated.
      *
      * @return boolean
      */
-    public function isMoving();
+    public function hasNavigated();
 
     /**
      * Returns true if the navigator has finished the navigation.

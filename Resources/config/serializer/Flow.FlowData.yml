@@ -2,8 +2,8 @@ IDCI\Bundle\StepBundle\Flow\FlowData:
     exclusion_policy: ALL
 
     properties:
+
         steps:
             expose: true
             groups: [idci_step.navigation]
-            serialized_name: steps
             type: array

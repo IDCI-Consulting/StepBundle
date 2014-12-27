@@ -33,6 +33,13 @@ interface StepInterface
     public function isFirst();
 
     /**
+     * Returns the previous label.
+     *
+     * @return string.
+     */
+    public function getPreviousLabel();
+
+    /**
      * Returns the step types used to construct the step.
      *
      * @return StepTypeInterface The step's type.

@@ -65,7 +65,7 @@ class TestController extends Controller
                 'conditional_destination',
                 array(
                     'source'        => 'personal',
-                    'label'         => 'next',
+                    //'label'         => 'next',
                     'destinations'  => array(
                         'purchase'  => array(
                             'rules' => array()
@@ -80,7 +80,7 @@ class TestController extends Controller
                 'single',
                 array(
                     'source'        => 'purchase',
-                    'label'         => 'next',
+                    //'label'         => 'next',
                     'destination'   => 'fork1'
                 )
             )
@@ -88,7 +88,7 @@ class TestController extends Controller
                 'single',
                 array(
                     'source'        => 'purchase',
-                    'label'         => 'next',
+                    'label'         => 'next p',
                     'destination'   => 'fork2',
                 )
             )
@@ -96,7 +96,7 @@ class TestController extends Controller
                 'single',
                 array(
                     'source'        => 'fork1',
-                    'label'         => 'next',
+                    'label'         => 'next f',
                     'destination'   => 'end'
                 )
             )
@@ -104,7 +104,7 @@ class TestController extends Controller
                 'single',
                 array(
                     'source'        => 'fork2',
-                    'label'         => 'next',
+                    'label'         => 'last',
                     'destination'   => 'end'
                 )
             )
@@ -124,7 +124,7 @@ class TestController extends Controller
             ->createNavigator($map, $request)
         ;
 
-        if ($navigator->isMoving()) {
+        if ($navigator->hasNavigated()) {
             return $this->redirect($this->generateUrl('idci_step'));
         }
 
