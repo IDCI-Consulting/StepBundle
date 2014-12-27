@@ -13,16 +13,16 @@ use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 interface NavigationLoggerInterface
 {
     /**
-     * Start init
+     * Start navigation
      */
-    public function startInit();
+    public function startNavigation();
 
     /**
-     * Stop init
+     * Stop navigation
      *
      * @param NavigatorInterface $navigator The navigator to log.
      */
-    public function stopInit(NavigatorInterface $navigator);
+    public function stopNavigation(NavigatorInterface $navigator);
 
     /**
      * Has navigation

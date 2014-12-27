@@ -8,7 +8,6 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 
 class Navigator extends AbstractNavigator
@@ -28,7 +27,7 @@ class Navigator extends AbstractNavigator
      *
      * @return Symfony\Component\Form\FormBuilderInterface
      */
-    protected function getFormBuilder()
+    private function getFormBuilder()
     {
         if (null === $this->formBuilder) {
             $this->formBuilder = $this->formFactory->createBuilder(
@@ -42,20 +41,6 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Returns the navigation form.
-     *
-     * @return Symfony\Component\Form\FormInterface
-     */
-    protected function getForm()
-    {
-        if (null === $this->form) {
-            $this->form = $this->getFormBuilder()->getForm();
-        }
-
-        return $this->form;
-    }
-
-    /**
      * Resets form.
      */
     private function resetForm()
@@ -65,48 +50,9 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Init the flow.
-     */
-    protected function initFlow()
-    {
-        $this->flow = $this->retrieveFlow();
-
-        if ($this->request->isMethod('POST')) {
-            $this->getForm()->handleRequest($this->request);
-            $destination = $this->navigate();
-            if (null !== $destination) {
-                $this->hasNavigated = true;
-                $this->flow->setCurrentStep($destination->getName());
-                $this->saveFlow();
-            }
-            $this->resetForm();
-        }
-    }
-
-    /**
-     * Retrieve the flow.
-     *
-     * @return FlowInterface
-     */
-    protected function retrieveFlow()
-    {
-        $flow = $this->dataStore->get(
-            $this->map->getFingerPrint(),
-            'flow'
-        );
-
-        if (null === $flow) {
-            $flow = new Flow();
-            $flow->setCurrentStep($this->map->getFirstStepName());
-        }
-
-        return $flow;
-    }
-
-    /**
      * Save the flow.
      */
-    protected function saveFlow()
+    private function saveFlow()
     {
         $this->dataStore->set(
             $this->map->getFingerPrint(),
@@ -140,16 +86,16 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Navigate using the given path.
+     * Retrieve the destination.
      *
-     * @return StepInterface | null The reached step.
+     * @return StepInterface | null The destination step to reached.
      */
-    private function navigate()
+    private function retrieveDestination()
     {
         if ($this->getForm()->has('_back') && $this->getForm()->get('_back')->isClicked()) {
-            $lastTakenPath = $this->flow->getHistory()->getLastTakenPath();
+            $lastTakenPath = $this->getFlow()->getHistory()->getLastTakenPath();
             $previousStep = $this->getMap()->getStep($lastTakenPath['source']);
-            $this->flow->getHistory()->retraceTakenPath($previousStep);
+            $this->getFlow()->getHistory()->retraceTakenPath($previousStep);
 
             return $previousStep;
         }
@@ -160,14 +106,43 @@ class Navigator extends AbstractNavigator
             return null;
         }
 
-        $destination = $path->resolveDestination($this);
+        $destinationStep = $path->resolveDestination($this);
 
-        if (null === $destination) {
+        if (null === $destinationStep) {
             $this->hasFinished = true;
 
             return null;
         }
 
-        return $destination;
+        return $destinationStep;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getForm()
+    {
+        if (null === $this->form) {
+            $this->form = $this->getFormBuilder()->getForm();
+        }
+
+        return $this->form;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function navigate()
+    {
+        if ($this->request->isMethod('POST')) {
+            $this->getForm()->handleRequest($this->request);
+            $destination = $this->retrieveDestination();
+            if (null !== $destination) {
+                $this->hasNavigated = true;
+                $this->getFlow()->setCurrentStep($destination->getName());
+                $this->saveFlow();
+            }
+            $this->resetForm();
+        }
     }
 }

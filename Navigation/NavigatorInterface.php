@@ -58,4 +58,9 @@ interface NavigatorInterface
      * @return boolean
      */
     public function hasFinished();
+
+    /**
+     * Clear the navigation flow.
+     */
+    public function clearFlow();
 }

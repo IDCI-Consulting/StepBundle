@@ -10,8 +10,9 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Flow\Flow;
 
 abstract class AbstractNavigator implements NavigatorInterface 
 {
@@ -81,30 +82,30 @@ abstract class AbstractNavigator implements NavigatorInterface
         $this->hasFinished  = false;
 
         if ($logger) {
-            $this->logger->startInit();
+            $this->logger->startNavigation();
         }
 
-        $this->initFlow();
+        $this->navigate();
 
         if ($logger) {
-            $this->logger->stopInit($this);
+            $this->logger->stopNavigation($this);
         }
     }
 
     /**
-     * Returns the navigation form
+     * Returns the navigation form.
      *
      * @return Symfony\Component\Form\FormInterface
      */
-    abstract protected function getForm();
+    abstract public function getForm();
 
     /**
-     * Init the flow
+     * Navigate.
      */
-    abstract protected function initFlow();
+    abstract public function navigate();
 
     /**
-     * Returns the navigator name
+     * Returns the navigator name.
      *
      * @return string
      */
@@ -126,6 +127,18 @@ abstract class AbstractNavigator implements NavigatorInterface
      */
     public function getFlow()
     {
+        if (null === $this->flow) {
+            $this->flow = $this->dataStore->get(
+                $this->map->getFingerPrint(),
+                'flow'
+            );
+
+            if (null === $this->flow) {
+                $this->flow = new Flow();
+                $this->flow->setCurrentStep($this->map->getFirstStepName());
+            }
+        }
+
         return $this->flow;
     }
 
@@ -167,5 +180,13 @@ abstract class AbstractNavigator implements NavigatorInterface
     public function hasFinished()
     {
         return $this->hasFinished;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clearFlow()
+    {
+        return $this->getFlow();
     }
 }

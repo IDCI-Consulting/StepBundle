@@ -51,22 +51,22 @@ class NavigationLogger implements NavigationLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function startInit()
+    public function startNavigation()
     {
         if (null !== $this->stopwatch) {
-            $this->stopwatch->start('idci_step_init');
+            $this->stopwatch->start('idci_step.navigation');
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function stopInit(NavigatorInterface $navigator)
+    public function stopNavigation(NavigatorInterface $navigator)
     {
         $this->navigator = $navigator;
 
         if (null !== $this->stopwatch) {
-            $this->stopwatch->stop('idci_step_init');
+            $this->stopwatch->stop('idci_step.navigation');
         }
 
         if (null !== $this->logger) {
