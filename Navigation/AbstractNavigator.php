@@ -161,6 +161,14 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function getPreviousStep()
+    {
+        return $this->getMap()->getStep($this->getFlow()->getPreviousStep());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAvailablePaths()
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStep());

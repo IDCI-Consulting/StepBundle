@@ -81,8 +81,10 @@ class Navigator extends AbstractNavigator
     private function retrieveDestination()
     {
         if ($this->getForm()->has('_back') && $this->getForm()->get('_back')->isClicked()) {
-            $lastTakenPath = $this->getFlow()->getHistory()->getLastTakenPath();
-            $previousStep = $this->getMap()->getStep($lastTakenPath['source']);
+            $previousStep = $this
+                ->getMap()
+                ->getStep($this->getFlow()->getPreviousStep())
+            ;
             $this->getFlow()->getHistory()->retraceTakenPath($previousStep);
 
             return $previousStep;

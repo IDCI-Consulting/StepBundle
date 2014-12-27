@@ -101,9 +101,8 @@ class NavigationLogger implements NavigationLoggerInterface
         }
 
         return array(
-            'map'          => $this->navigator->getMap(),
-            'current_step' => $this->navigator->getCurrentStep(),
-            'flow'         => $this->navigator->getFlow()
+            'map'  => $this->navigator->getMap(),
+            'flow' => $this->navigator->getFlow()
         );
     }
 }

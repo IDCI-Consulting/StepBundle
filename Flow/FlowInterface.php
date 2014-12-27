@@ -27,6 +27,13 @@ interface FlowInterface
     public function setCurrentStep($step);
 
     /**
+     * Returns the previous flow step if exists
+     *
+     * @return string | null
+     */
+    public function getPreviousStep();
+
+    /**
      * Returns the flow navigation history
      *
      * @return FlowHistoryInterface

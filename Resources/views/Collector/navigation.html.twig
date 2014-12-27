@@ -10,7 +10,7 @@
                     {{ collector.map.name }}
                 </abbr>
             </span>
-            {{ collector.currentStep.name }}
+            {{ collector.flow.currentStep }}
         </span>
         {% else %}
             <span class="sf-toolbar-status sf-toolbar-status-red"></span>
@@ -19,13 +19,22 @@
     {% set text %}
         {% if collector.hasNavigation %}
             <div class="sf-toolbar-info-piece">
-                <b>Navigation</b>
-                <span class="sf-toolbar-info-class sf-toolbar-info-with-next-pointer">
-                    <abbr title="{{ collector.map.fingerPrint }}">
-                        {{ collector.map.name }}
-                    </abbr>
-                </span>
-                {{ collector.currentStep.name }}
+                <b>Map name</b>
+                <abbr title="{{ collector.map.fingerPrint }}">
+                    {{ collector.map.name }}
+                </abbr>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Current step</b>
+                {{ collector.flow.currentStep }}
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Previous step</b>
+                {% if collector.flow.previousStep is not null %}
+                    {{ collector.flow.previousStep }}
+                {% else %}
+                    n/a
+                {% endif %}
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Data store</b>

@@ -72,7 +72,9 @@ class FlowHistory implements FlowHistoryInterface
      */
     public function getLastTakenPath()
     {
-        return $this->takenPaths[count($this->takenPaths) - 1];
+        $i = count($this->takenPaths) - 1;
+
+        return isset($this->takenPaths[$i]) ? $this->takenPaths[$i] : null;
     }
 
     /**

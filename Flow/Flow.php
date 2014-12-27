@@ -56,6 +56,20 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
+    public function getPreviousStep()
+    {
+        $lastTakenPath = $this->getHistory()->getLastTakenPath();
+
+        if (null !== $lastTakenPath) {
+            return $lastTakenPath['source'];
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getHistory()
     {
         return $this->history;

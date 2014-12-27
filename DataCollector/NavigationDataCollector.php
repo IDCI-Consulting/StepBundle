@@ -84,18 +84,4 @@ class NavigationDataCollector extends DataCollector
 
         return $this->data['idci_step.navigation']['flow'];
     }
-
-    /**
-     * Get current step
-     *
-     * @return StepInterface
-     */
-    public function getCurrentStep()
-    {
-        if (!$this->hasNavigation()) {
-            return null;
-        }
-
-        return $this->data['idci_step.navigation']['current_step'];
-    }
 }
