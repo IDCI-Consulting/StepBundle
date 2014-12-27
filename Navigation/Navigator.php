@@ -9,6 +9,7 @@
 namespace IDCI\Bundle\StepBundle\Navigation;
 
 use IDCI\Bundle\StepBundle\Flow\Flow;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 class Navigator extends AbstractNavigator
 {
@@ -74,7 +75,7 @@ class Navigator extends AbstractNavigator
             $this->getForm()->handleRequest($this->request);
             if ($this->getForm()->isValid()) {
                 $path = $this->getChoosenPath();
-                $this->goTo($path->resolveDestination($this));
+                $this->moveTo($path->resolveDestination($this));
             }
 
             //var_dump($this->request->request->get(self::getName()));
@@ -89,15 +90,25 @@ class Navigator extends AbstractNavigator
     protected function retrieveFlow()
     {
         $flow = new Flow();
-        $flowRaw = $this->dataStore->get($this->map->getName());
+        $flowRaw = $this->dataStore->get($this->map->getFingerPrint());
 
         if (empty($flowRaw)) {
             $flow->setCurrentStep($this->map->getFirstStepName());
-
-            return $flow;
         }
 
-        var_dump($flowRaw);die;
+        return $flow;
+    }
+
+    /**
+     * Save the flow.
+     */
+    protected function saveFlow()
+    {
+        $this->dataStore->set(
+            $this->map->getFingerPrint(),
+            'flow',
+            $this->flow
+        );
     }
 
     /**
@@ -119,13 +130,15 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Go to the next step destination
+     * Move to the given step destination.
      *
      * @param StepInterface $destination The step destination.
      */
-    private function goTo(StepInterface $destination)
+    private function moveTo(StepInterface $destination)
     {
         $this->resetForm();
         $this->flow->setCurrentStep($destination->getName());
+
+        $this->saveFlow();
     }
 }
