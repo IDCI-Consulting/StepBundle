@@ -74,11 +74,7 @@ class Navigator extends AbstractNavigator
             $this->getForm()->handleRequest($this->request);
             if ($this->getForm()->isValid()) {
                 $path = $this->getChoosenPath();
-                $destination = $path->resolveDestination($this);
-
-                //$this->goTo($destination);
-                $this->resetForm();
-                $this->flow->setCurrentStep($destination->getName());
+                $this->goTo($path->resolveDestination($this));
             }
 
             //var_dump($this->request->request->get(self::getName()));
@@ -120,5 +116,16 @@ class Navigator extends AbstractNavigator
         throw new \LogicException(sprintf(
             'The choosen path seem to disapear magically'
         ));
+    }
+
+    /**
+     * Go to the next step destination
+     *
+     * @param StepInterface $destination The step destination.
+     */
+    private function goTo(StepInterface $destination)
+    {
+        $this->resetForm();
+        $this->flow->setCurrentStep($destination->getName());
     }
 }
