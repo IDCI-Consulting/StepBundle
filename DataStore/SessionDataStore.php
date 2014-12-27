@@ -50,7 +50,10 @@ class SessionDataStore extends AbstractSerializerDataStore
             unset($namespaceData[$key]);
         }
 
-        $this->session->set($this->formatName($namespace), json_encode($namespaceData));
+        $this->session->set(
+            $this->formatName($namespace),
+            json_encode($namespaceData)
+        );
     }
 
     /**
@@ -58,21 +61,20 @@ class SessionDataStore extends AbstractSerializerDataStore
      */
     public function get($namespace, $key = null)
     {
-        $namespaceData = json_decode(
+        $namespacedData = json_decode(
             $this->session->get($this->formatName($namespace), '{}'),
             true
         );
 
-        return null === $key
-            ? $namespaceData
-            : (isset($namespaceData[$key])
-                ? (is_object($namespaceData[$key])
-                    ? $this->deserialize(json_encode($namespaceData[$key]))
-                    : $namespaceData[$key]
-                )
-                : null
-            )
-        ;
+        if (null === $key) {
+            return $namespacedData;
+        }
+
+        if (!isset($namespacedData[$key])) {
+            return null;
+        }
+
+        return $this->deserialize(json_encode($namespacedData[$key]));
     }
 
     /**

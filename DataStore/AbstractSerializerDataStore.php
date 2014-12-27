@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\DataStore;
 
 use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\SerializationContext;
 
 abstract class AbstractSerializerDataStore implements DataStoreInterface
 {
@@ -46,14 +47,12 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface
 
             $serializedData = $this->serializer->serialize(
                 $data,
-                $dataClass,
-                'json'
+                'json',
+                SerializationContext::create()->setGroups(array('idci_step.navigation'))
             );
 
-            $arrayData = json_decode($serializedData, true);
-
             return json_encode(array(
-                '_data' => $arrayData,
+                '_data' => json_decode($serializedData, true),
                 '_metadata' => array(
                     'class' => $dataClass
                 )
@@ -76,15 +75,13 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface
 
         // Handle object case.
         if (is_array($decodedData) && isset($decodedData['_metadata'])) {
-            $dataClass = get_class($data);
-
-            return $this->serializer->serialize(
+            return $this->serializer->deserialize(
                 json_encode($decodedData['_data']),
                 $decodedData['_metadata']['class'],
                 'json'
             );
         }
 
-        return json_encode($data);
+        return $decodedData;
     }
 }
