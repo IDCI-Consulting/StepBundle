@@ -92,6 +92,6 @@ class SessionDataStore extends AbstractSerializerDataStore
      */
     protected function formatName($namespace)
     {
-        return sprintf('idci_step.flow.%s', $namespace);
+        return sprintf('idci_step.navigation.%s', $namespace);
     }
 }
