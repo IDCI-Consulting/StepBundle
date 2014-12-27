@@ -30,27 +30,55 @@ class NavigatorType extends AbstractType
             )
         ;
 
+        $this->buildStep($builder, $options);
         $this->buildSubmit($builder, $options);
     }
 
     /**
-     * {@inheritdoc}
+     * Build step.
+     *
+     * @param FormBuilderInterface $builder The builder.
+     * @param array                $options The options.
+     */
+    public function buildStep(FormBuilderInterface $builder, array $options)
+    {
+        $currentStep = $options['navigator']->getCurrentStep();
+        $configuration = $currentStep->getConfiguration();
+
+        $currentStep->getType()->buildNavigationStepForm(
+            $builder,
+            $configuration['options']
+        );
+    }
+
+    /**
+     * Build submit buttons.
+     *
+     * @param FormBuilderInterface $builder The builder.
+     * @param array                $options The options.
      */
     public function buildSubmit(FormBuilderInterface $builder, array $options)
     {
-        $currentStep = $options['navigator']->getCurrentStep();
         $map = $options['navigator']->getMap();
+        $currentStep = $options['navigator']->getCurrentStep();
+        $configuration = $currentStep->getConfiguration();
 
         if ($currentStep->getName() !== $map->getFirstStepName()) {
-            $builder->add('_back', 'submit', array(
-                'label' => $currentStep->getPreviousLabel(),
-            ));
+            $builder->add(
+                '_back',
+                'submit',
+                $configuration['options']['previous_options']
+            );
         }
 
         foreach ($options['navigator']->getAvailablePaths() as $i => $path) {
-            $builder->add(sprintf('_path#%d', $i), 'submit', array(
-                'label' => $path->getLabel(),
-            ));
+            $configuration = $path->getConfiguration();
+
+            $builder->add(
+                sprintf('_path#%d', $i),
+                'submit',
+                $configuration['options']['next_options']
+            );
         }
     }
 

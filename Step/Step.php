@@ -64,14 +64,6 @@ class Step implements StepInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreviousLabel()
-    {
-        return $this->configuration['options']['previous_label'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return $this->configuration['type'];

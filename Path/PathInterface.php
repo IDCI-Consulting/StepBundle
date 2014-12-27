@@ -79,13 +79,6 @@ interface PathInterface
     public function resolveDestination(NavigatorInterface $navigator);
 
     /**
-     * Get the link label.
-     *
-     * @return string The link label.
-     */
-    public function getLabel();
-
-    /**
      * Returns the path types used to construct the path.
      *
      * @return PathTypeInterface The path's type.

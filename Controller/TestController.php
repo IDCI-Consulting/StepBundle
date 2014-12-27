@@ -33,8 +33,11 @@ class TestController extends Controller
                 'content'     => '<h1>My content</h1>',
             ))
             ->addStep('personal', 'form', array(
-                'title'       => 'Personal information',
-                'description' => 'The personal data step',
+                'title'            => 'Personal information',
+                'description'      => 'The personal data step',
+                'previous_options' => array(
+                    'label' => 'Retour au début'
+                ),
             ))
             ->addStep('purchase', 'form', array(
                 'title'       => 'Purchase information',
@@ -56,64 +59,72 @@ class TestController extends Controller
             ->addPath(
                 'single',
                 array(
-                    'source'        => 'intro',
-                    'label'         => 'next',
-                    'destination'   => 'personal'
+                    'source'       => 'intro',
+                    'destination'  => 'personal',
+                    'next_options' => array(
+                        'label' => 'next',
+                    ),
                 )
             )
             ->addPath(
                 'conditional_destination',
                 array(
                     'source'        => 'personal',
-                    //'label'         => 'next',
                     'destinations'  => array(
                         'purchase'  => array(
                             'rules' => array()
                         ),
                         'fork2'     => array(
                             'rules' => array()
-                        )
+                        ),
                     )
                 )
             )
             ->addPath(
                 'single',
                 array(
-                    'source'        => 'purchase',
-                    //'label'         => 'next',
-                    'destination'   => 'fork1'
+                    'source'      => 'purchase',
+                    'destination' => 'fork1'
                 )
             )
             ->addPath(
                 'single',
                 array(
-                    'source'        => 'purchase',
-                    'label'         => 'next p',
-                    'destination'   => 'fork2',
+                    'source'       => 'purchase',
+                    'destination'  => 'fork2',
+                    'next_options' => array(
+                        'label' => 'next p',
+                    ),
                 )
             )
             ->addPath(
                 'single',
                 array(
-                    'source'        => 'fork1',
-                    'label'         => 'next f',
-                    'destination'   => 'end'
+                    'source'       => 'fork1',
+                    'destination'  => 'end',
+                    'next_options' => array(
+                        'label' => 'next f',
+                    ),
                 )
             )
             ->addPath(
                 'single',
                 array(
-                    'source'        => 'fork2',
-                    'label'         => 'last',
-                    'destination'   => 'end'
+                    'source'       => 'fork2',
+                    'destination'  => 'end',
+                    'next_options' => array(
+                        'label' => 'last',
+                    ),
                 )
             )
             ->addPath(
                 'end',
                 array(
                     'source'           => 'end',
-                    'label'            => 'Fin',
                     'storage_provider' => 'step.storage.provider.participation',
+                    'next_options'     => array(
+                        'label' => 'Fin',
+                    ),
                 )
             )
             ->getMap()

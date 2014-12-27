@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class FormStepType extends AbstractStepType
 {
@@ -26,5 +27,13 @@ class FormStepType extends AbstractStepType
                 'builder' => array('null', 'Symfony\Component\Form\FormBuilderInterface'),
             ))
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
+    {
+    
     }
 }

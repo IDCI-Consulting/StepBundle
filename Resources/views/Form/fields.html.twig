@@ -1,0 +1,10 @@
+{% block html_content_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+{% block html_content_widget %}
+    <div class="html_text">
+        {% spaceless %}
+            {{ content | raw }}
+        {% endspaceless %}
+    </div>
+{% endblock %}

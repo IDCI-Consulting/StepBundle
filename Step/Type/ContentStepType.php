@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ContentStepType extends AbstractStepType
 {
@@ -26,5 +27,15 @@ class ContentStepType extends AbstractStepType
                 'content' => array('null', 'string')
             ))
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('content', 'html_content', array(
+            'content' => $options['content'],
+        ));
     }
 }

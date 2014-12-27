@@ -122,14 +122,6 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function getLabel()
-    {
-        return $this->configuration['options']['label'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getType()
     {
         return $this->configuration['type'];

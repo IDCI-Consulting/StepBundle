@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 
@@ -30,4 +31,12 @@ interface StepTypeInterface
      * @return StepInterface The built step.
      */
     public function buildStep(StepInterface $step, MapInterface $map, array $options = array());
+
+    /**
+     * Build the navigation step form.
+     *
+     * @param FormBuilderInterface $builder The builder.
+     * @param array                $options The options.
+     */
+    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options);
 }
