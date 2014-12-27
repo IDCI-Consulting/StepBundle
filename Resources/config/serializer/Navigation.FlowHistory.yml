@@ -4,16 +4,16 @@ IDCI\Bundle\StepBundle\Flow\FlowHistory:
     properties:
         doneSteps:
             expose: true
-            groups: [idci_step.flow]
+            groups: [idci_step.navigation]
             serialized_name: doneSteps
             type: array
         fullDoneSteps:
             expose: true
-            groups: [idci_step.flow]
+            groups: [idci_step.navigation]
             serialized_name: fullDoneSteps
             type: array
         takenPaths:
             expose: true
-            groups: [idci_step.flow]
+            groups: [idci_step.navigation]
             serialized_name: takenPaths
             type: array

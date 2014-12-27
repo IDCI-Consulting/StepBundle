@@ -1,0 +1,16 @@
+IDCI\Bundle\StepBundle\Flow\Flow:
+    exclusion_policy: ALL
+
+    properties:
+        currentStep:
+            expose: true
+            groups: [idci_step.navigation]
+            serialized_name: currentStep
+
+        history:
+            expose: true
+            groups: [idci_step.navigation]
+
+        data:
+            expose: true
+            groups: [idci_step.navigation]

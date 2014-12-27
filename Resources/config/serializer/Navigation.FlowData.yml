@@ -4,6 +4,6 @@ IDCI\Bundle\StepBundle\Flow\FlowData:
     properties:
         steps:
             expose: true
-            groups: [idci_step.flow]
+            groups: [idci_step.navigation]
             serialized_name: steps
             type: array
