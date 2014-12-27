@@ -6,6 +6,7 @@ IDCI\Bundle\StepBundle\Flow\Flow:
             expose: true
             groups: [idci_step.navigation]
             serialized_name: currentStep
+            type: string
 
         history:
             expose: true
