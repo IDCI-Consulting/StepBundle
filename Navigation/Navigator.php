@@ -77,8 +77,6 @@ class Navigator extends AbstractNavigator
                 $path = $this->getChoosenPath();
                 $this->moveTo($path->resolveDestination($this));
             }
-
-            //var_dump($this->request->request->get(self::getName()));
         }
     }
 
@@ -89,10 +87,13 @@ class Navigator extends AbstractNavigator
      */
     protected function retrieveFlow()
     {
-        $flow = new Flow();
-        $flowRaw = $this->dataStore->get($this->map->getFingerPrint());
+        $flow = $this->dataStore->get(
+            $this->map->getFingerPrint(),
+            'flow'
+        );
 
-        if (empty($flowRaw)) {
+        if (null === $flow) {
+            $flow = new Flow();
             $flow->setCurrentStep($this->map->getFirstStepName());
         }
 
@@ -134,11 +135,17 @@ class Navigator extends AbstractNavigator
      *
      * @param StepInterface $destination The step destination.
      */
-    private function moveTo(StepInterface $destination)
+    private function moveTo(StepInterface $destination = null)
     {
         $this->resetForm();
-        $this->flow->setCurrentStep($destination->getName());
 
-        $this->saveFlow();
+        if (null === $destination) {
+            $this->hasFinished = true;
+        } else {
+            $this->flow->setCurrentStep($destination->getName());
+            $this->saveFlow();
+            $this->isMoving = true;
+        }
+
     }
 }

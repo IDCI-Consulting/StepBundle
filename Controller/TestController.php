@@ -124,6 +124,14 @@ class TestController extends Controller
             ->createNavigator($map, $request)
         ;
 
+        if ($navigator->isMoving()) {
+            return $this->redirect($this->generateUrl('idci_step'));
+        }
+
+        if ($navigator->hasFinished()) {
+            die('fini');
+        }
+
         return array('navigator' => $navigator);
     }
 }

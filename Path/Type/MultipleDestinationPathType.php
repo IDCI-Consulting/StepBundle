@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 abstract class MultipleDestinationPathType extends AbstractPathType
 {
@@ -41,5 +42,15 @@ abstract class MultipleDestinationPathType extends AbstractPathType
         }
 
         return $path;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveDestination(array $options, NavigatorInterface $navigator)
+    {
+        $names = array_keys($options['destinations']);
+
+        return $names[0];
     }
 }

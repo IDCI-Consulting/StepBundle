@@ -46,6 +46,16 @@ abstract class AbstractNavigator implements NavigatorInterface
     protected $flow;
 
     /**
+     * @var boolean
+     */
+    protected $isMoving;
+
+    /**
+     * @var boolean
+     */
+    protected $hasFinished;
+
+    /**
      * Constructor
      *
      * @param FormFactoryInterface      $formFactory    The form factory.
@@ -67,6 +77,8 @@ abstract class AbstractNavigator implements NavigatorInterface
         $this->map         = $map;
         $this->request     = $request;
         $this->logger      = $logger;
+        $this->isMoving    = false;
+        $this->hasFinished = false;
 
         if ($logger) {
             $this->logger->startInit();
@@ -139,5 +151,21 @@ abstract class AbstractNavigator implements NavigatorInterface
     public function getAvailablePaths()
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStep());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isMoving()
+    {
+        return $this->isMoving;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasFinished()
+    {
+        return $this->hasFinished;
     }
 }
