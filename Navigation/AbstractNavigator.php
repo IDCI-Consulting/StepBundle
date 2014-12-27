@@ -185,8 +185,20 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function clearFlow()
+    public function save()
     {
-        return $this->getFlow();
+        $this->dataStore->set(
+            $this->map->getFingerPrint(),
+            'flow',
+            $this->flow
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->dataStore->clear($this->map->getFingerPrint());
     }
 }

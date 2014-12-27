@@ -50,18 +50,6 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Save the flow.
-     */
-    private function saveFlow()
-    {
-        $this->dataStore->set(
-            $this->map->getFingerPrint(),
-            'flow',
-            $this->flow
-        );
-    }
-
-    /**
      * Returns the choosen path.
      *
      * @return PathInterface | null
@@ -140,7 +128,7 @@ class Navigator extends AbstractNavigator
             if (null !== $destination) {
                 $this->hasNavigated = true;
                 $this->getFlow()->setCurrentStep($destination->getName());
-                $this->saveFlow();
+                $this->save();
             }
             $this->resetForm();
         }

@@ -80,7 +80,7 @@ class SessionDataStore extends AbstractSerializerDataStore
     /**
      * {@inheritdoc}
      */
-    public function clear($namespace, $key = null)
+    public function clear($namespace)
     {
         $this->session->remove($this->formatName($namespace));
     }

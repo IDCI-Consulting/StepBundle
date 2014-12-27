@@ -60,7 +60,12 @@ interface NavigatorInterface
     public function hasFinished();
 
     /**
-     * Clear the navigation flow.
+     * Save the navigation.
      */
-    public function clearFlow();
+    public function save();
+
+    /**
+     * Clear the navigation.
+     */
+    public function clear();
 }
