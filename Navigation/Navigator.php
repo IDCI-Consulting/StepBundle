@@ -30,9 +30,16 @@ class Navigator extends AbstractNavigator
     private function getFormBuilder()
     {
         if (null === $this->formBuilder) {
+            $data = null;
+            $currentStepName = $this->getFlow()->getCurrentStep();
+            if ($this->getFlow()->getData()->hasStep($currentStepName)) {
+                $data = array(
+                    '_data' => $this->getFlow()->getData()->getStep($currentStepName)
+                );
+            }
             $this->formBuilder = $this->formFactory->createBuilder(
                 new NavigatorType(),
-                null,
+                $data, // TODO: $this->getCurrentStepData()
                 array('navigator' => $this)
             );
         }
@@ -57,10 +64,17 @@ class Navigator extends AbstractNavigator
     private function getChoosenPath()
     {
         if ($this->getForm()->isValid()) {
-            var_dump($this->getForm()->isEmpty());
+
+            if ($this->getForm()->has('_data')) {
+                $this->getFlow()->getData()->setStep(
+                    $this->getFlow()->getCurrentStep(),
+                    $this->getForm()->get('_data')->getData()
+                );
+            }
+
             foreach ($this->getAvailablePaths() as $i => $path) {
                 if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
-                    $this->flow->getHistory()->addTakenPath($path->getSource(), $i);
+                    $this->getFlow()->getHistory()->addTakenPath($path->getSource(), $i);
 
                     return $path;
                 }

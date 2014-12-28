@@ -139,6 +139,11 @@ services:
         tags:
             - { name: form.type, alias: html_content }
 
+    form.type.form_content:
+        class: IDCI\Bundle\StepBundle\Step\Form\FormContentType
+        tags:
+            - { name: form.type, alias: form_content }
+
 
     # Twig Extensions
 

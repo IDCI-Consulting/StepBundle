@@ -32,12 +32,9 @@ class FormStepType extends AbstractStepType
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($options['builder']->all() as $fieldName => $subBuilder) {
-            $builder->add(
-                $fieldName,
-                $subBuilder->getType()->getInnerType(),
-                $subBuilder->getOptions()
-            );
-        }
+        $builder->add('_data', 'form_content', array(
+            'label'   => $options['title'],
+            'builder' => $options['builder']
+        ));
     }
 }
