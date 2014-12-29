@@ -19,7 +19,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function hasStep($name)
+    public function hasStepData($name)
     {
         return isset($this->steps[$name]);
     }
@@ -27,7 +27,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getStep($name)
+    public function getStepData($name)
     {
         if (!$this->hasStep($name)) {
             throw new \LogicException(sprintf(
@@ -42,7 +42,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function setStep($name, array $data)
+    public function setStepData($name, array $data)
     {
         $this->steps[$name] = $data;
     }
@@ -50,7 +50,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function unsetStep($name)
+    public function unsetStepData($name)
     {
         unset($this->steps[$name]);
     }

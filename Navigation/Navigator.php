@@ -32,9 +32,9 @@ class Navigator extends AbstractNavigator
         if (null === $this->formBuilder) {
             $data = null;
             $currentStepName = $this->getFlow()->getCurrentStep();
-            if ($this->getFlow()->getData()->hasStep($currentStepName)) {
+            if ($this->getFlow()->getData()->hasStepData($currentStepName)) {
                 $data = array(
-                    '_data' => $this->getFlow()->getData()->getStep($currentStepName)
+                    '_data' => $this->getFlow()->getData()->getStepData($currentStepName)
                 );
             }
             $this->formBuilder = $this->formFactory->createBuilder(
@@ -66,7 +66,7 @@ class Navigator extends AbstractNavigator
         if ($this->getForm()->isValid()) {
 
             if ($this->getForm()->has('_data')) {
-                $this->getFlow()->getData()->setStep(
+                $this->getFlow()->getData()->setStepData(
                     $this->getFlow()->getCurrentStep(),
                     $this->getForm()->get('_data')->getData()
                 );

@@ -16,7 +16,7 @@ interface FlowDataInterface
      *
      * @return boolean True if it exists a data for the step, false otherwise.
      */
-    public function hasStep($name);
+    public function hasStepData($name);
 
     /**
      * Get the data of a step.
@@ -27,7 +27,7 @@ interface FlowDataInterface
      *
      * @throws \LogicException if there is no associated data for the step.
      */
-    public function getStep($name);
+    public function getStepData($name);
 
     /**
      * Set the data of a step.
@@ -35,12 +35,12 @@ interface FlowDataInterface
      * @param string $name The identifier name of the step.
      * @param array  $data The associated data.
      */
-    public function setStep($name, array $data);
+    public function setStepData($name, array $data);
 
     /**
      * Unset the data for a step.
      *
      * @param string $name The identifier name of the step.
      */
-    public function unsetStep($name);
+    public function unsetStepData($name);
 }
