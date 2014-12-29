@@ -57,11 +57,11 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Returns the choosen path.
+     * Returns the chosen path.
      *
      * @return PathInterface|null
      */
-    private function getChoosenPath()
+    private function getChosenPath()
     {
         if ($this->getForm()->isValid()) {
 
@@ -81,7 +81,7 @@ class Navigator extends AbstractNavigator
             }
 
             throw new \LogicException(sprintf(
-                'The choosen path seem to disapear magically'
+                'The chosen path seem to disapear magically'
             ));
         }
 
@@ -105,7 +105,7 @@ class Navigator extends AbstractNavigator
             return $previousStep;
         }
 
-        $path = $this->getChoosenPath();
+        $path = $this->getChosenPath();
 
         if (null === $path) {
             return null;
