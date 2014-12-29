@@ -29,7 +29,7 @@ class FlowData implements FlowDataInterface
      */
     public function getStepData($name)
     {
-        if (!$this->hasStep($name)) {
+        if (!$this->hasStepData($name)) {
             throw new \LogicException(sprintf(
                 'No step "%s" found.',
                 $name
