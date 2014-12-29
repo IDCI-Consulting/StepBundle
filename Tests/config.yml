@@ -6,3 +6,8 @@ framework:
     form: ~
     session:
         storage_id: session.storage.mock_file
+    router:
+        resource: routing.yml
+        strict_requirements: ~
+    templating:
+        engines: ['twig']
