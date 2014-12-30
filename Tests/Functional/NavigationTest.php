@@ -9,10 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NavigationTest extends \PHPUnit_Framework_TestCase
 {
-    private static $request;
-    private static $map;
-    private static $flow;
-    private static $navigator;
+    private static $container;
 
     public static function setUpBeforeClass()
     {
@@ -20,11 +17,13 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
 
         $kernel = new \AppKernel('test', true);
         $kernel->boot();
-        self::$request = new Request();
-        self::$request->setMethod('POST');
-        $container = $kernel->getContainer();
 
-        self::$map = $container
+        self::$container = $kernel->getContainer();
+    }
+
+    public function setUp()
+    {
+        $this->map = self::$container
             ->get('idci_step.map.builder.factory')
             ->createNamedBuilder('test map')
             ->addStep('intro', 'html', array(
@@ -38,7 +37,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 'previous_options' => array(
                     'label' => 'Retour au début',
                 ),
-                'builder' => $container->get('form.factory')->createBuilder()
+                'builder' => self::$container->get('form.factory')->createBuilder()
                     ->add('first_name', 'text')
                     ->add('last_name', 'text')
                 ,
@@ -46,7 +45,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             ->addStep('purchase', 'form', array(
                 'title'       => 'Purchase information',
                 'description' => 'The purchase data step',
-                'builder' => $container->get('form.factory')->createBuilder()
+                'builder' => self::$container->get('form.factory')->createBuilder()
                     ->add('item', 'text')
                     ->add('purchase_date', 'datetime')
                 ,
@@ -54,14 +53,14 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             ->addStep('fork1', 'form', array(
                 'title'       => 'Fork1 information',
                 'description' => 'The fork1 data step',
-                'builder' => $container->get('form.factory')->createBuilder()
+                'builder' => self::$container->get('form.factory')->createBuilder()
                     ->add('fork1_data', 'textarea')
                 ,
             ))
             ->addStep('fork2', 'form', array(
                 'title'       => 'Fork2 information',
                 'description' => 'The fork2 data step',
-                'builder' => $container->get('form.factory')->createBuilder()
+                'builder' => self::$container->get('form.factory')->createBuilder()
                     ->add('fork2_data', 'textarea')
                 ,
             ))
@@ -143,13 +142,6 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             )
             ->getMap()
         ;
-
-        self::$navigator = $container
-            ->get('idci_step.navigator.factory')
-            ->createNavigator(self::$map, self::$request)
-        ;
-
-        self::$flow = self::$navigator->getFlow();
     }
 
     public function getData()
@@ -158,18 +150,203 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
 
         # 0
         $data[] = array(
+            'GET',
             null,
             'intro',
-            array('first_name')
+            0,
+            array(),
+            array()
         );
 
         # 1
         $data[] = array(
+            'POST',
             'intro',
             'personal',
+            0,
+            array(),
+            array()
+        );
+
+        # 2
+        $data[] = array(
+            'POST',
+            'personal',
+            'purchase',
+            0,
             array(
                 'first_name' => 'John',
                 'last_name' => 'Doe'
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                )
+            )
+        );
+
+        # 3
+        $date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2015-01-01T00:00:00');
+        $data[] = array(
+            'POST',
+            'purchase',
+            'fork1',
+            0,
+            array(
+                'item' => 'foo',
+                'purchase_date' => array(
+                    'date' => array(
+                        'year' => '2015',
+                        'month' => '1',
+                        'day' => '1'
+                    ),
+                    'time' => array(
+                        'hour' => '0',
+                        'minute' => '0'
+                    )
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date
+                )
+            )
+        );
+
+        # 4
+        $data[] = array(
+            'POST',
+            'fork1',
+            'end',
+            0,
+            array(
+                'fork1_data' => 'foo'
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                ),
+                'fork1' => array(
+                    'fork1_data' => 'foo'
+                )
+            )
+        );
+
+        # 5
+        $data[] = array(
+            'POST',
+            'purchase',
+            'fork1',
+            false,
+            array(),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                ),
+                'fork1' => array(
+                    'fork1_data' => 'foo'
+                )
+            )
+        );
+
+        # 6
+        $data[] = array(
+            'POST',
+            'personal',
+            'purchase',
+            false,
+            array(),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                ),
+                'fork1' => array( // TO CORRECT (TO REMOVE?)
+                    'fork1_data' => 'foo'
+                )
+            )
+        );
+
+        # 7
+        $date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
+        $data[] = array(
+            'POST',
+            'purchase',
+            'fork2',
+            1,
+            array(
+                'item' => 'foo',
+                'purchase_date' => array(
+                    'date' => array(
+                        'year' => '2016',
+                        'month' => '1',
+                        'day' => '1'
+                    ),
+                    'time' => array(
+                        'hour' => '0',
+                        'minute' => '0'
+                    )
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date
+                ),
+                'fork1' => array( // TO CORRECT (TO REMOVE?)
+                    'fork1_data' => 'foo'
+                )
+            )
+        );
+
+        # 8
+        $data[] = array(
+            'POST',
+            'fork2',
+            'end',
+            1,
+            array(
+                'fork2_data' => 'bar'
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                ),
+                'fork1' => array( // TO CORRECT (TO REMOVE?)
+                    'fork1_data' => 'foo'
+                ),
+                'fork2' => array(
+                    'fork2_data' => 'bar'
+                )
             )
         );
 
@@ -179,31 +356,51 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getData
      */
-    public function testNavigate($previousStep, $currentStep, array $arguments = array())
+    public function testNavigate(
+        $method,
+        $previousStep,
+        $currentStep,
+        $destination,
+        array $arguments,
+        array $expectedData
+    )
     {
-        $request = self::$request;
-        $flow = self::$flow;
-        $map = self::$map;
+        $request = new Request();
+        $request->setMethod($method);
+        $map = $this->map;
+
+        $requestParameters = array(
+            '_map_name' => $map->getName(),
+            '_map_finger_print' => $map->getFingerPrint(),
+            '_current_step' => $currentStep
+        );
+
+        if (false === $destination) {
+            $requestParameters['_back'] = true;
+        } else {
+            $requestParameters[sprintf('_path#%d', $destination)] = true;
+        }
+
+        if (!empty($arguments)) {
+            $requestParameters['_data'] = $arguments;
+        }
+
+        $request->request->set('idci_step_navigator', $requestParameters);
+
+        $navigator = self::$container
+            ->get('idci_step.navigator.factory')
+            ->createNavigator($map, $request)
+        ;
+
+        $flow = $navigator->getFlow();
         $history = $flow->getHistory();
         $data = $flow->getData();
 
-        $arguments = array_merge(
-            array(
-                '_map_name' => 'test map',
-                '_map_finger_print' => '123abc',
-                '_current_step' => $previousStep,
-                '_previous_step' => $currentStep,
-                '_path0' => true
-            ),
-            $arguments
-        );
-        $request->request->set('idci_step_navigator', $arguments);
-
-        var_dump('---', $flow->getPreviousStep(), $flow->getCurrentStep(), $previousStep, $currentStep);
-        self::$navigator->navigate();
-        var_dump('...', $flow->getPreviousStep(), $flow->getCurrentStep(), $previousStep, $currentStep);
-
         $this->assertEquals($previousStep, $flow->getPreviousStep());
         $this->assertEquals($currentStep, $flow->getCurrentStep());
+
+        foreach ($expectedData as $step => $value) {
+            $this->assertEquals($value, $data->getStepData($step));
+        }
     }
 }
