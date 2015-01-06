@@ -8,19 +8,13 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 
-abstract class AbstractNavigator implements NavigatorInterface 
+abstract class AbstractNavigator implements NavigatorInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    protected $formFactory;
-
     /**
      * @var DataStoreInterface
      */
@@ -59,21 +53,18 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * Constructor
      *
-     * @param FormFactoryInterface      $formFactory    The form factory.
      * @param DataStoreInterface        $dataStore      The data store using to keep the flow.
      * @param MapInterface              $map            The map to navigate.
      * @param Request                   $request        The HTTP request.
      * @param NavigationLoggerInterface $logger         The logger.
      */
     public function __construct(
-        FormFactoryInterface      $formFactory,
         DataStoreInterface        $dataStore,
         MapInterface              $map,
         Request                   $request,
         NavigationLoggerInterface $logger = null
     )
     {
-        $this->formFactory  = $formFactory;
         $this->dataStore    = $dataStore;
         $this->map          = $map;
         $this->request      = $request;
@@ -93,16 +84,9 @@ abstract class AbstractNavigator implements NavigatorInterface
     }
 
     /**
-     * Returns the navigation form.
-     *
-     * @return Symfony\Component\Form\FormInterface
-     */
-    abstract public function getForm();
-
-    /**
      * Navigate.
      */
-    abstract public function navigate();
+    abstract protected function navigate();
 
     /**
      * Returns the navigator name.
@@ -145,14 +129,6 @@ abstract class AbstractNavigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function createStepView()
-    {
-        return $this->getForm()->createView();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentStep()
     {
         return $this->getMap()->getStep($this->getFlow()->getCurrentStep());
@@ -164,6 +140,23 @@ abstract class AbstractNavigator implements NavigatorInterface
     public function getPreviousStep()
     {
         return $this->getMap()->getStep($this->getFlow()->getPreviousStep());
+    }
+
+    /**
+     * Returns the current step data.
+     *
+     * @return array The data.
+     */
+    protected function getCurrentStepData()
+    {
+        $data = array();
+
+        $currentStepName = $this->getFlow()->getCurrentStep();
+        if ($this->getFlow()->getData()->hasStepData($currentStepName)) {
+            $data = $this->getFlow()->getData()->getStepData($currentStepName);
+        }
+
+        return $data;
     }
 
     /**

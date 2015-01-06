@@ -53,6 +53,13 @@ interface NavigatorInterface
     public function getAvailablePaths();
 
     /**
+     * Returns the taken path
+     *
+     * @return PathInterface|null
+     */
+    public function getTakenPath();
+
+    /**
      * Returns true if the navigator has navigated.
      *
      * @return boolean
