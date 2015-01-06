@@ -43,4 +43,11 @@ interface FlowDataInterface
      * @param string $name The identifier name of the step.
      */
     public function unsetStepData($name);
+
+    /**
+     * Get the data of all the steps in an array.
+     *
+     * @return array The data.
+     */
+    public function getDataArray();
 }
