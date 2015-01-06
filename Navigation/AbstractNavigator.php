@@ -84,11 +84,6 @@ abstract class AbstractNavigator implements NavigatorInterface
     }
 
     /**
-     * Navigate.
-     */
-    abstract protected function navigate();
-
-    /**
      * Returns the navigator name.
      *
      * @return string
@@ -141,6 +136,13 @@ abstract class AbstractNavigator implements NavigatorInterface
     {
         return $this->getMap()->getStep($this->getFlow()->getPreviousStep());
     }
+
+    /**
+     * Get the destination step.
+     *
+     * @return StepInterface|null The destination step.
+     */
+    abstract protected function getDestinationStep();
 
     /**
      * Returns the current step data.
@@ -201,5 +203,21 @@ abstract class AbstractNavigator implements NavigatorInterface
     public function clear()
     {
         $this->dataStore->clear($this->map->getFingerPrint());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function navigate()
+    {
+        if ($this->request->isMethod('POST')) {
+            $destination = $this->getDestinationStep();
+
+            if (null !== $destination) {
+                $this->hasNavigated = true;
+                $this->getFlow()->setCurrentStep($destination->getName());
+                $this->save();
+            }
+        }
     }
 }

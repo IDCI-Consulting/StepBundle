@@ -40,6 +40,13 @@ class Navigator extends AbstractNavigator
     protected $takenPath = false;
 
     /**
+     * The destination step.
+     *
+     * @var StepInterface|null
+     */
+    protected $destinationStep = false;
+
+    /**
      * Constructor
      *
      * @param FormFactoryInterface      $formFactory    The form factory.
@@ -119,40 +126,37 @@ class Navigator extends AbstractNavigator
     }
 
     /**
-     * Retrieve the destination.
-     *
-     * @param FormInterface $form The form.
-     * @param FlowInterface $flow The flow.
-     *
-     * @return StepInterface|null The reached destination step.
+     * {@inheritdoc}
      */
-    protected function retrieveDestination(FormInterface $form, FlowInterface $flow)
+    protected function getDestinationStep()
     {
-        if ($form->has('_back') && $form->get('_back')->isClicked()) {
-            $previousStep = $this
-                ->getMap()
-                ->getStep($flow->getPreviousStep())
-            ;
-            $flow->getHistory()->retraceTakenPath($previousStep);
+        if (false === $this->destinationStep) {
+            $this->destinationStep = null;
+            $form = $this->getForm();
 
-            return $previousStep;
+            if ($form->has('_back') && $form->get('_back')->isClicked()) {
+                $flow = $this->getFlow();
+                $previousStep = $this
+                    ->getMap()
+                    ->getStep($flow->getPreviousStep())
+                ;
+                $flow->getHistory()->retraceTakenPath($previousStep);
+
+                $this->destinationStep = $previousStep;
+            } else {
+                $path = $this->getTakenPath();
+
+                if (null !== $path) {
+                    $this->destinationStep = $path->resolveDestination($this);
+
+                    if (null === $this->destinationStep) {
+                        $this->hasFinished = true;
+                    }
+                }
+            }
         }
 
-        $path = $this->getTakenPath();
-
-        if (null === $path) {
-            return null;
-        }
-
-        $destinationStep = $path->resolveDestination($this);
-
-        if (null === $destinationStep) {
-            $this->hasFinished = true;
-
-            return null;
-        }
-
-        return $destinationStep;
+        return $this->destinationStep;
     }
 
     /**
@@ -168,24 +172,6 @@ class Navigator extends AbstractNavigator
         }
 
         return $this->form;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function navigate()
-    {
-        if ($this->request->isMethod('POST')) {
-            $form = $this->getForm();
-            $flow = $this->getFlow();
-            $destination = $this->retrieveDestination($form, $flow);
-
-            if (null !== $destination) {
-                $this->hasNavigated = true;
-                $flow->setCurrentStep($destination->getName());
-                $this->save();
-            }
-        }
     }
 
     /**
