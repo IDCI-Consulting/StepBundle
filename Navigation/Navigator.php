@@ -138,7 +138,7 @@ class Navigator extends AbstractNavigator
             return $previousStep;
         }
 
-        $path = $this->getTakenPath($form, $flow);
+        $path = $this->getTakenPath();
 
         if (null === $path) {
             return null;
