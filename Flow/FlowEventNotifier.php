@@ -11,6 +11,24 @@ namespace IDCI\Bundle\StepBundle\Flow;
 class FlowEventNotifier implements FlowEventNotifierInterface
 {
     /**
+     * The list of listeners indexed by identifier alias.
+     *
+     * @var array
+     */
+    protected $listeners;
+
+    /**
+     * Add a listener.
+     *
+     * @param string                $alias    The identifier alias of the listener.
+     * @param FlowListenerInterface $listener The listener.
+     */
+    public function addListener($alias, FlowListenerInterface $listener)
+    {
+        $this->listeners[$alias] = $listener;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getListener($alias)

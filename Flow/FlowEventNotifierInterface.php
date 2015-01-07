@@ -13,7 +13,7 @@ interface FlowEventNotifierInterface
     /**
      * Notify a listener.
      *
-     * @param string        $alias The alias of the listener.
+     * @param string        $alias The identifier alias of the listener.
      * @param FlowInterface $flow  The flow.
      * @param array         $data  The associated data.
      */
@@ -30,7 +30,7 @@ interface FlowEventNotifierInterface
      *     // ...
      *   )
      *
-     * @param string        $alias The alias of the listener.
+     * @param string        $alias The identifier alias of the listener.
      * @param FlowInterface $flow  The flow.
      */
     public function notify(array $listeners, FlowInterface $flow);
