@@ -266,7 +266,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         );
 
         # 6
-        $data[] = array(
+        /*$data[] = array(
             'POST',
             'personal',
             'purchase',
@@ -348,7 +348,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                     'fork2_data' => 'bar'
                 )
             )
-        );
+        );*/
 
         return $data;
     }

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreRegistryInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowEventNotifierInterface;
 
 class NavigatorFactory implements NavigatorFactoryInterface
 {
@@ -26,6 +27,11 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $formFactory;
 
     /**
+     * @var FlowEventNotifierInterface
+     */
+    protected $flowEventNotifier;
+
+    /**
      * @var NavigationLoggerInterface
      */
     private $logger;
@@ -33,19 +39,22 @@ class NavigatorFactory implements NavigatorFactoryInterface
     /**
      * Constructor
      *
-     * @param DataStoreRegistryInterface $registry    The data store registry.
-     * @param FormFactoryInterface       $formFactory The form factory.
-     * @param NavigationLoggerInterface  $logger      The data store registry.
+     * @param DataStoreRegistryInterface $registry          The data store registry.
+     * @param FormFactoryInterface       $formFactory       The form factory.
+     * @param FlowEventNotifierInterface $flowEventNotifier The flow event notifier.
+     * @param NavigationLoggerInterface  $logger            The data store registry.
      */
     public function __construct(
         DataStoreRegistryInterface $registry,
         FormFactoryInterface       $formFactory,
+        FlowEventNotifierInterface $flowEventNotifier,
         NavigationLoggerInterface  $logger
     )
     {
-        $this->registry    = $registry;
-        $this->formFactory = $formFactory;
-        $this->logger      = $logger;
+        $this->registry          = $registry;
+        $this->formFactory       = $formFactory;
+        $this->flowEventNotifier = $flowEventNotifier;
+        $this->logger            = $logger;
     }
 
     /**
@@ -58,6 +67,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
             $this->guessDataStore($map),
             $map,
             $request,
+            $this->flowEventNotifier,
             $this->logger
         );
     }

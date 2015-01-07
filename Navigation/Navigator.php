@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowEventNotifierInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\DataStore\DataStoreInterface;
 
@@ -49,18 +50,20 @@ class Navigator extends AbstractNavigator
     /**
      * Constructor
      *
-     * @param FormFactoryInterface      $formFactory    The form factory.
-     * @param DataStoreInterface        $dataStore      The data store using to keep the flow.
-     * @param MapInterface              $map            The map to navigate.
-     * @param Request                   $request        The HTTP request.
-     * @param NavigationLoggerInterface $logger         The logger.
+     * @param FormFactoryInterface       $formFactory       The form factory.
+     * @param DataStoreInterface         $dataStore         The data store using to keep the flow.
+     * @param MapInterface               $map               The map to navigate.
+     * @param Request                    $request           The HTTP request.
+     * @param FlowEventNotifierInterface $flowEventNotifier The flow event notifier.
+     * @param NavigationLoggerInterface  $logger            The logger.
      */
     public function __construct(
-        FormFactoryInterface      $formFactory,
-        DataStoreInterface        $dataStore,
-        MapInterface              $map,
-        Request                   $request,
-        NavigationLoggerInterface $logger = null
+        FormFactoryInterface       $formFactory,
+        DataStoreInterface         $dataStore,
+        MapInterface               $map,
+        Request                    $request,
+        FlowEventNotifierInterface $flowEventNotifier,
+        NavigationLoggerInterface  $logger = null
     )
     {
         $this->formFactory  = $formFactory;
@@ -69,6 +72,7 @@ class Navigator extends AbstractNavigator
             $dataStore,
             $map,
             $request,
+            $flowEventNotifier,
             $logger
         );
     }
@@ -98,7 +102,10 @@ class Navigator extends AbstractNavigator
             $this->takenPath = null;
             $form = $this->getForm();
 
-            if ($form->isValid()) {
+            if (
+                $form->isValid() &&
+                (!$form->has('_back') || !$form->get('_back')->isClicked())
+            ) {
                 $flow = $this->getFlow();
 
                 if ($form->has('_data')) {
@@ -117,7 +124,7 @@ class Navigator extends AbstractNavigator
                 }
 
                 throw new \LogicException(sprintf(
-                    'The chosen path seem to disapear magically'
+                    'The taken path seem to disapear magically'
                 ));
             }
         }

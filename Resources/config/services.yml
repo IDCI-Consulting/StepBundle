@@ -16,9 +16,7 @@ parameters:
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
-    idci_step.flow.provider.class: IDCI\Bundle\StepBundle\Flow\FlowProvider
-    idci_step.flow.data.class: IDCI\Bundle\StepBundle\Flow\DataFlow
-    idci_step.flow.descriptor.class: IDCI\Bundle\StepBundle\Flow\FlowDescriptor
+    idci_step.flow.event_notifier.class: IDCI\Bundle\StepBundle\Flow\FlowEventNotifier
 
     idci_step.data_store.registry.class: IDCI\Bundle\StepBundle\DataStore\DataStoreRegistry
     idci_step.data_store.session.class: IDCI\Bundle\StepBundle\DataStore\SessionDataStore
@@ -75,6 +73,7 @@ services:
         arguments:
             - @idci_step.data_store.registry
             - @form.factory
+            - @idci_step.flow.event_notifier
             - @idci_step.navigation.logger
 
 
@@ -112,6 +111,12 @@ services:
         class: %idci_step.path.type.end.class%
         tags:
             - { name: idci_step.path.type, alias: end }
+
+
+    # Flow
+
+    idci_step.flow.event_notifier:
+        class: %idci_step.flow.event_notifier.class%
 
 
     # Logger

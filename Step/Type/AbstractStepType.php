@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -25,6 +25,10 @@ abstract class AbstractStepType implements StepTypeInterface
                 'is_first'         => false,
                 'previous_options' => array(
                     'label' => '< Previous'
+                ),
+                'listeners'        => array(
+                    'before' => array(),
+                    'after'  => array()
                 )
             ))
             ->setAllowedTypes(array(
@@ -32,6 +36,7 @@ abstract class AbstractStepType implements StepTypeInterface
                 'description'      => array('null', 'string'),
                 'is_first'         => array('bool'),
                 'previous_options' => array('array'),
+                'listeners'        => array('array'),
             ))
         ;
     }
