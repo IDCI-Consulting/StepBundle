@@ -46,4 +46,14 @@ interface FlowHistoryInterface
      * @return array The full taken paths.
      */
     public function getFullTakenPaths();
+
+    /**
+     * Whether or not a step has been done.
+     *
+     * @param StepInterface $step The step.
+     * @param boolean       $full Whether or not checking in the full history.
+     *
+     * @return boolean True if the step has been done, false otherwise.
+     */
+    public function hasDoneStep(StepInterface $step, $full = false);
 }

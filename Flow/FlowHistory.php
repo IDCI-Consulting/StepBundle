@@ -92,4 +92,21 @@ class FlowHistory implements FlowHistoryInterface
     {
         return $this->fullTakenPaths;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasDoneStep(StepInterface $step, $full = false)
+    {
+        $takenPaths = (bool)$full ? $this->fullTakenPaths : $this->takenPaths;
+        $stepName = $step->getName();
+
+        foreach ($takenPaths as $takenPath) {
+            if ($takenPaths['source'] === $stepName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
