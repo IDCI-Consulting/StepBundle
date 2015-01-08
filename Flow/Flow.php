@@ -26,13 +26,19 @@ class Flow implements FlowInterface
     private $data;
 
     /**
+     * @var FlowDataInterface
+     */
+    private $remindedData;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->currentStep = null;
-        $this->history     = new FlowHistory();
-        $this->data        = new FlowData();
+        $this->currentStep  = null;
+        $this->history      = new FlowHistory();
+        $this->data         = new FlowData();
+        $this->remindedData = new FlowData();
     }
 
     /**
@@ -99,6 +105,24 @@ class Flow implements FlowInterface
     public function setData(FlowDataInterface $data)
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRemindedData()
+    {
+        return $this->remindedData;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRemindedData(FlowDataInterface $data)
+    {
+        $this->remindedData = $data;
 
         return $this;
     }

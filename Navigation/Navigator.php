@@ -109,9 +109,16 @@ class Navigator extends AbstractNavigator
                 $flow = $this->getFlow();
 
                 if ($form->has('_data')) {
+                    $data = $form->get('_data')->getData();
+
                     $flow->getData()->setStepData(
                         $flow->getCurrentStep(),
-                        $form->get('_data')->getData()
+                        $data
+                    );
+
+                    $flow->getRemindedData()->setStepData(
+                        $flow->getCurrentStep(),
+                        $data
                     );
                 }
 
@@ -147,7 +154,13 @@ class Navigator extends AbstractNavigator
                     ->getMap()
                     ->getStep($flow->getPreviousStep())
                 ;
-                $flow->getHistory()->retraceTakenPath($previousStep);
+
+                $retracedPaths = $flow->getHistory()->retraceTakenPath($previousStep);
+                $data = $flow->getData();
+
+                foreach ($retracedPaths as $retracedPath) {
+                    $data->unsetStepData($retracedPath['source']);
+                }
 
                 $this->destinationStep = $previousStep;
             } else {
