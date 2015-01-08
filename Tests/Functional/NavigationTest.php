@@ -155,6 +155,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             'intro',
             0,
             array(),
+            array(),
             array()
         );
 
@@ -164,6 +165,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             'intro',
             'personal',
             0,
+            array(),
             array(),
             array()
         );
@@ -177,6 +179,12 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             array(
                 'first_name' => 'John',
                 'last_name' => 'Doe'
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                )
             ),
             array(
                 'personal' => array(
@@ -216,6 +224,16 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                     'item' => 'foo',
                     'purchase_date' => $date
                 )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date
+                )
             )
         );
 
@@ -235,7 +253,20 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                    'purchase_date' => $date
+                ),
+                'fork1' => array(
+                    'fork1_data' => 'foo'
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date
                 ),
                 'fork1' => array(
                     'fork1_data' => 'foo'
@@ -257,7 +288,20 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                    'purchase_date' => $date
+                ),
+                'fork1' => array(
+                    'fork1_data' => 'foo'
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date
                 ),
                 'fork1' => array(
                     'fork1_data' => 'foo'
@@ -266,7 +310,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         );
 
         # 6
-        /*$data[] = array(
+        $data[] = array(
             'POST',
             'personal',
             'purchase',
@@ -279,16 +323,26 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                    'purchase_date' => $date
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
                 ),
-                'fork1' => array( // TO CORRECT (TO REMOVE?)
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => $date
+                ),
+                'fork1' => array(
                     'fork1_data' => 'foo'
                 )
             )
         );
 
         # 7
-        $date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
+        /*$date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
         $data[] = array(
             'POST',
             'purchase',
@@ -362,7 +416,8 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $currentStep,
         $destination,
         array $arguments,
-        array $expectedData
+        array $expectedData,
+        array $expectedRemindedData
     )
     {
         $request = new Request();
@@ -395,12 +450,12 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $flow = $navigator->getFlow();
         $history = $flow->getHistory();
         $data = $flow->getData();
+        $remindedData = $flow->getData();
 
         $this->assertEquals($previousStep, $flow->getPreviousStep());
         $this->assertEquals($currentStep, $flow->getCurrentStep());
 
-        foreach ($expectedData as $step => $value) {
-            $this->assertEquals($value, $data->getStepData($step));
-        }
+        $this->assertEquals($expectedData, $data->getDataArray($step));
+        $this->assertEquals($expectedRemindedData, $remindedData->getDataArray());
     }
 }
