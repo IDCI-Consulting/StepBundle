@@ -7,33 +7,32 @@
 
 namespace IDCI\Bundle\StepBundle\DataStore;
 
-use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\ObjectEvent;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\EventDispatcher\Events;
+use IDCI\Bundle\StepBundle\Serialization\SerializerProviderInterface;
 
 abstract class AbstractSerializerDataStore implements DataStoreInterface,  EventSubscriberInterface
 {
     /**
-     * The serializer.
+     * The serializer provider.
      *
-     * @var SerializerInterface
+     * @var SerializerProviderInterface
      */
-    protected $serializer;
+    protected $serializerProvider;
 
     /**
      * Constructor.
      *
-     * @param SessionInterface    $session    The session.
-     * @param SerializerInterface $serializer The serializer.
+     * @param SerializerProviderInterface $serializerProvider The serializer provider.
      */
     public function __construct(
-        SerializerInterface $serializer
+        SerializerProviderInterface $serializerProvider
     )
     {
-        $this->serializer = $serializer;
+        $this->serializerProvider = $serializerProvider;
     }
 
     /**
@@ -49,8 +48,8 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface,  Event
         if (is_object($data)) {
             $dataClass = get_class($data);
 
-            $serializedData = $this->serializer->serialize(
-                $data,
+            $serializedData = $this->serializerProvider->get()->serialize(
+                clone $data,
                 'json',
                 SerializationContext::create()->setGroups(array('idci_step.navigation'))
             );
@@ -67,6 +66,37 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface,  Event
     }
 
     /**
+     * Deserialize a data.
+     *
+     * @param string $data The JSON encoded data.
+     *
+     * @return mixed The deserialized data.
+     */
+    protected function deserialize($data)
+    {
+        $decodedData = json_decode($data, true);
+
+        // Handle object case.
+        if (is_array($decodedData)) {
+            if (isset($decodedData['_metadata'])) {
+                $deserializedData = $this->serializerProvider->get()->deserialize(
+                    json_encode(
+                        $decodedData['_data']
+                    ),
+                    $decodedData['_metadata']['class'],
+                    'json'
+                );
+
+                return $this->deserializeObject(clone $deserializedData);
+            } else {
+                return $this->deserializeArray($decodedData);
+            }
+        }
+
+        return $decodedData;
+    }
+
+    /**
      * Serialize the data in an array.
      *
      * @param array $data The data.
@@ -79,36 +109,11 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface,  Event
             if (is_array($value)) {
                 $data[$key] = $this->serializeArray($value);
             } else if (is_object($value)) {
-                $data[$key] = $this->serialize($value);
+                $data[$key] = json_decode($this->serialize($value), true);
             }
         }
 
         return $data;
-    }
-
-    /**
-     * Deserialize a data.
-     *
-     * @param string $data The JSON encoded data.
-     *
-     * @return mixed The deserialized data.
-     */
-    protected function deserialize($data)
-    {
-        $decodedData = json_decode($data, true);
-
-        // Handle object case.
-        if (is_array($decodedData) && isset($decodedData['_metadata'])) {
-            return $this->serializer->deserialize(
-                json_encode(
-                    $this->deserializeArray($decodedData['_data'])
-                ),
-                $decodedData['_metadata']['class'],
-                'json'
-            );
-        }
-
-        return $decodedData;
     }
 
     /**
@@ -120,23 +125,114 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface,  Event
      */
     protected function deserializeArray(array $data)
     {
-        foreach ($data as $key => $value) {
-            // Handle object case.
-            if (is_array($value) && isset($value['_metadata'])) {
-                $realData = $value['_data'];
-                if (is_array($realData)) {
-                    $realData = $this->deserializeArray($realData);
-                }
+        if (isset($value['_metadata'])) {
+            $realData = $value['_data'];
+            if (is_array($realData)) {
+                $realData = $this->deserializeArray($realData);
+            }
 
-                $data[$key] = $this->serializer->deserialize(
-                    json_encode($realData),
-                    $value['_metadata']['class'],
-                    'json'
-                );
+            $data = $this->serializerProvider->get()->deserialize(
+                json_encode($realData),
+                $value['_metadata']['class'],
+                'json'
+            );
+        } else {
+            foreach ($data as $key => $value) {
+                if (is_array($value)) {
+                    if (isset($value['_metadata'])) {
+                        $realData = $value['_data'];
+                        if (is_array($realData)) {
+                            $realData = $this->deserializeArray($realData);
+                        }
+
+                        $value = $this->serializerProvider->get()->deserialize(
+                            json_encode($realData),
+                            $value['_metadata']['class'],
+                            'json'
+                        );
+
+                        $data[$key] = $this->deserializeObject($value);
+                    } else {
+                        $data[$key] = $this->deserializeArray($value);
+                    }
+                } elseif (is_object($value)) {
+                    $data[$key] = $this->deserializeObject(clone $value);
+                }
             }
         }
 
         return $data;
+    }
+
+    /**
+     * Serialize the data in an object.
+     *
+     * @param array $data The data.
+     *
+     * @return array The object with serialized data.
+     */
+    protected function serializeObject($object)
+    {
+        $class = new \ReflectionClass($object);
+        $properties = $class->getProperties();
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $value = $property->getValue($object);
+
+            if (is_array($value)) {
+                $property->setValue(
+                    $object,
+                    $this->serializeArray($value)
+                );
+            } elseif (is_object($value)) {
+                $property->setValue(
+                    $object,
+                    $this->serializeObject(clone $value)
+                );
+            }
+        }
+
+        return $object;
+    }
+
+    /**
+     * Deserialize the data in an object.
+     *
+     * @param array $data The data.
+     *
+     * @return array The object with deserialized data.
+     */
+    protected function deserializeObject($object)
+    {
+        $class = new \ReflectionClass($object);
+        $properties = $class->getProperties();
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $value = $property->getValue($object);
+
+            if (is_array($value)) {
+                $property->setValue(
+                    $object,
+                    $this->deserializeArray($value)
+                );
+
+            } elseif (is_object($value)) {
+                $property->setValue(
+                    $object,
+                    $this->deserializeObject(clone $value)
+                );
+            }
+        }
+
+        if ($object instanceof \DateTime) {
+            // Set the current timezone.
+            $now = new \DateTime();
+            $object->setTimezone($now->getTimezone());
+        }
+
+        return $object;
     }
 
     /**
@@ -158,21 +254,6 @@ abstract class AbstractSerializerDataStore implements DataStoreInterface,  Event
      */
     public function onPreSerialize(ObjectEvent $event)
     {
-        $object = $event->getObject();
-
-        $class = new \ReflectionClass($object);
-        $properties = $class->getProperties();
-
-        foreach ($properties as $property) {
-            $property->setAccessible(true);
-            $value = $property->getValue($object);
-
-            if (is_array($value)) {
-                $property->setValue(
-                    $object,
-                    $this->serializeArray($value)
-                );
-            }
-        }
+        $this->serializeObject($event->getObject());
     }
 }

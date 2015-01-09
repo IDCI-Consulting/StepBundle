@@ -275,7 +275,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         );
 
         # 5
-        $data[] = array(
+        /*$data[] = array(
             'POST',
             'purchase',
             'fork1',
@@ -455,7 +455,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($previousStep, $flow->getPreviousStep());
         $this->assertEquals($currentStep, $flow->getCurrentStep());
 
-        $this->assertEquals($expectedData, $data->getDataArray($step));
+        $this->assertEquals($expectedData, $data->getDataArray());
         $this->assertEquals($expectedRemindedData, $remindedData->getDataArray());
     }
 }

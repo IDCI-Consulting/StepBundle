@@ -18,3 +18,9 @@ IDCI\Bundle\StepBundle\Flow\Flow:
             expose: true
             groups: [idci_step.navigation]
             type: IDCI\Bundle\StepBundle\Flow\FlowData
+
+        remindedData:
+            expose: true
+            groups: [idci_step.navigation]
+            serialized_name: remindedData
+            type: IDCI\Bundle\StepBundle\Flow\FlowData

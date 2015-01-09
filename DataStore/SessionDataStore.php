@@ -8,7 +8,7 @@
 namespace IDCI\Bundle\StepBundle\DataStore;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use JMS\Serializer\SerializerInterface;
+use IDCI\Bundle\StepBundle\Serialization\SerializerProviderInterface;
 
 class SessionDataStore extends AbstractSerializerDataStore
 {
@@ -22,17 +22,17 @@ class SessionDataStore extends AbstractSerializerDataStore
     /**
      * Constructor.
      *
-     * @param SerializerInterface $serializer The serializer.
-     * @param SessionInterface    $session    The session.
+     * @param SerializerProviderInterface $serializerProvider The serializer provider.
+     * @param SessionInterface            $session            The session.
      */
     public function __construct(
-        SerializerInterface $serializer,
+        SerializerProviderInterface $serializerProvider,
         SessionInterface $session
     )
     {
         $this->session = $session;
 
-        parent::__construct($serializer);
+        parent::__construct($serializerProvider);
     }
 
     /**
