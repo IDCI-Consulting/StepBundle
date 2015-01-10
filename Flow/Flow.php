@@ -44,19 +44,19 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStep()
-    {
-        return $this->currentStep;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setCurrentStep($step)
     {
         $this->currentStep = $step;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentStep()
+    {
+        return $this->currentStep;
     }
 
     /**
@@ -76,14 +76,6 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getHistory()
-    {
-        return $this->history;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setHistory(FlowHistoryInterface $history)
     {
         $this->history = $history;
@@ -94,9 +86,9 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getHistory()
     {
-        return $this->data;
+        return $this->history;
     }
 
     /**
@@ -112,9 +104,9 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getRemindedData()
+    public function getData()
     {
-        return $this->remindedData;
+        return $this->data;
     }
 
     /**
@@ -125,5 +117,13 @@ class Flow implements FlowInterface
         $this->remindedData = $data;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRemindedData()
+    {
+        return $this->remindedData;
     }
 }

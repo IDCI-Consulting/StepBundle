@@ -58,7 +58,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getDataArray()
+    public function getAll()
     {
         return $this->steps;
     }

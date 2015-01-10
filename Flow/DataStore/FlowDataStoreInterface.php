@@ -8,34 +8,35 @@
 namespace IDCI\Bundle\StepBundle\Flow\DataStore;
 
 use Symfony\Component\HttpFoundation\Request;
-use IDCI\Bundle\StepBundle\Flow\Flow;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 
 interface FlowDataStoreInterface
 {
     /**
      * Set a flow.
      *
-     * @param string  $mapFingerPrint   The map finger print.
-     * @param Request $request          The HTTP request.
-     * @param Flow    $flow             The flow.
+     * @param MapInterface  $map     The map.
+     * @param Request       $request The HTTP request.
+     * @param FlowInterface $flow    The flow.
      */
-    public function set($mapFingerPrint, Request $request, Flow $flow);
+    public function set(MapInterface $map, Request $request, FlowInterface $flow);
 
     /**
      * Get a flow.
      *
-     * @param string  $mapFingerPrint   The map finger print.
-     * @param Request $request          The HTTP request.
+     * @param MapInterface  $map     The map.
+     * @param Request       $request The HTTP request.
      *
-     * @return Flow|null The flow or null if there is no corresponding flow.
+     * @return FlowInterface|null The flow or null if there is no corresponding flow.
      */
-    public function get($mapFingerPrint, Request $request);
+    public function get(MapInterface $map, Request $request);
 
     /**
      * Clear flow.
      *
-     * @param string  $mapFingerPrint   The map finger print.
-     * @param Request $request The HTTP request.
+     * @param MapInterface  $map     The map.
+     * @param Request       $request The HTTP request.
      */
-    public function clear($mapFingerPrint, Request $request);
+    public function clear(MapInterface $map, Request $request);
 }

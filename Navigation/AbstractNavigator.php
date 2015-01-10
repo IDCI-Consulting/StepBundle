@@ -109,7 +109,7 @@ abstract class AbstractNavigator implements NavigatorInterface
     {
         if (null === $this->flow) {
             $this->flow = $this->flowDataStore->get(
-                $this->map->getFingerPrint(),
+                $this->map,
                 $this->request
             );
 
@@ -192,7 +192,7 @@ abstract class AbstractNavigator implements NavigatorInterface
     public function save()
     {
         $this->flowDataStore->set(
-            $this->map->getFingerPrint(),
+            $this->map,
             $this->request,
             $this->flow
         );
@@ -204,7 +204,7 @@ abstract class AbstractNavigator implements NavigatorInterface
     public function clear()
     {
         $this->flowDataStore->clear(
-            $this->map->getFingerPrint(),
+            $this->map,
             $this->request
         );
     }

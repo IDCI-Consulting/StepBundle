@@ -49,5 +49,5 @@ interface FlowDataInterface
      *
      * @return array The data.
      */
-    public function getDataArray();
+    public function getAll();
 }
