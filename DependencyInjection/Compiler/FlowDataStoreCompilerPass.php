@@ -20,11 +20,11 @@ class FlowDataStoreCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.flow.data_store.registry')) {
+        if (!$container->hasDefinition('idci_step.flow.data_store_registry')) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.flow.data_store.registry');
+        $registryDefinition = $container->getDefinition('idci_step.flow.data_store_registry');
         foreach ($container->findTaggedServiceIds('idci_step.flow.data_store') as $id => $tag) {
             $alias = isset($tag[0]['alias'])
                 ? $tag[0]['alias']
@@ -32,7 +32,7 @@ class FlowDataStoreCompilerPass implements CompilerPassInterface
             ;
 
             $registryDefinition->addMethodCall(
-                'set',
+                'setStore',
                 array($alias, new Reference($id))
             );
         }

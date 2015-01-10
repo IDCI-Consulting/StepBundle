@@ -11,11 +11,9 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowEventNotifierInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
-use IDCI\Bundle\StepBundle\DataStore\DataStoreInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 
 class Navigator extends AbstractNavigator
 {
@@ -51,28 +49,25 @@ class Navigator extends AbstractNavigator
      * Constructor
      *
      * @param FormFactoryInterface       $formFactory       The form factory.
-     * @param DataStoreInterface         $dataStore         The data store using to keep the flow.
      * @param MapInterface               $map               The map to navigate.
      * @param Request                    $request           The HTTP request.
-     * @param FlowEventNotifierInterface $flowEventNotifier The flow event notifier.
+     * @param FlowDataStoreInterface     $flowDataStore     The flow data store using to keep the flow.
      * @param NavigationLoggerInterface  $logger            The logger.
      */
     public function __construct(
         FormFactoryInterface       $formFactory,
-        DataStoreInterface         $dataStore,
         MapInterface               $map,
         Request                    $request,
-        FlowEventNotifierInterface $flowEventNotifier,
+        FlowDataStoreInterface     $flowDataStore,
         NavigationLoggerInterface  $logger = null
     )
     {
         $this->formFactory  = $formFactory;
 
         parent::__construct(
-            $dataStore,
             $map,
             $request,
-            $flowEventNotifier,
+            $flowDataStore,
             $logger
         );
     }

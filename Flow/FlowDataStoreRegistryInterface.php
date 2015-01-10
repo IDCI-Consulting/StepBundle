@@ -12,7 +12,7 @@ use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 interface FlowDataStoreRegistryInterface
 {
     /**
-     * Sets a flow datastore identify by a alias.
+     * Sets a flow data store identify by a alias.
      *
      * @param string                 $alias  The store alias.
      * @param FlowDataStoreInterface $store  The store.
@@ -22,9 +22,9 @@ interface FlowDataStoreRegistryInterface
     public function setStore($alias, FlowDataStoreInterface $store);
 
     /**
-     * Returns a flow datastore by alias.
+     * Returns a flow data store by alias.
      *
-     * @param string $alias The alias of the flow datastore.
+     * @param string $alias The alias of the flow data store.
      *
      * @return FlowDataStoreInterface The store
      *
@@ -34,11 +34,11 @@ interface FlowDataStoreRegistryInterface
     public function getStore($alias);
 
     /**
-     * Returns whether the given flow datastore is supported.
+     * Returns whether the given flow data store is supported.
      *
-     * @param string $alias The alias of the flow datastore.
+     * @param string $alias The alias of the flow data store.
      *
-     * @return bool Whether the flow datastore is supported.
+     * @return bool Whether the flow data store is supported.
      */
     public function hasStore($alias);
 }

@@ -55,9 +55,9 @@ class NavigatorFactory implements NavigatorFactoryInterface
     {
         return new Navigator(
             $this->formFactory,
-            $this->guessFlowDataStore($map),
             $map,
             $request,
+            $this->guessFlowDataStore($map),
             $this->logger
         );
     }

@@ -4,39 +4,38 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Flow\DataStore;
 
-interface FlowDataStoreRegistryInterface
+use Symfony\Component\HttpFoundation\Request;
+use IDCI\Bundle\StepBundle\Flow\Flow;
+
+interface FlowDataStoreInterface
 {
     /**
-     * Sets a flow datastore identify by a alias.
+     * Set a flow.
      *
-     * @param string                 $alias  The store alias.
-     * @param FlowDataStoreInterface $store  The store.
-     *
-     * @return FlowDataStoreRegistryInterface
+     * @param string  $mapFingerPrint   The map finger print.
+     * @param Request $request          The HTTP request.
+     * @param Flow    $flow             The flow.
      */
-    public function setStore($alias, FlowDataStoreInterface $store);
+    public function set($mapFingerPrint, Request $request, Flow $flow);
 
     /**
-     * Returns a flow datastore by alias.
+     * Get a flow.
      *
-     * @param string $alias The alias of the flow datastore.
+     * @param string  $mapFingerPrint   The map finger print.
+     * @param Request $request          The HTTP request.
      *
-     * @return FlowDataStoreInterface The store
-     *
-     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws Exception\InvalidArgumentException if the store can not be retrieved.
+     * @return Flow|null The flow or null if there is no corresponding flow.
      */
-    public function getStore($alias);
+    public function get($mapFingerPrint, Request $request);
 
     /**
-     * Returns whether the given flow datastore is supported.
+     * Clear flow.
      *
-     * @param string $alias The alias of the flow datastore.
-     *
-     * @return bool Whether the flow datastore is supported.
+     * @param string  $mapFingerPrint   The map finger print.
+     * @param Request $request The HTTP request.
      */
-    public function hasStore($alias);
+    public function clear($mapFingerPrint, Request $request);
 }
