@@ -17,9 +17,8 @@ parameters:
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
     idci_step.flow.event_notifier.class: IDCI\Bundle\StepBundle\Flow\FlowEventNotifier
-
-    idci_step.data_store.registry.class: IDCI\Bundle\StepBundle\DataStore\DataStoreRegistry
-    idci_step.data_store.session.class: IDCI\Bundle\StepBundle\DataStore\SessionDataStore
+    idci_step.flow.data_store_registry.class: IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistry
+    idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionFlowDataStore
 
     idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
     idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
@@ -36,6 +35,9 @@ services:
     idci_step.path.registry:
         class: %idci_step.path.registry.class%
 
+    idci_step.flow.data_store_registry:
+        class: %idci_step.flow.data_store_registry.class%
+
 
     # Builder
 
@@ -46,21 +48,6 @@ services:
     idci_step.path.builder:
         class: %idci_step.path.builder.class%
         arguments: [@idci_step.path.registry]
-
-
-    # DataStore
-
-    idci_step.data_store.registry:
-        class: %idci_step.data_store.registry.class%
-
-    idci_step.data_store.session:
-        class: %idci_step.data_store.session.class%
-        arguments:
-            - @idci_step.serialization.serializer_provider
-            - @session
-        tags:
-            - { name: idci_step.data_store, alias: session }
-            - { name: jms_serializer.event_subscriber }
 
 
     # Factory
@@ -74,9 +61,8 @@ services:
     idci_step.navigator.factory:
         class: %idci_step.navigator.factory.class%
         arguments:
-            - @idci_step.data_store.registry
             - @form.factory
-            - @idci_step.flow.event_notifier
+            - @idci_step.flow.data_store_registry
             - @idci_step.navigation.logger
 
 
@@ -116,10 +102,12 @@ services:
             - { name: idci_step.path.type, alias: end }
 
 
-    # Flow
+    # FlowDataStore
 
-    idci_step.flow.event_notifier:
-        class: %idci_step.flow.event_notifier.class%
+    idci_step.flow.data_store.session:
+        class: %idci_step.flow.data_store.session.class%
+        tags:
+            - { name: idci_step.flow.data_store, alias: session }
 
 
     # Logger
@@ -160,16 +148,3 @@ services:
         arguments: []
         tags:
             - { name: twig.extension }
-
-
-    # Serialization
-
-    idci_step.serialization.serializer_provider:
-        class: %idci_step.serialization.serializer_provider.class%
-        arguments:
-            - @jms_serializer.metadata_factory
-            - @jms_serializer.handler_registry
-            - @jms_serializer.object_constructor
-            - {}
-            - {}
-            - @jms_serializer.event_dispatcher

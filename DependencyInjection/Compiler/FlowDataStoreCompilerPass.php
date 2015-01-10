@@ -13,19 +13,19 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
-class DataStoreCompilerPass implements CompilerPassInterface
+class FlowDataStoreCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.data_store.registry')) {
+        if (!$container->hasDefinition('idci_step.flow.data_store.registry')) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.data_store.registry');
-        foreach ($container->findTaggedServiceIds('idci_step.data_store') as $id => $tag) {
+        $registryDefinition = $container->getDefinition('idci_step.flow.data_store.registry');
+        foreach ($container->findTaggedServiceIds('idci_step.flow.data_store') as $id => $tag) {
             $alias = isset($tag[0]['alias'])
                 ? $tag[0]['alias']
                 : $id

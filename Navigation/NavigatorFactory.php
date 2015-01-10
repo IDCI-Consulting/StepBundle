@@ -11,25 +11,19 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
-use IDCI\Bundle\StepBundle\DataStore\DataStoreRegistryInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowEventNotifierInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistryInterface;
 
 class NavigatorFactory implements NavigatorFactoryInterface
 {
-    /**
-     * @var DataStoreRegistryInterface
-     */
-    private $registry;
-
     /**
      * @var FormFactoryInterface
      */
     private $formFactory;
 
     /**
-     * @var FlowEventNotifierInterface
+     * @var FlowDataStoreRegistryInterface
      */
-    protected $flowEventNotifier;
+    private $flowDataStoreRegistry;
 
     /**
      * @var NavigationLoggerInterface
@@ -39,22 +33,19 @@ class NavigatorFactory implements NavigatorFactoryInterface
     /**
      * Constructor
      *
-     * @param DataStoreRegistryInterface $registry          The data store registry.
-     * @param FormFactoryInterface       $formFactory       The form factory.
-     * @param FlowEventNotifierInterface $flowEventNotifier The flow event notifier.
-     * @param NavigationLoggerInterface  $logger            The data store registry.
+     * @param FormFactoryInterface           $formFactory           The form factory.
+     * @param FlowDataStoreRegistryInterface $flowDataStoreRegistry The flow data store registry.
+     * @param NavigationLoggerInterface      $logger                The logger.
      */
     public function __construct(
-        DataStoreRegistryInterface $registry,
-        FormFactoryInterface       $formFactory,
-        FlowEventNotifierInterface $flowEventNotifier,
-        NavigationLoggerInterface  $logger
+        FormFactoryInterface            $formFactory,
+        FlowDataStoreRegistryInterface  $flowDataStoreRegistry,
+        NavigationLoggerInterface       $logger
     )
     {
-        $this->registry          = $registry;
-        $this->formFactory       = $formFactory;
-        $this->flowEventNotifier = $flowEventNotifier;
-        $this->logger            = $logger;
+        $this->formFactory              = $formFactory;
+        $this->flowDataStoreRegistry    = $flowDataStoreRegistry;
+        $this->logger                   = $logger;
     }
 
     /**
@@ -64,10 +55,9 @@ class NavigatorFactory implements NavigatorFactoryInterface
     {
         return new Navigator(
             $this->formFactory,
-            $this->guessDataStore($map),
+            $this->guessFlowDataStore($map),
             $map,
             $request,
-            $this->flowEventNotifier,
             $this->logger
         );
     }
@@ -79,10 +69,13 @@ class NavigatorFactory implements NavigatorFactoryInterface
      *
      * @return DataStoreInterface
      */
-    private function guessDataStore(MapInterface $map)
+    private function guessFlowDataStore(MapInterface $map)
     {
         $mapConfig = $map->getConfiguration();
 
-        return $this->registry->get($mapConfig['options']['data_store']);
+        return $this
+            ->flowDataStoreRegistry
+            ->getStore($mapConfig['options']['data_store'])
+        ;
     }
 }
