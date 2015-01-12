@@ -73,26 +73,43 @@ abstract class AbstractNavigator implements NavigatorInterface
         $this->hasNavigated      = false;
         $this->hasFinished       = false;
 
-        if ($logger) {
+        $this->navigate();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function navigate()
+    {
+        if ($this->hasNavigated()) {
+            throw new \LogicException('The navigation has already been done');
+        }
+
+        if ($this->logger) {
             $this->logger->startNavigation();
         }
 
-        $this->navigate();
+        if ($this->request->isMethod('POST')) {
+            $destinationStep = $this->doNavigation();
 
-        if ($logger) {
+            if (null !== $destinationStep) {
+                $this->hasNavigated = true;
+                $this->getFlow()->setCurrentStep($destinationStep);
+                $this->save();
+            }
+        }
+
+        if ($this->logger) {
             $this->logger->stopNavigation($this);
         }
     }
 
     /**
-     * Returns the navigator name.
+     * Do the navigation to the chosen destination step.
      *
-     * @return string
+     * @return StepInterface|null The destination step.
      */
-    public static function getName()
-    {
-        return 'idci_step_navigator';
-    }
+    abstract protected function doNavigation();
 
     /**
      * {@inheritdoc}
@@ -115,7 +132,7 @@ abstract class AbstractNavigator implements NavigatorInterface
 
             if (null === $this->flow) {
                 $this->flow = new Flow();
-                $this->flow->setCurrentStep($this->map->getFirstStepName());
+                $this->flow->setCurrentStep($this->map->getFirstStep());
             }
         }
 
@@ -139,27 +156,13 @@ abstract class AbstractNavigator implements NavigatorInterface
     }
 
     /**
-     * Get the destination step.
-     *
-     * @return StepInterface|null The destination step.
-     */
-    abstract protected function getDestinationStep();
-
-    /**
      * Returns the current step data.
      *
      * @return array The data.
      */
-    protected function getCurrentStepData()
+    public function getCurrentStepData()
     {
-        $data = array();
-
-        $currentStepName = $this->getFlow()->getCurrentStep();
-        if ($this->getFlow()->getData()->hasStepData($currentStepName)) {
-            $data = $this->getFlow()->getData()->getStepData($currentStepName);
-        }
-
-        return $data;
+        return  $this->getFlow()->getStepData($this->getCurrentStep());
     }
 
     /**
@@ -207,25 +210,5 @@ abstract class AbstractNavigator implements NavigatorInterface
             $this->map,
             $this->request
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function navigate()
-    {
-        $flow = $this->getFlow();
-        $currentStep = $this->map->getStep($flow->getCurrentStep());
-
-        if ($this->request->isMethod('POST')) {
-            $destinationStep = $this->getDestinationStep();
-
-            if (null !== $destinationStep) {
-                $takenPath = $this->getTakenPath();
-                $this->hasNavigated = true;
-                $flow->setCurrentStep($destinationStep->getName());
-                $this->save();
-            }
-        }
     }
 }

@@ -50,4 +50,20 @@ interface FlowDataInterface
      * @return array The data.
      */
     public function getAll();
+
+    /**
+     * Returns the flow navigation reminded data
+     *
+     * @return FlowDataInterface
+     */
+    public function getRemindedData();
+
+    /**
+     * Set the flow navigation reminded data
+     *
+     * @return FlowDataInterface
+     *
+     * @return FlowInterface This
+     */
+    public function setRemindedData(FlowDataInterface $data);
 }

@@ -10,11 +10,28 @@ namespace IDCI\Bundle\StepBundle\Flow;
 class FlowData implements FlowDataInterface
 {
     /**
-     * The data of the steps.
+     * The data indexed by steps.
      *
      * @var array
      */
-    protected $steps = array();
+    protected $data = array();
+
+    /**
+     * The reminded data indexed by steps.
+     *
+     * @var array
+     */
+    private $remindedData;
+
+    /**
+     * Constructor
+     *
+     * @param array $steps The steps data.
+     */
+    public function __construct($steps = array())
+    {
+        $this->steps = $steps;
+    }
 
     /**
      * {@inheritdoc}

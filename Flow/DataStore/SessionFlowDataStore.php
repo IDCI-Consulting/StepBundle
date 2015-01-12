@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
+use IDCI\Bundle\StepBundle\Flow\FlowHistory;
+use IDCI\Bundle\StepBundle\Flow\FlowData;
 
 class SessionFlowDataStore implements FlowDataStoreInterface
 {
@@ -24,10 +26,7 @@ class SessionFlowDataStore implements FlowDataStoreInterface
             json_encode(array(
                 'current_step' => $flow->getCurrentStep(),
                 'data'         => $flow->getData()->getAll(),
-                'history'      => array(
-                    'takenPaths'     => $flow->getHistory()->getTakenPaths(),
-                    'fullTakenPaths' => $flow->getHistory()->getFullTakenPaths(),
-                ),
+                'history'      => $flow->getHistory()->getAll()
             )
         ));
     }
@@ -53,6 +52,11 @@ class SessionFlowDataStore implements FlowDataStoreInterface
 
         return $flow
             ->setCurrentStep($flowRow['current_step'])
+            ->setHistory(new FlowHistory(
+                $flowRow['history']['takenPaths'],
+                $flowRow['history']['fullTakenPaths']
+            ))
+            ->setData(new FlowData($flowRow['data']))
         ;
     }
 
@@ -61,7 +65,10 @@ class SessionFlowDataStore implements FlowDataStoreInterface
      */
     public function clear(MapInterface $map, Request $request)
     {
-    
+        $request
+            ->getSession()
+            ->remove(self::generateDataIdentifier($map))
+        ;
     }
 
     /**

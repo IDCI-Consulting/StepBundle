@@ -32,20 +32,6 @@ class Navigator extends AbstractNavigator
     protected $formFactory;
 
     /**
-     * The taken path.
-     *
-     * @var PathInterface|null
-     */
-    protected $takenPath = false;
-
-    /**
-     * The destination step.
-     *
-     * @var StepInterface|null
-     */
-    protected $destinationStep = false;
-
-    /**
      * Constructor
      *
      * @param FormFactoryInterface       $formFactory       The form factory.
@@ -91,87 +77,59 @@ class Navigator extends AbstractNavigator
     /**
      * {@inheritdoc}
      */
-    public function getTakenPath()
+    protected function getChosenPath()
     {
-        if (false === $this->takenPath) {
-            $this->takenPath = null;
-            $form = $this->getForm();
+        $form = $this->getForm();
+        $flow = $this->getFlow();
 
-            if (
-                $form->isValid() &&
-                (!$form->has('_back') || !$form->get('_back')->isClicked())
-            ) {
-                $flow = $this->getFlow();
+        if ($form->has('_data')) {
+            $flow->addData(
+                $flow->getCurrentStep(),
+                $form->get('_data')->getData()
+            );
+        }
 
-                if ($form->has('_data')) {
-                    $data = $form->get('_data')->getData();
+        foreach ($this->getAvailablePaths() as $i => $path) {
+            if ($form->get(sprintf('_path#%d', $i))->isClicked()) {
+                $flow->takePath($path, $i);
 
-                    $flow->getData()->setStepData(
-                        $flow->getCurrentStep(),
-                        $data
-                    );
-
-                    $flow->getRemindedData()->setStepData(
-                        $flow->getCurrentStep(),
-                        $data
-                    );
-                }
-
-                foreach ($this->getAvailablePaths() as $i => $path) {
-                    if ($form->get(sprintf('_path#%d', $i))->isClicked()) {
-                        $flow->getHistory()->addTakenPath($path->getSource(), $i);
-
-                        return $path;
-                    }
-                }
-
-                throw new \LogicException(sprintf(
-                    'The taken path seem to disapear magically'
-                ));
+                return $path;
             }
         }
 
-        return $this->takenPath;
+        throw new \LogicException(sprintf(
+            'The taken path seems to disapear magically'
+        ));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getDestinationStep()
+    protected function doNavigation()
     {
-        if (false === $this->destinationStep) {
-            $this->destinationStep = null;
-            $form = $this->getForm();
+        $destinationStep = null;
+        $form = $this->getForm();
 
-            if ($form->has('_back') && $form->get('_back')->isClicked()) {
-                $flow = $this->getFlow();
-                $previousStep = $this
-                    ->getMap()
-                    ->getStep($flow->getPreviousStep())
-                ;
+        if ($form->has('_back') && $form->get('_back')->isClicked()) {
+            $flow = $this->getFlow();
+            $previousStep = $this
+                ->getMap()
+                ->getStep($flow->getPreviousStep())
+            ;
 
-                $retracedPaths = $flow->getHistory()->retraceTakenPath($previousStep);
-                $data = $flow->getData();
+            $flow->retraceTo($previousStep);
 
-                foreach ($retracedPaths as $retracedPath) {
-                    $data->unsetStepData($retracedPath['source']);
-                }
+            $destinationStep = $previousStep;
+        } else {
+            $path = $this->getChosenPath();
+            $destinationStep = $path->resolveDestination($this);
 
-                $this->destinationStep = $previousStep;
-            } else {
-                $path = $this->getTakenPath();
-
-                if (null !== $path) {
-                    $this->destinationStep = $path->resolveDestination($this);
-
-                    if (null === $this->destinationStep) {
-                        $this->hasFinished = true;
-                    }
-                }
+            if (null === $destinationStep) {
+                $this->hasFinished = true;
             }
         }
 
-        return $this->destinationStep;
+        return $destinationStep;
     }
 
     /**

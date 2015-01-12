@@ -26,6 +26,18 @@ class FlowHistory implements FlowHistoryInterface
     protected $fullTakenPaths = array();
 
     /**
+     * Constructor
+     *
+     * @param array $takenPaths     The taken paths.
+     * @param array $fullTakenPaths The full taken paths.
+     */
+    public function __construct($takenPaths = array(), $fullTakenPaths = array())
+    {
+        $this->takenPaths     = $takenPaths;
+        $this->fullTakenPaths = $fullTakenPaths;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function addTakenPath(StepInterface $step, $pathId = 0)

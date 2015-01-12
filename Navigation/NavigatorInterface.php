@@ -11,6 +11,13 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 interface NavigatorInterface
 {
     /**
+     * Navigate through map's steps following the chosen path.
+     *
+     * @throw LogicException if the navigation is executed twice.
+     */
+    public function navigate();
+
+    /**
      * Get the map
      *
      * @return MapInterface
@@ -57,7 +64,7 @@ interface NavigatorInterface
      *
      * @return PathInterface|null
      */
-    public function getTakenPath();
+    //public function getTakenPath();
 
     /**
      * Returns true if the navigator has navigated.

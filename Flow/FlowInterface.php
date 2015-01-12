@@ -8,6 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
+use IDCI\Bundle\StepBundle\Step\StepInterface;
+
 interface FlowInterface
 {
     /**
@@ -20,11 +22,11 @@ interface FlowInterface
     /**
      * Set the current flow step
      *
-     * @param string $step
+     * @param StepInterface $step
      *
      * @return FlowInterface This
      */
-    public function setCurrentStep($step);
+    public function setCurrentStep(StepInterface $step);
 
     /**
      * Returns the previous flow step if exists
@@ -66,18 +68,15 @@ interface FlowInterface
     public function setData(FlowDataInterface $data);
 
     /**
-     * Returns the flow navigation reminded data
+     * Returns the flow navigation data for a given step
      *
-     * @return FlowDataInterface
+     * @return array
      */
-    public function getRemindedData();
+    public function getStepData(StepInterface $step);
 
-    /**
-     * Set the flow navigation reminded data
-     *
-     * @return FlowDataInterface
-     *
-     * @return FlowInterface This
-     */
-    public function setRemindedData(FlowDataInterface $data);
+    /*
+     retraceTo(step)
+     addData(step, data)
+     takePath(path, index)
+    */
 }
