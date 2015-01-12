@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Flow;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
@@ -48,10 +48,6 @@ class FlowDataStoreRegistry implements FlowDataStoreRegistryInterface
      */
     public function hasStore($alias)
     {
-        if (!isset($this->stores[$alias])) {
-            return true;
-        }
-
-        return false;
+        return isset($this->stores[$alias]);
     }
 }

@@ -9,13 +9,14 @@
 namespace IDCI\Bundle\StepBundle\Flow;
 
 use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
 
 interface FlowInterface
 {
     /**
      * Returns the current flow step
      *
-     * @return string
+     * @return StepInterface
      */
     public function getCurrentStep();
 
@@ -33,7 +34,7 @@ interface FlowInterface
      *
      * @return string|null
      */
-    public function getPreviousStep();
+    public function getPreviousStepName();
 
     /**
      * Returns the flow navigation history
@@ -61,7 +62,7 @@ interface FlowInterface
     /**
      * Set the flow navigation data
      *
-     * @return FlowDataInterface
+     * @param FlowDataInterface
      *
      * @return FlowInterface This
      */
@@ -74,9 +75,26 @@ interface FlowInterface
      */
     public function getStepData(StepInterface $step);
 
-    /*
-     retraceTo(step)
-     addData(step, data)
-     takePath(path, index)
-    */
+    /**
+     * Set the flow navigation data for a given step
+     *
+     * @param FlowDataInterface
+     * @param array
+     */
+    public function setStepData(StepInterface $step, array $data);
+
+    /**
+     * Retrace the flow to a step
+     *
+     * @return array The retraced paths
+     */
+    public function retraceTo(StepInterface $step);
+
+    /**
+     * Take a path
+     *
+     * @param PathInterface
+     * @param integer
+     */
+    public function takePath(PathInterface $path, $index);
 }

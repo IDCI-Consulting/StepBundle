@@ -8,6 +8,9 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
+use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
+
 class Flow implements FlowInterface
 {
     /**
@@ -42,7 +45,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStep($step)
+    public function setCurrentStep(StepInterface $step)
     {
         $this->currentStep = $step;
 
@@ -60,7 +63,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreviousStep()
+    public function getPreviousStepName()
     {
         $lastTakenPath = $this->getHistory()->getLastTakenPath();
 
@@ -105,5 +108,49 @@ class Flow implements FlowInterface
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setStepData(StepInterface $step, array $data)
+    {
+        $stepName = $step->getName();
+
+        $this->data->setStepData($stepName, $data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStepData(StepInterface $step)
+    {
+        $stepName = $step->getName();
+
+        if ($this->data->hasStepData($stepName)) {
+            $this->data->getStepData($stepName);
+        }
+
+        return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retraceTo(StepInterface $step)
+    {
+        $retracedPaths = $this->history->retraceTakenPath($step);
+
+        foreach ($retracedPaths as $retracedPath) {
+            $this->data->unsetStepData($retracedPath['source']);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function takePath(PathInterface $path, $index)
+    {
+        $this->history->addTakenPath($path->getSource(), $index);
     }
 }

@@ -121,4 +121,15 @@ class FlowHistory implements FlowHistoryInterface
 
         return false;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAll()
+    {
+        return array(
+            'takenPaths' => $this->takenPaths,
+            'fullTakenPaths' => $this->fullTakenPaths
+        );
+    }
 }

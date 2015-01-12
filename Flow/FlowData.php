@@ -21,16 +21,20 @@ class FlowData implements FlowDataInterface
      *
      * @var array
      */
-    private $remindedData;
+    private $remindedData = array();
 
     /**
      * Constructor
      *
-     * @param array $steps The steps data.
+     * @param array $data The steps data.
      */
-    public function __construct($steps = array())
+    public function __construct(
+        array $data = array(),
+        array $remindedData = array()
+    )
     {
-        $this->steps = $steps;
+        $this->data = $data;
+        $this->remindedData = $remindedData;
     }
 
     /**
@@ -38,7 +42,7 @@ class FlowData implements FlowDataInterface
      */
     public function hasStepData($name)
     {
-        return isset($this->steps[$name]);
+        return isset($this->data[$name]);
     }
 
     /**
@@ -53,7 +57,7 @@ class FlowData implements FlowDataInterface
             ));
         }
 
-        return $this->steps[$name];
+        return $this->data[$name];
     }
 
     /**
@@ -61,7 +65,8 @@ class FlowData implements FlowDataInterface
      */
     public function setStepData($name, array $data)
     {
-        $this->steps[$name] = $data;
+        $this->data[$name] = $data;
+        $this->remindedData[$name] = $data;
     }
 
     /**
@@ -69,7 +74,30 @@ class FlowData implements FlowDataInterface
      */
     public function unsetStepData($name)
     {
-        unset($this->steps[$name]);
+        unset($this->data[$name]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasRemindedStepData($name)
+    {
+        return isset($this->remindedData[$name]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRemindedStepData($name)
+    {
+        if (!$this->hasRemindedStepData($name)) {
+            throw new \LogicException(sprintf(
+                'No step "%s" found.',
+                $name
+            ));
+        }
+
+        return $this->remindedData[$name];
     }
 
     /**
@@ -77,6 +105,9 @@ class FlowData implements FlowDataInterface
      */
     public function getAll()
     {
-        return $this->steps;
+        return array(
+            'data' => $this->data,
+            'remindedData' => $this->remindedData
+        );
     }
 }

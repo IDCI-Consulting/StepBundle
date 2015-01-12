@@ -2,12 +2,19 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Functional\DataStore;
 
+use Symfony\Component\HttpFoundation\Request;
+use IDCI\Bundle\StepBundle\Map\Map;
+use IDCI\Bundle\StepBundle\Flow\Flow;
+
 /**
  * @author Thomas Prelot <thomas.prelot@tessi.fr>
  */
 class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
 {
-    private static $dataStore;
+    private static $container;
+    private $dataStore;
+    private $request;
+    private $map;
 
     public static function setUpBeforeClass()
     {
@@ -15,8 +22,20 @@ class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
 
         $kernel = new \AppKernel('test', true);
         $kernel->boot();
-        $container = $kernel->getContainer();
-        self::$dataStore = $container->get('idci_step.data_store.session');
+
+        self::$container = $kernel->getContainer();
+    }
+
+    public function setUp()
+    {
+        $this->dataStore = self::$container->get('idci_step.flow.data_store.session');
+        $session = self::$container->get('session');
+        $this->request = new Request();
+        $this->request->setSession($session);
+        $this->map = new Map(array(
+            'name' => 'foo',
+            'finger_print' => 'abc123'
+        ));
     }
 
     public function getData()
@@ -24,107 +43,27 @@ class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
         $data = array();
 
         # 0
-        $data[] = array(
-            'map',
-            'plop',
-            1,
-            1
-        );
+        $data[] = array(new Flow());
 
         # 1
-        $data[] = array(
-            'map',
-            'plip',
-            array('foo' => 'bar'),
-            array('foo' => 'bar')
-        );
+        $flow = new Flow();
+        $flowData = $flow->getData();
+        $flowData->setStepData('plop', array('foo' => 'bar'));
+        $data[] = array($flow);
 
         # 2
-        $data[] = array(
-            'map',
-            'plap',
-            3,
-            3
-        );
+        $flow = new Flow();
+        $flowData = $flow->getData();
+        $flowData->setStepData('plop', array('foo' => 'bar'));
+        $flowData->setStepData('plip', array('bar' => 2));
+        $data[] = array($flow);
 
         # 3
-        $data[] = array(
-            'map',
-            null,
-            null,
-            array(
-                'plop' => 1,
-                'plip' => array('foo' => 'bar'),
-                'plap' => 3
-            )
-        );
-
-        # 4
-        $data[] = array(
-            'map',
-            'plop',
-            null,
-            null
-        );
-
-        # 5
-        $data[] = array(
-            'map',
-            null,
-            null,
-            array(
-                'plip' => array('foo' => 'bar'),
-                'plap' => 3
-            )
-        );
-
-        # 6
-        $data[] = array(
-            'mop',
-            null,
-            null,
-            array()
-        );
-
-        # 7
-        $data[] = array(
-            'map',
-            null,
-            false,
-            array()
-        );
-
-        # 8
-        $data[] = array(
-            'map',
-            'plop',
-            1,
-            1
-        );
-
-        # 9
-        $data[] = array(
-            'mop',
-            'plop',
-            2,
-            2
-        );
-
-        # 10
-        $data[] = array(
-            'mop',
-            null,
-            null,
-            array('plop' => 2)
-        );
-
-        # 11
-        $data[] = array(
-            'map',
-            null,
-            null,
-            array('plop' => 1)
-        );
+        $flow = new Flow();
+        $flowData = $flow->getData();
+        $flowData->setStepData('plop', array('foo' => new \DateTime()));
+        $flowData->setStepData('plip', array('bar' => 2));
+        $data[] = array($flow);
 
         return $data;
     }
@@ -135,24 +74,22 @@ class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
      * @covers IDCI\Bundle\StepBundle\DataStore\SessionDataStore::clear
      * @dataProvider getData
      */
-    public function testProcess($namespace, $key, $data, $expected)
+    public function testProcess($flow)
     {
-        if ($key) {
-            self::$dataStore->set($namespace, $key, $data);
+        $this->dataStore->set($this->map, $this->request, $flow);
+        $retrievedFlow = $this->dataStore->get($this->map, $this->request);
 
-            $this->assertEquals(
-                $expected,
-                self::$dataStore->get($namespace, $key)
-            );
-        } else {
-            if (false === $data) {
-                self::$dataStore->clear($namespace, $key, $data);
-            }
+        $this->assertEquals(
+            $flow,
+            $retrievedFlow
+        );
 
-            $this->assertEquals(
-                $expected,
-                self::$dataStore->get($namespace)
-            );
-        }
+        $this->dataStore->clear($this->map, $this->request);
+        $retrievedFlow = $this->dataStore->get($this->map, $this->request);
+
+        $this->assertEquals(
+            null,
+            $retrievedFlow
+        );
     }
 }

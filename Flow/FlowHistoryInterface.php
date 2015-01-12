@@ -56,4 +56,11 @@ interface FlowHistoryInterface
      * @return boolean True if the step has been done, false otherwise.
      */
     public function hasDoneStep(StepInterface $step, $full = false);
+
+    /**
+     * Get all the history in an array.
+     *
+     * @return array The history.
+     */
+    public function getAll();
 }

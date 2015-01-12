@@ -12,6 +12,7 @@ use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Map\View\MapView;
 use IDCI\Bundle\StepBundle\Form\MapStepType;
+use IDCI\Bundle\StepBundle\Exception\StepNotFoundException;
 
 class Map implements MapInterface
 {
@@ -131,10 +132,11 @@ class Map implements MapInterface
      */
     public function getStep($name)
     {
-        return $this->hasStep($name) ?
-            $this->steps[$name] :
-            null
-        ;
+        if (!$this->hasStep($name)) {
+            throw new StepNotFoundException($name, $this->getName());
+        }
+
+        return $this->steps[$name];
     }
 
     /**

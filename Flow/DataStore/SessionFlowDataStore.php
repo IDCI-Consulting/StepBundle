@@ -21,10 +21,12 @@ class SessionFlowDataStore implements FlowDataStoreInterface
      */
     public function set(MapInterface $map, Request $request, FlowInterface $flow)
     {
+        $currentStep = $flow->getCurrentStep();
+
         $request->getSession()->set(
             self::generateDataIdentifier($map),
             json_encode(array(
-                'current_step' => $flow->getCurrentStep(),
+                'current_step' => $currentStep ? $currentStep->getName() : '',
                 'data'         => $flow->getData()->getAll(),
                 'history'      => $flow->getHistory()->getAll()
             )
@@ -50,13 +52,21 @@ class SessionFlowDataStore implements FlowDataStoreInterface
 
         $flow = new Flow();
 
+        if (!empty($flowRow['current_step'])) {
+            $flow->setCurrentStep(
+                $map->getStep($flowRow['current_step'])
+            );
+        }
+
         return $flow
-            ->setCurrentStep($flowRow['current_step'])
             ->setHistory(new FlowHistory(
                 $flowRow['history']['takenPaths'],
                 $flowRow['history']['fullTakenPaths']
             ))
-            ->setData(new FlowData($flowRow['data']))
+            ->setData(new FlowData(
+                $flowRow['data']['data'],
+                $flowRow['data']['remindedData']
+            ))
         ;
     }
 

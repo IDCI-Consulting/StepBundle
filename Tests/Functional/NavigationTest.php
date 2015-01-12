@@ -422,6 +422,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
         $request->setMethod($method);
+        $request->setSession(self::$container->get('session'));
         $map = $this->map;
 
         $requestParameters = array(
@@ -449,13 +450,13 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
 
         $flow = $navigator->getFlow();
         $history = $flow->getHistory();
-        $data = $flow->getData();
+        $data = $flow->getData()->getAll();
         $remindedData = $flow->getData();
 
-        $this->assertEquals($previousStep, $flow->getPreviousStep());
-        $this->assertEquals($currentStep, $flow->getCurrentStep());
+        $this->assertEquals($previousStep, $flow->getPreviousStepName());
+        $this->assertEquals($currentStep, $flow->getCurrentStep()->getName());
 
-        $this->assertEquals($expectedData, $data->getDataArray());
-        $this->assertEquals($expectedRemindedData, $remindedData->getDataArray());
+        $this->assertEquals($expectedData, $data['data']);
+        $this->assertEquals($expectedRemindedData, $data['remindedData']);
     }
 }

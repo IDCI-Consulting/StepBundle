@@ -45,25 +45,29 @@ interface FlowDataInterface
     public function unsetStepData($name);
 
     /**
+     * Whether or not it exists a reminded data for a step.
+     *
+     * @param string $name The identifier name of the step.
+     *
+     * @return boolean True if it exists a reminded data for the step, false otherwise.
+     */
+    public function hasRemindedStepData($name);
+
+    /**
+     * Get the reminded data of a step.
+     *
+     * @param string $name The identifier name of the step.
+     *
+     * @return array The associated data.
+     *
+     * @throws \LogicException if there is no associated data for the step.
+     */
+    public function getRemindedStepData($name);
+
+    /**
      * Get the data of all the steps in an array.
      *
      * @return array The data.
      */
     public function getAll();
-
-    /**
-     * Returns the flow navigation reminded data
-     *
-     * @return FlowDataInterface
-     */
-    public function getRemindedData();
-
-    /**
-     * Set the flow navigation reminded data
-     *
-     * @return FlowDataInterface
-     *
-     * @return FlowInterface This
-     */
-    public function setRemindedData(FlowDataInterface $data);
 }

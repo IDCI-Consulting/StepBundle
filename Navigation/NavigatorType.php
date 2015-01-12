@@ -109,6 +109,6 @@ class NavigatorType extends AbstractType
      */
     public function getName()
     {
-        return AbstractNavigator::getName();
+        return 'idci_step_navigator';
     }
 }
