@@ -16,7 +16,7 @@ class Flow implements FlowInterface
     /**
      * @var string
      */
-    private $currentStep;
+    private $currentStepName;
 
     /**
      * @var FlowHistoryInterface
@@ -32,14 +32,17 @@ class Flow implements FlowInterface
      * Constructor
      */
     public function __construct(
-        $currentStep  = null,
-        $history      = null,
-        $data         = null
+        StepInterface        $currentStep  = null,
+        FlowHistoryInterface $history      = null,
+        FlowDataInterface    $data         = null
     )
     {
-        $this->currentStep  = $currentStep;
-        $this->history      = null === $history ? new FlowHistory() : $history;
-        $this->data         = null === $data ? new FlowData() : $data;
+        if (null !== $currentStep) {
+            $this->setCurrentStep($currentStep);
+        }
+
+        $this->history = null === $history ? new FlowHistory() : $history;
+        $this->data    = null === $data ? new FlowData() : $data;
     }
 
     /**
@@ -47,7 +50,7 @@ class Flow implements FlowInterface
      */
     public function setCurrentStep(StepInterface $step)
     {
-        $this->currentStep = $step;
+        $this->currentStepName = $step->getName();
 
         return $this;
     }
@@ -55,9 +58,9 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStep()
+    public function getCurrentStepName()
     {
-        return $this->currentStep;
+        return $this->currentStepName;
     }
 
     /**
@@ -123,12 +126,16 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getStepData(StepInterface $step)
+    public function getStepData(StepInterface $step, $reminded = true)
     {
         $stepName = $step->getName();
 
-        if ($this->data->hasStepData($stepName)) {
-            $this->data->getStepData($stepName);
+        if ($reminded) {
+            if ($this->data->hasRemindedStepData($stepName)) {
+                return $this->data->getRemindedStepData($stepName);
+            }
+        } elseif ($this->data->hasStepData($stepName)) {
+            return $this->data->getStepData($stepName);
         }
 
         return array();

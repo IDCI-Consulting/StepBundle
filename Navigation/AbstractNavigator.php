@@ -134,7 +134,6 @@ abstract class AbstractNavigator implements NavigatorInterface
                 $this->flow = new Flow();
                 $this->flow->setCurrentStep($this->map->getFirstStep());
             }
-        var_dump($this->flow->getCurrentStep()->getName());
         }
 
         return $this->flow;
@@ -145,7 +144,7 @@ abstract class AbstractNavigator implements NavigatorInterface
      */
     public function getCurrentStep()
     {
-        return $this->getFlow()->getCurrentStep();
+        return $this->getMap()->getStep($this->getFlow()->getCurrentStepName());
     }
 
     /**
@@ -176,7 +175,7 @@ abstract class AbstractNavigator implements NavigatorInterface
      */
     public function getAvailablePaths()
     {
-        return $this->getMap()->getPaths($this->getFlow()->getCurrentStep()->getName());
+        return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
     }
 
     /**

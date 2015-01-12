@@ -14,13 +14,6 @@ use IDCI\Bundle\StepBundle\Path\PathInterface;
 interface FlowInterface
 {
     /**
-     * Returns the current flow step
-     *
-     * @return StepInterface
-     */
-    public function getCurrentStep();
-
-    /**
      * Set the current flow step
      *
      * @param StepInterface $step
@@ -28,6 +21,13 @@ interface FlowInterface
      * @return FlowInterface This
      */
     public function setCurrentStep(StepInterface $step);
+
+    /**
+     * Returns the current flow step name
+     *
+     * @return string|null
+     */
+    public function getCurrentStepName();
 
     /**
      * Returns the previous flow step if exists
@@ -71,9 +71,12 @@ interface FlowInterface
     /**
      * Returns the flow navigation data for a given step
      *
+     * @param StepInterface $step     The step.
+     * @param boolean       $reminded Returns the reminded data or not.
+     *
      * @return array
      */
-    public function getStepData(StepInterface $step);
+    public function getStepData(StepInterface $step, $reminded = false);
 
     /**
      * Set the flow navigation data for a given step

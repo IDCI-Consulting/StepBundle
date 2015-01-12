@@ -10,7 +10,7 @@
                     {{ collector.map.name }}
                 </abbr>
             </span>
-            {{ collector.flow.currentStep }}
+            {{ collector.flow.currentStepName }}
         </span>
         {% else %}
             <span class="sf-toolbar-status sf-toolbar-status-red"></span>
@@ -26,12 +26,12 @@
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Current step</b>
-                {{ collector.flow.currentStep }}
+                {{ collector.flow.currentStepName }}
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Previous step</b>
-                {% if collector.flow.previousStep is not null %}
-                    {{ collector.flow.previousStep }}
+                {% if collector.flow.previousStepName is not null %}
+                    {{ collector.flow.previousStepName }}
                 {% else %}
                     n/a
                 {% endif %}

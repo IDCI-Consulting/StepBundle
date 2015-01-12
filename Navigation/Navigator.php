@@ -84,7 +84,7 @@ class Navigator extends AbstractNavigator
 
         if ($form->has('_data')) {
             $flow->setStepData(
-                $flow->getCurrentStep(),
+                $this->getCurrentStep(),
                 $form->get('_data')->getData()
             );
         }
