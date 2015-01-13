@@ -34,7 +34,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SUBMIT   => 'preSubmit',
-            FormEvents::POST_SUBMIT  => 'postSubmit'
         );
     }
 
@@ -46,38 +45,5 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         if (isset($data['_data']) && !isset($data['_back'])) {
             $this->navigator->setCurrentStepData($data['_data']);
         }
-    }
-
-    public function postSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-        $form = $event->getForm();
-        /*
-        $map = $this->navigator->getMap();
-        $flow = $this->navigator->getFlow();
-
-        $destinationStep = null;
-
-        if ($form->has('_back') && $form->get('_back')->isClicked()) {
-            $previousStep = $map->getStep($flow->getPreviousStepName());
-            $flow->retraceTo($previousStep);
-
-            $destinationStep = $previousStep;
-        } else {
-            $path = $this->getChosenPath($form);
-            $destinationStep = $path->resolveDestination($this->navigator);
-
-            if (null === $destinationStep) {
-                $this->navigator->hasFinished = true;
-            }
-        }
-
-        if (null !== $destinationStep) {
-            $this->navigator->hasNavigated = true;
-            $flow->setCurrentStep($destinationStep);
-        }
-
-        return $destinationStep;
-        */
     }
 }

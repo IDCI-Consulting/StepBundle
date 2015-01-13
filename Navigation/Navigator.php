@@ -96,6 +96,57 @@ class Navigator implements NavigatorInterface
     }
 
     /**
+     * Returns the navigation form builder.
+     *
+     * @return Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function getFormBuilder()
+    {
+        $data = $this->getCurrentStepData();
+
+        return $this->formFactory->createBuilder(
+            new NavigatorType(),
+            !empty($data) ? array('_data' => $data) : null,
+            array('navigator' => $this)
+        );
+    }
+
+    /**
+     * Returns the navigation form.
+     *
+     * @return FormInterface The form.
+     */
+    protected function getForm()
+    {
+        if (null === $this->form) {
+            $this->form = $this->getFormBuilder()->getForm();
+            $this->form->handleRequest($this->request);
+        }
+
+        return $this->form;
+    }
+
+    /**
+     * Retrieve the choosen path.
+     *
+     * @
+     */
+    protected function getChosenPath()
+    {
+        foreach ($this->getAvailablePaths() as $i => $path) {
+            if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
+                $this->getFlow()->takePath($path, $i);
+
+                return $path;
+            }
+        }
+
+        throw new \LogicException(sprintf(
+            'The taken path seems to disapear magically'
+        ));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function navigate()
@@ -109,7 +160,24 @@ class Navigator implements NavigatorInterface
         }
 
         if ($this->request->isMethod('POST')) {
-            $destinationStep = $this->doNavigation();
+            $destinationStep = null;
+            if ($this->getForm()->has('_back') && $this->getForm()->get('_back')->isClicked()) {
+                $previousStep = $this
+                    ->getMap()
+                    ->getStep($this->getFlow()->getPreviousStepName())
+                ;
+
+                $this->getFlow()->retraceTo($previousStep);
+
+                $destinationStep = $previousStep;
+            } else {
+                $path = $this->getChosenPath();
+                $destinationStep = $path->resolveDestination($this);
+
+                if (null === $destinationStep) {
+                    $this->hasFinished = true;
+                }
+            }
 
             if (null !== $destinationStep) {
                 $this->hasNavigated = true;
@@ -121,36 +189,6 @@ class Navigator implements NavigatorInterface
         if ($this->logger) {
             $this->logger->stopNavigation($this);
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function doNavigation()
-    {
-        $destinationStep = null;
-        $form = $this->getForm();
-
-        if ($form->has('_back') && $form->get('_back')->isClicked()) {
-            $flow = $this->getFlow();
-            $previousStep = $this
-                ->getMap()
-                ->getStep($flow->getPreviousStepName())
-            ;
-
-            $flow->retraceTo($previousStep);
-
-            $destinationStep = $previousStep;
-        } else {
-            $path = $this->getChosenPath();
-            $destinationStep = $path->resolveDestination($this);
-
-            if (null === $destinationStep) {
-                $this->hasFinished = true;
-            }
-        }
-
-        return $destinationStep;
     }
 
     /**
@@ -292,64 +330,5 @@ class Navigator implements NavigatorInterface
     public function createStepView()
     {
         return $this->getForm()->createView();
-    }
-
-    /**
-     * Returns the navigation form builder.
-     *
-     * @return Symfony\Component\Form\FormBuilderInterface
-     */
-    protected function getFormBuilder()
-    {
-        $data = $this->getCurrentStepData();
-
-        return $this->formFactory->createBuilder(
-            new NavigatorType(),
-            !empty($data) ? array('_data' => $data) : null,
-            array('navigator' => $this)
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getChosenPath()
-    {
-        $form = $this->getForm();
-        $flow = $this->getFlow();
-
-        if ($form->has('_data')) {
-            $flow->setStepData(
-                $this->getCurrentStep(),
-                $form->get('_data')->getData()
-            );
-        }
-
-        foreach ($this->getAvailablePaths() as $i => $path) {
-            if ($form->get(sprintf('_path#%d', $i))->isClicked()) {
-                $flow->takePath($path, $i);
-
-                return $path;
-            }
-        }
-
-        throw new \LogicException(sprintf(
-            'The taken path seems to disapear magically'
-        ));
-    }
-
-    /**
-     * Returns the navigation form.
-     *
-     * @return FormInterface The form.
-     */
-    protected function getForm()
-    {
-        if (null === $this->form) {
-            $this->form = $this->getFormBuilder()->getForm();
-            $this->form->handleRequest($this->request);
-        }
-
-        return $this->form;
     }
 }
