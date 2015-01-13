@@ -102,11 +102,11 @@ class Navigator implements NavigatorInterface
      */
     protected function getFormBuilder()
     {
-        $data = $this->getCurrentStepData();
+        $data = $this->getCurrentNormalizedStepData();
 
         return $this->formFactory->createBuilder(
             new NavigatorType(),
-            !empty($data) ? array('_data' => $data) : null,
+            !empty($data) ? $data : null,
             array('navigator' => $this)
         );
     }
@@ -264,8 +264,19 @@ class Navigator implements NavigatorInterface
      */
     public function getCurrentNormalizedStepData()
     {
-        // TODO
-        return array();
+        $step = $this->getCurrentStep();
+        $builder = $this->formFactory->createBuilder();
+        $configuration = $step->getConfiguration();
+
+        $step->getType()->buildNavigationStepForm(
+            $builder,
+            $configuration['options']
+        );
+
+        $form = $builder->getForm();
+        $form->submit(array('_data' => $this->getCurrentStepData()));
+
+        return $form->getData();
     }
 
     /**
