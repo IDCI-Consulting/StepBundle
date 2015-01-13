@@ -25,16 +25,16 @@ interface NavigationLoggerInterface
     public function stopNavigation(NavigatorInterface $navigator);
 
     /**
-     * Has navigation
+     * Has navigator
      *
      * @return boolean
      */
-    public function hasNavigation();
+    public function hasNavigator();
 
     /**
      * Get navigation
      *
-     * @return array
+     * @return array|null
      */
     public function getNavigation();
 }

@@ -24,9 +24,14 @@ class NavigationLogger implements NavigationLoggerInterface
     protected $stopwatch;
 
     /**
-     *@var IDCI\Bundle\StepBundle\Navigation\NavigatorInterface
+     * @var array
      */
-    protected $navigator;
+    protected $data;
+
+    /**
+     * @var integer
+     */
+    protected $start;
 
     /**
      * Constructor
@@ -35,9 +40,10 @@ class NavigationLogger implements NavigationLoggerInterface
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->navigator = null;
         $this->logger    = null;
         $this->stopwatch = null;
+        $this->data      = null;
+        $this->start     = null;
 
         if ($container->has('logger')) {
             $this->logger = $container->get('logger');
@@ -53,6 +59,12 @@ class NavigationLogger implements NavigationLoggerInterface
      */
     public function startNavigation()
     {
+        $this->start = microtime(true);
+        $this->data = array(
+            'navigator'   => null,
+            'executionMS' => 0,
+        );
+
         if (null !== $this->stopwatch) {
             $this->stopwatch->start('idci_step.navigation');
         }
@@ -63,20 +75,29 @@ class NavigationLogger implements NavigationLoggerInterface
      */
     public function stopNavigation(NavigatorInterface $navigator)
     {
-        $this->navigator = $navigator;
-
         if (null !== $this->stopwatch) {
             $this->stopwatch->stop('idci_step.navigation');
         }
 
+        $this->data = array(
+            'navigator'   => $navigator,
+            'executionMS' => (microtime(true) - $this->start) * 1000,
+        );
+
         if (null !== $this->logger) {
-            $this->logger->info(sprintf('Step navigation [%s]',
-                $this->navigator->getMap()->getName()),
+            $this->logger->info(
+                sprintf('Step navigation [%s - %s]',
+                    $navigator->getMap()->getName(),
+                    $navigator->getMap()->getFingerPrint()
+                ),
                 array(
                 )
             );
-            $this->logger->debug(sprintf('Step navigation [%s] debug',
-                $this->navigator->getMap()->getName()),
+            $this->logger->debug(
+                sprintf('Step navigation [%s - %s] debug',
+                    $navigator->getMap()->getName(),
+                    $navigator->getMap()->getFingerPrint()
+                ),
                 array(
                 )
             );
@@ -86,9 +107,9 @@ class NavigationLogger implements NavigationLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function hasNavigation()
+    public function hasNavigator()
     {
-        return null !== $this->navigator;
+        return null !== $this->data['navigator'];
     }
 
     /**
@@ -96,13 +117,13 @@ class NavigationLogger implements NavigationLoggerInterface
      */
     public function getNavigation()
     {
-        if (!$this->hasNavigation()) {
-            return array();
+        if (!$this->hasNavigator()) {
+            return null;
         }
 
         return array(
-            'map'  => $this->navigator->getMap(),
-            'flow' => $this->navigator->getFlow()
+            'map'  => $this->data['navigator']->getMap(),
+            'flow' => $this->data['navigator']->getFlow()
         );
     }
 }

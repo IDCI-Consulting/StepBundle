@@ -3,21 +3,23 @@
 {% block toolbar %}
     {% set icon %}
         <img alt="STEP NAVIGATION" src="data:image/png;base64,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" />
-        {% if collector.hasNavigation %}
-        <span class="sf-toolbar-status">
-            <span class="sf-toolbar-info-class sf-toolbar-info-with-next-pointer">
-                <abbr title="{{ collector.map.fingerPrint }}">
-                    {{ collector.map.name }}
-                </abbr>
-            </span>
-            {{ collector.flow.currentStepName }}
-        </span>
-        {% else %}
+        {% if not collector.hasNavigation %}
             <span class="sf-toolbar-status sf-toolbar-status-red"></span>
+        {% else %}
+            <span class="sf-toolbar-status">
+                <span class="sf-toolbar-info-class sf-toolbar-info-with-next-pointer">
+                    <abbr title="{{ collector.map.fingerPrint }}">
+                        {{ collector.map.name }}
+                    </abbr>
+                </span>
+                {{ collector.flow.currentStepName }}
+            </span>
         {% endif %}
     {% endset %}
     {% set text %}
-        {% if collector.hasNavigation %}
+        {% if not collector.hasNavigation %}
+            <div class="sf-toolbar-info-piece">No step defined and used.</div>
+        {% else %}
             <div class="sf-toolbar-info-piece">
                 <b>Map name</b>
                 <abbr title="{{ collector.map.fingerPrint }}">
@@ -40,8 +42,6 @@
                 <b>Data store</b>
                 <span>{{ collector.map.configuration.options.data_store }}</span>
             </div>
-        {% else %}
-            <div class="sf-toolbar-info-piece">No step defined and used.</div>
         {% endif %}
     {% endset %}
     {% include "@WebProfiler/Profiler/toolbar_item.html.twig" with { "link": profiler_url } %}
@@ -50,16 +50,72 @@
 {% block menu %}
     <span class="label">
         <span class="icon">
-            <img alt="STEP NAVIGATION" src="data:image/png;base64,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" />
+            <img alt="NAVIGATION" src="data:image/png;base64,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" />
         </span>
         <strong>STEP NAVIGATION</strong>
-        <span class="todo">
-            <span>{# collector. #}</span>
-            <span>{# #}</span>
-        </span>
     </span>
 {% endblock %}
 
 {% block panel %}
     <h2>Step Navigation</h2>
+
+    {% if not collector.hasNavigation %}
+        <p>
+            <em>No step defined and used.</em>
+        </p>
+    {% else %}
+        <h3>Navigation step data</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stepName,stepData in collector.flow.data.all.data %}
+                <tr>
+                    <td>{{ stepName }}</td>
+                    <td>{{ stepData | json_encode }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Navigation history</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for path in collector.flow.history.all.takenPaths %}
+                <tr>
+                    <td>{{ path.source }}</td>
+                    <td>{{ path.index }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Navigation history (FULL)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for path in collector.flow.history.all.fullTakenPaths %}
+                <tr>
+                    <td>{{ path.source }}</td>
+                    <td>{{ path.index }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

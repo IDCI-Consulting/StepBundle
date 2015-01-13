@@ -34,9 +34,7 @@ class NavigationDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        if ($this->logger->hasNavigation()) {
-            $this->data['idci_step.navigation'] = $this->logger->getNavigation();
-        }
+        $this->data['idci_step.navigation'] = $this->logger->getNavigation();
     }
 
     /**
@@ -54,13 +52,13 @@ class NavigationDataCollector extends DataCollector
      */
     public function hasNavigation()
     {
-        return isset($this->data['idci_step.navigation']);
+        return null !== $this->data['idci_step.navigation'];
     }
 
     /**
      * Get map
      *
-     * @return MapInterface
+     * @return MapInterface|null
      */
     public function getMap()
     {
@@ -74,7 +72,7 @@ class NavigationDataCollector extends DataCollector
     /**
      * Get flow
      *
-     * @return FlowInterface
+     * @return FlowInterface|null
      */
     public function getFlow()
     {
