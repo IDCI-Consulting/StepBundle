@@ -98,6 +98,14 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
+    public function getTakenPaths()
+    {
+        return $this->history->getTakenPaths();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setData(FlowDataInterface $data)
     {
         $this->data = $data;

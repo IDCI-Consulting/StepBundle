@@ -53,6 +53,13 @@ interface FlowInterface
     public function setHistory(FlowHistoryInterface $history);
 
     /**
+     * Get the taken paths.
+     *
+     * @return array The taken paths.
+     */
+    public function getTakenPaths();
+
+    /**
      * Returns the flow navigation data
      *
      * @return FlowDataInterface

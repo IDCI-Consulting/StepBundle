@@ -106,7 +106,7 @@ class Navigator implements NavigatorInterface
 
         return $this->formFactory->createBuilder(
             new NavigatorType(),
-            !empty($data) ? $data : null,
+            !empty($data) ? array('_data' => $data) : null,
             array('navigator' => $this)
         );
     }
@@ -274,9 +274,14 @@ class Navigator implements NavigatorInterface
         );
 
         $form = $builder->getForm();
-        $form->submit(array('_data' => $this->getCurrentStepData()));
 
-        return $form->getData();
+        if ($form->has('_data')) {
+            $form->submit(array('_data' => $this->getCurrentStepData()));
+
+            return $form->get('_data')->getData();
+        }
+
+        return array();
     }
 
     /**
@@ -292,8 +297,7 @@ class Navigator implements NavigatorInterface
      */
     public function getTakenPaths()
     {
-        //TODO
-        return array();
+        return $this->getFlow()->getTakenPaths();
     }
 
     /**
