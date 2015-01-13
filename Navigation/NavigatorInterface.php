@@ -53,6 +53,22 @@ interface NavigatorInterface
     public function getPreviousStep();
 
     /**
+     * Returns current step data
+     *
+     * @return array|null
+     */
+    public function getCurrentStepData();
+
+    /**
+     * Set current step data
+     *
+     * @param array $data The step data.
+     *
+     * @return NavigatorInterface
+     */
+    public function setCurrentStepData(array $data);
+
+    /**
      * Returns the available paths
      *
      * @return array
@@ -62,9 +78,9 @@ interface NavigatorInterface
     /**
      * Returns the taken path
      *
-     * @return PathInterface|null
+     * @return array
      */
-    //public function getTakenPath();
+    public function getTakenPaths();
 
     /**
      * Returns true if the navigator has navigated.

@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 
 class NavigatorType extends AbstractType
 {
@@ -35,6 +36,8 @@ class NavigatorType extends AbstractType
                 'data' => $options['navigator']->getPreviousStep()->getName()
             ));
         }
+
+        $builder->addEventSubscriber(new NavigationEventSubscriber($options['navigator']));
 
         $this->buildStep($builder, $options);
         $this->buildSubmit($builder, $options);
