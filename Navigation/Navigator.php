@@ -129,7 +129,7 @@ class Navigator implements NavigatorInterface
     /**
      * Retrieve the choosen path.
      *
-     * @
+     * @return PathInterface
      */
     protected function getChosenPath()
     {
