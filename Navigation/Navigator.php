@@ -13,9 +13,10 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 
-class Navigator extends AbstractNavigator
+class Navigator implements NavigatorInterface
 {
     /**
      * The current form.
@@ -30,6 +31,41 @@ class Navigator extends AbstractNavigator
      * @var FormFactoryInterface
      */
     protected $formFactory;
+
+    /**
+     * @var MapInterface
+     */
+    protected $map;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var FlowDataStoreInterface
+     */
+    protected $flowDataStore;
+
+    /**
+     * @var NavigationLoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @var FlowInterface
+     */
+    protected $flow;
+
+    /**
+     * @var boolean
+     */
+    protected $hasNavigated;
+
+    /**
+     * @var boolean
+     */
+    protected $hasFinished;
 
     /**
      * Constructor
@@ -48,13 +84,178 @@ class Navigator extends AbstractNavigator
         NavigationLoggerInterface  $logger = null
     )
     {
-        $this->formFactory  = $formFactory;
+        $this->formFactory   = $formFactory;
+        $this->map           = $map;
+        $this->request       = $request;
+        $this->flowDataStore = $flowDataStore;
+        $this->logger        = $logger;
+        $this->hasNavigated  = false;
+        $this->hasFinished   = false;
 
-        parent::__construct(
-            $map,
-            $request,
-            $flowDataStore,
-            $logger
+        $this->navigate();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function navigate()
+    {
+        if ($this->hasNavigated()) {
+            throw new \LogicException('The navigation has already been done');
+        }
+
+        if ($this->logger) {
+            $this->logger->startNavigation();
+        }
+
+        if ($this->request->isMethod('POST')) {
+            $destinationStep = $this->doNavigation();
+
+            if (null !== $destinationStep) {
+                $this->hasNavigated = true;
+                $this->getFlow()->setCurrentStep($destinationStep);
+                $this->save();
+            }
+        }
+
+        if ($this->logger) {
+            $this->logger->stopNavigation($this);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doNavigation()
+    {
+        $destinationStep = null;
+        $form = $this->getForm();
+
+        if ($form->has('_back') && $form->get('_back')->isClicked()) {
+            $flow = $this->getFlow();
+            $previousStep = $this
+                ->getMap()
+                ->getStep($flow->getPreviousStepName())
+            ;
+
+            $flow->retraceTo($previousStep);
+
+            $destinationStep = $previousStep;
+        } else {
+            $path = $this->getChosenPath();
+            $destinationStep = $path->resolveDestination($this);
+
+            if (null === $destinationStep) {
+                $this->hasFinished = true;
+            }
+        }
+
+        return $destinationStep;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFlow()
+    {
+        if (null === $this->flow) {
+            $this->flow = $this->flowDataStore->get(
+                $this->map,
+                $this->request
+            );
+
+            if (null === $this->flow) {
+                $this->flow = new Flow();
+                $this->flow->setCurrentStep($this->map->getFirstStep());
+            }
+        }
+
+        return $this->flow;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentStep()
+    {
+        return $this->getMap()->getStep($this->getFlow()->getCurrentStepName());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPreviousStep()
+    {
+        $previousStepName = $this->getFlow()->getPreviousStepName();
+
+        return $previousStepName
+            ? $this->getMap()->getStep($previousStepName)
+            : null
+        ;
+    }
+
+    /**
+     * Returns the current step data.
+     *
+     * @return array The data.
+     */
+    public function getCurrentStepData()
+    {
+        return  $this->getFlow()->getStepData($this->getCurrentStep());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAvailablePaths()
+    {
+        return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasNavigated()
+    {
+        return $this->hasNavigated;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasFinished()
+    {
+        return $this->hasFinished;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save()
+    {
+        $this->flowDataStore->set(
+            $this->map,
+            $this->request,
+            $this->flow
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->flowDataStore->clear(
+            $this->map,
+            $this->request
         );
     }
 
@@ -100,36 +301,6 @@ class Navigator extends AbstractNavigator
         throw new \LogicException(sprintf(
             'The taken path seems to disapear magically'
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function doNavigation()
-    {
-        $destinationStep = null;
-        $form = $this->getForm();
-
-        if ($form->has('_back') && $form->get('_back')->isClicked()) {
-            $flow = $this->getFlow();
-            $previousStep = $this
-                ->getMap()
-                ->getStep($flow->getPreviousStepName())
-            ;
-
-            $flow->retraceTo($previousStep);
-
-            $destinationStep = $previousStep;
-        } else {
-            $path = $this->getChosenPath();
-            $destinationStep = $path->resolveDestination($this);
-
-            if (null === $destinationStep) {
-                $this->hasFinished = true;
-            }
-        }
-
-        return $destinationStep;
     }
 
     /**
