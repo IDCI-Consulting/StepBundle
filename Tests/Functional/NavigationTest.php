@@ -454,7 +454,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $remindedData = $flow->getData();
 
         $this->assertEquals($previousStep, $flow->getPreviousStepName());
-        $this->assertEquals($currentStep, $flow->getCurrentStep()->getName());
+        $this->assertEquals($currentStep, $flow->getCurrentStepName());
 
         $this->assertEquals($expectedData, $data['data']);
         $this->assertEquals($expectedRemindedData, $data['remindedData']);
