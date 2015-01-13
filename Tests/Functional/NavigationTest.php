@@ -156,6 +156,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             0,
             array(),
             array(),
+            array(),
             array()
         );
 
@@ -167,7 +168,11 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             0,
             array(),
             array(),
-            array()
+            array(),
+            array(
+                'first_name' => null,
+                'last_name' => null
+            )
         );
 
         # 2
@@ -191,6 +196,10 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                     'first_name' => 'John',
                     'last_name' => 'Doe'
                 )
+            ),
+            array(
+                'item' => null,
+                'purchase_date' => null
             )
         );
 
@@ -222,7 +231,17 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 )
             ),
             array(
@@ -232,8 +251,21 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 )
+            ),
+            array(
+                'fork1_data' => null
             )
         );
 
@@ -253,7 +285,17 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 ),
                 'fork1' => array(
                     'fork1_data' => 'foo'
@@ -266,16 +308,27 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 ),
                 'fork1' => array(
                     'fork1_data' => 'foo'
                 )
-            )
+            ),
+            array()
         );
 
         # 5
-        /*$data[] = array(
+        $data[] = array(
             'POST',
             'purchase',
             'fork1',
@@ -288,10 +341,17 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
-                ),
-                'fork1' => array(
-                    'fork1_data' => 'foo'
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 )
             ),
             array(
@@ -301,11 +361,24 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 ),
                 'fork1' => array(
                     'fork1_data' => 'foo'
                 )
+            ),
+            array(
+                'fork1_data' => 'foo'
             )
         );
 
@@ -320,10 +393,6 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 'personal' => array(
                     'first_name' => 'John',
                     'last_name' => 'Doe'
-                ),
-                'purchase' => array(
-                    'item' => 'foo',
-                    'purchase_date' => $date
                 )
             ),
             array(
@@ -333,16 +402,30 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 ),
                 'fork1' => array(
                     'fork1_data' => 'foo'
                 )
+            ),
+            array(
+                'item' => 'foo',
+                'purchase_date' => $date
             )
         );
 
         # 7
-        /*$date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
+        $date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
         $data[] = array(
             'POST',
             'purchase',
@@ -369,11 +452,44 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2016',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
                 ),
-                'fork1' => array( // TO CORRECT (TO REMOVE?)
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2016',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
+                ),
+                'fork1' => array(
                     'fork1_data' => 'foo'
                 )
+            ),
+            array(
+                'fork2_data' => null
             )
         );
 
@@ -382,7 +498,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
             'POST',
             'fork2',
             'end',
-            1,
+            0,
             array(
                 'fork2_data' => 'bar'
             ),
@@ -393,16 +509,50 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
                 ),
                 'purchase' => array(
                     'item' => 'foo',
-                    'purchase_date' => $date->format(\DateTime::ISO8601) // TO CORRECT (should be a \DateTime)
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2016',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
                 ),
-                'fork1' => array( // TO CORRECT (TO REMOVE?)
+                'fork2' => array(
+                    'fork2_data' => 'bar'
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2016',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
+                ),
+                'fork1' => array(
                     'fork1_data' => 'foo'
                 ),
                 'fork2' => array(
                     'fork2_data' => 'bar'
                 )
-            )
-        );*/
+            ),
+            array()
+        );
 
         return $data;
     }
@@ -416,8 +566,9 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $currentStep,
         $destination,
         array $arguments,
-        array $expectedData,
-        array $expectedRemindedData
+        array $expectedRawData,
+        array $expectedRemindedData,
+        array $expectedData
     )
     {
         $request = new Request();
@@ -456,7 +607,11 @@ class NavigationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($previousStep, $flow->getPreviousStepName());
         $this->assertEquals($currentStep, $flow->getCurrentStepName());
 
-        $this->assertEquals($expectedData, $data['data']);
+        $this->assertEquals($expectedRawData, $data['data']);
         $this->assertEquals($expectedRemindedData, $data['remindedData']);
+
+        $normalizedData = $navigator->getCurrentNormalizedStepData();
+
+        $this->assertEquals($expectedData, $normalizedData);
     }
 }

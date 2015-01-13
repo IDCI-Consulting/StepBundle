@@ -58,13 +58,6 @@ class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
         $flowData->setStepData('plip', array('bar' => 2));
         $data[] = array($flow);
 
-        # 3
-        $flow = new Flow();
-        $flowData = $flow->getData();
-        $flowData->setStepData('plop', array('foo' => new \DateTime()));
-        $flowData->setStepData('plip', array('bar' => 2));
-        $data[] = array($flow);
-
         return $data;
     }
 
