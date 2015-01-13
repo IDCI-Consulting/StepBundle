@@ -44,7 +44,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
 
         if (isset($data['_data']) && !isset($data['_back'])) {
-            $this->navigator->setStepData($data['_data']);
+            $this->navigator->setCurrentStepData($data['_data']);
         }
     }
 

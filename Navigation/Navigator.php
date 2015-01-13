@@ -203,13 +203,31 @@ class Navigator implements NavigatorInterface
     }
 
     /**
-     * Returns the current step data.
-     *
-     * @return array The data.
+     * {@inheritdoc}
      */
     public function getCurrentStepData()
     {
-        return  $this->getFlow()->getStepData($this->getCurrentStep());
+        return $this->getFlow()->getStepData($this->getCurrentStep());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCurrentStepData(array $data)
+    {
+        $this->getFlow()->setStepData(
+            $this->getCurrentStep(),
+            $data
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentNormalizedStepData()
+    {
+        // TODO
+        return array();
     }
 
     /**
@@ -218,6 +236,15 @@ class Navigator implements NavigatorInterface
     public function getAvailablePaths()
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTakenPaths()
+    {
+        //TODO
+        return array();
     }
 
     /**
@@ -257,6 +284,14 @@ class Navigator implements NavigatorInterface
             $this->map,
             $this->request
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createStepView()
+    {
+        return $this->getForm()->createView();
     }
 
     /**
@@ -316,13 +351,5 @@ class Navigator implements NavigatorInterface
         }
 
         return $this->form;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createStepView()
-    {
-        return $this->getForm()->createView();
     }
 }

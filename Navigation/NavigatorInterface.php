@@ -18,65 +18,63 @@ interface NavigatorInterface
     public function navigate();
 
     /**
-     * Get the map
+     * Get the map.
      *
      * @return MapInterface
      */
     public function getMap();
 
     /**
-     * Get the flow
+     * Get the flow.
      *
      * @return FlowInterface
      */
     public function getFlow();
 
     /**
-     * Create step view
-     *
-     * @return Symfony\Component\Form\FormView
-     */
-    public function createStepView();
-
-    /**
-     * Returns the current step
+     * Returns the current step.
      *
      * @return StepInterface
      */
     public function getCurrentStep();
 
     /**
-     * Returns the previous step
+     * Returns the previous step.
      *
      * @return StepInterface|null
      */
     public function getPreviousStep();
 
     /**
-     * Returns current step data
+     * Returns the current step data.
      *
      * @return array|null
      */
     public function getCurrentStepData();
 
     /**
-     * Set current step data
+     * Set current step data.
      *
      * @param array $data The step data.
-     *
-     * @return NavigatorInterface
      */
     public function setCurrentStepData(array $data);
 
     /**
-     * Returns the available paths
+     * Returns the current normalized step data.
+     *
+     * @return array|null
+     */
+    public function getCurrentNormalizedStepData();
+
+    /**
+     * Returns the available paths.
      *
      * @return array
      */
     public function getAvailablePaths();
 
     /**
-     * Returns the taken path
+     * Returns the taken path.
      *
      * @return array
      */
@@ -105,4 +103,11 @@ interface NavigatorInterface
      * Clear the navigation.
      */
     public function clear();
+
+    /**
+     * Create step view.
+     *
+     * @return Symfony\Component\Form\FormView
+     */
+    public function createStepView();
 }
