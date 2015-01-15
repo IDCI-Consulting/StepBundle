@@ -25,16 +25,18 @@ class StepCompilerPass implements CompilerPassInterface
         }
 
         $registryDefinition = $container->getDefinition('idci_step.step.registry');
-        foreach ($container->findTaggedServiceIds('idci_step.step.type') as $id => $tag) {
-            $alias = isset($tag[0]['alias'])
-                ? $tag[0]['alias']
-                : $id
-            ;
+        foreach ($container->findTaggedServiceIds('idci_step.step.type') as $id => $tags) {
+            foreach ($tags as $attributes) {
+                $alias = isset($attributes['alias'])
+                    ? $attributes['alias']
+                    : $id
+                ;
 
-            $registryDefinition->addMethodCall(
-                'setType',
-                array($alias, new Reference($id))
-            );
+                $registryDefinition->addMethodCall(
+                    'setType',
+                    array($alias, new Reference($id))
+                );
+            }
         }
     }
 }

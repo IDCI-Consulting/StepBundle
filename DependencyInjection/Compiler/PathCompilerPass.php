@@ -25,16 +25,18 @@ class PathCompilerPass implements CompilerPassInterface
         }
 
         $registryDefinition = $container->getDefinition('idci_step.path.registry');
-        foreach ($container->findTaggedServiceIds('idci_step.path.type') as $id => $tag) {
-            $alias = isset($tag[0]['alias'])
-                ? $tag[0]['alias']
-                : $id
-            ;
+        foreach ($container->findTaggedServiceIds('idci_step.path.type') as $id => $tags) {
+            foreach ($tags as $attributes) {
+                $alias = isset($attributes['alias'])
+                    ? $attributes['alias']
+                    : $id
+                ;
 
-            $registryDefinition->addMethodCall(
-                'setType',
-                array($alias, new Reference($id))
-            );
+                $registryDefinition->addMethodCall(
+                    'setType',
+                    array($alias, new Reference($id))
+                );
+            }
         }
     }
 }
