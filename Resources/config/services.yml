@@ -20,10 +20,15 @@ parameters:
     idci_step.flow.data_store_registry.class: IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistry
     idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionFlowDataStore
 
+    idci_step.configuration.builder.class: IDCI\Bundle\StepBundle\Configuration\ConfigurationBuilder
+    idci_step.configuration.worker_registry.class: IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry
+    idci_step.configuration.worker.form_builder.class: IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker
+
     idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
     idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
 
     idci_step.serialization.serializer_provider.class: IDCI\Bundle\StepBundle\Serialization\SerializerProvider
+
 
 services:
 
@@ -108,6 +113,22 @@ services:
         class: %idci_step.flow.data_store.session.class%
         tags:
             - { name: idci_step.flow.data_store, alias: session }
+
+
+    # Configuration
+
+    idci_step.configuration.builder:
+        class: %idci_step.configuration.builder.class%
+        arguments: [@idci_step.configuration.worker_registry]
+
+    idci_step.configuration.worker_registry:
+        class: %idci_step.configuration.worker_registry.class%
+
+    idci_step.configuration.worker.form_builder:
+        class: %idci_step.configuration.worker.form_builder.class%
+        arguments: [@form.factory]
+        tags:
+            - { name: idci_step.configuration.worker, alias: form_builder }
 
 
     # Logger
