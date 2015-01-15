@@ -22,6 +22,9 @@
         "symfony/twig-bundle": ">=2.3",
         "jms/serializer-bundle": "dev-master"
     },
+    "suggest": {
+        "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
+    },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },
