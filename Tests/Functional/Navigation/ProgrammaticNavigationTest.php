@@ -122,7 +122,6 @@ class ProgrammaticNavigationTest extends AbstractNavigationTest
                 'end',
                 array(
                     'source'           => 'end',
-                    'storage_provider' => 'step.storage.provider.participation',
                     'next_options'     => array(
                         'label' => 'end',
                     ),

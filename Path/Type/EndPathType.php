@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,11 +21,10 @@ class EndPathType extends AbstractPathType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setRequired(array('source', 'storage_provider'))
+            ->setRequired(array('source'))
             ->setDefaults(array('label' => 'end'))
             ->setAllowedTypes(array(
-                'source'           => 'string',
-                'storage_provider' => 'string',
+                'source' => 'string'
             ))
         ;
     }
