@@ -33,6 +33,12 @@ class FormBuilderWorker implements ConfigurationWorkerInterface
      */
     public function work(array $parameters = array())
     {
-        // TODO: Implement.
+        $builder = $this->formFactory->createBuilder();
+
+        foreach ($parameters['fields'] as $field) {
+            $builder->add($field['name'], $field['type']);
+        }
+
+        return $builder;
     }
 }

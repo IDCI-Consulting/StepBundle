@@ -16,10 +16,10 @@ interface NavigatorFactoryInterface
     /**
      * Create a Navigator
      *
-     * @param MapInterface $map     The map to navigate.
-     * @param Request      $request The HTTP request.
+     * @param IDCI\Bundle\StepBundle\Map\MapInterface|array $map     The map to navigate.
+     * @param Request                                       $request The HTTP request.
      *
      * @return NavigatorInterface
      */
-    public function createNavigator(MapInterface $map, Request $request);
+    public function createNavigator($map, Request $request);
 }

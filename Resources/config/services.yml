@@ -68,6 +68,7 @@ services:
         arguments:
             - @form.factory
             - @idci_step.flow.data_store_registry
+            - @idci_step.configuration.builder
             - @idci_step.navigation.logger
 
 
@@ -119,7 +120,9 @@ services:
 
     idci_step.configuration.builder:
         class: %idci_step.configuration.builder.class%
-        arguments: [@idci_step.configuration.worker_registry]
+        arguments:
+            - @idci_step.map.builder.factory
+            - @idci_step.configuration.worker_registry
 
     idci_step.configuration.worker_registry:
         class: %idci_step.configuration.worker_registry.class%

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistryInterface;
+use IDCI\Bundle\StepBundle\Configuration\ConfigurationBuilderInterface;
 
 class NavigatorFactory implements NavigatorFactoryInterface
 {
@@ -26,6 +27,11 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $flowDataStoreRegistry;
 
     /**
+     * @var ConfigurationBuilderInterface
+     */
+    private $configurationBuilder;
+
+    /**
      * @var NavigationLoggerInterface
      */
     private $logger;
@@ -35,24 +41,37 @@ class NavigatorFactory implements NavigatorFactoryInterface
      *
      * @param FormFactoryInterface           $formFactory           The form factory.
      * @param FlowDataStoreRegistryInterface $flowDataStoreRegistry The flow data store registry.
+     * @param ConfigurationBuilderInterface  $configurationBuilder  The configuration builder.
      * @param NavigationLoggerInterface      $logger                The logger.
      */
     public function __construct(
         FormFactoryInterface            $formFactory,
         FlowDataStoreRegistryInterface  $flowDataStoreRegistry,
+        ConfigurationBuilderInterface   $configurationBuilder,
         NavigationLoggerInterface       $logger
     )
     {
         $this->formFactory              = $formFactory;
         $this->flowDataStoreRegistry    = $flowDataStoreRegistry;
+        $this->configurationBuilder     = $configurationBuilder;
         $this->logger                   = $logger;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createNavigator(MapInterface $map, Request $request)
+    public function createNavigator($map, Request $request)
     {
+        if (is_array($map)) {
+            $map = $this->configurationBuilder->build($map);
+        }
+
+        if (!$map instanceof MapInterface) {
+            throw new \InvalidArgumentException(
+                'The map must be an "array" or an instance of "IDCI\Bundle\StepBundle\Map\MapInterface"'
+            );
+        }
+
         return new Navigator(
             $this->formFactory,
             $map,
