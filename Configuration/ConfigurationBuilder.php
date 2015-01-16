@@ -20,6 +20,13 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
     protected $mapBuilderFactory;
 
     /**
+     * The configuration processor.
+     *
+     * @var ConfigurationProcessorInterface
+     */
+    protected $processor;
+
+    /**
      * The configuration worker registry.
      *
      * @var ConfigurationWorkerRegistryInterface
@@ -30,14 +37,17 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
      * Constructor.
      *
      * @param MapBuilderFactoryInterface           $mapBuilderFactory The map builder factory.
+     * @param ConfigurationProcessorInterface      $processor         The configuration processor.
      * @param ConfigurationWorkerRegistryInterface $workerRegistry    The configuration worker registry.
      */
     public function __construct(
         MapBuilderFactoryInterface $mapBuilderFactory,
+        ConfigurationProcessorInterface $processor,
         ConfigurationWorkerRegistryInterface $workerRegistry
     )
     {
         $this->mapBuilderFactory = $mapBuilderFactory;
+        $this->processor = $processor;
         $this->workerRegistry = $workerRegistry;
     }
 
@@ -46,7 +56,11 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
      */
     public function build(array $parameters = array())
     {
-        $mapOptions = $this->formatOptions($parameters);
+        // Check and process the structure of the parameters.
+        $parameters = $this->processor->process(array('dumb' => $parameters));
+
+        // Build the map.
+        $mapOptions = $this->formatOptions($parameters['options']);
 
         $mapData = isset($parameters['data'])
             ? $parameters['data']
@@ -62,7 +76,7 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
                 $builder->addStep(
                     $name,
                     $step['type'],
-                    $this->formatOptions($step)
+                    $this->formatOptions($step['options'])
                 );
             }
         }
@@ -71,7 +85,7 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
             foreach ($parameters['paths'] as $name => $path) {
                 $builder->addPath(
                     $path['type'],
-                    $this->formatOptions($path)
+                    $this->formatOptions($path['options'])
                 );
             }
         }
@@ -82,41 +96,25 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
     /**
      * Format options.
      *
-     * @param array $optionsContainer The array containing the options in a field "options".
+     * @param array $options The options.
      *
      * @return array The formatted options.
      */
-    protected function formatOptions(array $optionsContainer)
+    protected function formatOptions(array $options)
     {
-        if (!isset($optionsContainer['options'])) {
-            return array();
-        }
-
-        return $this->formatOptionField($optionsContainer['options']);
-    }
-
-    /**
-     * Format an option field.
-     *
-     * @param array $optionField The option field.
-     *
-     * @return array The formatted field.
-     */
-    protected function formatOptionField(array $optionField)
-    {
-        foreach ($optionField as $key => $value) {
+        foreach ($options as $key => $option) {
             // Case of a worker.
             if ('@' === substr($key, 0, 1)) {
-                $worker = $this->workerRegistry->getWorker($value['worker']);
+                $worker = $this->workerRegistry->getWorker($option['worker']);
 
-                unset($optionField[$key]);
-                $optionField[substr($key, 1)] = $worker->work($value['parameters']);
+                unset($options[$key]);
+                $options[substr($key, 1)] = $worker->work($option['parameters']);
             // Case of an embedded array.
-            } else if (is_array($value)) {
-                $optionField[$key] = $this->formatOptionField($value);
+            } else if (is_array($option)) {
+                $options[$key] = $this->formatOptions($option);
             }
         }
 
-        return $optionField;
+        return $options;
     }
 }

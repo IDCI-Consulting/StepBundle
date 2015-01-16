@@ -23,6 +23,7 @@ parameters:
     idci_step.configuration.builder.class: IDCI\Bundle\StepBundle\Configuration\ConfigurationBuilder
     idci_step.configuration.worker_registry.class: IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry
     idci_step.configuration.worker.form_builder.class: IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker
+    idci_step.configuration.processor.class: IDCI\Bundle\StepBundle\Configuration\ConfigurationProcessor
 
     idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
     idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
@@ -122,6 +123,7 @@ services:
         class: %idci_step.configuration.builder.class%
         arguments:
             - @idci_step.map.builder.factory
+            - @idci_step.configuration.processor
             - @idci_step.configuration.worker_registry
 
     idci_step.configuration.worker_registry:
@@ -132,6 +134,9 @@ services:
         arguments: [@form.factory]
         tags:
             - { name: idci_step.configuration.worker, alias: form_builder }
+
+    idci_step.configuration.processor:
+        class: %idci_step.configuration.processor.class%
 
 
     # Logger

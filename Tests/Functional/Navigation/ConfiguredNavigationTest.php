@@ -14,11 +14,6 @@ class ConfiguredNavigationTest extends AbstractNavigationTest
         $this->map = json_decode(
             '{
                 "name": "test map",
-                "options": {
-                    "browsing": "linear",
-                    "data_store": "session",
-                    "first_step_name": null
-                },
                 "data": {
                     "foo": "bar"
                 },
