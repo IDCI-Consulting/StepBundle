@@ -453,12 +453,6 @@ abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
         $request->setSession(self::$container->get('session'));
         $map = $this->map;
 
-        $requestParameters = array(
-            '_map_name' => $map->getName(),
-            '_map_finger_print' => $map->getFingerPrint(),
-            '_current_step' => $currentStep
-        );
-
         if (false === $destination) {
             $requestParameters['_back'] = true;
         } else {
