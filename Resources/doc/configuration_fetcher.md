@@ -27,9 +27,9 @@ If you wish to create your own configuration fetcher, you have to create a class
 which extends `AbstractConfigurationFetcher` and implement necessary methods.
 ```php
 <?php
-// src/My/Bundle/Configuration/StepFetcher/MyConfigurationFetcher.php
+// src/My/Bundle/Configuration/MapFetcher/MyConfigurationFetcher.php
 
-namespace My\Bundle\Configuration\StepFetcher;
+namespace My\Bundle\Configuration\MapFetcher;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\AbstractConfigurationFetcher;
@@ -60,7 +60,7 @@ Then declare this new ConfigurationFetcher as service:
 ```yml
 services:
     idci_step.configuration.fetcher.my_fetcher:
-        class: My\Bundle\Configuration\StepFetcher\MyConfigurationFetcher
+        class: My\Bundle\Configuration\MapFetcher\MyConfigurationFetcher
         arguments: []
         tags:
             - { name: idci_step.configuration.fetcher, alias: my_fetcher }
@@ -70,7 +70,7 @@ The alias "my_fetcher" will be the ConfigurationFetcher identifier.
 The doFetch function must return an array that should be in the following format:
 ```
 array(
-    // ...
+    // Thomas demo data
 )
 ```
 
