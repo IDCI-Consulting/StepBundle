@@ -145,7 +145,7 @@ class TestController extends Controller
 
         $navigator = $this
             ->get('idci_step.navigator.factory')
-            ->createNavigator($map, $request)
+            ->createNavigator($request, $map)
         ;
 
         if ($navigator->hasNavigated()) {

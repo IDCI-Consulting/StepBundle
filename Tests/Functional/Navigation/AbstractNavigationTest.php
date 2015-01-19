@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
 {
     protected static $container;
+    protected $options = array();
 
     public static function setUpBeforeClass()
     {
@@ -451,7 +452,6 @@ abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $request->setMethod($method);
         $request->setSession(self::$container->get('session'));
-        $map = $this->map;
 
         if (false === $destination) {
             $requestParameters['_back'] = true;
@@ -467,7 +467,7 @@ abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
 
         $navigator = self::$container
             ->get('idci_step.navigator.factory')
-            ->createNavigator($map, $request)
+            ->createNavigator($request, $this->map, $this->options)
         ;
 
         $flow = $navigator->getFlow();
