@@ -19,8 +19,7 @@
         "symfony/form": ">=2.3",
         "symfony/finder": ">=2.3",
         "twig/extensions": "1.0.*",
-        "symfony/twig-bundle": ">=2.3",
-        "jms/serializer-bundle": "dev-master"
+        "symfony/twig-bundle": ">=2.3"
     },
     "suggest": {
         "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
