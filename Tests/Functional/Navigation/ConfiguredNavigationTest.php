@@ -55,7 +55,7 @@ class ConfiguredNavigationTest extends AbstractNavigationTest
                     "purchase": {
                         "type": "form",
                         "options": {
-                           "title": "Purchase information",
+                            "title": "Purchase information",
                             "description": "The purchase data step",
                             "@builder": {
                                 "worker": "form_builder",
@@ -78,7 +78,7 @@ class ConfiguredNavigationTest extends AbstractNavigationTest
                     "fork1": {
                         "type": "form",
                         "options": {
-                           "title": "Fork1 information",
+                            "title": "Fork1 information",
                             "description": "The fork1 data step",
                             "@builder": {
                                 "worker": "form_builder",
@@ -97,7 +97,7 @@ class ConfiguredNavigationTest extends AbstractNavigationTest
                     "fork2": {
                         "type": "form",
                         "options": {
-                           "title": "Fork2 information",
+                            "title": "Fork2 information",
                             "description": "The fork2 data step",
                             "@builder": {
                                 "worker": "form_builder",
