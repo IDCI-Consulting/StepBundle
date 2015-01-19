@@ -20,10 +20,12 @@ parameters:
     idci_step.flow.data_store_registry.class: IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistry
     idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionFlowDataStore
 
-    idci_step.configuration.builder.class: IDCI\Bundle\StepBundle\Configuration\ConfigurationBuilder
+    idci_step.configuration.builder.class: IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder
     idci_step.configuration.worker_registry.class: IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry
     idci_step.configuration.worker.form_builder.class: IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker
     idci_step.configuration.processor.class: IDCI\Bundle\StepBundle\Configuration\ConfigurationProcessor
+    idci_step.configuration.fetcher_registry.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistry
+    idci_step.configuration.fetcher.config.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigFetcher
 
     idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
     idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
@@ -70,6 +72,7 @@ services:
             - @form.factory
             - @idci_step.flow.data_store_registry
             - @idci_step.configuration.builder
+            - @idci_step.configuration.fetcher_registry
             - @idci_step.navigation.logger
 
 
@@ -137,6 +140,15 @@ services:
 
     idci_step.configuration.processor:
         class: %idci_step.configuration.processor.class%
+
+    idci_step.configuration.fetcher_registry:
+        class: %idci_step.configuration.fetcher_registry.class%
+
+    idci_step.configuration.fetcher.config:
+        class: %idci_step.configuration.fetcher.config.class%
+        arguments: [%idci_step.config.maps%]
+        tags:
+            - { name: idci_step.configuration.fetcher, alias: config }
 
 
     # Logger

@@ -29,6 +29,14 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
+            ->children()
+                ->arrayNode('maps')
+                    ->useAttributeAsKey('dumb')
+                    ->defaultValue(array())
+                    ->prototype('variable') // See IDCI\Bundle\StepBundle\Configuration\MapConfiguration
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;
