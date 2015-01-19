@@ -17,7 +17,7 @@ class ConfigurationProcessor implements ConfigurationProcessorInterface
     public function process(array $config)
     {
         $processor = new Processor();
-        $configuration = new Configuration();
+        $configuration = new MapConfiguration();
 
         return $processor->processConfiguration($configuration, $config);
     }

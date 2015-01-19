@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Configuration;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration implements ConfigurationInterface
+class MapConfiguration implements ConfigurationInterface
 {
     /**
      * {@inheritDoc}
@@ -18,10 +18,10 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('dumb');
+        $rootNode = $treeBuilder->root('map');
 
         $rootNode
-          ->children()
+            ->children()
                 ->scalarNode('name')
                     ->isRequired()
                 ->end()
