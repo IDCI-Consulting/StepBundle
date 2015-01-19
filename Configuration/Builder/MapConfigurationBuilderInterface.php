@@ -5,9 +5,9 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Configuration;
+namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
-interface ConfigurationBuilderInterface
+interface MapConfigurationBuilderInterface
 {
     /**
      * Build the configuration.

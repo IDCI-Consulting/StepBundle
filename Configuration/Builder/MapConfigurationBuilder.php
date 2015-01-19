@@ -5,12 +5,13 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Configuration;
+namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
 use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface;
+use IDCI\Bundle\StepBundle\Configuration\ConfigurationProcessorInterface;
 
-class ConfigurationBuilder implements ConfigurationBuilderInterface
+class MapConfigurationBuilder implements MapConfigurationBuilderInterface
 {
     /**
      * The map builder factory.
@@ -57,7 +58,7 @@ class ConfigurationBuilder implements ConfigurationBuilderInterface
     public function build(array $parameters = array())
     {
         // Check and process the structure of the parameters.
-        $parameters = $this->processor->process(array('dumb' => $parameters));
+        $parameters = $this->processor->process(array('map' => $parameters));
 
         // Build the map.
         $mapOptions = $this->formatOptions($parameters['options']);
