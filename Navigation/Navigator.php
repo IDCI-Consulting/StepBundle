@@ -120,7 +120,10 @@ class Navigator implements NavigatorInterface
     {
         if (null === $this->form) {
             $this->form = $this->getFormBuilder()->getForm();
-            $this->form->handleRequest($this->request);
+
+            if ($this->request) {
+                $this->form->handleRequest($this->request);
+            }
         }
 
         return $this->form;
@@ -188,6 +191,12 @@ class Navigator implements NavigatorInterface
 
         if ($this->logger) {
             $this->logger->stopNavigation($this);
+        }
+
+        if ($this->getForm()->isValid() && $this->hasNavigated) {
+            // Reset the current form.
+            $this->form = null;
+            $this->request = null;
         }
     }
 
