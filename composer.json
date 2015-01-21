@@ -13,14 +13,14 @@
     ],
     "require": {
         "php": ">=5.3.9",
-        "symfony/framework-bundle": ">=2.3,<3.0",
-        "symfony/options-resolver": ">=2.3,<3.0",
-        "symfony/validator": ">=2.3,<3.0",
-        "symfony/form": ">=2.3,<3.0",
-        "symfony/finder": ">=2.3,<3.0",
-        "symfony/expression-language": ">=2.4,<3.0",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/options-resolver": "~2.3",
+        "symfony/validator": "~2.3",
+        "symfony/form": "~2.3",
+        "symfony/finder": "~2.3",
+        "symfony/expression-language": "~2.4",
         "twig/extensions": "1.0.*",
-        "symfony/twig-bundle": ">=2.3,<3.0"
+        "symfony/twig-bundle": "~2.3"
     },
     "suggest": {
         "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
