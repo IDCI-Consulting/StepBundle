@@ -32,7 +32,7 @@ class ConfiguredNavigationTest extends AbstractNavigationTest
                             "title": "Personal information",
                             "description": "The personal data step",
                             "previous_options": {
-                                "label": "Retour au début"
+                                "label": "Back to first step"
                             },
                             "@builder": {
                                 "worker": "form_builder",

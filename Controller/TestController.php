@@ -36,7 +36,7 @@ class TestController extends Controller
                 'title'            => 'Personal information',
                 'description'      => 'The personal data step',
                 'previous_options' => array(
-                    'label' => 'Retour au début',
+                    'label' => 'Back to first step',
                 ),
                 'builder' => $this->get('form.factory')->createBuilder()
                     ->add('first_name', 'text')

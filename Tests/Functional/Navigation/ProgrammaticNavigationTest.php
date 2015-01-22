@@ -23,7 +23,7 @@ class ProgrammaticNavigationTest extends AbstractNavigationTest
                 'title'            => 'Personal information',
                 'description'      => 'The personal data step',
                 'previous_options' => array(
-                    'label' => 'Retour au début',
+                    'label' => 'Back to first step',
                 ),
                 'builder' => self::$container->get('form.factory')->createBuilder()
                     ->add('first_name', 'text')
