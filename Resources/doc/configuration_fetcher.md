@@ -1,6 +1,5 @@
-ConfigurationFetcher
-====================
-
+Configuration Fetcher
+=====================
 
 ConfigurationFetcher are services that fetch a configuration raw and provide an
 understandable data structure that is use by a MapConfigurationBuilder to build a MapBuilder.
@@ -11,25 +10,152 @@ By default this bundle provide some configuration fetcher.
 ## Default configuration fetcher
 
 This is the default ConfigurationFetcher, the raw is located in your configuration.
-To define a configuration :
-```yml
-idci_step:
-    configurations:
-        participation_map:
-            # Thomas demo configuration
-```
-In this example, "participation_map" is the ConfigurationFetcher identifier.
+To define a configuration:
 
+```yml
+# app/config/config.yml
+
+idci_step:
+    maps:
+        participation_map:
+            name: participation map
+            data:
+                foo: bar
+            steps:
+                intro:
+                    type: html
+                    options:
+                        title: Introduction
+                        description: The first step
+                        content: <h1>My content</h1>
+                personal:
+                    type: form
+                    options:
+                        title: Personal information
+                        description: The personal data step
+                        previous_options:
+                            label: Back to first step
+                        @builder:
+                            worker: form_builder
+                            parameters:
+                                fields:
+                                    -
+                                        name: first_name
+                                        type: text
+                                    -
+                                        name: last_name
+                                        type: text
+                purchase:
+                    type: form
+                    options:
+                        title: Purchase information
+                        description: The purchase data step
+                        @builder:
+                            worker: form_builder
+                            parameters:
+                                fields:
+                                    -
+                                        name: item
+                                        type: text
+                                    -
+                                        name: purchase_date
+                                        type: datetime
+                fork1:
+                    type: form
+                    options:
+                        title: Fork1 information
+                        description: The fork1 data step
+                        @builder:
+                            worker: form_builder
+                            parameters:
+                                fields:
+                                    -
+                                        name: fork1_data
+                                        type: textarea
+                fork2:
+                    type: form
+                    options:
+                        title: Fork2 information
+                        description: The fork2 data step
+                        @builder:
+                            worker: form_builder
+                            parameters:
+                                fields:
+                                    -
+                                        name: fork2_data
+                                        type: textarea
+                end:
+                    type: html
+                    options:
+                        title: The end
+                        description: The last data step
+                        content: <h1>The end</h1>
+            paths:
+                -
+                    type: single
+                    options:
+                        source: intro
+                        destination: personal
+                        next_options:
+                            label: next
+                -
+                    type: conditional_destination
+                    options:
+                        source: personal
+                        destinations:
+                            purchase:
+                                rules: {}
+                            fork2:
+                                rules: {}
+                -
+                    type: single
+                    options:
+                        source: purchase
+                        destination: fork1
+                -
+                    type: single
+                    options:
+                        source: purchase
+                        destination: fork2
+                        next_options:
+                            label: next p
+
+                -
+                    type: single
+                    options:
+                        source: fork1
+                        destination: end
+                        next_options:
+                            label: next f
+
+                -
+                    type: single
+                    options:
+                        source: fork2
+                        destination: end
+                        next_options:
+                            label: last
+                -
+                    type: end
+                    options:
+                        source: end
+                        next_options:
+                            label: end
+```
+
+In this example, "participation_map" is the configuration fetcher identifier.
+
+> The prefix `@` means you use a [worker](./configuration_worker.md) to inject an object in the options of the map, a step or a path.
 
 ## Create your own configuration fetcher
 
 If you wish to create your own configuration fetcher, you have to create a class
 which extends `AbstractConfigurationFetcher` and implement necessary methods.
-```php
-<?php
-// src/My/Bundle/Configuration/MapFetcher/MyConfigurationFetcher.php
 
-namespace My\Bundle\Configuration\MapFetcher;
+```php
+// src/My/OwnBundle/Configuration/MapFetcher/MyConfigurationFetcher.php
+
+namespace My\OwnBundle\Configuration\MapFetcher;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\AbstractConfigurationFetcher;
@@ -56,25 +182,209 @@ class MyConfigurationFetcher extends AbstractConfigurationFetcher
 }
 ```
 
-Then declare this new ConfigurationFetcher as service:
+Then declare this new configuration fetcher as service:
+
 ```yml
 services:
-    idci_step.configuration.fetcher.my_fetcher:
-        class: My\Bundle\Configuration\MapFetcher\MyConfigurationFetcher
-        arguments: []
+    my_own.step_configuration.fetcher.my_fetcher:
+        class: My\OwnBundle\Configuration\MapFetcher\MyConfigurationFetcher
+        arguments: array(]
         tags:
             - { name: idci_step.configuration.fetcher, alias: my_fetcher }
 ```
-The alias "my_fetcher" will be the ConfigurationFetcher identifier.
+
+The alias "my_fetcher" will be the configuration fetcher identifier.
 
 The doFetch function must return an array that should be in the following format:
-```
+
+```php
 array(
-    // Thomas demo data
+    "name" => "test map",
+    "data" => array(
+        "foo" => "bar"
+    ),
+    "steps" => array(
+        "intro" => array(
+            "type" => "html",
+            "options" => array(
+                "title" => "Introduction",
+                "description" => "The first step",
+                "content" => "<h1>My content</h1>"
+            )
+        ),
+        "personal" => array(
+            "type" => "form",
+            "options" => array(
+                "title" => "Personal information",
+                "description" => "The personal data step",
+                "previous_options" => array(
+                    "label" => "Back to first step"
+                ),
+                "@builder" => array(
+                    "worker" => "form_builder",
+                    "parameters" => array(
+                        "fields" => array(
+                            array(
+                                "name" => "first_name",
+                                "type" => "text"
+                            ),
+                            array(
+                                "name" => "last_name",
+                                "type" => "text"
+                            )
+                        )
+
+                    )
+                )
+            )
+        ),
+        "purchase" => array(
+            "type" => "form",
+            "options" => array(
+                "title" => "Purchase information",
+                "description" => "The purchase data step",
+                "@builder" => array(
+                    "worker" => "form_builder",
+                    "parameters" => array(
+                        "fields" => array(
+                            array(
+                                "name" => "item",
+                                "type" => "text"
+                            ),
+                            array(
+                                "name" => "purchase_date",
+                                "type" => "datetime"
+                            )
+                        )
+
+                    )
+                )
+            )
+        ),
+        "fork1" => array(
+            "type" => "form",
+            "options" => array(
+                "title" => "Fork1 information",
+                "description" => "The fork1 data step",
+                "@builder" => array(
+                    "worker" => "form_builder",
+                    "parameters" => array(
+                        "fields" => array(
+                            array(
+                                "name" => "fork1_data",
+                                "type" => "textarea"
+                            )
+                        )
+
+                    )
+                )
+            )
+        ),
+        "fork2" => array(
+            "type" => "form",
+            "options" => array(
+                "title" => "Fork2 information",
+                "description" => "The fork2 data step",
+                "@builder" => array(
+                    "worker" => "form_builder",
+                    "parameters" => array(
+                        "fields" => array(
+                            array(
+                                "name" => "fork2_data",
+                                "type" => "textarea"
+                            )
+                        )
+
+                    )
+                )
+            )
+        ),
+        "end" => array(
+            "type" => "html",
+            "options" => array(
+                "title" => "The end",
+                "description" => "The last data step",
+                "content" => "<h1>The end</h1>"
+            )
+        )
+    ),
+    "paths" => array(
+        array(
+            "type" => "single",
+            "options" => array(
+                "source" => "intro",
+                "destination" => "personal",
+                "next_options" => array(
+                    "label" => "next"
+                )
+            )
+        ),
+        array(
+            "type" => "conditional_destination",
+            "options" => array(
+                "source" => "personal",
+                "destinations" => array(
+                    "purchase" => array(
+                        "rules" => array()
+                    ),
+                    "fork2" => array(
+                        "rules" => array()
+                    )
+                )
+            )
+        ),
+        array(
+            "type" => "single",
+            "options" => array(
+                "source" => "purchase",
+                "destination" => "fork1"
+            )
+        ),
+        array(
+            "type" => "single",
+            "options" => array(
+                "source" => "purchase",
+                "destination" => "fork2",
+                "next_options" => array(
+                    "label" => "next p"
+                )
+            )
+        ),
+        array(
+            "type" => "single",
+            "options" => array(
+                "source" => "fork1",
+                "destination" => "end",
+                "next_options" => array(
+                    "label" => "next f"
+                )
+            )
+        ),
+        array(
+            "type" => "single",
+            "options" => array(
+                "source" => "fork2",
+                "destination" => "end",
+                "next_options" => array(
+                    "label" => "last"
+                )
+            )
+        ),
+        array(
+            "type" => "end",
+            "options" => array(
+                "source" => "end",
+                "next_options" => array(
+                    "label" => "end"
+                )
+            )
+        )
+    )
 )
 ```
 
-To check if ConfigurationFetcher are well configurated, you could list all them:
+To check if your configuration fetcher are well configurated, you could list all them:
+
 ```sh
-$ php app/console container:debug | grep "idci_step\.configuration.fetcher\."
+$ php app/console container:debug | grep "my_own\.step_configuration\.fetcher\."
 ```
