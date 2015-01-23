@@ -303,6 +303,48 @@ abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
         );
 
         # 7
+        $data[] = array(
+            'GET',
+            'personal',
+            'purchase',
+            0,
+            array(),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2015',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
+                ),
+                'fork1' => array(
+                    'fork1_data' => 'foo'
+                )
+            ),
+            array(
+                'item' => 'foo',
+                'purchase_date' => $date
+            )
+        );
+
+        # 8
         $date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
         $data[] = array(
             'POST',
@@ -371,7 +413,76 @@ abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        # 8
+        # 9
+        $date = \DateTime::createFromFormat('Y-m-d\TH:i:s', '2016-01-01T00:00:00');
+        $data[] = array(
+            'GET',
+            'purchase',
+            'fork2',
+            0,
+            array(
+                'item' => 'foo',
+                'purchase_date' => array(
+                    'date' => array(
+                        'year' => '2016',
+                        'month' => '1',
+                        'day' => '1'
+                    ),
+                    'time' => array(
+                        'hour' => '0',
+                        'minute' => '0'
+                    )
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2016',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
+                )
+            ),
+            array(
+                'personal' => array(
+                    'first_name' => 'John',
+                    'last_name' => 'Doe'
+                ),
+                'purchase' => array(
+                    'item' => 'foo',
+                    'purchase_date' => array(
+                        'date' => array(
+                            'year' => '2016',
+                            'month' => '1',
+                            'day' => '1'
+                        ),
+                        'time' => array(
+                            'hour' => '0',
+                            'minute' => '0'
+                        )
+                    )
+                ),
+                'fork1' => array(
+                    'fork1_data' => 'foo'
+                )
+            ),
+            array(
+                'fork2_data' => null
+            )
+        );
+
+        # 10
         $data[] = array(
             'POST',
             'fork2',
