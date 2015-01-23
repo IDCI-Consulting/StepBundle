@@ -35,8 +35,14 @@ class FormBuilderWorker implements ConfigurationWorkerInterface
     {
         $builder = $this->formFactory->createBuilder();
 
-        foreach ($parameters['fields'] as $field) {
-            $builder->add($field['name'], $field['type']);
+        if (isset($parameters['fields'])) {
+            foreach ($parameters['fields'] as $field) {
+                $builder->add(
+                    $field['name'],
+                    $field['type'],
+                    isset($field['options']) ? $field['options'] : array()
+                );
+            }
         }
 
         return $builder;
