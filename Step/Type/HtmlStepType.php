@@ -28,7 +28,7 @@ class HtmlStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
+    public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', 'html_content', array(
             'content' => $options['content'],

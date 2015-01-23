@@ -7,8 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 
@@ -46,4 +47,24 @@ abstract class AbstractStepType implements StepTypeInterface
     {
         return $step;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
+    {
+        $resolver = new OptionsResolver();
+        $this->setDefaultOptions($resolver);
+        $resolvedOptions = $resolver->resolve($options);
+
+        $this->doBuildNavigationStepForm($builder, $resolvedOptions);
+    }
+
+    /**
+     * Do build the navigation step form.
+     *
+     * @param FormBuilderInterface $builder The builder.
+     * @param array                $options The options.
+     */
+    abstract public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options);
 }

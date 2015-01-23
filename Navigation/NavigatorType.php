@@ -49,10 +49,14 @@ class NavigatorType extends AbstractType
      * @param FormBuilderInterface $builder The builder.
      * @param array                $options The options.
      */
-    public function buildStep(FormBuilderInterface $builder, array $options)
+    protected function buildStep(FormBuilderInterface $builder, array $options)
     {
         $currentStep = $options['navigator']->getCurrentStep();
         $configuration = $currentStep->getConfiguration();
+
+        if (!empty($options['data'])) {
+            $configuration['options']['data'] = $options['data'];
+        }
 
         $currentStep->getType()->buildNavigationStepForm(
             $builder,
@@ -66,7 +70,7 @@ class NavigatorType extends AbstractType
      * @param FormBuilderInterface $builder The builder.
      * @param array                $options The options.
      */
-    public function buildSubmit(FormBuilderInterface $builder, array $options)
+    protected function buildSubmit(FormBuilderInterface $builder, array $options)
     {
         $map = $options['navigator']->getMap();
         $currentStep = $options['navigator']->getCurrentStep();
@@ -101,6 +105,9 @@ class NavigatorType extends AbstractType
     {
         $resolver
             ->setRequired(array('navigator'))
+            ->setDefaults(array(
+                'data' => array()
+            ))
             ->setAllowedTypes(array(
                 'navigator'=> array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface')
             ))

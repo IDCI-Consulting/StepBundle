@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FormStepType extends AbstractStepType
@@ -21,6 +22,16 @@ class FormStepType extends AbstractStepType
 
         $resolver
             ->setRequired(array('builder'))
+            ->setDefaults(array('data' => array()))
+            ->setNormalizers(array(
+                'data' => function (Options $options, $value) {
+                    if (isset($value['_data'])) {
+                        return $value['_data'];
+                    }
+
+                    return $value;
+                }
+            ))
             ->setAllowedTypes(array(
                 'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
             ))
@@ -30,11 +41,12 @@ class FormStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
+    public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('_data', 'form_content', array(
             'label'   => $options['title'],
-            'builder' => $options['builder']
+            'builder' => $options['builder'],
+            'data'    => $options['data'],
         ));
     }
 }

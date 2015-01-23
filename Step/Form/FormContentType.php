@@ -18,11 +18,17 @@ class FormContentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($options['builder']->all() as $fieldName => $subBuilder) {
+        foreach ($options['builder']->all() as $fieldName => $fieldBuilder) {
+            $fieldOptions = $fieldBuilder->getOptions();
+
+            if (isset($options['data'][$fieldName])) {
+                $fieldOptions['data'] = $options['data'][$fieldName];
+            }
+
             $builder->add(
                 $fieldName,
-                $subBuilder->getType()->getInnerType(),
-                $subBuilder->getOptions()
+                $fieldBuilder->getType()->getInnerType(),
+                $fieldOptions
             );
         }
     }
@@ -34,6 +40,7 @@ class FormContentType extends AbstractType
     {
         $resolver
             ->setRequired(array('builder'))
+            ->setDefaults(array('data' => array()))
             ->setAllowedTypes(array(
                 'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
             ))
