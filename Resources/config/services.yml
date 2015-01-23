@@ -26,6 +26,7 @@ parameters:
     idci_step.configuration.processor.class: IDCI\Bundle\StepBundle\Configuration\ConfigurationProcessor
     idci_step.configuration.fetcher_registry.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistry
     idci_step.configuration.fetcher.config.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigFetcher
+    idci_step.configuration.fetcher.configuration.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcher
 
     idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
     idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
@@ -149,6 +150,11 @@ services:
         arguments: [%idci_step.config.maps%]
         tags:
             - { name: idci_step.configuration.fetcher, alias: config }
+
+    idci_step.configuration.fetcher.configuration:
+        class: %idci_step.configuration.fetcher.configuration.class%
+        abstract: true
+        arguments: [null]
 
 
     # Logger
