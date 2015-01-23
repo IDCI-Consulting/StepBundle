@@ -200,18 +200,18 @@ The doFetch function must return an array that should be in the following format
 ```php
 array(
     "name" => "MAP_NAME",
-    "data" => array(),
+    "data" => array(), //MAP_DATA
     "steps" => array(
         "STEP_NAME" => array(
             "type" => "STEP_TYPE",
-            "options" => "STEP_OPTIONS"
+            "options" => array(), //STEP_OPTIONS
         ),
         ...
     ),
     "paths" => array(
         array(
             "type" => "PATH_TYPE",
-            "options" => "PATH_OPTIONS"
+            "options" => array(), //PATH_OPTIONS
         ),
         ...
     )
