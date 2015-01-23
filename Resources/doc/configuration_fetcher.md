@@ -199,186 +199,21 @@ The doFetch function must return an array that should be in the following format
 
 ```php
 array(
-    "name" => "test map",
-    "data" => array(
-        "foo" => "bar"
-    ),
+    "name" => "MAP_NAME",
+    "data" => array(),
     "steps" => array(
-        "intro" => array(
-            "type" => "html",
-            "options" => array(
-                "title" => "Introduction",
-                "description" => "The first step",
-                "content" => "<h1>My content</h1>"
-            )
+        "STEP_NAME" => array(
+            "type" => "STEP_TYPE",
+            "options" => "STEP_OPTIONS"
         ),
-        "personal" => array(
-            "type" => "form",
-            "options" => array(
-                "title" => "Personal information",
-                "description" => "The personal data step",
-                "previous_options" => array(
-                    "label" => "Back to first step"
-                ),
-                "@builder" => array(
-                    "worker" => "form_builder",
-                    "parameters" => array(
-                        "fields" => array(
-                            array(
-                                "name" => "first_name",
-                                "type" => "text"
-                            ),
-                            array(
-                                "name" => "last_name",
-                                "type" => "text"
-                            )
-                        )
-
-                    )
-                )
-            )
-        ),
-        "purchase" => array(
-            "type" => "form",
-            "options" => array(
-                "title" => "Purchase information",
-                "description" => "The purchase data step",
-                "@builder" => array(
-                    "worker" => "form_builder",
-                    "parameters" => array(
-                        "fields" => array(
-                            array(
-                                "name" => "item",
-                                "type" => "text"
-                            ),
-                            array(
-                                "name" => "purchase_date",
-                                "type" => "datetime"
-                            )
-                        )
-
-                    )
-                )
-            )
-        ),
-        "fork1" => array(
-            "type" => "form",
-            "options" => array(
-                "title" => "Fork1 information",
-                "description" => "The fork1 data step",
-                "@builder" => array(
-                    "worker" => "form_builder",
-                    "parameters" => array(
-                        "fields" => array(
-                            array(
-                                "name" => "fork1_data",
-                                "type" => "textarea"
-                            )
-                        )
-
-                    )
-                )
-            )
-        ),
-        "fork2" => array(
-            "type" => "form",
-            "options" => array(
-                "title" => "Fork2 information",
-                "description" => "The fork2 data step",
-                "@builder" => array(
-                    "worker" => "form_builder",
-                    "parameters" => array(
-                        "fields" => array(
-                            array(
-                                "name" => "fork2_data",
-                                "type" => "textarea"
-                            )
-                        )
-
-                    )
-                )
-            )
-        ),
-        "end" => array(
-            "type" => "html",
-            "options" => array(
-                "title" => "The end",
-                "description" => "The last data step",
-                "content" => "<h1>The end</h1>"
-            )
-        )
+        ...
     ),
     "paths" => array(
         array(
-            "type" => "single",
-            "options" => array(
-                "source" => "intro",
-                "destination" => "personal",
-                "next_options" => array(
-                    "label" => "next"
-                )
-            )
+            "type" => "PATH_TYPE",
+            "options" => "PATH_OPTIONS"
         ),
-        array(
-            "type" => "conditional_destination",
-            "options" => array(
-                "source" => "personal",
-                "destinations" => array(
-                    "purchase" => array(
-                        "rules" => array()
-                    ),
-                    "fork2" => array(
-                        "rules" => array()
-                    )
-                )
-            )
-        ),
-        array(
-            "type" => "single",
-            "options" => array(
-                "source" => "purchase",
-                "destination" => "fork1"
-            )
-        ),
-        array(
-            "type" => "single",
-            "options" => array(
-                "source" => "purchase",
-                "destination" => "fork2",
-                "next_options" => array(
-                    "label" => "next p"
-                )
-            )
-        ),
-        array(
-            "type" => "single",
-            "options" => array(
-                "source" => "fork1",
-                "destination" => "end",
-                "next_options" => array(
-                    "label" => "next f"
-                )
-            )
-        ),
-        array(
-            "type" => "single",
-            "options" => array(
-                "source" => "fork2",
-                "destination" => "end",
-                "next_options" => array(
-                    "label" => "last"
-                )
-            )
-        ),
-        array(
-            "type" => "end",
-            "options" => array(
-                "source" => "end",
-                "next_options" => array(
-                    "label" => "end"
-                )
-            )
-        )
+        ...
     )
 )
 ```
