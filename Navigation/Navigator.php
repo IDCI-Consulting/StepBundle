@@ -120,10 +120,6 @@ class Navigator implements NavigatorInterface
     {
         if (null === $this->form) {
             $this->form = $this->getFormBuilder()->getForm();
-
-            if ($this->request) {
-                $this->form->handleRequest($this->request);
-            }
         }
 
         return $this->form;
@@ -164,7 +160,10 @@ class Navigator implements NavigatorInterface
 
         if ($this->request->isMethod('POST')) {
             $destinationStep = null;
-            if ($this->getForm()->has('_back') && $this->getForm()->get('_back')->isClicked()) {
+            $form = $this->getForm();
+            $form->handleRequest($this->request);
+
+            if ($form->has('_back') && $form->get('_back')->isClicked()) {
                 $previousStep = $this
                     ->getMap()
                     ->getStep($this->getFlow()->getPreviousStepName())
@@ -193,10 +192,9 @@ class Navigator implements NavigatorInterface
             $this->logger->stopNavigation($this);
         }
 
-        if ($this->getForm()->isValid() && $this->hasNavigated) {
+        if ($this->hasNavigated()) {
             // Reset the current form.
             $this->form = null;
-            $this->request = null;
         }
     }
 
