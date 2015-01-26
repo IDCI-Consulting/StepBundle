@@ -164,15 +164,13 @@ class Navigator implements NavigatorInterface
             $form->handleRequest($this->request);
 
             if ($form->has('_back') && $form->get('_back')->isClicked()) {
-                $previousStep = $this
+                $destinationStep = $this
                     ->getMap()
                     ->getStep($this->getFlow()->getPreviousStepName())
                 ;
 
-                $this->getFlow()->retraceTo($previousStep);
-
-                $destinationStep = $previousStep;
-            } else {
+                $this->getFlow()->retraceTo($destinationStep);
+            } elseif ($form->isValid()) {
                 $path = $this->getChosenPath();
                 $destinationStep = $path->resolveDestination($this);
 
@@ -184,17 +182,17 @@ class Navigator implements NavigatorInterface
             if (null !== $destinationStep) {
                 $this->hasNavigated = true;
                 $this->getFlow()->setCurrentStep($destinationStep);
+            }
+
+            if ($this->hasNavigated || $this->hasFinished) {
                 $this->save();
+                // Reset the current form.
+                $this->form = null;
             }
         }
 
         if ($this->logger) {
             $this->logger->stopNavigation($this);
-        }
-
-        if ($this->hasNavigated()) {
-            // Reset the current form.
-            $this->form = null;
         }
     }
 
