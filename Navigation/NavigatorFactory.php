@@ -14,6 +14,7 @@ use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilderInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface;
+use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface;
 
 class NavigatorFactory implements NavigatorFactoryInterface
 {
@@ -69,29 +70,31 @@ class NavigatorFactory implements NavigatorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNavigator(Request $request, $map, array $options = array())
+    public function createNavigator(Request $request, $configuration, array $parameters = array(), array $data = array())
     {
-        if (is_string($map)) {
-            $map = $this->configurationFetcherRegistry->getFetcher($map)->fetch($options);
-        } elseif (!empty($options)) {
-            throw new \InvalidArgumentException('You can specify options only when you use a reference to a fetcher');
+        if (is_string($configuration)) {
+            $configuration = $this->configurationFetcherRegistry->getFetcher($configuration);
         }
 
-        if (is_array($map)) {
-            $map = $this->mapConfigurationBuilder->build($map);
+        if ($configuration instanceof ConfigurationFetcherInterface) {
+            $configuration = $configuration->fetch($parameters);
         }
 
-        if (!$map instanceof MapInterface) {
+        if (is_array($configuration)) {
+            $configuration = $this->mapConfigurationBuilder->build($configuration);
+        }
+
+        if (!$configuration instanceof MapInterface) {
             throw new \InvalidArgumentException(
-                'The map must be an "array", a "reference to a fetcher" or an instance of "IDCI\Bundle\StepBundle\Map\MapInterface"'
+                'The map must be an "array", a "reference to a fetcher", an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"'
             );
         }
 
         return new Navigator(
             $this->formFactory,
-            $map,
+            $configuration,
             $request,
-            $this->guessFlowDataStore($map),
+            $this->guessFlowDataStore($configuration),
             $this->logger
         );
     }
