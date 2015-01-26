@@ -24,7 +24,6 @@ parameters:
     idci_step.configuration.worker_registry.class: IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry
     idci_step.configuration.worker.form_builder.class: IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker
     idci_step.configuration.fetcher_registry.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistry
-    idci_step.configuration.fetcher.config.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigFetcher
     idci_step.configuration.fetcher.configuration.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcher
 
     idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
@@ -139,12 +138,6 @@ services:
 
     idci_step.configuration.fetcher_registry:
         class: %idci_step.configuration.fetcher_registry.class%
-
-    idci_step.configuration.fetcher.config:
-        class: %idci_step.configuration.fetcher.config.class%
-        arguments: [%idci_step.config.maps%]
-        tags:
-            - { name: idci_step.configuration.fetcher, alias: config }
 
     idci_step.configuration.fetcher.configuration:
         class: %idci_step.configuration.fetcher.configuration.class%
