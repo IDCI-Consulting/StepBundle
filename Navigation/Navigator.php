@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
+use IDCI\Bundle\StepBundle\Flow\FlowData;
 use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 
 class Navigator implements NavigatorInterface
@@ -71,28 +72,58 @@ class Navigator implements NavigatorInterface
      * Constructor
      *
      * @param FormFactoryInterface       $formFactory       The form factory.
-     * @param MapInterface               $map               The map to navigate.
      * @param Request                    $request           The HTTP request.
+     * @param MapInterface               $map               The map to navigate.
+     * @param array                      $data              The navigation data.
      * @param FlowDataStoreInterface     $flowDataStore     The flow data store using to keep the flow.
      * @param NavigationLoggerInterface  $logger            The logger.
      */
     public function __construct(
         FormFactoryInterface       $formFactory,
-        MapInterface               $map,
         Request                    $request,
+        MapInterface               $map,
+        array                      $data = array(),
         FlowDataStoreInterface     $flowDataStore,
         NavigationLoggerInterface  $logger = null
     )
     {
         $this->formFactory   = $formFactory;
-        $this->map           = $map;
         $this->request       = $request;
+        $this->map           = $map;
         $this->flowDataStore = $flowDataStore;
         $this->logger        = $logger;
         $this->hasNavigated  = false;
         $this->hasFinished   = false;
 
+        $this->initFlow($data);
+
         $this->navigate();
+    }
+
+    /**
+     * Init the flow
+     *
+     * @param array $data The default data.
+     */
+    protected function initFlow(array $data = array())
+    {
+        $this->flow = $this->flowDataStore->get(
+            $this->map,
+            $this->request
+        );
+
+        if (null === $this->flow) {
+            $this->flow = new Flow();
+            $this->flow->setCurrentStep($this->map->getFirstStep());
+
+            if (!empty($data)) {
+                foreach ($data as $stepName => $stepData) {
+                    $this->flow->setStepData($this->map->getStep($stepName), $stepData);
+                }
+
+                $this->save();
+            }
+        }
     }
 
     /**
@@ -209,18 +240,6 @@ class Navigator implements NavigatorInterface
      */
     public function getFlow()
     {
-        if (null === $this->flow) {
-            $this->flow = $this->flowDataStore->get(
-                $this->map,
-                $this->request
-            );
-
-            if (null === $this->flow) {
-                $this->flow = new Flow();
-                $this->flow->setCurrentStep($this->map->getFirstStep());
-            }
-        }
-
         return $this->flow;
     }
 

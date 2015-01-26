@@ -39,7 +39,11 @@ class TestController extends Controller
                     'label' => 'Back to first step',
                 ),
                 'builder' => $this->get('form.factory')->createBuilder()
-                    ->add('first_name', 'text')
+                    ->add('first_name', 'text', array(
+                        'constraints' => array(
+                            new \Symfony\Component\Validator\Constraints\NotBlank()
+                        )
+                    ))
                     ->add('last_name', 'text')
                 ,
             ))
@@ -145,16 +149,22 @@ class TestController extends Controller
 
         $navigator = $this
             ->get('idci_step.navigator.factory')
-            ->createNavigator($request, $map)
+            ->createNavigator(
+                $request,
+                $map, 
+                array(),
+                json_decode('{
+                    "personal":{"first_name":"John","last_name":"DOE"},
+                    "purchase":{"item":"Something","purchase_date":{"date":{"month":"10","day":"10","year":"2010"},"time":{"hour":"10","minute":"10"}}}
+                }', true)
+            )
         ;
-
-        if ($navigator->hasNavigated()) {
-            return $this->redirect($this->generateUrl('idci_step'));
-        }
 
         if ($navigator->hasFinished()) {
             $navigator->clear();
+        }
 
+        if ($navigator->hasNavigated()) {
             return $this->redirect($this->generateUrl('idci_step'));
         }
 

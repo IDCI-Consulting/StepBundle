@@ -92,8 +92,9 @@ class NavigatorFactory implements NavigatorFactoryInterface
 
         return new Navigator(
             $this->formFactory,
-            $configuration,
             $request,
+            $configuration,
+            $data,
             $this->guessFlowDataStore($configuration),
             $this->logger
         );
