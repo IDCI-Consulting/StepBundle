@@ -9,7 +9,6 @@ namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
 use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface;
-use IDCI\Bundle\StepBundle\Configuration\ConfigurationProcessorInterface;
 
 class MapConfigurationBuilder implements MapConfigurationBuilderInterface
 {
@@ -20,12 +19,6 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      */
     protected $mapBuilderFactory;
 
-    /**
-     * The configuration processor.
-     *
-     * @var ConfigurationProcessorInterface
-     */
-    protected $processor;
 
     /**
      * The configuration worker registry.
@@ -38,17 +31,14 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      * Constructor.
      *
      * @param MapBuilderFactoryInterface           $mapBuilderFactory The map builder factory.
-     * @param ConfigurationProcessorInterface      $processor         The configuration processor.
      * @param ConfigurationWorkerRegistryInterface $workerRegistry    The configuration worker registry.
      */
     public function __construct(
         MapBuilderFactoryInterface $mapBuilderFactory,
-        ConfigurationProcessorInterface $processor,
         ConfigurationWorkerRegistryInterface $workerRegistry
     )
     {
         $this->mapBuilderFactory = $mapBuilderFactory;
-        $this->processor = $processor;
         $this->workerRegistry = $workerRegistry;
     }
 
@@ -57,9 +47,6 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      */
     public function build(array $parameters = array())
     {
-        // Check and process the structure of the parameters.
-        $parameters = $this->processor->process(array('map' => $parameters));
-
         // Build the map.
         $mapOptions = $this->formatOptions($parameters['options']);
 
