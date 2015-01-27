@@ -63,9 +63,12 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData($name, array $data)
+    public function setStepData($name, array $data, $reminded = false)
     {
-        $this->data[$name] = $data;
+        if (!$reminded) {
+            $this->data[$name] = $data;
+        }
+
         $this->remindedData[$name] = $data;
     }
 

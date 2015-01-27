@@ -126,7 +126,7 @@ class Navigator implements NavigatorInterface
 
             if (!empty($data)) {
                 foreach ($data as $stepName => $stepData) {
-                    $this->flow->setStepData($this->map->getStep($stepName), $stepData);
+                    $this->flow->setStepData($this->map->getStep($stepName), $stepData, true);
                 }
 
                 $this->save();

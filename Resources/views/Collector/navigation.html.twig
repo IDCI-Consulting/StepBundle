@@ -70,12 +70,18 @@
                 <tr>
                     <th>Step</th>
                     <th>Data</th>
+                    <th>Reminded data</th>
                 </tr>
             </thead>
             <tbody>
-                {% for stepName,stepData in collector.flow.data.all.data %}
+                {% for stepName,stepData in collector.flow.data.all.remindedData %}
                 <tr>
                     <td>{{ stepName }}</td>
+                    <td>
+                        {% if collector.flow.data.hasStepData(stepName) %}
+                            {{ collector.flow.data.getStepData(stepName) | json_encode }}
+                        {% endif %}
+                    </td>
                     <td>{{ stepData | json_encode }}</td>
                 </tr>
                 {% endfor %}

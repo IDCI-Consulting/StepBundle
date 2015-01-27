@@ -124,11 +124,9 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData(StepInterface $step, array $data)
+    public function setStepData(StepInterface $step, array $data, $reminded = false)
     {
-        $stepName = $step->getName();
-
-        $this->data->setStepData($stepName, $data);
+        $this->data->setStepData($step->getName(), $data, $reminded);
     }
 
     /**

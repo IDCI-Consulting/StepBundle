@@ -88,13 +88,16 @@ interface FlowInterface
     /**
      * Set the flow navigation data for a given step
      *
-     * @param FlowDataInterface
-     * @param array
+     * @param StepInterface $step     The step.
+     * @param array         $data     The data to store.
+     * @param boolean       $reminded Set the reminded data or not.
      */
-    public function setStepData(StepInterface $step, array $data);
+    public function setStepData(StepInterface $step, array $data, $reminded = false);
 
     /**
      * Retrace the flow to a step
+     *
+     * @param StepInterface $step The target step.
      *
      * @return array The retraced paths
      */

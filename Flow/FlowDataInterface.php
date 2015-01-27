@@ -32,10 +32,11 @@ interface FlowDataInterface
     /**
      * Set the data of a step.
      *
-     * @param string $name The identifier name of the step.
-     * @param array  $data The associated data.
+     * @param string  $name     The identifier name of the step.
+     * @param array   $data     The associated data.
+     * @param boolean $reminded Set only the reminded data or not.
      */
-    public function setStepData($name, array $data);
+    public function setStepData($name, array $data, $reminded = false);
 
     /**
      * Unset the data for a step.
