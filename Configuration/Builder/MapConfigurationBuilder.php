@@ -47,8 +47,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      */
     public function build(array $parameters = array())
     {
-        // Build the map.
-        $mapOptions = $this->formatOptions($parameters);
+        $mapOptions = $this->buildOptions($parameters);
 
         $mapData = isset($parameters['data'])
             ? $parameters['data']
@@ -64,7 +63,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
                 $builder->addStep(
                     $name,
                     $step['type'],
-                    $this->formatOptions($step)
+                    $this->buildOptions($step)
                 );
             }
         }
@@ -73,7 +72,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
             foreach ($parameters['paths'] as $name => $path) {
                 $builder->addPath(
                     $path['type'],
-                    $this->formatOptions($path)
+                    $this->buildOptions($path)
                 );
             }
         }
@@ -82,17 +81,17 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     }
 
     /**
-     * Format options.
+     * Build options.
      *
-     * @param array   $options    The options.
-     * @param boolean $hasOptions True if the given options must contain an 'options' sub field.
+     * @param array       $options      The options.
+     * @param string|null $optionField  The option sub field to build if given.
      *
-     * @return array The formatted options.
+     * @return array The built options.
      */
-    protected function formatOptions(array $options, $hasOptions = true)
+    protected function buildOptions(array $options, $optionField = 'options')
     {
-        if ($hasOptions) {
-            $options = isset($options['options']) ? $options['options'] : array();
+        if (null !== $optionField) {
+            $options = isset($options[$optionField]) ? $options[$optionField] : array();
         }
 
         foreach ($options as $key => $option) {
@@ -104,7 +103,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
                 $options[substr($key, 1)] = $worker->work($option['parameters']);
             // Case of an embedded array.
             } else if (is_array($option)) {
-                $options[$key] = $this->formatOptions($option, false);
+                $options[$key] = $this->buildOptions($option, null);
             }
         }
 
