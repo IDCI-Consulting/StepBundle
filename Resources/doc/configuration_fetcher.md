@@ -147,6 +147,7 @@ In this example, "participation_map" is the configuration fetcher identifier.
 
 > The prefix `@` means you use a [worker](./configuration_worker.md) to inject an object in the options of the map, a step or a path.
 
+
 ## Create your own configuration fetcher
 
 If you wish to create your own configuration fetcher, you have to create a class
@@ -221,5 +222,5 @@ array(
 To check if your configuration fetcher are well configurated, you could list all them:
 
 ```sh
-$ php app/console container:debug | grep "my_own\.step_configuration\.fetcher\."
+$ php app/console container:debug | grep "idci_step\.step_configuration\.fetcher\."
 ```
