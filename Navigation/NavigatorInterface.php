@@ -110,4 +110,11 @@ interface NavigatorInterface
      * @return Symfony\Component\Form\FormView
      */
     public function createStepView();
+
+    /**
+     * Returns the step form view.
+     *
+     * @return Symfony\Component\Form\FormView
+     */
+    public function getFormView();
 }

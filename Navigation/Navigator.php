@@ -27,6 +27,13 @@ class Navigator implements NavigatorInterface
     protected $form;
 
     /**
+     * The current form view.
+     *
+     * @var FormViewInterface
+     */
+    protected $formView;
+
+    /**
      * The form factory.
      *
      * @var FormFactoryInterface
@@ -87,6 +94,7 @@ class Navigator implements NavigatorInterface
         NavigationLoggerInterface  $logger = null
     )
     {
+        $this->formView      = null;
         $this->formFactory   = $formFactory;
         $this->request       = $request;
         $this->map           = $map;
@@ -369,5 +377,17 @@ class Navigator implements NavigatorInterface
     public function createStepView()
     {
         return $this->getForm()->createView();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormView()
+    {
+        if (null === $this->formView) {
+            $this->formView = $this->createStepView();
+        }
+
+        return $this->formView;
     }
 }
