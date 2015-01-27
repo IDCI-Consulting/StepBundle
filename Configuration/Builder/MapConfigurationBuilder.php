@@ -47,15 +47,13 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      */
     public function build(array $parameters = array())
     {
-        $mapOptions = $this->buildOptions($parameters);
-
-        $mapData = isset($parameters['data'])
-            ? $parameters['data']
-            : array()
-        ;
-
-        $builder = $this->mapBuilderFactory
-            ->createNamedBuilder($parameters['name'], $mapData, $mapOptions)
+        $builder = $this
+            ->mapBuilderFactory
+            ->createNamedBuilder(
+                $parameters['name'],
+                isset($parameters['data']) ? $parameters['data'] : array(),
+                $this->buildOptions($parameters)
+            )
         ;
 
         if (isset($parameters['steps'])) {
