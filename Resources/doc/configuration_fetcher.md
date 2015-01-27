@@ -222,5 +222,5 @@ array(
 To check if your configuration fetcher are well configurated, you could list all them:
 
 ```sh
-$ php app/console container:debug | grep "idci_step\.step_configuration\.fetcher\."
+$ php app/console container:debug | grep "idci_step\.configuration\.fetcher\."
 ```

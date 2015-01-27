@@ -24,6 +24,7 @@ class TestController extends Controller
      */
     public function indexAction(Request $request)
     {
+        /*
         $map = $this
             ->get('idci_step.map.builder.factory')
             ->createNamedBuilder('test map')
@@ -151,7 +152,7 @@ class TestController extends Controller
             ->get('idci_step.navigator.factory')
             ->createNavigator(
                 $request,
-                $map, 
+                $map,
                 array(),
                 json_decode('{
                     "personal":{"first_name":"John","last_name":"DOE"},
@@ -159,6 +160,16 @@ class TestController extends Controller
                 }', true)
             )
         ;
+        */
+
+        $navigator = $this
+            ->get('idci_step.navigator.factory')
+            ->createNavigator(
+                $request,
+                'participation_map'
+            )
+        ;
+
 
         if ($navigator->hasFinished()) {
             $navigator->clear();

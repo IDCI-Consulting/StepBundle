@@ -25,13 +25,12 @@ class ConfigurationFetcherCompilerPass implements CompilerPassInterface
 
         $registryDefinition = $container->getDefinition('idci_step.configuration.fetcher_registry');
 
-        $configurations = $container->getParameter('idci_step.config.maps');
+        $configurations = $container->getParameter('idci_step.maps');
         foreach ($configurations as $name => $configuration) {
             $fetcherDefinition = new DefinitionDecorator('idci_step.configuration.fetcher.configuration');
-            $fetcherServiceId = sprintf('idci_step.configuration.fetcher.configuration.%s', $name);
+            $fetcherServiceId = sprintf('idci_step.configuration.fetcher.%s', $name);
 
             $fetcherDefinition->replaceArgument(0, $configuration);
-
             $container->setDefinition($fetcherServiceId, $fetcherDefinition);
 
             $registryDefinition->addMethodCall(

@@ -48,7 +48,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     public function build(array $parameters = array())
     {
         // Build the map.
-        $mapOptions = $this->formatOptions($parameters['options']);
+        $mapOptions = $this->formatOptions($parameters);
 
         $mapData = isset($parameters['data'])
             ? $parameters['data']
@@ -64,7 +64,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
                 $builder->addStep(
                     $name,
                     $step['type'],
-                    $this->formatOptions($step['options'])
+                    $this->formatOptions($step)
                 );
             }
         }
@@ -73,7 +73,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
             foreach ($parameters['paths'] as $name => $path) {
                 $builder->addPath(
                     $path['type'],
-                    $this->formatOptions($path['options'])
+                    $this->formatOptions($path)
                 );
             }
         }
@@ -84,12 +84,17 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     /**
      * Format options.
      *
-     * @param array $options The options.
+     * @param array   $options       The options.
+     * @param boolean $isOptionnable True if the given options must contain an 'option' sub field.
      *
      * @return array The formatted options.
      */
-    protected function formatOptions(array $options)
+    protected function formatOptions(array $options, $isOptionnable = true)
     {
+        if ($isOptionnable) {
+            $options = isset($options['options']) ? $options['options'] : array();
+        }
+
         foreach ($options as $key => $option) {
             // Case of a worker.
             if ('@' === substr($key, 0, 1)) {
@@ -99,7 +104,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
                 $options[substr($key, 1)] = $worker->work($option['parameters']);
             // Case of an embedded array.
             } else if (is_array($option)) {
-                $options[$key] = $this->formatOptions($option);
+                $options[$key] = $this->formatOptions($option, false);
             }
         }
 
