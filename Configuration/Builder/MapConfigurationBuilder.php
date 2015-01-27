@@ -84,14 +84,14 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     /**
      * Format options.
      *
-     * @param array   $options       The options.
-     * @param boolean $isOptionnable True if the given options must contain an 'option' sub field.
+     * @param array   $options    The options.
+     * @param boolean $hasOptions True if the given options must contain an 'options' sub field.
      *
      * @return array The formatted options.
      */
-    protected function formatOptions(array $options, $isOptionnable = true)
+    protected function formatOptions(array $options, $hasOptions = true)
     {
-        if ($isOptionnable) {
+        if ($hasOptions) {
             $options = isset($options['options']) ? $options['options'] : array();
         }
 
