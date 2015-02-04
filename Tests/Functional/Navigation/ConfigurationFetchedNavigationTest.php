@@ -11,7 +11,7 @@ class ConfigurationFetchedNavigationTest extends AbstractNavigationTest
 {
     public function setUp()
     {
-        $this->map = 'config';
-        $this->options = array('name' => 'test');
+        $this->map = 'test';
+        $this->options = array();
     }
 }
