@@ -27,8 +27,12 @@ class SessionFlowDataStore implements FlowDataStoreInterface
             self::generateDataIdentifier($map),
             json_encode(array(
                 'current_step' => $currentStepName ? $currentStepName : '',
-                'data'         => $flow->getData()->getAll(),
-                'history'      => $flow->getHistory()->getAll()
+                'history'      => $flow->getHistory()->getAll(),
+                'data'         => array(
+                    'data'          => $flow->getData()->getData(),
+                    'remindedData'  => $flow->getData()->getRemindedData(),
+                    'retrievedData' => $flow->getData()->getRetrievedData(),
+                ),
             )
         ));
     }
@@ -65,7 +69,8 @@ class SessionFlowDataStore implements FlowDataStoreInterface
             ))
             ->setData(new FlowData(
                 $flowRow['data']['data'],
-                $flowRow['data']['remindedData']
+                $flowRow['data']['remindedData'],
+                $flowRow['data']['retrievedData']
             ))
         ;
     }

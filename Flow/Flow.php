@@ -124,24 +124,28 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData(StepInterface $step, array $data, $reminded = false)
+    public function setStepData(StepInterface $step, array $data, $type = null)
     {
-        $this->data->setStepData($step->getName(), $data, $reminded);
+        $this->data->setStepData($step->getName(), $data, $type);
+
+        if (null === $type) {
+            $this->data->setStepData($step->getName(), $data, FlowData::TYPE_REMINDED);
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getStepData(StepInterface $step, $reminded = true)
+    public function getStepData(StepInterface $step, $type = null)
     {
         $stepName = $step->getName();
 
-        if ($reminded) {
-            if ($this->data->hasRemindedStepData($stepName)) {
-                return $this->data->getRemindedStepData($stepName);
-            }
-        } elseif ($this->data->hasStepData($stepName)) {
-            return $this->data->getStepData($stepName);
+        if ($this->data->hasStepData($stepName, $type)) {
+            return $this->data->getStepData($stepName, $type);
+        }
+
+        if (null === $type) {
+            return $this->getStepData($step, FlowData::TYPE_REMINDED);
         }
 
         return array();

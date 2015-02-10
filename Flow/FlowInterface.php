@@ -78,21 +78,21 @@ interface FlowInterface
     /**
      * Returns the flow navigation data for a given step
      *
-     * @param StepInterface $step     The step.
-     * @param boolean       $reminded Returns the reminded data or not.
+     * @param StepInterface $step  The step.
+     * @param string|null   $type  The data type (null, 'reminded' or 'retrieved').
      *
      * @return array
      */
-    public function getStepData(StepInterface $step, $reminded = false);
+    public function getStepData(StepInterface $step, $type = null);
 
     /**
      * Set the flow navigation data for a given step
      *
-     * @param StepInterface $step     The step.
-     * @param array         $data     The data to store.
-     * @param boolean       $reminded Set the reminded data or not.
+     * @param StepInterface $step  The step.
+     * @param array         $data  The data to store.
+     * @param string|null   $type  The data type (null, 'reminded' or 'retrieved').
      */
-    public function setStepData(StepInterface $step, array $data, $reminded = false);
+    public function setStepData(StepInterface $step, array $data, $type = null);
 
     /**
      * Retrace the flow to a step
