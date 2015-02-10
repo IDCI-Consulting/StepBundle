@@ -28,14 +28,18 @@ abstract class AbstractStepType implements StepTypeInterface
                 'previous_options' => array(
                     'label' => '< Previous'
                 ),
-                'listeners'        => array(),
+                'js'               => null,
+                'css'              => null,
+                //'listeners'        => array(),
             ))
             ->setAllowedTypes(array(
                 'title'            => array('null', 'string'),
                 'description'      => array('null', 'string'),
                 'is_first'         => array('bool'),
                 'previous_options' => array('array'),
-                'listeners'        => array('array'),
+                'js'               => array('null', 'string'),
+                'css'              => array('null', 'string'),
+                //'listeners'        => array('array'),
             ))
         ;
     }

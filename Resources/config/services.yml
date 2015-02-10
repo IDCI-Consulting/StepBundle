@@ -174,3 +174,11 @@ services:
         class: IDCI\Bundle\StepBundle\Step\Form\FormContentType
         tags:
             - { name: form.type, alias: form_content }
+
+
+    # Twig
+
+    idci_step.twig.step_extension:
+        class: IDCI\Bundle\StepBundle\Twig\StepExtension
+        tags:
+            - { name: twig.extension }

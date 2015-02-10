@@ -1,5 +1,15 @@
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ step_stylesheets(navigator) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ step_javascripts(navigator) }}
+{% endblock %}
+
 {% block body %}
     {{ form(navigator.formView) }}
 {% endblock %}
