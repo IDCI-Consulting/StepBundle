@@ -17,8 +17,16 @@ class StepExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('step_stylesheets', array($this, 'stepStylesheets')),
-            new \Twig_SimpleFunction('step_javascripts', array($this, 'stepJavascripts')),
+            new \Twig_SimpleFunction(
+                'step_stylesheets',
+                array($this, 'stepStylesheets'),
+                array('is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFunction(
+                'step_javascripts',
+                array($this, 'stepJavascripts'),
+                array('is_safe' => array('html', 'js'))
+            ),
         );
     }
 
@@ -31,18 +39,40 @@ class StepExtension extends \Twig_Extension
     }
 
     /**
+     * Returns step stylesheets
      *
+     * @param NavigatorInterface $navigator
+     *
+     * @return string
      */
     public function stepStylesheets(NavigatorInterface $navigator)
     {
-        return 'css';
+        $configuration = $navigator->getCurrentStep()->getConfiguration();
+
+        if (null !== $configuration['options']['css']) {
+            return sprintf(
+                '<style type="text/css">%s</style>',
+                $configuration['options']['css']
+            );
+        }
     }
 
     /**
+     * Returns step javascripts
      *
+     * @param NavigatorInterface $navigator
+     *
+     * @return string
      */
     public function stepJavascripts(NavigatorInterface $navigator)
     {
-        return 'js';
+        $configuration = $navigator->getCurrentStep()->getConfiguration();
+
+        if (null !== $configuration['options']['js']) {
+            return sprintf(
+                '<script type="text/javascript">%s</script>',
+                $configuration['options']['js']
+            );
+        }
     }
 }
