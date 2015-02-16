@@ -22,14 +22,10 @@ class SinglePathType extends AbstractPathType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setRequired(array('source', 'destination', 'listeners'))
-            ->setDefaults(array(
-                'listeners' => array()
-            ))
+            ->setRequired(array('source', 'destination'))
             ->setAllowedTypes(array(
                 'source'        => 'string',
                 'destination'   => 'string',
-                'listeners'     => 'array',
             ))
         ;
     }

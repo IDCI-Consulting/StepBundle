@@ -30,7 +30,6 @@ abstract class AbstractStepType implements StepTypeInterface
                 ),
                 'js'               => null,
                 'css'              => null,
-                //'listeners'        => array(),
             ))
             ->setAllowedTypes(array(
                 'title'            => array('null', 'string'),
@@ -39,7 +38,6 @@ abstract class AbstractStepType implements StepTypeInterface
                 'previous_options' => array('array'),
                 'js'               => array('null', 'string'),
                 'css'              => array('null', 'string'),
-                //'listeners'        => array('array'),
             ))
         ;
     }

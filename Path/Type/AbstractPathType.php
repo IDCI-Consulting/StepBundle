@@ -25,11 +25,11 @@ abstract class AbstractPathType implements PathTypeInterface
                 'next_options' => array(
                     'label' => 'Next >'
                 ),
-                'listeners'    => array(),
+                'events'       => array(),
             ))
             ->setAllowedTypes(array(
                 'next_options' => 'array',
-                'listeners'    => 'array',
+                'events'       => 'array',
             ))
         ;
     }

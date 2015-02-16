@@ -148,7 +148,7 @@ class Navigator implements NavigatorInterface
         $data = $this->getCurrentNormalizedStepData();
 
         return $this->formFactory->createBuilder(
-            new NavigatorType(),
+            'idci_step_navigator',
             !empty($data) ? array('_data' => $data) : null,
             array('navigator' => $this)
         );
@@ -261,6 +261,14 @@ class Navigator implements NavigatorInterface
     public function getCurrentStep()
     {
         return $this->getMap()->getStep($this->getFlow()->getCurrentStepName());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentPaths()
+    {
+        return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
     }
 
     /**

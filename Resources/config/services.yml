@@ -1,22 +1,20 @@
 parameters:
     idci_step.step.registry.class: IDCI\Bundle\StepBundle\Step\StepRegistry
-    idci_step.path.registry.class: IDCI\Bundle\StepBundle\Path\PathRegistry
-
     idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
-    idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
-
-    idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
-    idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
-
     idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
+    idci_step.path.registry.class: IDCI\Bundle\StepBundle\Path\PathRegistry
+    idci_step.path_event.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventRegistry
+    idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
     idci_step.path.type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
     idci_step.path.type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
 
-    idci_step.flow.event_notifier.class: IDCI\Bundle\StepBundle\Flow\FlowEventNotifier
+    idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
+    idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
+
     idci_step.flow.data_store_registry.class: IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistry
     idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionFlowDataStore
 
@@ -41,6 +39,9 @@ services:
 
     idci_step.path.registry:
         class: %idci_step.path.registry.class%
+
+    idci_step.path_event.registry:
+        class: %idci_step.path_event.registry.class%
 
     idci_step.flow.data_store_registry:
         class: %idci_step.flow.data_store_registry.class%
@@ -111,6 +112,14 @@ services:
             - { name: idci_step.path.type, alias: end }
 
 
+    # PathEvent
+
+    idci_step.path_event.action.test:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\TestPathEventAction
+        tags:
+            - { name: idci_step.path_event.action, alias: test }
+
+
     # FlowDataStore
 
     idci_step.flow.data_store.session:
@@ -164,6 +173,12 @@ services:
 
 
     # FormType
+
+    form.type.navigator:
+        class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
+        arguments: [@idci_step.path_event.registry]
+        tags:
+            - { name: form.type, alias: idci_step_navigator }
 
     form.type.html_content:
         class: IDCI\Bundle\StepBundle\Step\Form\HtmlContentType

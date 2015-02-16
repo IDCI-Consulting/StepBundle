@@ -39,6 +39,13 @@ interface NavigatorInterface
     public function getCurrentStep();
 
     /**
+     * Returns the current paths.
+     *
+     * @return array
+     */
+    public function getCurrentPaths();
+
+    /**
      * Returns the previous step.
      *
      * @return StepInterface|null
