@@ -5,14 +5,14 @@
  * @license: MIT
  */
  
-namespace IDCI\Bundle\StepBundle\Step\Form;
+namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class HtmlContentType extends AbstractType
+class HtmlStepFormType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -42,6 +42,6 @@ class HtmlContentType extends AbstractType
      */
     public function getName()
     {
-        return 'html_content';
+        return 'idci_step_form_html';
     }
 }

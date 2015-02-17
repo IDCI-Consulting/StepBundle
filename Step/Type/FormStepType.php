@@ -43,7 +43,7 @@ class FormStepType extends AbstractStepType
      */
     public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('_data', 'form_content', array(
+        $builder->add('_data', 'idci_step_form_form', array(
             'label'   => $options['title'],
             'builder' => $options['builder'],
             'data'    => $options['data'],

@@ -43,14 +43,22 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SET_DATA  => array(array('addPathEvents', 10)),
-            FormEvents::POST_SET_DATA => array(array('addPathEvents', 10)),
+            FormEvents::PRE_SET_DATA  => array(
+                array('addPathEvents', 10)
+            ),
+            FormEvents::POST_SET_DATA => array(
+                array('addPathEvents', 10)
+            ),
             FormEvents::PRE_SUBMIT    => array(
                 array('preSubmit', 0),
                 array('addPathEvents', 10)
             ),
-            FormEvents::SUBMIT        => array(array('addPathEvents', 10)),
-            FormEvents::POST_SUBMIT   => array(array('addPathEvents', 10)),
+            FormEvents::SUBMIT        => array(
+                array('addPathEvents', 10)
+            ),
+            FormEvents::POST_SUBMIT   => array(
+                array('addPathEvents', 10)
+            ),
         );
     }
 
@@ -78,6 +86,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     $action->execute(
                         $form,
                         $this->navigator,
+                        $i,
                         $configuration['parameters']
                     );
                 }

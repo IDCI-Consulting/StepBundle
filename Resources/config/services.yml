@@ -114,10 +114,10 @@ services:
 
     # PathEvent
 
-    idci_step.path_event.action.test:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\TestPathEventAction
+    idci_step.path_event.action.js_comfirm:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
         tags:
-            - { name: idci_step.path_event.action, alias: test }
+            - { name: idci_step.path_event.action, alias: js_confirm }
 
 
     # FlowDataStore
@@ -174,21 +174,26 @@ services:
 
     # FormType
 
-    form.type.navigator:
+    form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
         arguments: [@idci_step.path_event.registry]
         tags:
             - { name: form.type, alias: idci_step_navigator }
 
-    form.type.html_content:
-        class: IDCI\Bundle\StepBundle\Step\Form\HtmlContentType
+    form.type.idci_step.step_form.html:
+        class: IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType
         tags:
-            - { name: form.type, alias: html_content }
+            - { name: form.type, alias: idci_step_form_html }
 
-    form.type.form_content:
-        class: IDCI\Bundle\StepBundle\Step\Form\FormContentType
+    form.type.idci_step.step_form.form:
+        class: IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType
         tags:
-            - { name: form.type, alias: form_content }
+            - { name: form.type, alias: idci_step_form_form }
+
+    form.type.idci_step.action_form.js_confirm:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\Form\JsConfirmActionFormType
+        tags:
+            - { name: form.type, alias: idci_step_action_form_js_confirm }
 
 
     # Twig

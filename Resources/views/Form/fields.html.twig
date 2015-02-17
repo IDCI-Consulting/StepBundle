@@ -1,10 +1,24 @@
-{% block html_content_row %}
+{% block idci_step_form_html_row %}
     {{ form_widget(form) }}
 {% endblock %}
-{% block html_content_widget %}
+{% block idci_step_form_html_widget %}
     <div class="html_text">
         {% spaceless %}
             {{ content | raw }}
         {% endspaceless %}
     </div>
+{% endblock %}
+
+{% block idci_step_action_form_js_confirm_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+{% block idci_step_action_form_js_confirm_widget %}
+    <script type="text/javascript">
+        var observedItem = document.getElementById("{{ form.vars.observed_id }}");
+        observedItem.addEventListener("click", function(event) {
+            if (!confirm("Are you sure ")) {
+                event.preventDefault();
+            }
+        }, false);
+    </script>
 {% endblock %}

@@ -10,20 +10,23 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 use Symfony\Component\Form\FormInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
-interface PathEventActionInterface
+class JsConfirmPathEventAction implements PathEventActionInterface
 {
     /**
-     * Execute action.
-     *
-     * @param FormInterface      $form       The form.
-     * @param NavigatorInterface $navigator  The navigator.
-     * @param integer            $pathIndex  The path index.
-     * @param array              $parameters The parameters.
+     * {@inheritdoc}
      */
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $index,
+        $i,
         $parameters = array()
-    );
+    )
+    {
+        $form
+            ->add('_js_confirm', 'idci_step_action_form_js_confirm', array_merge(
+                $parameters,
+                array('path_index' => $i)
+            ))
+        ;
+    }
 }
