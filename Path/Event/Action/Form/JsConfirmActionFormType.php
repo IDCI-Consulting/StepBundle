@@ -31,6 +31,8 @@ class JsConfirmActionFormType extends AbstractType
             'idci_step_navigator__path#%s',
             $options['path_index']
         );
+
+        $view->vars['message'] = $options['message'];
     }
 
     /**
@@ -48,8 +50,10 @@ class JsConfirmActionFormType extends AbstractType
     {
         $resolver
             ->setRequired(array('path_index'))
+            ->setDefaults(array('message' => "Are you sure ?"))
             ->setAllowedTypes(array(
-                'path_index' => array('integer')
+                'path_index' => array('integer'),
+                'message'    => array('string')
             ))
         ;
     }

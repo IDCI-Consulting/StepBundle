@@ -16,7 +16,7 @@
     <script type="text/javascript">
         var observedItem = document.getElementById("{{ form.vars.observed_id }}");
         observedItem.addEventListener("click", function(event) {
-            if (!confirm("Are you sure ")) {
+            if (!confirm("{{ form.vars.message }}")) {
                 event.preventDefault();
             }
         }, false);
