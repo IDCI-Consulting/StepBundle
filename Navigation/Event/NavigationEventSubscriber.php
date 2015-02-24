@@ -44,20 +44,20 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA  => array(
-                array('addPathEvents', 10)
+                array('addPathEvents', 0)
             ),
             FormEvents::POST_SET_DATA => array(
-                array('addPathEvents', 10)
+                array('addPathEvents', 0)
             ),
             FormEvents::PRE_SUBMIT    => array(
-                array('preSubmit', 0),
-                array('addPathEvents', 10)
+                array('preSubmit', 99999),
+                array('addPathEvents', 0)
             ),
             FormEvents::SUBMIT        => array(
-                array('addPathEvents', 10)
+                array('addPathEvents', 0)
             ),
             FormEvents::POST_SUBMIT   => array(
-                array('addPathEvents', 10)
+                array('addPathEvents', 0)
             ),
         );
     }
@@ -83,12 +83,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                         ->getAction($configuration['action'])
                     ;
 
-                    $action->execute(
-                        $form,
-                        $this->navigator,
-                        $i,
-                        $configuration['parameters']
-                    );
+                    $parameters = isset($configuration['parameters']) ?
+                        $configuration['parameters'] :
+                        array()
+                    ;
+
+                    $action->execute($form, $this->navigator, $i, $parameters);
                 }
             }
         }
@@ -104,7 +104,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (isset($data['_data']) && !isset($data['_back'])) {
+        if (isset($data['_back'])) {
+            $this->navigator->goBack();
+        } elseif (isset($data['_data'])) {
             $this->navigator->setCurrentStepData($data['_data']);
         }
     }

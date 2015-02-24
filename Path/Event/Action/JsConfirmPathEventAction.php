@@ -8,14 +8,16 @@
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
-class JsConfirmPathEventAction implements PathEventActionInterface
+class JsConfirmPathEventAction extends AbstractPathEventAction
 {
     /**
      * {@inheritdoc}
      */
-    public function execute(
+    protected function doExecute(
         FormInterface $form,
         NavigatorInterface $navigator,
         $i,
@@ -28,5 +30,13 @@ class JsConfirmPathEventAction implements PathEventActionInterface
                 array('path_index' => $i)
             ))
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    {
+        $resolver->setOptional(array('message'));
     }
 }

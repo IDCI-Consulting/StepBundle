@@ -73,6 +73,11 @@ class Navigator implements NavigatorInterface
     /**
      * @var boolean
      */
+    protected $hasReturned;
+
+    /**
+     * @var boolean
+     */
     protected $hasFinished;
 
     /**
@@ -94,6 +99,7 @@ class Navigator implements NavigatorInterface
         NavigationLoggerInterface  $logger = null
     )
     {
+        $this->form          = null;
         $this->formView      = null;
         $this->formFactory   = $formFactory;
         $this->request       = $request;
@@ -101,6 +107,7 @@ class Navigator implements NavigatorInterface
         $this->flowDataStore = $flowDataStore;
         $this->logger        = $logger;
         $this->hasNavigated  = false;
+        $this->hasReturned   = false;
         $this->hasFinished   = false;
 
         $this->initFlow($data);
@@ -193,7 +200,7 @@ class Navigator implements NavigatorInterface
      */
     public function navigate()
     {
-        if ($this->hasNavigated()) {
+        if ($this->hasNavigated() || $this->hasReturned() || $this->hasFinished()) {
             throw new \LogicException('The navigation has already been done');
         }
 
@@ -202,41 +209,42 @@ class Navigator implements NavigatorInterface
         }
 
         if ($this->request->isMethod('POST')) {
-            $destinationStep = null;
             $form = $this->getForm();
             $form->handleRequest($this->request);
 
-            if ($form->has('_back') && $form->get('_back')->isClicked()) {
-                $destinationStep = $this
-                    ->getMap()
-                    ->getStep($this->getFlow()->getPreviousStepName())
-                ;
-
-                $this->getFlow()->retraceTo($destinationStep);
-            } elseif ($form->isValid()) {
+            if (!$this->hasReturned() && $form->isValid()) {
                 $path = $this->getChosenPath();
                 $destinationStep = $path->resolveDestination($this);
 
                 if (null === $destinationStep) {
                     $this->hasFinished = true;
+                } else {
+                    $this->hasNavigated = true;
+                    $this->getFlow()->setCurrentStep($destinationStep);
                 }
             }
 
-            if (null !== $destinationStep) {
-                $this->hasNavigated = true;
-                $this->getFlow()->setCurrentStep($destinationStep);
-            }
-
-            if ($this->hasNavigated || $this->hasFinished) {
-                $this->save();
-                // Reset the current form.
-                $this->form = null;
-            }
+            $this->save();
         }
 
         if ($this->logger) {
             $this->logger->stopNavigation($this);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function goBack()
+    {
+        $destinationStep = $this->getPreviousStep();
+
+        if (null === $destinationStep) {
+            throw new \LogicException('Could not go back to a non existing step');
+        }
+
+        $this->getFlow()->retraceTo($destinationStep);
+        $this->hasReturned = true;
     }
 
     /**
@@ -355,6 +363,14 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function hasReturned()
+    {
+        return $this->hasReturned;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function hasFinished()
     {
         return $this->hasFinished;
@@ -370,6 +386,9 @@ class Navigator implements NavigatorInterface
             $this->request,
             $this->flow
         );
+
+        // Reset the current form.
+        $this->form = null;
     }
 
     /**

@@ -161,6 +161,8 @@ class Flow implements FlowInterface
         foreach ($retracedPaths as $retracedPath) {
             $this->data->unsetStepData($retracedPath['source']);
         }
+
+        $this->setCurrentStep($step);
     }
 
     /**

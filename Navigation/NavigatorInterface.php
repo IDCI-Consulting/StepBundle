@@ -18,6 +18,13 @@ interface NavigatorInterface
     public function navigate();
 
     /**
+     * Go back to the previous step.
+     *
+     * @throw LogicException if the navigation doesn't has a previous step.
+     */
+    public function goBack();
+
+    /**
      * Get the map.
      *
      * @return MapInterface
@@ -93,6 +100,13 @@ interface NavigatorInterface
      * @return boolean
      */
     public function hasNavigated();
+
+    /**
+     * Returns true if the navigator has returned.
+     *
+     * @return boolean
+     */
+    public function hasReturned();
 
     /**
      * Returns true if the navigator has finished the navigation.

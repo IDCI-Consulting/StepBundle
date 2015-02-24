@@ -24,6 +24,6 @@ interface PathEventActionInterface
         FormInterface $form,
         NavigatorInterface $navigator,
         $index,
-        $parameters = array()
+        array $parameters = array()
     );
 }
