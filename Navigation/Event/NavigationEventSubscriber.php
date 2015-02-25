@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowData;
 
 class NavigationEventSubscriber implements EventSubscriberInterface
 {
@@ -69,8 +70,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function addPathEvents(FormEvent $event)
     {
-        $data = $event->getData();
-        $form = $event->getForm();
+        $data          = $event->getData();
+        $form          = $event->getForm();
+        $retrievedData = array();
 
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
             $configuration = $path->getConfiguration();
@@ -88,9 +90,26 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                         array()
                     ;
 
-                    $action->execute($form, $this->navigator, $i, $parameters);
+                    $result = $action->execute(
+                        $form,
+                        $this->navigator,
+                        $i,
+                        $parameters
+                    );
+
+                    if (null !== $result) {
+                        $retrievedData[$configuration['action']] = $result;
+                    }
                 }
             }
+        }
+
+        if (!empty($retrievedData)) {
+            $this->navigator->getFlow()->setStepData(
+                $this->navigator->getCurrentStep(),
+                $retrievedData,
+                FlowData::TYPE_RETRIVED
+            );
         }
     }
 
