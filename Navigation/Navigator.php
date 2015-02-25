@@ -222,9 +222,9 @@ class Navigator implements NavigatorInterface
                     $this->hasNavigated = true;
                     $this->getFlow()->setCurrentStep($destinationStep);
                 }
-            }
 
-            $this->save();
+                $this->save();
+            }
         }
 
         if ($this->logger) {
@@ -245,6 +245,7 @@ class Navigator implements NavigatorInterface
 
         $this->getFlow()->retraceTo($destinationStep);
         $this->hasReturned = true;
+        $this->save();
     }
 
     /**
