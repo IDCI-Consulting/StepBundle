@@ -173,6 +173,8 @@ class TestController extends Controller
 
         if ($navigator->hasFinished()) {
             $navigator->clear();
+
+            return $this->redirect($this->generateUrl('idci_step'));
         }
 
         if ($navigator->hasNavigated()) {
