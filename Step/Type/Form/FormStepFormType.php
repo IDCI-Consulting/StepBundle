@@ -4,15 +4,27 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FormStepFormType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars = array_merge($view->vars, array(
+            'display_title' => $options['display_title'],
+        ));
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -40,9 +52,13 @@ class FormStepFormType extends AbstractType
     {
         $resolver
             ->setRequired(array('builder'))
-            ->setDefaults(array('data' => array()))
+            ->setDefaults(array(
+                'data'          => array(),
+                'display_title' => true,
+            ))
             ->setAllowedTypes(array(
-                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
+                'builder'       => array('Symfony\Component\Form\FormBuilderInterface'),
+                'display_title' => array('bool'),
             ))
         ;
     }

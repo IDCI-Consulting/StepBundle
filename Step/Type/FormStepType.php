@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -22,7 +22,10 @@ class FormStepType extends AbstractStepType
 
         $resolver
             ->setRequired(array('builder'))
-            ->setDefaults(array('data' => array()))
+            ->setDefaults(array(
+                'data'          => array(),
+                'display_title' => true,
+            ))
             ->setNormalizers(array(
                 'data' => function (Options $options, $value) {
                     if (isset($value['_data'])) {
@@ -33,7 +36,8 @@ class FormStepType extends AbstractStepType
                 }
             ))
             ->setAllowedTypes(array(
-                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
+                'builder'       => array('Symfony\Component\Form\FormBuilderInterface'),
+                'display_title' => array('bool'),
             ))
         ;
     }
@@ -44,9 +48,10 @@ class FormStepType extends AbstractStepType
     public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('_data', 'idci_step_form_form', array(
-            'label'   => $options['title'],
-            'builder' => $options['builder'],
-            'data'    => $options['data'],
+            'label'         => $options['title'],
+            'builder'       => $options['builder'],
+            'data'          => $options['data'],
+            'display_title' => $options['display_title'],
         ));
     }
 }
