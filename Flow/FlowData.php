@@ -60,6 +60,20 @@ class FlowData implements FlowDataInterface
     }
 
     /**
+     * Set data.
+     *
+     * @param array $data The data.
+     *
+     * @return FlowDataInterface
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getRemindedData()
@@ -68,11 +82,39 @@ class FlowData implements FlowDataInterface
     }
 
     /**
+     * Set reminded data.
+     *
+     * @param array $remindedData The reminded data.
+     *
+     * @return FlowDataInterface
+     */
+    public function setRemindedData(array $remindedData)
+    {
+        $this->remindedData = $remindedData;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getRetrievedData()
     {
         return $this->retrievedData;
+    }
+
+    /**
+     * Set retrived data.
+     *
+     * @param array $retrievedData The retrieved data.
+     *
+     * @return FlowDataInterface
+     */
+    public function setRetrievedData(array $retrievedData)
+    {
+        $this->retrievedData = $retrievedData;
+
+        return $this;
     }
 
     /**

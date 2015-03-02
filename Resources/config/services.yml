@@ -124,8 +124,17 @@ services:
 
     idci_step.flow.data_store.session:
         class: %idci_step.flow.data_store.session.class%
+        arguments: [@jms_serializer]
         tags:
             - { name: idci_step.flow.data_store, alias: session }
+
+
+    # Serializer Handler
+
+#    idci_step.serializer.subscribing_handler.flow_data:
+#        class: IDCI\Bundle\StepBundle\Serializer\Handler\FlowDataHandler
+#        tags:
+#            - { name: jms_serializer.subscribing_handler }
 
 
     # Configuration

@@ -58,6 +58,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 array('addPathEvents', 0)
             ),
             FormEvents::POST_SUBMIT   => array(
+                array('postSubmit', 99999),
                 array('addPathEvents', 0)
             ),
         );
@@ -121,11 +122,22 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     public function preSubmit(FormEvent $event)
     {
         $data = $event->getData();
-        $form = $event->getForm();
 
         if (isset($data['_back'])) {
             $this->navigator->goBack();
-        } elseif (isset($data['_data'])) {
+        }
+    }
+
+    /**
+     * Post submit.
+     *
+     * @param FormEvent $event
+     */
+    public function postSubmit(FormEvent $event)
+    {
+        $data = $event->getData();
+
+        if (!$this->navigator->hasReturned() && isset($data['_data'])) {
             $this->navigator->setCurrentStepData($data['_data']);
         }
     }

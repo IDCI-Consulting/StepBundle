@@ -1,0 +1,16 @@
+IDCI\Bundle\StepBundle\Flow\Flow:
+    exclusion_policy: ALL
+
+    properties:
+        currentStepName:
+            expose: true
+            serialized_name: currentStepName
+            type: string
+
+        history:
+            expose: true
+            type: IDCI\Bundle\StepBundle\Flow\FlowHistory
+
+        data:
+            expose: true
+            type: IDCI\Bundle\StepBundle\Flow\FlowData

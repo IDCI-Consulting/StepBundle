@@ -1,0 +1,17 @@
+IDCI\Bundle\StepBundle\Flow\FlowData:
+    exclusion_policy: ALL
+
+    properties:
+        data:
+            expose: true
+            type: array
+
+        remindedData:
+            expose: true
+            serialized_name: remindedData
+            type: array
+
+        retrievedData:
+            expose: true
+            serialized_name: retrievedData
+            type: array

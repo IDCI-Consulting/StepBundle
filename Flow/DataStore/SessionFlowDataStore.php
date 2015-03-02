@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Flow\DataStore;
 
 use Symfony\Component\HttpFoundation\Request;
+use JMS\Serializer\SerializerInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
@@ -17,24 +18,24 @@ use IDCI\Bundle\StepBundle\Flow\FlowData;
 class SessionFlowDataStore implements FlowDataStoreInterface
 {
     /**
+     * @var SerializerInterface
+     */
+    protected $serializer;
+
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function set(MapInterface $map, Request $request, FlowInterface $flow)
     {
-        $currentStepName = $flow->getCurrentStepName();
-
         $request->getSession()->set(
             self::generateDataIdentifier($map),
-            json_encode(array(
-                'current_step' => $currentStepName ? $currentStepName : '',
-                'history'      => $flow->getHistory()->getAll(),
-                'data'         => array(
-                    'data'          => $flow->getData()->getData(),
-                    'remindedData'  => $flow->getData()->getRemindedData(),
-                    'retrievedData' => $flow->getData()->getRetrievedData(),
-                ),
-            )
-        ));
+            $this->serializer->serialize($flow, 'json')
+        );
     }
 
     /**
@@ -46,33 +47,17 @@ class SessionFlowDataStore implements FlowDataStoreInterface
             return null;
         }
 
-        $flowRow = json_decode(
+        $flow = $this->serializer->deserialize(
             $request
                 ->getSession()
                 ->get(self::generateDataIdentifier($map))
             ,
-            true
+            'IDCI\Bundle\StepBundle\Flow\Flow',
+            'json'
         );
 
-        $flow = new Flow();
-
-        if (!empty($flowRow['current_step'])) {
-            $flow->setCurrentStep(
-                $map->getStep($flowRow['current_step'])
-            );
-        }
-
-        return $flow
-            ->setHistory(new FlowHistory(
-                $flowRow['history']['takenPaths'],
-                $flowRow['history']['fullTakenPaths']
-            ))
-            ->setData(new FlowData(
-                $flowRow['data']['data'],
-                $flowRow['data']['remindedData'],
-                $flowRow['data']['retrievedData']
-            ))
-        ;
+        //var_dump($flow->getData()); die;
+        return $flow;
     }
 
     /**
