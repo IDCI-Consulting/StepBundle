@@ -136,6 +136,7 @@ class Navigator implements NavigatorInterface
                     $this->flow->setStepData(
                         $this->map->getStep($stepName),
                         $stepData,
+                        array(),
                         FlowData::TYPE_REMINDED
                     );
                 }
@@ -304,11 +305,12 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStepData(array $data)
+    public function setCurrentStepData(array $data, array $mapping = array())
     {
         $this->getFlow()->setStepData(
             $this->getCurrentStep(),
-            $data
+            $data,
+            $mapping
         );
     }
 

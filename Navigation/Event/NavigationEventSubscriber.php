@@ -9,6 +9,7 @@ namespace IDCI\Bundle\StepBundle\Navigation\Event;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
@@ -138,7 +139,27 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         if (!$this->navigator->hasReturned() && isset($data['_data'])) {
-            $this->navigator->setCurrentStepData($data['_data']);
+            $this->navigator->setCurrentStepData(
+                $data['_data'],
+                $this->buildDataFormTypeMapping($event->getForm())
+            );
         }
+    }
+
+    /**
+     * Build data form type mapping.
+     *
+     * @param FormInterface $form The form.
+     *
+     * @return array
+     */
+    protected function buildDataFormTypeMapping(FormInterface $form)
+    {
+        $mapping = array();
+        foreach($form->get('_data') as $key => $field) {
+            $mapping[$key] = $field->getConfig()->getType()->getName();
+        }
+
+        return $mapping;
     }
 }

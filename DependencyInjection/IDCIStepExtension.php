@@ -31,5 +31,6 @@ class IDCIStepExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('idci_step.maps', $config['maps']);
+        $container->setParameter('idci_step.serialization.mapping', $config['serialization']['mapping']);
     }
 }

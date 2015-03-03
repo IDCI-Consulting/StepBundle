@@ -129,7 +129,11 @@ services:
             - { name: idci_step.flow.data_store, alias: session }
 
 
-    # Serializer Handler
+    # Serializer
+
+    idci_step.serialization_mapper:
+        class: IDCI\Bundle\StepBundle\SerializationMapper
+        arguments: [%idci_step.serialization.mapping%]
 
 #    idci_step.serializer.subscribing_handler.flow_data:
 #        class: IDCI\Bundle\StepBundle\Serializer\Handler\FlowDataHandler

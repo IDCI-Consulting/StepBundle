@@ -69,9 +69,10 @@ interface NavigatorInterface
     /**
      * Set current step data.
      *
-     * @param array $data The step data.
+     * @param array $data    The step data.
+     * @param array $mapping The step data form type mapping.
      */
-    public function setCurrentStepData(array $data);
+    public function setCurrentStepData(array $data, array $mapping = array());
 
     /**
      * Returns the current normalized step data.

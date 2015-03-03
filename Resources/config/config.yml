@@ -1,3 +1,9 @@
+idci_step:
+    serialization:
+        mapping:
+            form_types:
+                text: string
+
 twig:
     form:
         resources:

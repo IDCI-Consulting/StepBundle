@@ -69,9 +69,7 @@
             <thead>
                 <tr>
                     <th>Step</th>
-                    <th>Data</th>
-                    <th>Reminded data</th>
-                    <th>Retrieved data</th>
+                    <th>Flow data</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,19 +77,34 @@
                 <tr>
                     <td>{{ stepName }}</td>
                     <td>
-                        {% if stepData.data %}
-                            {{ stepData.data | json_encode }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if stepData.remindedData %}
-                            {{ stepData.remindedData | json_encode }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if stepData.retrievedData %}
-                            {{ stepData.retrievedData | json_encode }}
-                        {% endif %}
+                        <table>
+                            <tbody>
+                                {% if stepData.formTypeMapping %}
+                                <tr>
+                                    <th>Form type mapping</th>
+                                    <td>{{ stepData.formTypeMapping | json_encode }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if stepData.data %}
+                                <tr>
+                                    <th>Data</th>
+                                    <td>{{ stepData.data | json_encode }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if stepData.remindedData %}
+                                <tr>
+                                    <th>Reminded data</th>
+                                    <td>{{ stepData.remindedData | json_encode }}</td>
+                                </tr>
+                                {% endif %}
+                                {% if stepData.retrievedData %}
+                                <tr>
+                                    <th>Retrieved data</th>
+                                    <td>{{ stepData.retrievedData | json_encode }}</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
                 {% endfor %}

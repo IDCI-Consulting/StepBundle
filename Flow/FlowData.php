@@ -13,25 +13,32 @@ class FlowData implements FlowDataInterface
     const TYPE_RETRIVED = 'retrieved';
 
     /**
+     * The data form type mapping
+     *
+     * @var array
+     */
+    protected $formTypeMapping;
+
+    /**
      * The data indexed by steps.
      *
      * @var array
      */
-    protected $data = array();
+    protected $data;
 
     /**
      * The reminded data indexed by steps.
      *
      * @var array
      */
-    private $remindedData = array();
+    private $remindedData;
 
     /**
      * The retrieved data indexed by steps.
      *
      * @var array
      */
-    private $retrievedData = array();
+    private $retrievedData;
 
     /**
      * Constructor
@@ -46,9 +53,29 @@ class FlowData implements FlowDataInterface
         array $retrievedData = array()
     )
     {
+        $this->formTypeMapping = array();
+
         $this->data          = $data;
         $this->remindedData  = $remindedData;
         $this->retrievedData = $retrievedData;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormTypeMapping()
+    {
+        return $this->formTypeMapping;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFormTypeMapping(array $mapping)
+    {
+        $this->formTypeMapping = $mapping;
+
+        return $this;
     }
 
     /**
@@ -82,11 +109,7 @@ class FlowData implements FlowDataInterface
     }
 
     /**
-     * Set reminded data.
-     *
-     * @param array $remindedData The reminded data.
-     *
-     * @return FlowDataInterface
+     * {@inheritdoc}
      */
     public function setRemindedData(array $remindedData)
     {
@@ -104,11 +127,7 @@ class FlowData implements FlowDataInterface
     }
 
     /**
-     * Set retrived data.
-     *
-     * @param array $retrievedData The retrieved data.
-     *
-     * @return FlowDataInterface
+     * {@inheritdoc}
      */
     public function setRetrievedData(array $retrievedData)
     {
@@ -164,7 +183,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData($name, array $data, $type = null)
+    public function setStepData($name, array $data, array $mapping = array(), $type = null)
     {
         if (null === $type) {
             $this->data[$name] = $data;
@@ -176,6 +195,10 @@ class FlowData implements FlowDataInterface
 
         if (self::TYPE_RETRIVED === $type) {
             $this->retrievedData[$name] = $data;
+        }
+
+        if (!empty($mapping)) {
+            $this->setStepFormTypeMapping($name, $mapping);
         }
 
         return $this;
@@ -204,9 +227,20 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
+    public function setStepFormTypeMapping($name, array $mapping)
+    {
+        $this->formTypeMapping[$name] = $mapping;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAll()
     {
         $steps = array_merge(
+            array_keys($this->formTypeMapping),
             array_keys($this->data),
             array_keys($this->remindedData),
             array_keys($this->retrievedData)
@@ -215,9 +249,10 @@ class FlowData implements FlowDataInterface
         $all = array();
         foreach ($steps as $step) {
             $all[$step] = array(
-                'data'          => isset($this->data[$step]) ? $this->data[$step] : null,
-                'remindedData'  => isset($this->remindedData[$step]) ? $this->remindedData[$step] : null,
-                'retrievedData' => isset($this->retrievedData[$step]) ? $this->retrievedData[$step] : null,
+                'formTypeMapping' => isset($this->formTypeMapping[$step]) ? $this->formTypeMapping[$step] : null,
+                'data'            => isset($this->data[$step]) ? $this->data[$step] : null,
+                'remindedData'    => isset($this->remindedData[$step]) ? $this->remindedData[$step] : null,
+                'retrievedData'   => isset($this->retrievedData[$step]) ? $this->retrievedData[$step] : null,
             );
         }
 
