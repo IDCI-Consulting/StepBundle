@@ -92,7 +92,7 @@ interface FlowDataInterface
      *
      * @return array The associated data.
      *
-     * @throws \LogicException if there is no associated data for the step.
+     * @throws \InvalidArgumentException if there is no associated data for the step.
      */
     public function getStepData($name, $type = null);
 

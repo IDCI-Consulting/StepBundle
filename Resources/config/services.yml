@@ -132,11 +132,18 @@ services:
     # Serializer
 
     idci_step.serialization_mapper:
-        class: IDCI\Bundle\StepBundle\SerializationMapper
+        class: IDCI\Bundle\StepBundle\Serializer\SerializationMapper
         arguments: [%idci_step.serialization.mapping%]
+
+    idci_step.event.subscriber.serializer:
+        class: IDCI\Bundle\StepBundle\Event\Subscriber\SerializerSubscriber
+        arguments: [@idci_step.serialization_mapper]
+        tags:
+            - { name: jms_serializer.event_subscriber }
 
 #    idci_step.serializer.subscribing_handler.flow_data:
 #        class: IDCI\Bundle\StepBundle\Serializer\Handler\FlowDataHandler
+#        arguments: [@idci_step.serialization_mapper]
 #        tags:
 #            - { name: jms_serializer.subscribing_handler }
 

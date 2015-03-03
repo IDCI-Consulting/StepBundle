@@ -75,13 +75,6 @@ interface NavigatorInterface
     public function setCurrentStepData(array $data, array $mapping = array());
 
     /**
-     * Returns the current normalized step data.
-     *
-     * @return array|null
-     */
-    public function getCurrentNormalizedStepData();
-
-    /**
      * Returns the available paths.
      *
      * @return array

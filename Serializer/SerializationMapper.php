@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Serializer;
 
+use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
+
 class SerializationMapper
 {
     /**
@@ -17,7 +19,7 @@ class SerializationMapper
     /**
      * Constructor
      */
-    public function __constructor($mapping)
+    public function __construct($mapping)
     {
         $this->mapping = $mapping;
     }
@@ -28,26 +30,32 @@ class SerializationMapper
      * @param $namespace The namespace.
      * @param $key       The key.
      *
-     * @return string
+     * @return string|null
      *
-     * @throws UnexpectedValueException
+     * @throws UnexpectedTypeException
+     * @throws InvalidArgumentException
      */
     public function map($namespace, $key)
     {
+        if (!is_string($namespace)) {
+            throw new UnexpectedTypeException($namespace, 'string');
+        }
+
+        if (!is_string($key)) {
+            throw new UnexpectedTypeException($key, 'string');
+        }
+
         if (!isset($this->mapping[$namespace])) {
-            throw new \UnexpectedValueException(sprintf(
+            throw new \InvalidArgumentException(sprintf(
                 'The given namespace "%s" doesn\'t exist',
                 $namespace
             ));
         }
 
         if (!isset($this->mapping[$namespace][$key])) {
-            throw new \UnexpectedValueException(sprintf(
-                'The namespace "%s" doesn\'t contain "%s" key',
-                $namespace, $key
-            ));
+            return null;
         }
 
-        return $this->mapping[$namespace][$key]
+        return $this->mapping[$namespace][$key];
     }
 }

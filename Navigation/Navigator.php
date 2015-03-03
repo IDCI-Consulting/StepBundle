@@ -153,7 +153,7 @@ class Navigator implements NavigatorInterface
      */
     protected function getFormBuilder()
     {
-        $data = $this->getCurrentNormalizedStepData();
+        $data = $this->getCurrentStepData();
 
         return $this->formFactory->createBuilder(
             'idci_step_navigator',
@@ -312,31 +312,6 @@ class Navigator implements NavigatorInterface
             $data,
             $mapping
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentNormalizedStepData()
-    {
-        $step = $this->getCurrentStep();
-        $builder = $this->formFactory->createBuilder();
-        $configuration = $step->getConfiguration();
-
-        $step->getType()->buildNavigationStepForm(
-            $builder,
-            $configuration['options']
-        );
-
-        $form = $builder->getForm();
-
-        if ($form->has('_data')) {
-            $form->submit(array('_data' => $this->getCurrentStepData()));
-
-            return $form->get('_data')->getData();
-        }
-
-        return array();
     }
 
     /**

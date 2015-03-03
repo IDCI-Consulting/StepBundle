@@ -43,21 +43,22 @@ class FlowData implements FlowDataInterface
     /**
      * Constructor
      *
-     * @param array $data           The steps data.
-     * @param array $remindedData   The reminded steps data.
-     * @param array $retrievedData  The retrieved steps data.
+     * @param array $formTypeMapping The form type mapping.
+     * @param array $data            The steps data.
+     * @param array $remindedData    The reminded steps data.
+     * @param array $retrievedData   The retrieved steps data.
      */
     public function __construct(
-        array $data          = array(),
-        array $remindedData  = array(),
-        array $retrievedData = array()
+        array $formTypeMapping = array(),
+        array $data            = array(),
+        array $remindedData    = array(),
+        array $retrievedData   = array()
     )
     {
-        $this->formTypeMapping = array();
-
-        $this->data          = $data;
-        $this->remindedData  = $remindedData;
-        $this->retrievedData = $retrievedData;
+        $this->formTypeMapping = $formTypeMapping;
+        $this->data            = $data;
+        $this->remindedData    = $remindedData;
+        $this->retrievedData   = $retrievedData;
     }
 
     /**
@@ -160,7 +161,7 @@ class FlowData implements FlowDataInterface
     public function getStepData($name, $type = null)
     {
         if (!$this->hasStepData($name, $type)) {
-            throw new \LogicException(sprintf(
+            throw new \InvalidArgumentException(sprintf(
                 'No step "%s" found (%s).',
                 $name,
                 null === $type ? 'data' : $type

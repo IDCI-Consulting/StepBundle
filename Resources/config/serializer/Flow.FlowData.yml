@@ -8,7 +8,7 @@ IDCI\Bundle\StepBundle\Flow\FlowData:
 
         formTypeMapping:
             expose: true
-            serialized_name: formType
+            serialized_name: formTypeMapping
             type: array
 
         remindedData:
