@@ -2,8 +2,10 @@ idci_step:
     serialization:
         mapping:
             form_types:
-                datetime: DateTime
-                birthday: DateTime
+                datetime:
+                    type: DateTime
+                birthday:
+                    type: DateTime
 
 twig:
     form:

@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Serializer;
+namespace IDCI\Bundle\StepBundle\Flow\DataStore\Serialization;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 
@@ -30,7 +30,7 @@ class SerializationMapper
      * @param $namespace The namespace.
      * @param $key       The key.
      *
-     * @return string|null
+     * @return array|null
      *
      * @throws UnexpectedTypeException
      * @throws InvalidArgumentException

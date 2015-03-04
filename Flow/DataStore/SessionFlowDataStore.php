@@ -9,11 +9,13 @@ namespace IDCI\Bundle\StepBundle\Flow\DataStore;
 
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\DeserializationContext;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowHistory;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Flow\DataStore\Serialization\SerializationMapper;
 
 class SessionFlowDataStore implements FlowDataStoreInterface
 {
@@ -22,9 +24,21 @@ class SessionFlowDataStore implements FlowDataStoreInterface
      */
     protected $serializer;
 
-    public function __construct(SerializerInterface $serializer)
+    /**
+     * @var SerializationMapper
+     */
+    protected $mapper;
+
+    /**
+     * Constructor
+     *
+     * @param SerializerInterface $serializer The serializer.
+     * @param SerializationMapper $mapper     The serialization mapper.
+     */
+    public function __construct(SerializerInterface $serializer, SerializationMapper $mapper)
     {
         $this->serializer = $serializer;
+        $this->mapper     = $mapper;
     }
 
     /**
@@ -56,7 +70,8 @@ class SessionFlowDataStore implements FlowDataStoreInterface
             'json'
         );
 
-        //var_dump($flow->getData()); die;
+        $this->reconstructFlowData($flow->getData());
+
         return $flow;
     }
 
@@ -69,6 +84,53 @@ class SessionFlowDataStore implements FlowDataStoreInterface
             ->getSession()
             ->remove(self::generateDataIdentifier($map))
         ;
+    }
+
+    /**
+     * Reconstruct the flow data
+     *
+     * @param FlowData $flowData the deserialized flowData.
+     */
+    protected function reconstructFlowData(FlowData $flowData)
+    {
+        foreach ($flowData->getFormTypeMapping() as $step => $fields) {
+            foreach ($fields as $field => $formType) {
+                $mapping = $this->mapper->map('form_types', $formType);
+                if (null !== $mapping) {
+                    $this->reconstructData($flowData, $step, $field, $mapping);
+                    $this->reconstructData($flowData, $step, $field, $mapping, FlowData::TYPE_REMINDED);
+                }
+            }
+        }
+    }
+
+    /**
+     * Transform data
+     *
+     * @param FlowData $flowData The flow data to transform.
+     * @param string   $step     The step name.
+     * @param string   $field    The field step name.
+     * @param array    $mapping  The mapping transformation (The type and the context).
+     * @param string   $dataType The flow data type.
+     */
+    protected function reconstructData(FlowData & $flowData, $step, $field, array $mapping, $dataType = null)
+    {
+        if ($flowData->hasStepData($step, $dataType)) {
+            $data = $flowData->getStepData($step, $dataType);
+            if (isset($data[$field])) {
+                $context = new DeserializationContext();
+                if (!empty($mapping['groups'])) {
+                    $context->setGroups($mapping['groups']);
+                }
+                $data[$field] = $this->serializer->deserialize(
+                    json_encode($data[$field]),
+                    $mapping['type'],
+                    'json',
+                    $context
+                );
+                $flowData->setStepData($step, $data, array(), $dataType);
+            }
+        }
     }
 
     /**

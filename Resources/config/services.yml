@@ -122,24 +122,15 @@ services:
 
     # FlowDataStore
 
-    idci_step.flow.data_store.session:
-        class: %idci_step.flow.data_store.session.class%
-        arguments: [@jms_serializer]
-        tags:
-            - { name: idci_step.flow.data_store, alias: session }
-
-
-    # Serializer
-
     idci_step.serialization_mapper:
-        class: IDCI\Bundle\StepBundle\Serializer\SerializationMapper
+        class: IDCI\Bundle\StepBundle\Flow\DataStore\Serialization\SerializationMapper
         arguments: [%idci_step.serialization.mapping%]
 
-    idci_step.event.subscriber.serializer:
-        class: IDCI\Bundle\StepBundle\Event\Subscriber\SerializerSubscriber
-        arguments: [@idci_step.serialization_mapper]
+    idci_step.flow.data_store.session:
+        class: %idci_step.flow.data_store.session.class%
+        arguments: [@jms_serializer, @idci_step.serialization_mapper]
         tags:
-            - { name: jms_serializer.event_subscriber }
+            - { name: idci_step.flow.data_store, alias: session }
 
 
     # Configuration
