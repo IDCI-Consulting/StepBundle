@@ -110,6 +110,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             $this->navigator->getFlow()->setStepData(
                 $this->navigator->getCurrentStep(),
                 $retrievedData,
+                array(),
                 FlowData::TYPE_RETRIVED
             );
         }
