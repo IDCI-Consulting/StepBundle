@@ -2,9 +2,19 @@ idci_step:
     serialization:
         mapping:
             form_types:
+#                integer:
+#                    type: integer
+#                money:
+#                    type: double
+#                number:
+#                    type: double
+#                percent:
+#                    type: double
                 datetime:
                     type: DateTime
                 birthday:
+                    type: DateTime
+                time:
                     type: DateTime
 
 twig:
