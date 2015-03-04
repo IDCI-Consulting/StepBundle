@@ -181,6 +181,10 @@ class TestController extends Controller
             return $this->redirect($this->generateUrl('idci_step'));
         }
 
+        if ($navigator->hasReturned()) {
+            return $this->redirect($this->generateUrl('idci_step'));
+        }
+
         return array('navigator' => $navigator);
     }
 }
