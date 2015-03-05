@@ -20,7 +20,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $i,
+        $pathIndex,
         array $parameters = array()
     )
     {
@@ -30,7 +30,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
         return $this->doExecute(
             $form,
             $navigator,
-            $i,
+            $pathIndex,
             $resolver->resolve($parameters)
         );
     }
@@ -55,7 +55,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     abstract protected function doExecute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $i,
+        $pathIndex,
         $parameters = array()
     );
 }

@@ -20,14 +20,14 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
     protected function doExecute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $i,
+        $pathIndex,
         $parameters = array()
     )
     {
         $form
             ->add('_js_confirm', 'idci_step_action_form_js_confirm', array_merge(
                 $parameters,
-                array('path_index' => $i)
+                array('path_index' => $pathIndex)
             ))
         ;
     }

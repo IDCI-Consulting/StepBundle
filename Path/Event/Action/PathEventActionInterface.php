@@ -23,7 +23,7 @@ interface PathEventActionInterface
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $index,
+        $pathIndex,
         array $parameters = array()
     );
 }
