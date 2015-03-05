@@ -235,9 +235,9 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function goBack()
+    public function goBack($stepName = null)
     {
-        $destinationStep = $this->getPreviousStep();
+        $destinationStep = $this->getPreviousStep($stepName);
 
         if (null === $destinationStep) {
             throw new \LogicException('Could not go back to a non existing step');
@@ -283,14 +283,27 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreviousStep()
+    public function getPreviousStep($stepName = null)
     {
-        $previousStepName = $this->getFlow()->getPreviousStepName();
+        if (null === $stepName) {
+            $previousStepName = $this->getFlow()->getPreviousStepName();
 
-        return $previousStepName
-            ? $this->getMap()->getStep($previousStepName)
-            : null
-        ;
+            return $previousStepName
+                ? $this->getMap()->getStep($previousStepName)
+                : null
+            ;
+        }
+
+        $previousStep = $this->getMap()->getStep($stepName);
+
+        if (!$this->getFlow()->hasDoneStep($previousStep)) {
+            throw new \LogicException(sprintf(
+                'The step "%s" is not a previous step',
+                $stepName
+            ));
+        }
+
+        return $previousStep;
     }
 
     /**

@@ -106,6 +106,14 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
+    public function hasDoneStep(StepInterface $step, $full = false)
+    {
+        return $this->history->hasDoneStep($step);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setData(FlowDataInterface $data)
     {
         $this->data = $data;

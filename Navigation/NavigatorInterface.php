@@ -20,9 +20,11 @@ interface NavigatorInterface
     /**
      * Go back to the previous step.
      *
+     * @param string|null $stepName The identifier name of the step.
+     *
      * @throw LogicException if the navigation doesn't has a previous step.
      */
-    public function goBack();
+    public function goBack($stepName = null);
 
     /**
      * Get the map.
@@ -55,9 +57,11 @@ interface NavigatorInterface
     /**
      * Returns the previous step.
      *
+     * @param string|null $stepName The identifier name of the step.
+     *
      * @return StepInterface|null
      */
-    public function getPreviousStep();
+    public function getPreviousStep($stepName = null);
 
     /**
      * Returns the current step data.
