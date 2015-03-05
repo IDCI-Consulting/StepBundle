@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use JMS\SerializerBundle\DependencyInjection\Compiler\ServiceMapPass;
 use JMS\DiExtraBundle\DependencyInjection\Compiler\LazyServiceMapPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
@@ -26,6 +27,7 @@ class IDCIStepBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new StepCompilerPass());
+        $container->addCompilerPass(new StepEventCompilerPass());
         $container->addCompilerPass(new PathCompilerPass());
         $container->addCompilerPass(new PathEventCompilerPass());
         $container->addCompilerPass(new FlowDataStoreCompilerPass());

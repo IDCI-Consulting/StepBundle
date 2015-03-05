@@ -1,5 +1,6 @@
 parameters:
     idci_step.step.registry.class: IDCI\Bundle\StepBundle\Step\StepRegistry
+    idci_step.step_event.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventRegistry
     idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
     idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
@@ -36,6 +37,9 @@ services:
 
     idci_step.step.registry:
         class: %idci_step.step.registry.class%
+
+    idci_step.step_event.registry:
+        class: %idci_step.step_event.registry.class%
 
     idci_step.path.registry:
         class: %idci_step.path.registry.class%
@@ -87,6 +91,20 @@ services:
         class: %idci_step.step.type.form.class%
         tags:
             - { name: idci_step.step.type, alias: form }
+
+
+    # StepEvent
+
+    idci_step.twig_string_loader:
+        class:        "Twig_Loader_String"
+    idci_step.twig:
+        class:        "%twig.class%"
+        arguments:    [@idci_step.twig_string_loader, %twig.options% ]
+    idci_step.step_event.action.flow_data_merger:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\FlowDataMergerStepEventAction
+        arguments: [@idci_step.twig]
+        tags:
+            - { name: idci_step.step_event.action, alias: flow_data_merger }
 
 
     # Path
