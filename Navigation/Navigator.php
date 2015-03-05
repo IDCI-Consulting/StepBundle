@@ -110,9 +110,16 @@ class Navigator implements NavigatorInterface
         $this->hasReturned   = false;
         $this->hasFinished   = false;
 
-        $this->initFlow($data);
+        if ($this->logger) {
+            $this->logger->startNavigation();
+        }
 
+        $this->initFlow($data);
         $this->navigate();
+
+        if ($this->logger) {
+            $this->logger->stopNavigation($this);
+        }
     }
 
     /**
@@ -205,10 +212,6 @@ class Navigator implements NavigatorInterface
             throw new \LogicException('The navigation has already been done');
         }
 
-        if ($this->logger) {
-            $this->logger->startNavigation();
-        }
-
         if ($this->request->isMethod('POST')) {
             $form = $this->getForm();
             $form->handleRequest($this->request);
@@ -226,10 +229,6 @@ class Navigator implements NavigatorInterface
 
                 $this->save();
             }
-        }
-
-        if ($this->logger) {
-            $this->logger->stopNavigation($this);
         }
     }
 

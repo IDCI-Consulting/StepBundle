@@ -82,25 +82,25 @@
                                 {% if stepData.formTypeMapping %}
                                 <tr>
                                     <th>Form type mapping</th>
-                                    <td>{{ stepData.formTypeMapping | json_encode }}</td>
+                                    <td>{{ stepData.formTypeMapping | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
                                 </tr>
                                 {% endif %}
                                 {% if stepData.data %}
                                 <tr>
                                     <th>Data</th>
-                                    <td>{{ stepData.data | json_encode }}</td>
+                                    <td>{{ stepData.data | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
                                 </tr>
                                 {% endif %}
                                 {% if stepData.remindedData %}
                                 <tr>
                                     <th>Reminded data</th>
-                                    <td>{{ stepData.remindedData | json_encode }}</td>
+                                    <td>{{ stepData.remindedData | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
                                 </tr>
                                 {% endif %}
                                 {% if stepData.retrievedData %}
                                 <tr>
                                     <th>Retrieved data</th>
-                                    <td>{{ stepData.retrievedData | json_encode }}</td>
+                                    <td>{{ stepData.retrievedData | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
                                 </tr>
                                 {% endif %}
                             </tbody>
