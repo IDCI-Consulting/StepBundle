@@ -17,13 +17,11 @@ interface StepEventActionInterface
      *
      * @param FormInterface      $form       The form.
      * @param NavigatorInterface $navigator  The navigator.
-     * @param string             $stepName   The step name.
      * @param array              $parameters The parameters.
      */
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $stepName,
         array $parameters = array()
     );
 }

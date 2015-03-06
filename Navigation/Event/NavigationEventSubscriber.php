@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
 
@@ -23,6 +24,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     protected $navigator;
 
     /**
+     * @var StepEventRegistryInterface
+     */
+    protected $stepEventRegistry;
+
+    /**
      * @var PathEventRegistryInterface
      */
     protected $pathEventRegistry;
@@ -31,11 +37,17 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      * Constructor
      *
      * @param NavigatorInterface         $navigator         The navigator.
+     * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
      * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
      */
-    public function __construct(NavigatorInterface $navigator, PathEventRegistryInterface $pathEventRegistry)
+    public function __construct(
+        NavigatorInterface $navigator,
+        StepEventRegistryInterface $stepEventRegistry,
+        PathEventRegistryInterface $pathEventRegistry
+    )
     {
         $this->navigator         = $navigator;
+        $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
     }
 
@@ -46,23 +58,76 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA  => array(
-                array('addPathEvents', 0)
+                array('addStepEvents', 1),
+                array('addPathEvents', 0),
             ),
             FormEvents::POST_SET_DATA => array(
-                array('addPathEvents', 0)
+                array('addStepEvents', 1),
+                array('addPathEvents', 0),
             ),
             FormEvents::PRE_SUBMIT    => array(
                 array('preSubmit', 99999),
-                array('addPathEvents', 0)
+                array('addStepEvents', 1),
+                array('addPathEvents', 0),
             ),
             FormEvents::SUBMIT        => array(
-                array('addPathEvents', 0)
+                array('addStepEvents', 1),
+                array('addPathEvents', 0),
             ),
             FormEvents::POST_SUBMIT   => array(
                 array('postSubmit', 99999),
-                array('addPathEvents', 0)
+                array('addStepEvents', 1),
+                array('addPathEvents', 0),
             ),
         );
+    }
+
+    /**
+     * Add step events.
+     *
+     * @param FormEvent $event
+     */
+    public function addStepEvents(FormEvent $event)
+    {
+        $form          = $event->getForm();
+        $retrievedData = array();
+
+        $step = $this->navigator->getCurrentStep();
+        $configuration = $step->getConfiguration();
+        $events = $configuration['options']['events'];
+
+        if (isset($events[$event->getName()])) {
+            foreach ($events[$event->getName()] as $configuration) {
+                $action = $this
+                    ->stepEventRegistry
+                    ->getAction($configuration['action'])
+                ;
+
+                $parameters = isset($configuration['parameters']) ?
+                    $configuration['parameters'] :
+                    array()
+                ;
+
+                $result = $action->execute(
+                    $form,
+                    $this->navigator,
+                    $parameters
+                );
+
+                if (null !== $result) {
+                    $retrievedData[$configuration['action']] = $result;
+                }
+            }
+        }
+
+        if (!empty($retrievedData)) {
+            $this->navigator->getFlow()->setStepData(
+                $this->navigator->getCurrentStep(),
+                $retrievedData,
+                array(),
+                FlowData::TYPE_RETRIVED
+            );
+        }
     }
 
     /**
@@ -72,7 +137,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function addPathEvents(FormEvent $event)
     {
-        $data          = $event->getData();
         $form          = $event->getForm();
         $retrievedData = array();
 

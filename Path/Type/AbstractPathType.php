@@ -28,8 +28,8 @@ abstract class AbstractPathType implements PathTypeInterface
                 'events'       => array(),
             ))
             ->setAllowedTypes(array(
-                'next_options' => 'array',
-                'events'       => 'array',
+                'next_options' => array('array'),
+                'events'       => array('array'),
             ))
         ;
     }

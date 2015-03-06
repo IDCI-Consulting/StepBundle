@@ -11,10 +11,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
 
 class NavigatorType extends AbstractType
 {
+    /**
+     * @var StepEventRegistryInterface
+     */
+    protected $stepEventRegistry;
+
     /**
      * @var PathEventRegistryInterface
      */
@@ -23,10 +29,15 @@ class NavigatorType extends AbstractType
     /**
      * Constructor
      *
+     * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
      * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
      */
-    public function __construct(PathEventRegistryInterface $pathEventRegistry)
+    public function __construct(
+        StepEventRegistryInterface $stepEventRegistry,
+        PathEventRegistryInterface $pathEventRegistry
+    )
     {
+        $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
     }
 
@@ -55,6 +66,7 @@ class NavigatorType extends AbstractType
 
         $builder->addEventSubscriber(new NavigationEventSubscriber(
             $options['navigator'],
+            $this->stepEventRegistry,
             $this->pathEventRegistry
         ));
 

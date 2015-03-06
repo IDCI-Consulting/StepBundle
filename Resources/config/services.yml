@@ -199,7 +199,7 @@ services:
 
     form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
-        arguments: [@idci_step.path_event.registry]
+        arguments: [@idci_step.step_event.registry, @idci_step.path_event.registry]
         tags:
             - { name: form.type, alias: idci_step_navigator }
 

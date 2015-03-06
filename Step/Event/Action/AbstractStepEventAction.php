@@ -20,7 +20,6 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $stepName,
         array $parameters = array()
     )
     {
@@ -30,7 +29,6 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
         return $this->doExecute(
             $form,
             $navigator,
-            $stepName,
             $resolver->resolve($parameters)
         );
     }
@@ -49,13 +47,11 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
      *
      * @param FormInterface      $form       The form.
      * @param NavigatorInterface $navigator  The navigator.
-     * @param string             $stepName   The step name.
      * @param array              $parameters The resolved parameters.
      */
     abstract protected function doExecute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $stepName,
         $parameters = array()
     );
 }

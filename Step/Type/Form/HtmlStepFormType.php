@@ -19,8 +19,13 @@ class HtmlStepFormType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $content = $options['content'];
+        if (null !== $form->getData('content')) {
+            $content = $form->getData('content');
+        }
+
         $view->vars = array_merge($view->vars, array(
-            'content' => $options['content'],
+            'content' => $content,
         ));
     }
 
@@ -30,10 +35,8 @@ class HtmlStepFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setRequired(array('content'))
-            ->setAllowedTypes(array(
-                'content'=> array('string')
-            ))
+            ->setDefaults(array('content' => null))
+            ->setAllowedTypes(array('content' => array('null', 'string')))
         ;
     }
 
