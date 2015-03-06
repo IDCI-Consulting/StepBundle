@@ -114,7 +114,7 @@ class FlowHistory implements FlowHistoryInterface
         $stepName = $step->getName();
 
         foreach ($takenPaths as $takenPath) {
-            if ($takenPaths['source'] === $stepName) {
+            if ($takenPath['source'] === $stepName) {
                 return true;
             }
         }
