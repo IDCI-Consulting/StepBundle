@@ -190,8 +190,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         if (isset($data['_back'])) {
-            $stepName = '1' == $data['_back'] ? null : $data['_back'];
-            $this->navigator->goBack($stepName);
+            if (empty($data['_back'])) {
+                $this->navigator->goBack();
+            } else {
+                $this->navigator->goBack($data['_back']);
+            }
         }
     }
 
