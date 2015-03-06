@@ -100,11 +100,18 @@ services:
     idci_step.twig:
         class:        "%twig.class%"
         arguments:    [@idci_step.twig_string_loader, %twig.options% ]
+
     idci_step.step_event.action.flow_data_merger:
         class: IDCI\Bundle\StepBundle\Step\Event\Action\FlowDataMergerStepEventAction
         arguments: [@idci_step.twig]
         tags:
             - { name: idci_step.step_event.action, alias: flow_data_merger }
+
+    idci_step.step_event.action.security_context_merger:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\SecurityContextMergerStepEventAction
+        arguments: [@idci_step.twig, @security.context]
+        tags:
+            - { name: idci_step.step_event.action, alias: security_context_merger }
 
 
     # Path
