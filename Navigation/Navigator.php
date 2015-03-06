@@ -286,17 +286,15 @@ class Navigator implements NavigatorInterface
     public function getPreviousStep($stepName = null)
     {
         if (null === $stepName) {
-            $previousStepName = $this->getFlow()->getPreviousStepName();
-
-            return $previousStepName
-                ? $this->getMap()->getStep($previousStepName)
-                : null
-            ;
+            $stepName = $this->getFlow()->getPreviousStepName();
+            if (null === $stepName) {
+                return null;
+            }
         }
 
         $previousStep = $this->getMap()->getStep($stepName);
 
-        if (!$this->getFlow()->hasDoneStep($previousStep)) {
+        if (null !== $previousStep && !$this->getFlow()->hasDoneStep($previousStep)) {
             throw new \LogicException(sprintf(
                 'The step "%s" is not a previous step',
                 $stepName
