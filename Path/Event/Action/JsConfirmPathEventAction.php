@@ -9,7 +9,6 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class JsConfirmPathEventAction extends AbstractPathEventAction
