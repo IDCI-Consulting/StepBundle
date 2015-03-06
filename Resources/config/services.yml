@@ -141,6 +141,7 @@ services:
 
     idci_step.path_event.action.js_comfirm:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
+        arguments: [@idci_step.twig, @security.context]
         tags:
             - { name: idci_step.path_event.action, alias: js_confirm }
 

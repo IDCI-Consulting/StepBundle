@@ -10,10 +10,33 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 abstract class AbstractPathEventAction implements PathEventActionInterface
 {
+    /**
+     * @var \Twig_Environment
+     */
+    protected $merger;
+
+    /**
+     * @var SecurityContextInterface
+     */
+    protected $securityContext;
+
+    /**
+     * Constructor
+     *
+     * @param \Twig_Environment        $merger          The merger.
+     * @param SecurityContextInterface $securityContext The security context.
+     */
+    public function __construct(\Twig_Environment $merger, SecurityContextInterface $securityContext)
+    {
+        $this->merger          = $merger;
+        $this->securityContext = $securityContext;
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -13,11 +13,6 @@ use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 class SecurityContextMergerStepEventAction extends AbstractMergerStepEventAction
 {
     /**
-     * @var \Twig_Environment
-     */
-    protected $merger;
-
-    /**
      * @var SecurityContextInterface
      */
     protected $securityContext;
@@ -25,7 +20,8 @@ class SecurityContextMergerStepEventAction extends AbstractMergerStepEventAction
     /**
      * Constructor
      *
-     * @param
+     * @param \Twig_Environment        $merger          The merger.
+     * @param SecurityContextInterface $securityContext The security context.
      */
     public function __construct(\Twig_Environment $merger, SecurityContextInterface $securityContext)
     {

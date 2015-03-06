@@ -21,7 +21,7 @@ abstract class AbstractMergerStepEventAction extends AbstractStepEventAction
     /**
      * Constructor
      *
-     * @param
+     * @param \Twig_Environment $merger The merger.
      */
     public function __construct(\Twig_Environment $merger)
     {
