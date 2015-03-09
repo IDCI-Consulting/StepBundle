@@ -123,7 +123,7 @@ class NavigatorType extends AbstractType
 
             $builder->add(
                 sprintf('_path#%d', $i),
-                'submit',
+                $configuration['options']['type'],
                 $configuration['options']['next_options']
             );
         }

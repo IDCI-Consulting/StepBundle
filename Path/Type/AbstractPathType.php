@@ -22,12 +22,14 @@ abstract class AbstractPathType implements PathTypeInterface
     {
         $resolver
             ->setDefaults(array(
+                'type'         => 'submit',
                 'next_options' => array(
                     'label' => 'Next >'
                 ),
                 'events'       => array(),
             ))
             ->setAllowedTypes(array(
+                'type'         => array('string'),
                 'next_options' => array('array'),
                 'events'       => array('array'),
             ))
