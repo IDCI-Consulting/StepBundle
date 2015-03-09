@@ -1,15 +1,15 @@
-{% block idci_step_form_html_row %}
+{% block idci_step_step_form_html_row %}
     {{ form_widget(form) }}
-{% endblock %}
-{% block idci_step_form_html_widget %}
+{% endblock idci_step_step_form_html_row %}
+{% block idci_step_step_form_html_widget %}
     <div class="html_text">
         {% spaceless %}
             {{ content | raw }}
         {% endspaceless %}
     </div>
-{% endblock %}
+{% endblock idci_step_step_form_html_widget %}
 
-{%- block idci_step_form_form_row -%}
+{%- block idci_step_step_form_form_row -%}
     <div>
         {% if form.vars.display_title %}
             {{- form_label(form) -}}
@@ -17,7 +17,7 @@
         {{- form_errors(form) -}}
         {{- form_widget(form) -}}
     </div>
-{%- endblock idci_step_form_form_row -%}
+{%- endblock idci_step_step_form_form_row -%}
 
 {% block idci_step_action_form_js_confirm_row %}
     {{ form_widget(form) }}
