@@ -45,6 +45,6 @@ class HtmlStepFormType extends AbstractType
      */
     public function getName()
     {
-        return 'idci_step_form_html';
+        return 'idci_step_step_form_html';
     }
 }

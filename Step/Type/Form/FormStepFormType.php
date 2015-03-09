@@ -68,6 +68,6 @@ class FormStepFormType extends AbstractType
      */
     public function getName()
     {
-        return 'idci_step_form_form';
+        return 'idci_step_step_form_form';
     }
 }
