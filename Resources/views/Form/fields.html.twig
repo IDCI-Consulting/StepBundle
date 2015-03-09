@@ -32,3 +32,14 @@
         }, false);
     </script>
 {% endblock %}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+{%- endblock button_widget -%}
+
+{%- block step_link_path_widget -%}
+    <a href="{{ form.vars.href }}">{{ label|trans({}, translation_domain) }}</a>
+{%- endblock submit_widget -%}

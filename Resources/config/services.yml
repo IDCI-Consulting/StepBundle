@@ -12,6 +12,7 @@ parameters:
     idci_step.path.type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
+    idci_step.path.type.link.class: IDCI\Bundle\StepBundle\Path\Type\LinkPathType
 
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
     idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
@@ -136,6 +137,11 @@ services:
         tags:
             - { name: idci_step.path.type, alias: end }
 
+    idci_step.path.type.link:
+        class: %idci_step.path.type.link.class%
+        tags:
+            - { name: idci_step.path.type, alias: link }
+
 
     # PathEvent
 
@@ -204,28 +210,32 @@ services:
 
 
     # FormType
-
+    # Navigator
     form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
         arguments: [@idci_step.step_event.registry, @idci_step.path_event.registry]
         tags:
             - { name: form.type, alias: idci_step_navigator }
-
+    # Step
     form.type.idci_step.step_form.html:
         class: IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType
         tags:
-            - { name: form.type, alias: idci_step_form_html }
+            - { name: form.type, alias: idci_step_step_form_html }
 
     form.type.idci_step.step_form.form:
         class: IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType
         tags:
-            - { name: form.type, alias: idci_step_form_form }
-
+            - { name: form.type, alias: idci_step_step_form_form }
+    # Path
+    form.type.idci_step.path_form.link:
+        class: IDCI\Bundle\StepBundle\Path\Type\Form\LinkPathFormType
+        tags:
+            - { name: form.type, alias: idci_step_path_form_link }
+    # Action
     form.type.idci_step.action_form.js_confirm:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\Form\JsConfirmActionFormType
         tags:
             - { name: form.type, alias: idci_step_action_form_js_confirm }
-
 
     # Twig
 
