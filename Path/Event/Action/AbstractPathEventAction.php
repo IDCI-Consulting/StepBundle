@@ -49,12 +49,32 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     {
         $resolver = new OptionsResolver();
         $this->setDefaultParameters($resolver);
+        $resolvedParameters = $resolver->resolve($parameters);
+
+        $user = null;
+        if (null !== $this->securityContext->getToken()) {
+            $user = $this->securityContext->getToken()->getUser();
+        }
+
+        // Merge token
+        foreach ($resolvedParameters as $k => $v) {
+            $resolvedParameters[$k] = json_decode(
+                $this->merger->render(
+                    json_encode($v),
+                    array(
+                        'flow_data' => $navigator->getFlow()->getData(),
+                        'user'      => $user
+                    )
+                ),
+                true
+            );
+        }
 
         return $this->doExecute(
             $form,
             $navigator,
             $pathIndex,
-            $resolver->resolve($parameters)
+            $resolvedParameters
         );
     }
 
