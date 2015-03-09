@@ -40,6 +40,6 @@
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
 {%- endblock button_widget -%}
 
-{%- block step_link_path_widget -%}
-    <a href="{{ form.vars.href }}">{{ label|trans({}, translation_domain) }}</a>
-{%- endblock submit_widget -%}
+{%- block idci_step_path_form_link_row -%}
+    <a href="{{ form.vars.href }}" target="{{ form.vars.target }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</a>
+{%- endblock idci_step_path_form_link_row -%}

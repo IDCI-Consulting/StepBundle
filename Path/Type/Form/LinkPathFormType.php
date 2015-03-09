@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 
 class LinkPathFormType extends AbstractType
 {
@@ -20,7 +21,8 @@ class LinkPathFormType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_merge($view->vars, array(
-            'href' => $options['href'],
+            'href'   => $options['href'],
+            'target' => $options['target'],
         ));
     }
 
@@ -30,7 +32,19 @@ class LinkPathFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver
-            ->setDefaults(array('href' => 'javascript:void(0);'))
+            ->setDefaults(array(
+                'href'   => 'javascript:void(0);',
+                'target' => '_self',
+            ))
+            ->setNormalizers(array(
+                'label' => function(Options $options, $value) {
+                    if (in_array($value, array(null, 'end'))) {
+                        return $options['href'];
+                    }
+
+                    return $value;
+                }
+            ))
         ;
     }
 

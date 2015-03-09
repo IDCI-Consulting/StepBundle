@@ -191,7 +191,7 @@ class Navigator implements NavigatorInterface
     protected function getChosenPath()
     {
         foreach ($this->getAvailablePaths() as $i => $path) {
-            if ($this->getForm()->get(sprintf('_path#%d', $i))->isClicked()) {
+            if ($this->getForm()->get(sprintf('_path_%d', $i))->isClicked()) {
                 $this->getFlow()->takePath($path, $i);
 
                 return $path;

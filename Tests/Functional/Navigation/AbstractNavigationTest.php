@@ -567,7 +567,7 @@ abstract class AbstractNavigationTest extends \PHPUnit_Framework_TestCase
         if (false === $destination) {
             $requestParameters['_back'] = true;
         } else {
-            $requestParameters[sprintf('_path#%d', $destination)] = true;
+            $requestParameters[sprintf('_path_%d', $destination)] = true;
         }
 
         if (!empty($arguments)) {
