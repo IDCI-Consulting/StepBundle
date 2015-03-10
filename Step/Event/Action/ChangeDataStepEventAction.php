@@ -11,23 +11,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
-abstract class AbstractMergerStepEventAction extends AbstractStepEventAction
+class ChangeDataStepEventAction extends AbstractStepEventAction
 {
-    /**
-     * @var \Twig_Environment
-     */
-    protected $merger;
-
-    /**
-     * Constructor
-     *
-     * @param \Twig_Environment $merger The merger.
-     */
-    public function __construct(\Twig_Environment $merger)
-    {
-        $this->merger = $merger;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -44,14 +29,8 @@ abstract class AbstractMergerStepEventAction extends AbstractStepEventAction
             $form = $form->get('_data');
         }
 
-        foreach ($parameters['fields'] as $field => $toMerge) {
-            $form
-                ->get($field)
-                ->setData($this->merger->render(
-                    $toMerge,
-                    $this->buildRenderParameters($navigator, $parameters)
-                ))
-            ;
+        foreach ($parameters['fields'] as $field => $newValue) {
+            $form->get($field)->setData($newValue);
         }
     }
 
@@ -67,14 +46,4 @@ abstract class AbstractMergerStepEventAction extends AbstractStepEventAction
             ))
         ;
     }
-
-    /**
-     * Build render parameters
-     *
-     * @param NavigatorInterface $navigator  The navigator.
-     * @param array              $parameters The parameters.
-     *
-     * @return array
-     */
-    abstract protected function buildRenderParameters(NavigatorInterface $navigator, $parameters = array());
 }

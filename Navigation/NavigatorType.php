@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
@@ -27,6 +28,16 @@ class NavigatorType extends AbstractType
     protected $pathEventRegistry;
 
     /**
+     * @var \Twig_Environment
+     */
+    protected $merger;
+
+    /**
+     * @var SecurityContextInterface
+     */
+    protected $securityContext;
+
+    /**
      * Constructor
      *
      * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
@@ -34,11 +45,15 @@ class NavigatorType extends AbstractType
      */
     public function __construct(
         StepEventRegistryInterface $stepEventRegistry,
-        PathEventRegistryInterface $pathEventRegistry
+        PathEventRegistryInterface $pathEventRegistry,
+        \Twig_Environment          $merger,
+        SecurityContextInterface   $securityContext
     )
     {
         $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
+        $this->merger            = $merger;
+        $this->securityContext   = $securityContext;
     }
 
     /**
@@ -67,7 +82,9 @@ class NavigatorType extends AbstractType
         $builder->addEventSubscriber(new NavigationEventSubscriber(
             $options['navigator'],
             $this->stepEventRegistry,
-            $this->pathEventRegistry
+            $this->pathEventRegistry,
+            $this->merger,
+            $this->securityContext
         ));
 
         $this->buildStep($builder, $options);

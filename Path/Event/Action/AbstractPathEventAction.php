@@ -10,33 +10,10 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 abstract class AbstractPathEventAction implements PathEventActionInterface
 {
-    /**
-     * @var \Twig_Environment
-     */
-    protected $merger;
-
-    /**
-     * @var SecurityContextInterface
-     */
-    protected $securityContext;
-
-    /**
-     * Constructor
-     *
-     * @param \Twig_Environment        $merger          The merger.
-     * @param SecurityContextInterface $securityContext The security context.
-     */
-    public function __construct(\Twig_Environment $merger, SecurityContextInterface $securityContext)
-    {
-        $this->merger          = $merger;
-        $this->securityContext = $securityContext;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -49,32 +26,12 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     {
         $resolver = new OptionsResolver();
         $this->setDefaultParameters($resolver);
-        $resolvedParameters = $resolver->resolve($parameters);
-
-        $user = null;
-        if (null !== $this->securityContext->getToken()) {
-            $user = $this->securityContext->getToken()->getUser();
-        }
-
-        // Merge token
-        foreach ($resolvedParameters as $k => $v) {
-            $resolvedParameters[$k] = json_decode(
-                $this->merger->render(
-                    json_encode($v),
-                    array(
-                        'flow_data' => $navigator->getFlow()->getData(),
-                        'user'      => $user
-                    )
-                ),
-                true
-            );
-        }
 
         return $this->doExecute(
             $form,
             $navigator,
             $pathIndex,
-            $resolvedParameters
+            $resolver->resolve($parameters)
         );
     }
 

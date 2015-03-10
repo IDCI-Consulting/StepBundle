@@ -96,23 +96,10 @@ services:
 
     # StepEvent
 
-    idci_step.twig_string_loader:
-        class:        "Twig_Loader_String"
-    idci_step.twig:
-        class:        "%twig.class%"
-        arguments:    [@idci_step.twig_string_loader, %twig.options% ]
-
-    idci_step.step_event.action.flow_data_merger:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\FlowDataMergerStepEventAction
-        arguments: [@idci_step.twig]
+    idci_step.step_event.action.change_data:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventAction
         tags:
-            - { name: idci_step.step_event.action, alias: flow_data_merger }
-
-    idci_step.step_event.action.security_context_merger:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\SecurityContextMergerStepEventAction
-        arguments: [@idci_step.twig, @security.context]
-        tags:
-            - { name: idci_step.step_event.action, alias: security_context_merger }
+            - { name: idci_step.step_event.action, alias: change_data }
 
 
     # Path
@@ -147,7 +134,6 @@ services:
 
     idci_step.path_event.action.js_comfirm:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
-        arguments: [@idci_step.twig, @security.context]
         tags:
             - { name: idci_step.path_event.action, alias: js_confirm }
 
@@ -211,9 +197,18 @@ services:
 
     # FormType
     # Navigator
+    idci_step.twig_string_loader:
+        class:        "Twig_Loader_String"
+    idci_step.twig:
+        class:        "%twig.class%"
+        arguments:    [@idci_step.twig_string_loader, %twig.options% ]
     form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
-        arguments: [@idci_step.step_event.registry, @idci_step.path_event.registry]
+        arguments: 
+            - @idci_step.step_event.registry
+            - @idci_step.path_event.registry
+            - @idci_step.twig
+            - @security.context
         tags:
             - { name: form.type, alias: idci_step_navigator }
     # Step
