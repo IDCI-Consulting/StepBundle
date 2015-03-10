@@ -101,6 +101,11 @@ services:
         tags:
             - { name: idci_step.step_event.action, alias: change_data }
 
+    idci_step.step_event.action.add_link:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction
+        tags:
+            - { name: idci_step.step_event.action, alias: add_link }
+
 
     # Path
 
@@ -123,11 +128,6 @@ services:
         class: %idci_step.path.type.end.class%
         tags:
             - { name: idci_step.path.type, alias: end }
-
-    idci_step.path.type.link:
-        class: %idci_step.path.type.link.class%
-        tags:
-            - { name: idci_step.path.type, alias: link }
 
 
     # PathEvent
@@ -221,16 +221,16 @@ services:
         class: IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType
         tags:
             - { name: form.type, alias: idci_step_step_form_form }
-    # Path
-    form.type.idci_step.path_form.link:
-        class: IDCI\Bundle\StepBundle\Path\Type\Form\LinkPathFormType
-        tags:
-            - { name: form.type, alias: idci_step_path_form_link }
     # Action
     form.type.idci_step.action_form.js_confirm:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\Form\JsConfirmActionFormType
+        class: IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType
         tags:
             - { name: form.type, alias: idci_step_action_form_js_confirm }
+    form.type.idci_step.action_form.link:
+        class: IDCI\Bundle\StepBundle\Form\Type\LinkFormType
+        tags:
+            - { name: form.type, alias: idci_step_action_form_link }
+
 
     # Twig
 

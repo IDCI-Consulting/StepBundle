@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Path\Event\Action\Form;
+namespace IDCI\Bundle\StepBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class JsConfirmActionFormType extends AbstractType
+class JsConfirmFormType extends AbstractType
 {
     /**
      * {@inheritdoc}

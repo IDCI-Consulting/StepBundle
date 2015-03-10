@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Path\Type\Form;
+namespace IDCI\Bundle\StepBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 
-class LinkPathFormType extends AbstractType
+class LinkFormType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -53,6 +53,6 @@ class LinkPathFormType extends AbstractType
      */
     public function getName()
     {
-        return 'idci_step_path_form_link';
+        return 'idci_step_action_form_link';
     }
 }
