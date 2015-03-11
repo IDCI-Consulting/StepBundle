@@ -75,26 +75,26 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA  => array(
-                array('addStepEvents', 1),
-                array('addPathEvents', 0),
+                array('addStepEvents', -1),
+                array('addPathEvents', -2),
             ),
             FormEvents::POST_SET_DATA => array(
-                array('addStepEvents', 1),
-                array('addPathEvents', 0),
+                array('addStepEvents', -1),
+                array('addPathEvents', -2),
             ),
             FormEvents::PRE_SUBMIT    => array(
-                array('preSubmit', 99999),
-                array('addStepEvents', 1),
-                array('addPathEvents', 0),
+                array('preSubmit', 0),
+                array('addStepEvents', -1),
+                array('addPathEvents', -2),
             ),
             FormEvents::SUBMIT        => array(
-                array('addStepEvents', 1),
-                array('addPathEvents', 0),
+                array('addStepEvents', -1),
+                array('addPathEvents', -2),
             ),
             FormEvents::POST_SUBMIT   => array(
-                array('postSubmit', 99999),
-                array('addStepEvents', 1),
-                array('addPathEvents', 0),
+                array('postSubmit', 0),
+                array('addStepEvents', -1),
+                array('addPathEvents', -2),
             ),
         );
     }
@@ -223,11 +223,15 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     public function postSubmit(FormEvent $event)
     {
         $data = $event->getData();
+        $form = $event->getForm();
 
-        if (!$this->navigator->hasReturned() && isset($data['_data'])) {
+        if (!$this->navigator->hasReturned() &&
+            $form->isValid()                 &&
+            isset($data['_data'])
+        ) {
             $this->navigator->setCurrentStepData(
                 $data['_data'],
-                $this->buildDataFormTypeMapping($event->getForm())
+                $this->buildDataFormTypeMapping($form)
             );
         }
     }
