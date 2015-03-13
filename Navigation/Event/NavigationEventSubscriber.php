@@ -229,22 +229,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (isset($data['_data'])) {
-            if ($form->isValid()) {
-                $this->navigator->setCurrentStepData(
-                    $data['_data'],
-                    $this->buildDataFormTypeMapping($form)
-                );
-            } else {
-                $this->navigator->getFlow()->setStepData(
-                    $this->navigator->getCurrentStep(),
-                    $this->getValidData($form->get('_data')),
-                    $this->buildDataFormTypeMapping($form),
-                    FlowData::TYPE_REMINDED
-                );
-
-                $this->navigator->save();
-            }
+        if (isset($data['_data']) && $form->isValid()) {
+            $this->navigator->setCurrentStepData(
+                $data['_data'],
+                $this->buildDataFormTypeMapping($form->get('_data'))
+            );
         }
     }
 
@@ -258,31 +247,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     protected function buildDataFormTypeMapping(FormInterface $form)
     {
         $mapping = array();
-        foreach($form->get('_data') as $key => $field) {
+        foreach($form->all() as $key => $field) {
             $mapping[$key] = $field->getConfig()->getType()->getName();
         }
 
         return $mapping;
-    }
-
-    /**
-     * Get valid data.
-     *
-     * @param FormInterface $form The form.
-     *
-     * @return array
-     */
-    protected function getValidData(FormInterface $form)
-    {
-        $validData = array();
-        foreach ($form->all() as $name => $child) {
-            if (!$child->isValid()) {
-                continue;
-            }
-            $validData[$name] = $child->getData();
-        }
-
-        return $validData;
     }
 
     /**

@@ -167,10 +167,8 @@ class TestController extends Controller
             ->createNavigator(
                 $request,
                 'participation_map',
-                array(),
-                json_decode('{
-                    "purchase":{"item": "test_conf"}
-                }', true)
+                array()
+                //json_decode('{ "purchase":{"item": "test_conf"}}', true)
             )
         ;
 

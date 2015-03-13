@@ -228,6 +228,9 @@ class Navigator implements NavigatorInterface
                 }
 
                 $this->save();
+
+                // Reset the current form.
+                $this->form = null;
             }
         }
     }
@@ -246,6 +249,9 @@ class Navigator implements NavigatorInterface
         $this->getFlow()->retraceTo($destinationStep);
         $this->hasReturned = true;
         $this->save();
+
+        // Reset the current form.
+        $this->form = null;
     }
 
     /**
@@ -374,9 +380,6 @@ class Navigator implements NavigatorInterface
             $this->request,
             $this->flow
         );
-
-        // Reset the current form.
-        $this->form = null;
     }
 
     /**
