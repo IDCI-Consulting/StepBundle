@@ -18,11 +18,11 @@ class TestController extends Controller
     /**
      * Test.
      *
-     * @Route("/", name="idci_step")
+     * @Route("/", name="idci_step_test_1")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("IDCIStepBundle:Test:test.html.twig")
      */
-    public function indexAction(Request $request)
+    public function test1Action(Request $request)
     {
         /*
         $map = $this
@@ -174,15 +174,15 @@ class TestController extends Controller
         if ($navigator->hasFinished()) {
             $navigator->clear();
 
-            return $this->redirect($this->generateUrl('idci_step'));
+            return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
 
         if ($navigator->hasNavigated()) {
-            return $this->redirect($this->generateUrl('idci_step'));
+            return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
 
         if ($navigator->hasReturned()) {
-            return $this->redirect($this->generateUrl('idci_step'));
+            return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
 
         return array('navigator' => $navigator);
