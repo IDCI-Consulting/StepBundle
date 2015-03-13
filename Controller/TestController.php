@@ -166,7 +166,11 @@ class TestController extends Controller
             ->get('idci_step.navigator.factory')
             ->createNavigator(
                 $request,
-                'participation_map'
+                'participation_map',
+                array(),
+                json_decode('{
+                    "purchase":{"item": "test_conf"}
+                }', true)
             )
         ;
 
