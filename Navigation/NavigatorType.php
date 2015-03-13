@@ -154,7 +154,8 @@ class NavigatorType extends AbstractType
         $resolver
             ->setRequired(array('navigator'))
             ->setDefaults(array(
-                'data' => array()
+                'data'               => array(),
+                'cascade_validation' => true,
             ))
             ->setAllowedTypes(array(
                 'navigator'=> array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface')
