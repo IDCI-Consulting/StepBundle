@@ -133,17 +133,15 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                 if (null !== $result) {
                     $retrievedData[$configuration['action']] = $result;
+
+                    $this->navigator->getFlow()->setStepData(
+                        $this->navigator->getCurrentStep(),
+                        $retrievedData,
+                        array(),
+                        FlowData::TYPE_RETRIEVED
+                    );
                 }
             }
-        }
-
-        if (!empty($retrievedData)) {
-            $this->navigator->getFlow()->setStepData(
-                $this->navigator->getCurrentStep(),
-                $retrievedData,
-                array(),
-                FlowData::TYPE_RETRIVED
-            );
         }
     }
 
@@ -192,7 +190,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 $this->navigator->getCurrentStep(),
                 $retrievedData,
                 array(),
-                FlowData::TYPE_RETRIVED
+                FlowData::TYPE_RETRIEVED
             );
         }
     }
@@ -255,7 +253,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Merge parameters with the SecurityContext (user) 
+     * Merge parameters with the SecurityContext (user)
      * and the navigation flow data (flow_data).
      *
      * @param array $parameters The parameters.
