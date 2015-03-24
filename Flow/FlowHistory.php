@@ -65,14 +65,12 @@ class FlowHistory implements FlowHistoryInterface
         $remove = false;
         $removedPaths = array();
 
-        foreach ($this->takenPaths as $i => $path) {
-            if (!$remove && $step->getName() === $path['source']) {
-                $remove = true;
-            }
+        foreach (array_reverse($this->takenPaths) as $i => $path) {
+            $removedPaths[$step->getName()] = $path;
+            unset($this->takenPaths[$i]);
 
-            if ($remove) {
-                $removedPaths[$step->getName()] = $path;
-                unset($this->takenPaths[$i]);
+            if ($step->getName() === $path['source']) {
+                break;
             }
         }
 
