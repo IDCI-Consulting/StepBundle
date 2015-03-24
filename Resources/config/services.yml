@@ -137,6 +137,11 @@ services:
         tags:
             - { name: idci_step.path_event.action, alias: js_confirm }
 
+    idci_step.path_event.action.change_data:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction
+        tags:
+            - { name: idci_step.path_event.action, alias: change_data }
+
 
     # FlowDataStore
 
@@ -204,7 +209,7 @@ services:
         arguments:    [@idci_step.twig_string_loader, %twig.options% ]
     form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
-        arguments: 
+        arguments:
             - @idci_step.step_event.registry
             - @idci_step.path_event.registry
             - @idci_step.twig
