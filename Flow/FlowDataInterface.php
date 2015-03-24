@@ -66,7 +66,7 @@ interface FlowDataInterface
     public function getRetrievedData();
 
     /**
-     * Set retrived data.
+     * Set retrieved data.
      *
      * @param array $retrievedData The retrieved data.
      *

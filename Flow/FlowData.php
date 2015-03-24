@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Flow;
 class FlowData implements FlowDataInterface
 {
     const TYPE_REMINDED = 'reminded';
-    const TYPE_RETRIVED = 'retrieved';
+    const TYPE_RETRIEVED = 'retrieved';
 
     /**
      * The data form type mapping
@@ -150,7 +150,7 @@ class FlowData implements FlowDataInterface
             return isset($this->remindedData[$name]);
         }
 
-        if (self::TYPE_RETRIVED === $type) {
+        if (self::TYPE_RETRIEVED === $type) {
             return isset($this->retrievedData[$name]);
         }
     }
@@ -176,7 +176,7 @@ class FlowData implements FlowDataInterface
             return $this->remindedData[$name];
         }
 
-        if (self::TYPE_RETRIVED === $type) {
+        if (self::TYPE_RETRIEVED === $type) {
             return $this->retrievedData[$name];
         }
     }
@@ -194,7 +194,7 @@ class FlowData implements FlowDataInterface
             $this->remindedData[$name] = $data;
         }
 
-        if (self::TYPE_RETRIVED === $type) {
+        if (self::TYPE_RETRIEVED === $type) {
             $this->retrievedData[$name] = $data;
         }
 
@@ -218,7 +218,7 @@ class FlowData implements FlowDataInterface
             unset($this->remindedData[$name]);
         }
 
-        if (self::TYPE_RETRIVED === $type) {
+        if (self::TYPE_RETRIEVED === $type) {
             unset($this->retrievedData[$name]);
         }
 
