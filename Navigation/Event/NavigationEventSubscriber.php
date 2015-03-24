@@ -155,6 +155,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $form          = $event->getForm();
         $retrievedData = array();
 
+        // Prevent triggering path event actions on post submit and if the form is not valid.
+        if (FormEvents::POST_SUBMIT === $event->getName() && !$form->isValid()) {
+            return;
+        }
+
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
             $configuration = $path->getConfiguration();
             $events = $configuration['options']['events'];
@@ -180,18 +185,16 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                     if (null !== $result) {
                         $retrievedData[$configuration['action']] = $result;
+
+                        $this->navigator->getFlow()->setStepData(
+                            $this->navigator->getCurrentStep(),
+                            $retrievedData,
+                            array(),
+                            FlowData::TYPE_RETRIEVED
+                        );
                     }
                 }
             }
-        }
-
-        if (!empty($retrievedData)) {
-            $this->navigator->getFlow()->setStepData(
-                $this->navigator->getCurrentStep(),
-                $retrievedData,
-                array(),
-                FlowData::TYPE_RETRIEVED
-            );
         }
     }
 
