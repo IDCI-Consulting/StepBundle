@@ -155,12 +155,24 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $form          = $event->getForm();
         $retrievedData = array();
 
-        // Prevent triggering path event actions on post submit and if the form is not valid.
+        // Prevent triggering path event actions if the form is not valid during post submit event.
         if (FormEvents::POST_SUBMIT === $event->getName() && !$form->isValid()) {
             return;
         }
 
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
+            // Trigger only path event actions on the clicked path during submit events.
+            if (
+                in_array($event->getName(), array(
+                    FormEvents::PRE_SUBMIT,
+                    FormEvents::SUBMIT,
+                    FormEvents::POST_SUBMIT
+                )) &&
+                ($this->navigator->hasReturned() || !$form->get('_path_'.$i)->isClicked())
+            ) {
+                continue;
+            }
+
             $configuration = $path->getConfiguration();
             $events = $configuration['options']['events'];
 
