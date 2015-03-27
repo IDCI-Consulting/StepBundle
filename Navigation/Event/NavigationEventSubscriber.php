@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
@@ -115,24 +118,23 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         if (isset($events[$event->getName()])) {
             foreach ($events[$event->getName()] as $configuration) {
+                $resolver = new OptionsResolver();
+                $this->configureEventConfiguration($resolver);
+                $configuration = $resolver->resolve($configuration);
+
                 $action = $this
                     ->stepEventRegistry
                     ->getAction($configuration['action'])
                 ;
 
-                $parameters = isset($configuration['parameters']) ?
-                    $configuration['parameters'] :
-                    array()
-                ;
-
                 $result = $action->execute(
                     $form,
                     $this->navigator,
-                    $this->merge($parameters)
+                    $this->merge($configuration['parameters'])
                 );
 
                 if (null !== $result) {
-                    $retrievedData[$configuration['action']] = $result;
+                    $retrievedData[$configuration['name']] = $result;
 
                     $this->navigator->getFlow()->setStepData(
                         $this->navigator->getCurrentStep(),
@@ -178,25 +180,24 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
             if (isset($events[$event->getName()])) {
                 foreach ($events[$event->getName()] as $configuration) {
+                    $resolver = new OptionsResolver();
+                    $this->configureEventConfiguration($resolver);
+                    $configuration = $resolver->resolve($configuration);
+
                     $action = $this
                         ->pathEventRegistry
                         ->getAction($configuration['action'])
-                    ;
-
-                    $parameters = isset($configuration['parameters']) ?
-                        $configuration['parameters'] :
-                        array()
                     ;
 
                     $result = $action->execute(
                         $form,
                         $this->navigator,
                         $i,
-                        $this->merge($parameters)
+                        $this->merge($configuration['parameters'])
                     );
 
                     if (null !== $result) {
-                        $retrievedData[$configuration['action']] = $result;
+                        $retrievedData[$configuration['name']] = $result;
 
                         $this->navigator->getFlow()->setStepData(
                             $this->navigator->getCurrentStep(),
@@ -265,6 +266,35 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         return $mapping;
+    }
+
+    /**
+     * Configure event configuration.
+     *
+     * @param OptionsResolverInterface $resolver
+     */
+    protected function configureEventConfiguration(OptionsResolverInterface $resolver)
+    {
+        $resolver
+            ->setRequired(array('action'))
+            ->setDefaults(array(
+                'name'       => null,
+                'parameters' => array(),
+            ))
+            ->setNormalizers(array(
+                'name' => function (Options $options, $value) {
+                    if (null === $value) {
+                        return $options['action'];
+                    }
+
+                    return $value;
+                }
+            ))
+            ->setAllowedTypes(array(
+                'action' => array('string'),
+                'name'   => array('null', 'string'),
+            ))
+        ;
     }
 
     /**
