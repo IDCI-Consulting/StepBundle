@@ -31,14 +31,14 @@ class FlowData implements FlowDataInterface
      *
      * @var array
      */
-    private $remindedData;
+    protected $remindedData;
 
     /**
      * The retrieved data indexed by steps.
      *
      * @var array
      */
-    private $retrievedData;
+    protected $retrievedData;
 
     /**
      * Constructor
