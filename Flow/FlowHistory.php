@@ -40,36 +40,53 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function addTakenPath(StepInterface $step, $pathId = 0)
+    public function setCurrentStep(StepInterface $step)
     {
-        $this->takenPaths[] = array(
-            'source'  => $step->getName(),
-            'index'   => $pathId,
-        );
-        $this->fullTakenPaths[] = array(
-            'source' => $step->getName(),
-            'index'  => $pathId,
-        );
+        if (empty($this->fullTakenPaths)) {
+            $path = array(
+                'source'      => null,
+                'index'       => null,
+                'destination' => $step->getName(),
+            );
+            $this->takenPaths[]     = $path;
+            $this->fullTakenPaths[] = $path;
+        } else {
+            $this->takenPaths[count($this->takenPaths) -1]['destination'] = $step->getName();
+            $this->fullTakenPaths[count($this->fullTakenPaths) -1]['destination'] = $step->getName();
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function retraceTakenPath(StepInterface $step)
+    public function addTakenPath(StepInterface $step, $pathId = 0)
+    {
+        $path = array(
+            'source'  => $step->getName(),
+            'index'   => $pathId,
+        );
+        $this->takenPaths[]     = $path;
+        $this->fullTakenPaths[] = $path;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retraceTakenPath($sourceStepName, StepInterface $destinationStep)
     {
         $this->fullTakenPaths[] = array(
-            'source' => $step->getName(),
-            'index'  => '_back',
+            'source'      => $sourceStepName,
+            'index'       => '_back',
         );
 
-        $remove = false;
         $removedPaths = array();
 
+        $reversedIndex = count($this->takenPaths) - 1;
         foreach (array_reverse($this->takenPaths) as $i => $path) {
-            $removedPaths[$step->getName()] = $path;
-            unset($this->takenPaths[$i]);
+            $removedPaths[] = $this->takenPaths[$reversedIndex - $i];
+            unset($this->takenPaths[$reversedIndex - $i]);
 
-            if ($step->getName() === $path['source']) {
+            if ($destinationStep->getName() === $path['source']) {
                 break;
             }
         }
@@ -109,10 +126,8 @@ class FlowHistory implements FlowHistoryInterface
     public function hasDoneStep(StepInterface $step, $full = false)
     {
         $takenPaths = (bool)$full ? $this->fullTakenPaths : $this->takenPaths;
-        $stepName = $step->getName();
-
         foreach ($takenPaths as $takenPath) {
-            if ($takenPath['source'] === $stepName) {
+            if (isset($takenPath['source']) && $takenPath['source'] === $step->getName()) {
                 return true;
             }
         }

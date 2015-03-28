@@ -117,13 +117,15 @@
                 <tr>
                     <th>Source</th>
                     <th>Link</th>
+                    <th>Destination</th>
                 </tr>
             </thead>
             <tbody>
                 {% for path in collector.flow.history.all.takenPaths %}
                 <tr>
-                    <td>{{ path.source }}</td>
-                    <td>{{ path.index }}</td>
+                    <td>{{ path.source|default('') }}</td>
+                    <td>{{ path.index|default('') }}</td>
+                    <td>{{ path.destination }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -135,13 +137,15 @@
                 <tr>
                     <th>Source</th>
                     <th>Link</th>
+                    <th>Destination</th>
                 </tr>
             </thead>
             <tbody>
                 {% for path in collector.flow.history.all.fullTakenPaths %}
                 <tr>
-                    <td>{{ path.source }}</td>
-                    <td>{{ path.index }}</td>
+                    <td>{{ path.source|default('') }}</td>
+                    <td>{{ path.index|default('') }}</td>
+                    <td>{{ path.destination }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

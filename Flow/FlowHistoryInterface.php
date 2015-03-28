@@ -12,6 +12,13 @@ use IDCI\Bundle\StepBundle\Step\StepInterface;
 interface FlowHistoryInterface
 {
     /**
+     * Store the current step into the history.
+     *
+     * @param StepInterface $step The step.
+     */
+    public function setCurrentStep(StepInterface $step);
+
+    /**
      * Add a taken path.
      *
      * @param StepInterface $step The step.
@@ -22,9 +29,10 @@ interface FlowHistoryInterface
     /**
      * Retrace to a step.
      *
-     * @param StepInterface $step The step.
+     * @param string        $sourceStepName  The source step name.
+     * @param StepInterface $destinationstep The destination step.
      */
-    public function retraceTakenPath(StepInterface $step);
+    public function retraceTakenPath($sourceStepName, StepInterface $destinationStep);
 
     /**
      * Get the last taken path.

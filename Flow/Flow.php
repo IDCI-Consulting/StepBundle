@@ -51,6 +51,7 @@ class Flow implements FlowInterface
     public function setCurrentStep(StepInterface $step)
     {
         $this->currentStepName = $step->getName();
+        $this->history->setCurrentStep($step);
 
         return $this;
     }
@@ -70,7 +71,7 @@ class Flow implements FlowInterface
     {
         $lastTakenPath = $this->getHistory()->getLastTakenPath();
 
-        if (null !== $lastTakenPath) {
+        if (isset($lastTakenPath['source'])) {
             return $lastTakenPath['source'];
         }
 
@@ -174,7 +175,10 @@ class Flow implements FlowInterface
      */
     public function retraceTo(StepInterface $step)
     {
-        $retracedPaths = $this->history->retraceTakenPath($step);
+        $retracedPaths = $this->history->retraceTakenPath(
+            $this->getCurrentStepName(),
+            $step
+        );
 
         foreach ($retracedPaths as $retracedPath) {
             $this->data->unsetStepData($retracedPath['source']);
