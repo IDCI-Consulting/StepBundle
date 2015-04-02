@@ -115,6 +115,7 @@ class Navigator implements NavigatorInterface
         }
 
         $this->initFlow($data);
+        $this->getForm();
         $this->navigate();
 
         if ($this->logger) {
@@ -313,20 +314,21 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStepData()
+    public function getCurrentStepData($type = null)
     {
-        return $this->getFlow()->getStepData($this->getCurrentStep());
+        return $this->getFlow()->getStepData($this->getCurrentStep(), $type);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStepData(array $data, array $mapping = array())
+    public function setCurrentStepData(array $data, array $mapping = array(), $type = null)
     {
         $this->getFlow()->setStepData(
             $this->getCurrentStep(),
             $data,
-            $mapping
+            $mapping,
+            $type
         );
     }
 
