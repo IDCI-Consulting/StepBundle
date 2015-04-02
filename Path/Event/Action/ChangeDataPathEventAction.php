@@ -21,7 +21,8 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
         FormInterface $form,
         NavigatorInterface $navigator,
         $pathIndex,
-        $parameters = array()
+        $parameters = array(),
+        $data = null
     )
     {
         foreach ($parameters['fields'] as $field) {

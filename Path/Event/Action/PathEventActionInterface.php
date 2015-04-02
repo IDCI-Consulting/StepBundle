@@ -19,11 +19,13 @@ interface PathEventActionInterface
      * @param NavigatorInterface $navigator  The navigator.
      * @param integer            $pathIndex  The path index.
      * @param array              $parameters The parameters.
+     * @param mixed              $data       The retrieved event data.
      */
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
         $pathIndex,
-        array $parameters = array()
+        array $parameters = array(),
+        $data = null
     );
 }

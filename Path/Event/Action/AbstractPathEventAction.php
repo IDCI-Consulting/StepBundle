@@ -21,7 +21,8 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
         FormInterface $form,
         NavigatorInterface $navigator,
         $pathIndex,
-        array $parameters = array()
+        array $parameters = array(),
+        $data = null
     )
     {
         $resolver = new OptionsResolver();
@@ -31,7 +32,8 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
             $form,
             $navigator,
             $pathIndex,
-            $resolver->resolve($parameters)
+            $resolver->resolve($parameters),
+            $data
         );
     }
 
@@ -51,11 +53,13 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
      * @param NavigatorInterface $navigator  The navigator.
      * @param integer            $pathIndex  The path index.
      * @param array              $parameters The resolved parameters.
+     * @param mixed              $data       The retrieved event data.
      */
     abstract protected function doExecute(
         FormInterface $form,
         NavigatorInterface $navigator,
         $pathIndex,
-        $parameters = array()
+        $parameters = array(),
+        $data = null
     );
 }

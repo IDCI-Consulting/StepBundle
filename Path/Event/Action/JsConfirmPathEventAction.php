@@ -20,7 +20,8 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
         FormInterface $form,
         NavigatorInterface $navigator,
         $pathIndex,
-        $parameters = array()
+        $parameters = array(),
+        $data = null
     )
     {
         $form

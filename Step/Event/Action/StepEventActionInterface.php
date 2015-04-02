@@ -18,10 +18,12 @@ interface StepEventActionInterface
      * @param FormInterface      $form       The form.
      * @param NavigatorInterface $navigator  The navigator.
      * @param array              $parameters The parameters.
+     * @param mixed              $data       The retrieved event data.
      */
     public function execute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        array $parameters = array()
+        array $parameters = array(),
+        $data = null
     );
 }

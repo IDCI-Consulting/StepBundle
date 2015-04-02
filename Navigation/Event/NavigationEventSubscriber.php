@@ -78,12 +78,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA  => array(
-                array('addStepEvents', -1),
-                array('addPathEvents', -2),
+                array('addStepEvents', 2),
+                array('addPathEvents', 1),
             ),
             FormEvents::POST_SET_DATA => array(
-                array('addStepEvents', -1),
-                array('addPathEvents', -2),
+                array('addStepEvents', 2),
+                array('addPathEvents', 1),
+                array('postSetData', 0),
             ),
             FormEvents::PRE_SUBMIT    => array(
                 array('preSubmit', 0),
@@ -127,17 +128,23 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     ->getAction($configuration['action'])
                 ;
 
+                $retrievedData = $this->navigator->getCurrentStepData(FlowData::TYPE_RETRIEVED);
+                $data = isset($retrievedData[$configuration['name']]) ?
+                    $retrievedData[$configuration['name']] :
+                    null
+                ;
+
                 $result = $action->execute(
                     $form,
                     $this->navigator,
-                    $this->merge($configuration['parameters'])
+                    $this->merge($configuration['parameters']),
+                    $data
                 );
 
                 if (null !== $result) {
                     $retrievedData[$configuration['name']] = $result;
 
-                    $this->navigator->getFlow()->setStepData(
-                        $this->navigator->getCurrentStep(),
+                    $this->navigator->setCurrentStepData(
                         $retrievedData,
                         array(),
                         FlowData::TYPE_RETRIEVED
@@ -189,18 +196,24 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                         ->getAction($configuration['action'])
                     ;
 
+                    $retrievedData = $this->navigator->getCurrentStepData(FlowData::TYPE_RETRIEVED);
+                    $data = isset($retrievedData[$configuration['name']]) ?
+                        $retrievedData[$configuration['name']] :
+                        null
+                    ;
+
                     $result = $action->execute(
                         $form,
                         $this->navigator,
                         $i,
-                        $this->merge($configuration['parameters'])
+                        $this->merge($configuration['parameters']),
+                        $data
                     );
 
                     if (null !== $result) {
                         $retrievedData[$configuration['name']] = $result;
 
-                        $this->navigator->getFlow()->setStepData(
-                            $this->navigator->getCurrentStep(),
+                        $this->navigator->setCurrentStepData(
                             $retrievedData,
                             array(),
                             FlowData::TYPE_RETRIEVED
@@ -209,6 +222,16 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 }
             }
         }
+    }
+
+    /**
+     * Post set data.
+     *
+     * @param FormEvent $event
+     */
+    public function postSetData(FormEvent $event)
+    {
+        $this->navigator->save();
     }
 
     /**

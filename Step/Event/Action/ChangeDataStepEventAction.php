@@ -19,7 +19,8 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     protected function doExecute(
         FormInterface $form,
         NavigatorInterface $navigator,
-        $parameters = array()
+        $parameters = array(),
+        $data = null
     )
     {
         $step = $navigator->getCurrentStep();
