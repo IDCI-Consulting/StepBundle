@@ -19,13 +19,6 @@ interface StepInterface
     public function getConfiguration();
 
     /**
-     * Create a view.
-     *
-     * @return IDCI\Bundle\StepBundle\Step\View\StepView The view.
-     */
-    public function createView();
-
-    /**
      * Returns a boolean to indicate That this step was define as a first step
      *
      * @return boolean.
@@ -38,4 +31,11 @@ interface StepInterface
      * @return StepTypeInterface The step's type.
      */
     public function getType();
+
+    /**
+     * Returns the form pre step content.
+     *
+     * @return string|null The content.
+     */
+    public function getPreStepContent();
 }

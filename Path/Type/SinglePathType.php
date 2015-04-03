@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -33,8 +33,10 @@ class SinglePathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function buildPath(PathInterface $path, MapInterface $map, array $options = array())
+    public function buildPath(MapInterface $map, array $options = array())
     {
+        $path = parent::buildPath($map, $options);
+
         return $path
             ->setSource($map->getStep($options['source']))
             ->addDestination($map->getStep($options['destination']))

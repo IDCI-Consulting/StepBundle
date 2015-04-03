@@ -32,8 +32,10 @@ class EndPathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function buildPath(PathInterface $path, MapInterface $map, array $options = array())
+    public function buildPath(MapInterface $map, array $options = array())
     {
+        $path = parent::buildPath($map, $options);
+
         return $path->setSource($map->getStep($options['source']));
     }
 }

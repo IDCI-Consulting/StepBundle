@@ -27,6 +27,19 @@ class StepExtension extends \Twig_Extension
                 array($this, 'stepJavascripts'),
                 array('is_safe' => array('html', 'js'))
             ),
+            new \Twig_SimpleFunction(
+                'pre_step_content',
+                array($this, 'preStepContent'),
+                array('is_safe' => array('html', 'js'))
+            ),
+            new \Twig_SimpleFunction(
+                'step',
+                array($this, 'step'),
+                array(
+                    'is_safe'           => array('html', 'js'),
+                    'needs_environment' => true,
+                )
+            ),
         );
     }
 
@@ -74,5 +87,33 @@ class StepExtension extends \Twig_Extension
                 $configuration['options']['js']
             );
         }
+    }
+
+    /**
+     * Returns the pre step content
+     *
+     * @param NavigatorInterface $navigator
+     *
+     * @return string
+     */
+    public function preStepContent(NavigatorInterface $navigator)
+    {
+        return $navigator->getCurrentStep()->getPreStepContent();
+    }
+
+    /**
+     * Returns step
+     *
+     * @param Twig_Environment   $twig
+     * @param NavigatorInterface $navigator
+     *
+     * @return string
+     */
+    public function step(\Twig_Environment $twig, NavigatorInterface $navigator)
+    {
+        return $twig->render(
+            'IDCIStepBundle:Step:default.html.twig',
+            array('navigator' => $navigator)
+        );
     }
 }

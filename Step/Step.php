@@ -8,7 +8,6 @@
 namespace IDCI\Bundle\StepBundle\Step;
 
 use IDCI\Bundle\StepBundle\Step\StepInterface;
-use IDCI\Bundle\StepBundle\Step\View\StepView;
 
 class Step implements StepInterface
 {
@@ -48,14 +47,6 @@ class Step implements StepInterface
     /**
      * {@inheritdoc}
      */
-    public function createView()
-    {
-        return new StepView();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function isFirst()
     {
         return $this->configuration['options']['is_first'];
@@ -67,5 +58,16 @@ class Step implements StepInterface
     public function getType()
     {
         return $this->configuration['type'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPreStepContent()
+    {
+        return isset($this->configuration['pre_step_content']) ?
+            $this->configuration['pre_step_content'] :
+            null
+        ;
     }
 }

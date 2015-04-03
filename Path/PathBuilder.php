@@ -30,23 +30,6 @@ class PathBuilder implements PathBuilderInterface
     }
 
     /**
-     * Create a Path.
-     *
-     * @param PathTypeInterface $type    The type.
-     * @param array             $options The options.
-     *
-     * @return PathInterface The created Path.
-     */
-    protected static function createPath(PathTypeInterface $type, array $options = array())
-    {
-        // TODO: Use a PathConfig as argument instead of an array.
-        return new Path(array(
-            'type'    => $type,
-            'options' => $options
-        ));
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function build($typeAlias, array $options = array(), MapInterface & $map)
@@ -58,7 +41,6 @@ class PathBuilder implements PathBuilderInterface
         $resolvedOptions = $resolver->resolve($options);
 
         return $type->buildPath(
-            self::createPath($type, $resolvedOptions),
             $map,
             $resolvedOptions
         );

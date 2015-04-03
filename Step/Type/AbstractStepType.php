@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Step\Step;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 abstract class AbstractStepType implements StepTypeInterface
@@ -47,9 +47,14 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function buildStep(StepInterface $step, MapInterface $map, array $options = array())
+    public function buildStep($name, MapInterface $map, array $options = array())
     {
-        return $step;
+        // TODO: Use a StepConfig as argument instead of an array.
+        return new Step(array(
+            'name'      => $name,
+            'type'      => $this,
+            'options'   => $options
+        ));
     }
 
     /**

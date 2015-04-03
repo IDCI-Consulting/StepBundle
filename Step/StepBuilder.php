@@ -29,25 +29,6 @@ class StepBuilder implements StepBuilderInterface
     }
 
     /**
-     * Create a Step.
-     *
-     * @param string            $name    The step name.
-     * @param StepTypeInterface $type    The type.
-     * @param array             $options The options.
-     *
-     * @return StepInterface The created Step.
-     */
-    protected static function createStep($name, StepTypeInterface $type, array $options = array())
-    {
-        // TODO: Use a StepConfig as argument instead of an array.
-        return new Step(array(
-            'name'      => $name,
-            'type'      => $type,
-            'options'   => $options
-        ));
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function build($name, $typeAlias, array $options = array(), MapInterface & $map)
@@ -59,7 +40,7 @@ class StepBuilder implements StepBuilderInterface
         $resolvedOptions = $resolver->resolve($options);
 
         return $type->buildStep(
-            self::createStep($name, $type, $resolvedOptions),
+            $name,
             $map,
             $resolvedOptions
         );

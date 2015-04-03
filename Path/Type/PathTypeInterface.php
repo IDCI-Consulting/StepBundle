@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,13 +24,12 @@ interface PathTypeInterface
     /**
      * Build a path.
      *
-     * @param PathInterface $path       The building path.
      * @param MapInterface  $map        The map container.
      * @param array         $options    The options.
      *
      * @return PathInterface The built path.
      */
-    public function buildPath(PathInterface $path, MapInterface $map, array $options = array());
+    public function buildPath(MapInterface $map, array $options = array());
 
     /**
      * Resolve the destination step name.

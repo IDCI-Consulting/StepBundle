@@ -4,7 +4,7 @@
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @license: MIT
  */
- 
+
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,13 +24,13 @@ interface StepTypeInterface
     /**
      * Build a step.
      *
-     * @param StepInterface $step       The building step.
+     * @param string        $name       The step name.
      * @param MapInterface  $map        The map container.
      * @param array         $options    The options.
      *
      * @return StepInterface The built step.
      */
-    public function buildStep(StepInterface $step, MapInterface $map, array $options = array());
+    public function buildStep($name, MapInterface $map, array $options = array());
 
     /**
      * Build the navigation step form.
