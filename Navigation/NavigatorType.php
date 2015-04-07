@@ -122,26 +122,31 @@ class NavigatorType extends AbstractType
     {
         $map = $options['navigator']->getMap();
         $currentStep = $options['navigator']->getCurrentStep();
-        $configuration = $currentStep->getConfiguration();
+        $stepConfiguration = $currentStep->getConfiguration();
 
         if ($currentStep->getName() !== $map->getFirstStepName()) {
             $builder->add(
                 '_back',
                 'submit',
                 array_merge(
-                    $configuration['options']['previous_options'],
+                    $stepConfiguration['options']['previous_options'],
                     array('attr' => array('formnovalidate' => 'true'))
                 )
             );
         }
 
+        // Do not add path link on last steps (even if they are configured, this allow dynamic changes)
+        if ($stepConfiguration['options']['is_last']) {
+            return;
+        }
+
         foreach ($options['navigator']->getAvailablePaths() as $i => $path) {
-            $configuration = $path->getConfiguration();
+            $pathConfiguration = $path->getConfiguration();
 
             $builder->add(
                 sprintf('_path_%d', $i),
-                $configuration['options']['type'],
-                $configuration['options']['next_options']
+                $pathConfiguration['options']['type'],
+                $pathConfiguration['options']['next_options']
             );
         }
     }

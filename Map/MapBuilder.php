@@ -31,12 +31,12 @@ class MapBuilder implements MapBuilderInterface
     /**
      * @var array
      */
-    private $steps = array();
+    private $steps;
 
     /**
      * @var array
      */
-    private $paths = array();
+    private $paths;
 
     /**
      * @var StepBuilderInterface
@@ -51,7 +51,7 @@ class MapBuilder implements MapBuilderInterface
     /**
      * @var MapInterface
      */
-    private $builtMap;
+    private $map;
 
     /**
      * Creates a new map builder.
@@ -70,14 +70,14 @@ class MapBuilder implements MapBuilderInterface
         PathBuilderInterface $pathBuilder
     )
     {
-        $this->name         = $name;
-        $this->data         = $data;
-        $this->options      = self::resolveOptions($options);
-        $this->stepBuilder  = $stepBuilder;
-        $this->pathBuilder  = $pathBuilder;
-        $this->steps        = array();
-        $this->paths        = array();
-        $this->builtMap     = null;
+        $this->name        = $name;
+        $this->data        = $data;
+        $this->options     = self::resolveOptions($options);
+        $this->stepBuilder = $stepBuilder;
+        $this->pathBuilder = $pathBuilder;
+        $this->steps       = array();
+        $this->paths       = array();
+        $this->map         = null;
     }
 
     /**
@@ -175,25 +175,27 @@ class MapBuilder implements MapBuilderInterface
      */
     public function getMap()
     {
-        $this->initMap();
-        $this->buildSteps();
-        $this->buildPaths();
+        $this->build();
 
-        return $this->builtMap;
+        return $this->map;
     }
 
     /**
-     * Init the map.
+     * Build the map.
      */
-    private function initMap()
+    private function build()
     {
         // TODO: Use a MapConfig as argument instead of an array.
-        $this->builtMap = new Map(array(
+        $this->map = new Map(array(
             'name'         => $this->name,
             'finger_print' => $this->generateFingerPrint(),
             'data'         => $this->data,
             'options'      => $this->options
         ));
+
+        // Build steps before paths !
+        $this->buildSteps();
+        $this->buildPaths();
     }
 
     /**
@@ -215,16 +217,15 @@ class MapBuilder implements MapBuilderInterface
             $step = $this->stepBuilder->build(
                 $name,
                 $parameters['type'],
-                $parameters['options'],
-                $this->builtMap
+                $parameters['options']
             );
 
             if (null !== $step) {
-                $this->builtMap->addStep($name, $step);
+                $this->map->addStep($name, $step);
             }
 
-            if (null === $this->builtMap->getFirstStepName() || $step->isFirst()) {
-                $this->builtMap->setFirstStepName($name);
+            if (null === $this->map->getFirstStepName() || $step->isFirst()) {
+                $this->map->setFirstStepName($name);
             }
         }
     }
@@ -238,11 +239,11 @@ class MapBuilder implements MapBuilderInterface
             $path = $this->pathBuilder->build(
                 $parameters['type'],
                 $parameters['options'],
-                $this->builtMap
+                $this->map->getSteps()
             );
 
             if (null !== $path) {
-                $this->builtMap->addPath(
+                $this->map->addPath(
                     $path->getSource()->getName(),
                     $path
                 );

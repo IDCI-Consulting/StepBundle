@@ -11,5 +11,6 @@
 {% endblock %}
 
 {% block body %}
-    {{ form(navigator.formView) }}
+    {% include 'IDCINotificationApiClientBundle::notifications.html.twig' %}
+    {{ step(navigator) }}
 {% endblock %}

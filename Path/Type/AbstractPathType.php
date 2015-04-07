@@ -10,7 +10,6 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Path\Path;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 abstract class AbstractPathType implements PathTypeInterface
@@ -39,7 +38,7 @@ abstract class AbstractPathType implements PathTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function buildPath(MapInterface $map, array $options = array())
+    public function buildPath(array $steps, array $options = array())
     {
         // TODO: Use a PathConfig as argument instead of an array.
         return new Path(array(

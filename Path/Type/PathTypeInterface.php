@@ -9,7 +9,6 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 interface PathTypeInterface
@@ -24,12 +23,12 @@ interface PathTypeInterface
     /**
      * Build a path.
      *
-     * @param MapInterface  $map        The map container.
-     * @param array         $options    The options.
+     * @param array $steps   The map steps.
+     * @param array $options The options.
      *
      * @return PathInterface The built path.
      */
-    public function buildPath(MapInterface $map, array $options = array());
+    public function buildPath(array $steps, array $options = array());
 
     /**
      * Resolve the destination step name.

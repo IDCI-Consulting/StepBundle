@@ -8,7 +8,6 @@
 namespace IDCI\Bundle\StepBundle\Step;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
 class StepBuilder implements StepBuilderInterface
@@ -31,7 +30,7 @@ class StepBuilder implements StepBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build($name, $typeAlias, array $options = array(), MapInterface & $map)
+    public function build($name, $typeAlias, array $options = array())
     {
         $type = $this->registry->getType($typeAlias);
 
@@ -41,7 +40,6 @@ class StepBuilder implements StepBuilderInterface
 
         return $type->buildStep(
             $name,
-            $map,
             $resolvedOptions
         );
     }

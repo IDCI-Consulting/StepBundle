@@ -9,7 +9,6 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 abstract class MultipleDestinationPathType extends AbstractPathType
@@ -33,13 +32,13 @@ abstract class MultipleDestinationPathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function buildPath(MapInterface $map, array $options = array())
+    public function buildPath(array $steps, array $options = array())
     {
-        $path = parent::buildPath($map, $options);
-        $path->setSource($map->getStep($options['source']));
+        $path = parent::buildPath($steps, $options);
+        $path->setSource($steps[$options['source']]);
 
         foreach ($options['destinations'] as $destName => $destOptions) {
-            $path->addDestination($map->getStep($destName));
+            $path->addDestination($steps[$destName]);
         }
 
         return $path;

@@ -8,18 +8,17 @@
 namespace IDCI\Bundle\StepBundle\Path;
 
 use IDCI\Bundle\StepBundle\Step\StepInterface;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 interface PathBuilderInterface
 {
     /**
      * Returns built path.
      *
-     * @param string        $typeAlias The type alias.
-     * @param array         $options   The options.
-     * @param MapInterface  $map       The building map.
+     * @param string $typeAlias The type alias.
+     * @param array  $options   The options.
+     * @param array  $steps     The map steps.
      *
      * @return PathInterface The step.
      */
-    public function build($typeAlias, array $options = array(), MapInterface & $map);
+    public function build($typeAlias, array $options = array(), array $steps);
 }

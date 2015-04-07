@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\Step;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 abstract class AbstractStepType implements StepTypeInterface
 {
@@ -25,6 +24,7 @@ abstract class AbstractStepType implements StepTypeInterface
                 'title'            => null,
                 'description'      => null,
                 'is_first'         => false,
+                'is_last'          => false,
                 'previous_options' => array(
                     'label' => '< Previous'
                 ),
@@ -47,7 +47,7 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function buildStep($name, MapInterface $map, array $options = array())
+    public function buildStep($name, array $options = array())
     {
         // TODO: Use a StepConfig as argument instead of an array.
         return new Step(array(

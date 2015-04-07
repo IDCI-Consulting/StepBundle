@@ -9,7 +9,6 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 class EndPathType extends AbstractPathType
 {
@@ -32,10 +31,10 @@ class EndPathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function buildPath(MapInterface $map, array $options = array())
+    public function buildPath(array $steps, array $options = array())
     {
-        $path = parent::buildPath($map, $options);
+        $path = parent::buildPath($steps, $options);
 
-        return $path->setSource($map->getStep($options['source']));
+        return $path->setSource($steps[$options['source']]);
     }
 }
