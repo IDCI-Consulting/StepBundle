@@ -46,6 +46,11 @@ class Navigator implements NavigatorInterface
     protected $map;
 
     /**
+     * @var array
+     */
+    protected $data;
+
+    /**
      * @var Request
      */
     protected $request;
@@ -104,6 +109,7 @@ class Navigator implements NavigatorInterface
         $this->formFactory   = $formFactory;
         $this->request       = $request;
         $this->map           = $map;
+        $this->data          = $data;
         $this->flowDataStore = $flowDataStore;
         $this->logger        = $logger;
         $this->hasNavigated  = false;
@@ -114,7 +120,7 @@ class Navigator implements NavigatorInterface
             $this->logger->startNavigation();
         }
 
-        $this->initFlow($data);
+        $this->initFlow();
         $this->getForm();
         $this->navigate();
 
@@ -128,7 +134,7 @@ class Navigator implements NavigatorInterface
      *
      * @param array $data The default data.
      */
-    protected function initFlow(array $data = array())
+    protected function initFlow()
     {
         $this->flow = $this->flowDataStore->get(
             $this->map,
@@ -139,8 +145,8 @@ class Navigator implements NavigatorInterface
             $this->flow = new Flow();
             $this->flow->setCurrentStep($this->map->getFirstStep());
 
-            if (!empty($data)) {
-                foreach ($data as $stepName => $stepData) {
+            if (!empty($this->data)) {
+                foreach ($this->data as $stepName => $stepData) {
                     $this->flow->setStepData(
                         $this->map->getStep($stepName),
                         $stepData,
