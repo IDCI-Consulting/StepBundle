@@ -70,6 +70,8 @@ services:
         arguments:
             - @idci_step.step.builder
             - @idci_step.path.builder
+            - @idci_step.twig
+            - @security.context
 
     idci_step.navigator.factory:
         class: %idci_step.navigator.factory.class%
@@ -200,13 +202,9 @@ services:
             - { name: data_collector, template: 'IDCIStepBundle:Collector:navigation', id: idci_step.navigation }
 
 
-    # FormType
+    ## FormType
+
     # Navigator
-    idci_step.twig_string_loader:
-        class:        "Twig_Loader_String"
-    idci_step.twig:
-        class:        "%twig.class%"
-        arguments:    [@idci_step.twig_string_loader, %twig.options% ]
     form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
         arguments:
@@ -238,7 +236,11 @@ services:
 
 
     # Twig
-
+    idci_step.twig_string_loader:
+        class:        "Twig_Loader_String"
+    idci_step.twig:
+        class:        "%twig.class%"
+        arguments:    [@idci_step.twig_string_loader, %twig.options% ]
     idci_step.twig.step_extension:
         class: IDCI\Bundle\StepBundle\Twig\StepExtension
         tags:

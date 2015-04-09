@@ -42,6 +42,8 @@ class NavigatorType extends AbstractType
      *
      * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
      * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
+     * @param Twig_Environment           $merger            The twig merger.
+     * @param SecurityContextInterface   $securityContext   The security context.
      */
     public function __construct(
         StepEventRegistryInterface $stepEventRegistry,

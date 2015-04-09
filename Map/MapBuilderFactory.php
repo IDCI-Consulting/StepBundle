@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Map\MapNavigatorInterface;
@@ -24,18 +25,34 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $pathBuilder;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $merger;
+
+    /**
+     * @var SecurityContextInterface
+     */
+    private $securityContext;
+
+    /**
      * Constructor
      *
-     * @param StepBuilderInterface  $stepBuilder  The step builder.
-     * @param PathBuilderInterface  $pathBuilder  The path builder.
+     * @param StepBuilderInterface     $stepBuilder       The step builder.
+     * @param PathBuilderInterface     $pathBuilder       The path builder.
+     * @param Twig_Environment         $merger            The twig merger.
+     * @param SecurityContextInterface $securityContext   The security context.
      */
     public function __construct(
-        StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder
+        StepBuilderInterface     $stepBuilder,
+        PathBuilderInterface     $pathBuilder,
+        \Twig_Environment        $merger,
+        SecurityContextInterface $securityContext
     )
     {
-        $this->stepBuilder = $stepBuilder;
-        $this->pathBuilder = $pathBuilder;
+        $this->stepBuilder     = $stepBuilder;
+        $this->pathBuilder     = $pathBuilder;
+        $this->merger          = $merger;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -56,7 +73,9 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
             $data,
             $options,
             $this->stepBuilder,
-            $this->pathBuilder
+            $this->pathBuilder,
+            $this->merger,
+            $this->securityContext
         );
     }
 }

@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Map;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -49,6 +50,16 @@ class MapBuilder implements MapBuilderInterface
     private $pathBuilder;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $merger;
+
+    /**
+     * @var SecurityContextInterface
+     */
+    private $securityContext;
+
+    /**
      * @var MapInterface
      */
     private $map;
@@ -56,28 +67,34 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Creates a new map builder.
      *
-     * @param string                $name
-     * @param array                 $data
-     * @param array                 $options
-     * @param StepBuilderInterface  $stepBuilder
-     * @param PathBuilderInterface  $pathBuilder
+     * @param string                   $name              The map name.
+     * @param array                    $data              The map data.
+     * @param array                    $options           The map options.
+     * @param StepBuilderInterface     $stepBuilder       The sdtep builder.
+     * @param PathBuilderInterface     $pathBuilder       The path builder.
+     * @param Twig_Environment         $merger            The twig merger.
+     * @param SecurityContextInterface $securityContext   The security context.
      */
     public function __construct(
         $name = null,
         $data = array(),
         $options = array(),
         StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder
+        PathBuilderInterface $pathBuilder,
+        \Twig_Environment $merger,
+        SecurityContextInterface $securityContext
     )
     {
-        $this->name        = $name;
-        $this->data        = $data;
-        $this->options     = self::resolveOptions($options);
-        $this->stepBuilder = $stepBuilder;
-        $this->pathBuilder = $pathBuilder;
-        $this->steps       = array();
-        $this->paths       = array();
-        $this->map         = null;
+        $this->name            = $name;
+        $this->data            = $data;
+        $this->options         = self::resolveOptions($options);
+        $this->stepBuilder     = $stepBuilder;
+        $this->pathBuilder     = $pathBuilder;
+        $this->merger          = $merger;
+        $this->securityContext = $securityContext;
+        $this->steps           = array();
+        $this->paths           = array();
+        $this->map             = null;
     }
 
     /**
@@ -217,7 +234,7 @@ class MapBuilder implements MapBuilderInterface
             $step = $this->stepBuilder->build(
                 $name,
                 $parameters['type'],
-                $parameters['options']
+                $this->merge($parameters['options'])
             );
 
             if (null !== $step) {
@@ -238,7 +255,7 @@ class MapBuilder implements MapBuilderInterface
         foreach ($this->paths as $parameters) {
             $path = $this->pathBuilder->build(
                 $parameters['type'],
-                $parameters['options'],
+                $this->merge($parameters['options']),
                 $this->map->getSteps()
             );
 
@@ -249,5 +266,32 @@ class MapBuilder implements MapBuilderInterface
                 );
             }
         }
+    }
+
+    /**
+     * Merge options with the SecurityContext (user).
+     *
+     * @param array $options The options.
+     *
+     * @return array
+     */
+    protected function merge(array $options = array())
+    {
+        if (null === $this->securityContext->getToken()) {
+            return $options;
+        }
+
+        $user = $this->securityContext->getToken()->getUser();
+        foreach ($options as $k => $v) {
+            $options[$k] = json_decode(
+                $this->merger->render(
+                    json_encode($v),
+                    array('user' => $user)
+                ),
+                true
+            );
+        }
+
+        return $options;
     }
 }

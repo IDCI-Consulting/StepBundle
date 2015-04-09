@@ -25,27 +25,27 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * @var NavigatorInterface
      */
-    protected $navigator;
+    private $navigator;
 
     /**
      * @var StepEventRegistryInterface
      */
-    protected $stepEventRegistry;
+    private $stepEventRegistry;
 
     /**
      * @var PathEventRegistryInterface
      */
-    protected $pathEventRegistry;
+    private $pathEventRegistry;
 
     /**
      * @var \Twig_Environment
      */
-    protected $merger;
+    private $merger;
 
     /**
      * @var SecurityContextInterface
      */
-    protected $securityContext;
+    private $securityContext;
 
     /**
      * Constructor
