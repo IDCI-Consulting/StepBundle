@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Map;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Map\MapNavigatorInterface;
@@ -35,24 +36,32 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $securityContext;
 
     /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * Constructor
      *
-     * @param StepBuilderInterface     $stepBuilder       The step builder.
-     * @param PathBuilderInterface     $pathBuilder       The path builder.
-     * @param Twig_Environment         $merger            The twig merger.
-     * @param SecurityContextInterface $securityContext   The security context.
+     * @param StepBuilderInterface     $stepBuilder     The step builder.
+     * @param PathBuilderInterface     $pathBuilder     The path builder.
+     * @param Twig_Environment         $merger          The twig merger.
+     * @param SecurityContextInterface $securityContext The security context.
+     * @param SessionInterface         $session         The session.
      */
     public function __construct(
         StepBuilderInterface     $stepBuilder,
         PathBuilderInterface     $pathBuilder,
         \Twig_Environment        $merger,
-        SecurityContextInterface $securityContext
+        SecurityContextInterface $securityContext,
+        SessionInterface         $session
     )
     {
         $this->stepBuilder     = $stepBuilder;
         $this->pathBuilder     = $pathBuilder;
         $this->merger          = $merger;
         $this->securityContext = $securityContext;
+        $this->session         = $session;
     }
 
     /**
@@ -75,7 +84,8 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
             $this->stepBuilder,
             $this->pathBuilder,
             $this->merger,
-            $this->securityContext
+            $this->securityContext,
+            $this->session
         );
     }
 }

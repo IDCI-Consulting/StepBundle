@@ -340,8 +340,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 $this->merger->render(
                     json_encode($v),
                     array(
+                        'user'      => $user,
                         'flow_data' => $this->navigator->getFlow()->getData(),
-                        'user'      => $user
                     )
                 ),
                 true

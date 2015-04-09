@@ -72,6 +72,7 @@ services:
             - @idci_step.path.builder
             - @idci_step.twig
             - @security.context
+            - @session
 
     idci_step.navigator.factory:
         class: %idci_step.navigator.factory.class%

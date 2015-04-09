@@ -9,6 +9,7 @@ namespace IDCI\Bundle\StepBundle\Map;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -60,6 +61,11 @@ class MapBuilder implements MapBuilderInterface
     private $securityContext;
 
     /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * @var MapInterface
      */
     private $map;
@@ -67,13 +73,14 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Creates a new map builder.
      *
-     * @param string                   $name              The map name.
-     * @param array                    $data              The map data.
-     * @param array                    $options           The map options.
-     * @param StepBuilderInterface     $stepBuilder       The sdtep builder.
-     * @param PathBuilderInterface     $pathBuilder       The path builder.
-     * @param Twig_Environment         $merger            The twig merger.
-     * @param SecurityContextInterface $securityContext   The security context.
+     * @param string                   $name            The map name.
+     * @param array                    $data            The map data.
+     * @param array                    $options         The map options.
+     * @param StepBuilderInterface     $stepBuilder     The sdtep builder.
+     * @param PathBuilderInterface     $pathBuilder     The path builder.
+     * @param Twig_Environment         $merger          The twig merger.
+     * @param SecurityContextInterface $securityContext The security context.
+     * @param SessionInterface         $session         The session.
      */
     public function __construct(
         $name = null,
@@ -82,7 +89,8 @@ class MapBuilder implements MapBuilderInterface
         StepBuilderInterface $stepBuilder,
         PathBuilderInterface $pathBuilder,
         \Twig_Environment $merger,
-        SecurityContextInterface $securityContext
+        SecurityContextInterface $securityContext,
+        SessionInterface $session
     )
     {
         $this->name            = $name;
@@ -92,6 +100,7 @@ class MapBuilder implements MapBuilderInterface
         $this->pathBuilder     = $pathBuilder;
         $this->merger          = $merger;
         $this->securityContext = $securityContext;
+        $this->session         = $session;
         $this->steps           = array();
         $this->paths           = array();
         $this->map             = null;
@@ -269,7 +278,8 @@ class MapBuilder implements MapBuilderInterface
     }
 
     /**
-     * Merge options with the SecurityContext (user).
+     * Merge options with the SecurityContext (user)
+     * and the session (session).
      *
      * @param array $options The options.
      *
@@ -277,16 +287,24 @@ class MapBuilder implements MapBuilderInterface
      */
     protected function merge(array $options = array())
     {
-        if (null === $this->securityContext->getToken()) {
-            return $options;
+        $user = null;
+        if (null !== $this->securityContext->getToken()) {
+            $user = $this->securityContext->getToken()->getUser();
         }
 
-        $user = $this->securityContext->getToken()->getUser();
         foreach ($options as $k => $v) {
+            // Do not merge events parameters and building objects !
+            if ($k == 'events' || is_object($v)) {
+                continue;
+            }
+
             $options[$k] = json_decode(
                 $this->merger->render(
                     json_encode($v),
-                    array('user' => $user)
+                    array(
+                        'user'    => $user,
+                        'session' => $this->session,
+                    )
                 ),
                 true
             );
