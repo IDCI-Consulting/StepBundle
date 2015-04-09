@@ -303,7 +303,7 @@ class MapBuilder implements MapBuilderInterface
                     json_encode($v),
                     array(
                         'user'    => $user,
-                        'session' => $this->session,
+                        'session' => $this->session->all(),
                     )
                 ),
                 true
