@@ -338,7 +338,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         foreach ($parameters as $k => $v) {
             $parameters[$k] = json_decode(
                 $this->merger->render(
-                    json_encode($v),
+                    json_encode($v, JSON_UNESCAPED_UNICODE),
                     array(
                         'user'      => $user,
                         'flow_data' => $this->navigator->getFlow()->getData(),

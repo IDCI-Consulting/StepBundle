@@ -300,7 +300,7 @@ class MapBuilder implements MapBuilderInterface
 
             $options[$k] = json_decode(
                 $this->merger->render(
-                    json_encode($v),
+                    json_encode($v, JSON_UNESCAPED_UNICODE),
                     array(
                         'user'    => $user,
                         'session' => $this->session->all(),
