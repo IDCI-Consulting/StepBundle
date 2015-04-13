@@ -119,13 +119,12 @@ services:
 
     idci_step.path.type.conditional_destination:
         class: %idci_step.path.type.conditional_destination.class%
+        arguments:
+            - @idci_step.twig
+            - @security.context
+            - @session
         tags:
             - { name: idci_step.path.type, alias: conditional_destination }
-
-    idci_step.path.type.random_destination:
-        class: %idci_step.path.type.random_destination.class%
-        tags:
-            - { name: idci_step.path.type, alias: random_destination }
 
     idci_step.path.type.end:
         class: %idci_step.path.type.end.class%
