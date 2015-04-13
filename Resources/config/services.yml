@@ -104,6 +104,11 @@ services:
         tags:
             - { name: idci_step.step_event.action, alias: change_data }
 
+    idci_step.step_event.action.transform_data:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventAction
+        tags:
+            - { name: idci_step.step_event.action, alias: transform_data }
+
     idci_step.step_event.action.add_link:
         class: IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction
         tags:
