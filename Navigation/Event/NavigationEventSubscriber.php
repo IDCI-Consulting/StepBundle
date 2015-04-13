@@ -188,8 +188,21 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             if (isset($events[$event->getName()])) {
                 foreach ($events[$event->getName()] as $configuration) {
                     $resolver = new OptionsResolver();
-                    $this->configureEventConfiguration($resolver);
+                    $this->configurePathEventConfiguration($resolver);
                     $configuration = $resolver->resolve($configuration);
+
+                    // Check the resolved destination match the target destinations for the event
+                    // in the case of multi destination paths.
+                    if (isset($configuration['destinations'])) {
+                        $destination = $path->resolveDestination($this->navigator);
+
+                        if (
+                            null === $destination ||
+                            !in_array($destination->getName(), $configuration['destinations'])
+                        ) {
+                            continue;
+                        }
+                    }
 
                     $action = $this
                         ->pathEventRegistry
@@ -316,6 +329,25 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             ->setAllowedTypes(array(
                 'action' => array('string'),
                 'name'   => array('null', 'string'),
+            ))
+        ;
+    }
+
+    /**
+     * Configure path event configuration.
+     *
+     * @param OptionsResolverInterface $resolver
+     */
+    protected function configurePathEventConfiguration(OptionsResolverInterface $resolver)
+    {
+        $this->configureEventConfiguration($resolver);
+
+        $resolver
+            ->setDefaults(array(
+                'destinations' => null,
+            ))
+            ->setAllowedTypes(array(
+                'destinations' => array('null', 'array'),
             ))
         ;
     }
