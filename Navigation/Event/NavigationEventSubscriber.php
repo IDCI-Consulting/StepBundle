@@ -110,7 +110,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function addStepEvents(FormEvent $event)
     {
-        $form          = $event->getForm();
         $retrievedData = array();
 
         $step = $this->navigator->getCurrentStep();
@@ -135,7 +134,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 ;
 
                 $result = $action->execute(
-                    $form,
+                    $event,
                     $this->navigator,
                     $this->merge($configuration['parameters']),
                     $data
@@ -216,7 +215,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     ;
 
                     $result = $action->execute(
-                        $form,
+                        $event,
                         $this->navigator,
                         $i,
                         $this->merge($configuration['parameters']),

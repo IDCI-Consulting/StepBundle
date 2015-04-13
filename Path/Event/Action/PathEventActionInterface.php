@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormEvent;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 interface PathEventActionInterface
@@ -15,14 +15,14 @@ interface PathEventActionInterface
     /**
      * Execute action.
      *
-     * @param FormInterface      $form       The form.
+     * @param FormEvent          $event      The form event.
      * @param NavigatorInterface $navigator  The navigator.
      * @param integer            $pathIndex  The path index.
      * @param array              $parameters The parameters.
      * @param mixed              $data       The retrieved event data.
      */
     public function execute(
-        FormInterface $form,
+        FormEvent $event,
         NavigatorInterface $navigator,
         $pathIndex,
         array $parameters = array(),

@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
@@ -18,7 +18,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
      * {@inheritdoc}
      */
     public function execute(
-        FormInterface $form,
+        FormEvent $event,
         NavigatorInterface $navigator,
         $pathIndex,
         array $parameters = array(),
@@ -29,7 +29,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
         $this->setDefaultParameters($resolver);
 
         return $this->doExecute(
-            $form,
+            $event,
             $navigator,
             $pathIndex,
             $resolver->resolve($parameters),
@@ -49,14 +49,14 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     /**
      * Do execute action.
      *
-     * @param FormInterface      $form       The form.
+     * @param FormEvent          $event      The form event.
      * @param NavigatorInterface $navigator  The navigator.
      * @param integer            $pathIndex  The path index.
      * @param array              $parameters The resolved parameters.
      * @param mixed              $data       The retrieved event data.
      */
     abstract protected function doExecute(
-        FormInterface $form,
+        FormEvent $event,
         NavigatorInterface $navigator,
         $pathIndex,
         $parameters = array(),
