@@ -126,7 +126,10 @@ class NavigatorType extends AbstractType
         $currentStep = $options['navigator']->getCurrentStep();
         $stepConfiguration = $currentStep->getConfiguration();
 
-        if ($currentStep->getName() !== $map->getFirstStepName()) {
+        if (
+            $currentStep->getName() !== $map->getFirstStepName() &&
+            !$stepConfiguration['options']['prevent_previous']
+        ) {
             $builder->add(
                 '_back',
                 'submit',
@@ -137,8 +140,8 @@ class NavigatorType extends AbstractType
             );
         }
 
-        // Do not add path link on last steps (even if they are configured, this allow dynamic changes)
-        if ($stepConfiguration['options']['is_last']) {
+        // Do not add path link on steps if this is specified, this allow dynamic changes
+        if ($stepConfiguration['options']['prevent_next']) {
             return;
         }
 

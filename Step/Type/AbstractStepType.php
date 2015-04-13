@@ -24,7 +24,8 @@ abstract class AbstractStepType implements StepTypeInterface
                 'title'            => null,
                 'description'      => null,
                 'is_first'         => false,
-                'is_last'          => false,
+                'prevent_previous' => false,
+                'prevent_next'     => false,
                 'previous_options' => array(
                     'label' => '< Previous'
                 ),
