@@ -8,7 +8,6 @@
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class SinglePathType extends AbstractPathType
@@ -23,8 +22,8 @@ class SinglePathType extends AbstractPathType
         $resolver
             ->setRequired(array('source', 'destination'))
             ->setAllowedTypes(array(
-                'source'        => 'string',
-                'destination'   => 'string',
+                'source'      => 'string',
+                'destination' => 'string',
             ))
         ;
     }
