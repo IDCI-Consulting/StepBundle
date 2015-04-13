@@ -92,7 +92,7 @@ class ConditionalDestinationPathType extends AbstractPathType
         foreach ($options['destinations'] as $name => $rule) {
             $merged = $this->merger->render($rule, array(
                 'user'      => $user,
-                'session'   => $this->session,
+                'session'   => $this->session->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
             ));
 
