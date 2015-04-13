@@ -264,7 +264,7 @@ class MapBuilder implements MapBuilderInterface
         foreach ($this->paths as $parameters) {
             $path = $this->pathBuilder->build(
                 $parameters['type'],
-                $this->merge($parameters['options']),
+                $parameters['options'],
                 $this->map->getSteps()
             );
 
