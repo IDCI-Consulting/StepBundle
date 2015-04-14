@@ -106,6 +106,7 @@ class StepExtension extends \Twig_Extension
      *
      * @param Twig_Environment   $twig
      * @param NavigatorInterface $navigator
+     * @param string             $theme
      *
      * @return string
      */
