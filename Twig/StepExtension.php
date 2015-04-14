@@ -109,11 +109,14 @@ class StepExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function step(\Twig_Environment $twig, NavigatorInterface $navigator)
+    public function step(\Twig_Environment $twig, NavigatorInterface $navigator, $theme = null)
     {
         return $twig->render(
             'IDCIStepBundle:Step:default.html.twig',
-            array('navigator' => $navigator)
+            array(
+                'navigator' => $navigator,
+                'theme'     => $theme,
+            )
         );
     }
 }
