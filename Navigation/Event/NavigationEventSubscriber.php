@@ -136,6 +136,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 ;
 
                 $stepEvent = new StepEvent($this->navigator, $event, $stepEventData);
+                // TODO: Catch execution exceptions and handle them (clear navigator, log, stop propagation, ...)
                 $result = $action->execute(
                     $stepEvent,
                     $this->merge($configuration['parameters'])
@@ -149,6 +150,10 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                         array(),
                         FlowData::TYPE_RETRIEVED
                     );
+                }
+
+                if ($stepEvent->isPropagationStopped()) {
+                    break;
                 }
             }
         }
@@ -216,6 +221,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     ;
 
                     $pathEvent = new PathEvent($this->navigator, $event, $pathEventData, $i);
+                    // TODO: Catch execution exceptions and handle them (clear navigator, log, stop propagation, ...)
                     $result = $action->execute(
                         $pathEvent,
                         $this->merge($configuration['parameters'])
@@ -229,6 +235,10 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                             array(),
                             FlowData::TYPE_RETRIEVED
                         );
+                    }
+
+                    if ($pathEvent->isPropagationStopped()) {
+                        break;
                     }
                 }
             }
