@@ -7,10 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\Common\Util\Inflector;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\Step\Type\FormStepType;
 
 class TransformDataStepEventAction extends AbstractStepEventAction
@@ -19,15 +18,13 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      * {@inheritdoc}
      */
     protected function doExecute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        $parameters = array(),
-        $data = null
+        StepEventInterface $event,
+        array $parameters = array()
     )
     {
-        $form     = $event->getForm();
-        $formData = $event->getData();
-        $step = $navigator->getCurrentStep();
+        $form          = $event->getForm();
+        $formData      = $event->getData();
+        $step          = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();
 
         if (empty($formData) ||

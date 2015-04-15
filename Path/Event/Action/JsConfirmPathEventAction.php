@@ -7,9 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 
 class JsConfirmPathEventAction extends AbstractPathEventAction
 {
@@ -17,11 +16,8 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
      * {@inheritdoc}
      */
     protected function doExecute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        $pathIndex,
-        $parameters = array(),
-        $data = null
+        PathEventInterface $event,
+        array $parameters = array()
     )
     {
         $form = $event->getForm();
@@ -29,7 +25,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
         $form
             ->add('_js_confirm', 'idci_step_action_form_js_confirm', array_merge(
                 $parameters,
-                array('path_index' => $pathIndex)
+                array('path_index' => $event->getPathIndex())
             ))
         ;
     }

@@ -7,9 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
 class AddLinkStepEventAction extends AbstractStepEventAction
 {
@@ -17,10 +16,8 @@ class AddLinkStepEventAction extends AbstractStepEventAction
      * {@inheritdoc}
      */
     protected function doExecute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        $parameters = array(),
-        $data = null
+        StepEventInterface $event,
+        array $parameters = array()
     )
     {
         $form = $event->getForm();

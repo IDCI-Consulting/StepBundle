@@ -7,9 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 
 class ChangeDataPathEventAction extends AbstractPathEventAction
@@ -18,16 +17,13 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
      * {@inheritdoc}
      */
     protected function doExecute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        $pathIndex,
-        $parameters = array(),
-        $data = null
+        PathEventInterface $event,
+        array $parameters = array()
     )
     {
         foreach ($parameters['fields'] as $field) {
             $this->change(
-                $navigator->getFlow(),
+                $event->getNavigator()->getFlow(),
                 $field['target']['path'],
                 $field['target']['types'],
                 $field['value']

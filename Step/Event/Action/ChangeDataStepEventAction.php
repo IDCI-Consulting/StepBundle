@@ -7,9 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
 class ChangeDataStepEventAction extends AbstractStepEventAction
 {
@@ -17,14 +16,12 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
      * {@inheritdoc}
      */
     protected function doExecute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        $parameters = array(),
-        $data = null
+        StepEventInterface $event,
+        array $parameters = array()
     )
     {
         $form = $event->getForm();
-        $step = $navigator->getCurrentStep();
+        $step = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();
 
         if ($configuration['type'] instanceof \IDCI\Bundle\StepBundle\Step\Type\FormStepType) {

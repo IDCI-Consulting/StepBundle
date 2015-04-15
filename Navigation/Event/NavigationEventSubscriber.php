@@ -17,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEvent;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
 
 class NavigationEventSubscriber implements EventSubscriberInterface
@@ -128,16 +130,15 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 ;
 
                 $retrievedData = $this->navigator->getCurrentStepData(FlowData::TYPE_RETRIEVED);
-                $data = isset($retrievedData[$configuration['name']]) ?
+                $stepEventData = isset($retrievedData[$configuration['name']]) ?
                     $retrievedData[$configuration['name']] :
                     null
                 ;
 
+                $stepEvent = new StepEvent($this->navigator, $event, $stepEventData);
                 $result = $action->execute(
-                    $event,
-                    $this->navigator,
-                    $this->merge($configuration['parameters']),
-                    $data
+                    $stepEvent,
+                    $this->merge($configuration['parameters'])
                 );
 
                 if (null !== $result) {
@@ -209,17 +210,15 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     ;
 
                     $retrievedData = $this->navigator->getCurrentStepData(FlowData::TYPE_RETRIEVED);
-                    $data = isset($retrievedData[$configuration['name']]) ?
+                    $pathEventData = isset($retrievedData[$configuration['name']]) ?
                         $retrievedData[$configuration['name']] :
                         null
                     ;
 
+                    $pathEvent = new PathEvent($this->navigator, $event, $pathEventData, $i);
                     $result = $action->execute(
-                        $event,
-                        $this->navigator,
-                        $i,
-                        $this->merge($configuration['parameters']),
-                        $data
+                        $pathEvent,
+                        $this->merge($configuration['parameters'])
                     );
 
                     if (null !== $result) {

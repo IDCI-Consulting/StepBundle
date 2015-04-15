@@ -133,7 +133,7 @@ class NavigatorType extends AbstractType
             $builder->add(
                 '_back',
                 'submit',
-                array_merge(
+                array_merge_recursive(
                     $stepConfiguration['options']['previous_options'],
                     array('attr' => array('formnovalidate' => 'true'))
                 )

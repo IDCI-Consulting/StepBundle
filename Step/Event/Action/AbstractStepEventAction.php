@@ -7,10 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
 abstract class AbstractStepEventAction implements StepEventActionInterface
 {
@@ -18,21 +17,14 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
      * {@inheritdoc}
      */
     public function execute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        array $parameters = array(),
-        $data = null
+        StepEventInterface $event,
+        array $parameters = array()
     )
     {
         $resolver = new OptionsResolver();
         $this->setDefaultParameters($resolver);
 
-        return $this->doExecute(
-            $event,
-            $navigator,
-            $resolver->resolve($parameters),
-            $data
-        );
+        return $this->doExecute($event, $resolver->resolve($parameters));
     }
 
     /**
@@ -47,15 +39,11 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
     /**
      * Do execute action.
      *
-     * @param FormEvent          $event      The form event.
-     * @param NavigatorInterface $navigator  The navigator.
+     * @param StepEventInterface $event      The step event.
      * @param array              $parameters The resolved parameters.
-     * @param mixed              $data       The retrieved event data.
      */
     abstract protected function doExecute(
-        FormEvent $event,
-        NavigatorInterface $navigator,
-        $parameters = array(),
-        $data = null
+        StepEventInterface $event,
+        array $parameters = array()
     );
 }
