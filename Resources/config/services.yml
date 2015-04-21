@@ -139,7 +139,7 @@ services:
 
     # PathEvent
 
-    idci_step.path_event.action.js_comfirm:
+    idci_step.path_event.action.js_confirm:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
         tags:
             - { name: idci_step.path_event.action, alias: js_confirm }
