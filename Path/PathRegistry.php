@@ -49,9 +49,9 @@ class PathRegistry implements PathRegistryInterface
     public function hasType($alias)
     {
         if (!isset($this->types[$alias])) {
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 }
