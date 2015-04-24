@@ -14,21 +14,28 @@ use IDCI\Bundle\StepBundle\Path\PathInterface;
 interface MapInterface
 {
     /**
-     * Get the name of the map.
+     * Returns the name of the map.
      *
      * @return string The name.
      */
     public function getName();
 
     /**
-     * Get the map finger print.
+     * Returns the map finger print.
      *
      * @return string The map finger print.
      */
     public function getFingerPrint();
 
     /**
-     * Get the configuration.
+     * Returns the map data.
+     *
+     * @return array|null The map data.
+     */
+    public function getData();
+
+    /**
+     * Returns the configuration.
      *
      * @return array The configuration.
      */
@@ -64,7 +71,7 @@ interface MapInterface
     public function hasStep($name);
 
     /**
-     * Get a step by its name if exists.
+     * Returns a step by its name if exists.
      *
      * @param string $name The identifier name of the step.
      *
@@ -73,7 +80,7 @@ interface MapInterface
     public function getStep($name);
 
     /**
-     * Get the steps.
+     * Returns the steps.
      *
      * @return array The steps.
      */
@@ -87,14 +94,14 @@ interface MapInterface
     public function countSteps();
 
     /**
-     * Get the first step.
+     * Returns the first step.
      *
      * @return StepInterface The step.
      */
     public function getFirstStep();
 
     /**
-     * Get the paths.
+     * Returns the paths.
      *
      * @param string $source The identifier name of the source step.
      *
@@ -103,7 +110,7 @@ interface MapInterface
     public function getPaths($source = null);
 
     /**
-     * Get a path.
+     * Returns a path.
      *
      * @param string  $source The identifier name of the source step.
      * @param integer $index  The path index for the step.

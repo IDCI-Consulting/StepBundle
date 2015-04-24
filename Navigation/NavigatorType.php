@@ -81,6 +81,7 @@ class NavigatorType extends AbstractType
             ));
         }
 
+
         $builder->addEventSubscriber(new NavigationEventSubscriber(
             $options['navigator'],
             $this->stepEventRegistry,
@@ -103,10 +104,6 @@ class NavigatorType extends AbstractType
     {
         $currentStep = $options['navigator']->getCurrentStep();
         $configuration = $currentStep->getConfiguration();
-
-        if (!empty($options['data'])) {
-            $configuration['options']['data'] = $options['data'];
-        }
 
         $currentStep->getType()->buildNavigationStepForm(
             $builder,

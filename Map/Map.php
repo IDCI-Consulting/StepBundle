@@ -90,6 +90,17 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
+    public function getData()
+    {
+        return isset($this->configuration['data']) ?
+            $this->configuration['data'] :
+            null
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getConfiguration()
     {
         return $this->configuration;
@@ -101,6 +112,13 @@ class Map implements MapInterface
     public function addStep($name, StepInterface $step)
     {
         $this->steps[$name] = $step;
+
+        if (null !== $step->getData()) {
+            $this->configuration['data'] = array_replace_recursive(
+                $this->configuration['data'],
+                array($name => $step->getData())
+            );
+        }
 
         return $this;
     }

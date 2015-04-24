@@ -31,16 +31,10 @@ class FormStepFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['builder']->all() as $fieldName => $fieldBuilder) {
-            $fieldOptions = $fieldBuilder->getOptions();
-
-            if (isset($options['data'][$fieldName])) {
-                $fieldOptions['data'] = $options['data'][$fieldName];
-            }
-
             $builder->add(
                 $fieldName,
                 $fieldBuilder->getType()->getInnerType(),
-                $fieldOptions
+                $fieldBuilder->getOptions()
             );
         }
     }
@@ -53,7 +47,6 @@ class FormStepFormType extends AbstractType
         $resolver
             ->setRequired(array('builder'))
             ->setDefaults(array(
-                'data'          => array(),
                 'display_title' => true,
             ))
             ->setAllowedTypes(array(

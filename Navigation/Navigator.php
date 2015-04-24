@@ -109,7 +109,7 @@ class Navigator implements NavigatorInterface
         $this->formFactory   = $formFactory;
         $this->request       = $request;
         $this->map           = $map;
-        $this->data          = $data;
+        $this->data          = array_replace_recursive($this->map->getData(), $data);
         $this->flowDataStore = $flowDataStore;
         $this->logger        = $logger;
         $this->hasNavigated  = false;
@@ -131,8 +131,6 @@ class Navigator implements NavigatorInterface
 
     /**
      * Init the flow
-     *
-     * @param array $data The default data.
      */
     protected function initFlow()
     {

@@ -33,6 +33,13 @@ interface StepInterface
     public function getType();
 
     /**
+     * Returns the step data.
+     *
+     * @return array|null The step's data.
+     */
+    public function getData();
+
+    /**
      * Returns the form pre step content.
      *
      * @return string|null The content.

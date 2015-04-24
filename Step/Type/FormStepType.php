@@ -23,17 +23,7 @@ class FormStepType extends AbstractStepType
         $resolver
             ->setRequired(array('builder'))
             ->setDefaults(array(
-                'data'          => array(),
                 'display_title' => true,
-            ))
-            ->setNormalizers(array(
-                'data' => function (Options $options, $value) {
-                    if (isset($value['_data'])) {
-                        return $value['_data'];
-                    }
-
-                    return $value;
-                }
             ))
             ->setAllowedTypes(array(
                 'builder'       => array('Symfony\Component\Form\FormBuilderInterface'),
@@ -50,7 +40,6 @@ class FormStepType extends AbstractStepType
         $builder->add('_data', 'idci_step_step_form_form', array(
             'label'         => $options['title'],
             'builder'       => $options['builder'],
-            'data'          => $options['data'],
             'display_title' => $options['display_title'],
         ));
     }
