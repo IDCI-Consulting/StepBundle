@@ -41,6 +41,8 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
      *
      * @param StepEventInterface $event      The step event.
      * @param array              $parameters The resolved parameters.
+     *
+     * @return mixed
      */
     abstract protected function doExecute(
         StepEventInterface $event,

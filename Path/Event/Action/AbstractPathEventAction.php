@@ -41,6 +41,8 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
      *
      * @param PathEventInterface $event      The path event.
      * @param array              $parameters The resolved parameters.
+     *
+     * @return mixed
      */
     abstract protected function doExecute(
         PathEventInterface $event,

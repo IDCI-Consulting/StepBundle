@@ -16,6 +16,8 @@ interface StepEventActionInterface
      *
      * @param StepEventInterface $event      The step event.
      * @param array              $parameters The parameters.
+     *
+     * @return mixed
      */
     public function execute(
         StepEventInterface $event,

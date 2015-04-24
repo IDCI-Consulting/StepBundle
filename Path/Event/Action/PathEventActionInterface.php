@@ -16,6 +16,8 @@ interface PathEventActionInterface
      *
      * @param PathEventInterface $event      The path event.
      * @param array              $parameters The parameters.
+     *
+     * @return mixed
      */
     public function execute(
         PathEventInterface $event,
