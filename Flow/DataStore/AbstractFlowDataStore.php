@@ -62,10 +62,43 @@ abstract class AbstractFlowDataStore implements FlowDataStoreInterface
     }
 
     /**
+     * Transform flow data if a step data type mapping is defined
+     *
+     * @param FlowData     $flowData The flow data.
+     * @param MapInterface $map      The map.
+     */
+    protected function reconstructFlowData(FlowData $flowData, MapInterface $map)
+    {
+        foreach ($map->getSteps() as $stepName => $step) {
+            foreach (array(null, FlowData::TYPE_REMINDED) as $dataType) {
+                if ($flowData->hasStepData($stepName, $dataType)) {
+                    $mapping = $step->getDataTypeMapping();
+                    $data = $flowData->getStepData($stepName, $dataType);
+                    $transformed = array();
+                    foreach ($data as $field => $value) {
+                        if (isset($mapping[$field])) {
+                            $transformed[$field] = $this->transformData($value, $mapping[$field]);
+                        }
+                    }
+                    if (!empty($transformed)) {
+                        $flowData->setStepData(
+                            $stepName,
+                            array_replace_recursive($data, $transformed),
+                            $dataType
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function set(MapInterface $map, Request $request, FlowInterface $flow)
     {
+        $this->reconstructFlowData($flow->getData(), $map);
+
         $this->store(
             $request,
             self::generateDataIdentifier($map),
@@ -93,29 +126,7 @@ abstract class AbstractFlowDataStore implements FlowDataStoreInterface
             'json'
         );
 
-        // Transform flow data if a step data type mapping is defined
-        $flowData = $flow->getData();
-        foreach ($map->getSteps() as $stepName => $step) {
-            foreach (array(null, FlowData::TYPE_REMINDED) as $dataType) {
-                if ($flowData->hasStepData($stepName, $dataType)) {
-                    $mapping = $step->getDataTypeMapping();
-                    $data = $flowData->getStepData($stepName, $dataType);
-                    $transformed = array();
-                    foreach ($data as $field => $value) {
-                        if (isset($mapping[$field])) {
-                            $transformed[$field] = $this->transformData($value, $mapping[$field]);
-                        }
-                    }
-                    if (!empty($transformed)) {
-                        $flowData->setStepData(
-                            $stepName,
-                            array_replace_recursive($data, $transformed),
-                            $dataType
-                        );
-                    }
-                }
-            }
-        }
+        $this->reconstructFlowData($flow->getData(), $map);
 
         return $flow;
     }
