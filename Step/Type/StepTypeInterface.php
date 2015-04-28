@@ -23,8 +23,8 @@ interface StepTypeInterface
     /**
      * Build a step.
      *
-     * @param string        $name       The step name.
-     * @param array         $options    The options.
+     * @param string $name    The step name.
+     * @param array  $options The options.
      *
      * @return StepInterface The built step.
      */
@@ -37,4 +37,13 @@ interface StepTypeInterface
      * @param array                $options The options.
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options);
+
+    /**
+     * Returns the step data type mapping.
+     *
+     * @param array $options The options.
+     *
+     * @return array The data type mapping.
+     */
+    public function getDataTypeMapping($options);
 }

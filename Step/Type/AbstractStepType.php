@@ -79,4 +79,12 @@ abstract class AbstractStepType implements StepTypeInterface
      * @param array                $options The options.
      */
     abstract public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options);
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDataTypeMapping($options)
+    {
+        return array();
+    }
 }

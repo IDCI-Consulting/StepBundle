@@ -288,28 +288,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         if (isset($data['_data']) && $form->isValid()) {
-            $this->navigator->setCurrentStepData(
-                $data['_data'],
-                $this->buildDataFormTypeMapping($form->get('_data'))
-            );
+            $this->navigator->setCurrentStepData($data['_data']);
         }
-    }
-
-    /**
-     * Build data form type mapping.
-     *
-     * @param FormInterface $form The form.
-     *
-     * @return array
-     */
-    protected function buildDataFormTypeMapping(FormInterface $form)
-    {
-        $mapping = array();
-        foreach($form->all() as $key => $field) {
-            $mapping[$key] = $field->getConfig()->getType()->getName();
-        }
-
-        return $mapping;
     }
 
     /**

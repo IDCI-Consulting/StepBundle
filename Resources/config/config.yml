@@ -2,20 +2,14 @@ idci_step:
     serialization:
         mapping:
             form_types:
-#                integer:
-#                    type: integer
-#                money:
-#                    type: double
-#                number:
-#                    type: double
-#                percent:
-#                    type: double
-                datetime:
-                    type: DateTime
-                birthday:
-                    type: DateTime
-                time:
-                    type: DateTime
+                birthday: DateTime
+                checkbox: boolean
+                datetime: DateTime
+                integer:  integer
+                money:    double
+                number:   double
+                percent:  double
+                time:     DateTime
 
 twig:
     form:

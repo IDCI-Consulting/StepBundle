@@ -10,9 +10,25 @@ namespace IDCI\Bundle\StepBundle\Step\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormBuilderInterface;
+use IDCI\Bundle\StepBundle\Serialization\SerializationMapper;
 
 class FormStepType extends AbstractStepType
 {
+    /**
+     * @var SerializationMapper
+     */
+    protected $serializationMapper;
+
+    /**
+     * Constructor
+     *
+     * @param SerializationMapper $serializationMapper The serialization mapper.
+     */
+    public function __construct(SerializationMapper $serializationMapper)
+    {
+        $this->serializationMapper = $serializationMapper;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -42,5 +58,24 @@ class FormStepType extends AbstractStepType
             'builder'       => $options['builder'],
             'display_title' => $options['display_title'],
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDataTypeMapping($options)
+    {
+        $mapping = array();
+        foreach($options['builder']->all() as $key => $field) {
+            $mapping[$key] = $this
+                ->serializationMapper
+                ->map(
+                    'form_types',
+                    $field->getType()->getName()
+                )
+            ;
+        }
+
+        return $mapping;
     }
 }

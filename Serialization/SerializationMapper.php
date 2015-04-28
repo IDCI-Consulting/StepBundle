@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Flow\DataStore\Serialization;
+namespace IDCI\Bundle\StepBundle\Serialization;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 

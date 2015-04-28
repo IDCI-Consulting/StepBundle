@@ -81,4 +81,12 @@ class Step implements StepInterface
             null
         ;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDataTypeMapping()
+    {
+        return $this->getType()->getDataTypeMapping($this->configuration['options']);
+    }
 }

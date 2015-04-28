@@ -133,12 +133,11 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData(StepInterface $step, array $data, array $mapping = array(), $type = null)
+    public function setStepData(StepInterface $step, array $data, $type = null)
     {
         $this->data->setStepData(
             $step->getName(),
             $data,
-            $mapping,
             $type
         );
 
@@ -146,7 +145,6 @@ class Flow implements FlowInterface
             $this->data->setStepData(
                 $step->getName(),
                 $data,
-                array(),
                 FlowData::TYPE_REMINDED
             );
         }

@@ -45,4 +45,11 @@ interface StepInterface
      * @return string|null The content.
      */
     public function getPreStepContent();
+
+    /**
+     * Returns the step data type mapping.
+     *
+     * @return array The data tpe mapping.
+     */
+    public function getDataTypeMapping();
 }

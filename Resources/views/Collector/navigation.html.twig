@@ -79,12 +79,6 @@
                     <td>
                         <table>
                             <tbody>
-                                {% if stepData.formTypeMapping %}
-                                <tr>
-                                    <th>Form type mapping</th>
-                                    <td>{{ stepData.formTypeMapping | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
-                                </tr>
-                                {% endif %}
                                 {% if stepData.data %}
                                 <tr>
                                     <th>Data</th>

@@ -76,10 +76,9 @@ interface NavigatorInterface
      * Set current step data.
      *
      * @param array       $data    The step data.
-     * @param array       $mapping The step data form type mapping.
      * @param string|null $type    The data type (null, 'reminded' or 'retrieved').
      */
-    public function setCurrentStepData(array $data, array $mapping = array(), $type = null);
+    public function setCurrentStepData(array $data, $type = null);
 
     /**
      * Returns the available paths.

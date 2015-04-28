@@ -93,6 +93,7 @@ services:
 
     idci_step.step.type.form:
         class: %idci_step.step.type.form.class%
+        arguments: [@idci_step.serialization_mapper]
         tags:
             - { name: idci_step.step.type, alias: form }
 
@@ -150,15 +151,18 @@ services:
             - { name: idci_step.path_event.action, alias: change_data }
 
 
-    # FlowDataStore
+    # SerialisationMapper
 
     idci_step.serialization_mapper:
-        class: IDCI\Bundle\StepBundle\Flow\DataStore\Serialization\SerializationMapper
+        class: IDCI\Bundle\StepBundle\Serialization\SerializationMapper
         arguments: [%idci_step.serialization.mapping%]
+
+
+    # FlowDataStore
 
     idci_step.flow.data_store.session:
         class: %idci_step.flow.data_store.session.class%
-        arguments: [@jms_serializer, @idci_step.serialization_mapper]
+        arguments: [@jms_serializer]
         tags:
             - { name: idci_step.flow.data_store, alias: session }
 
