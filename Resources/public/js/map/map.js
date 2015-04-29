@@ -92,7 +92,7 @@ define(
             this.translateSteps();
             this.refreshPaths();
         };
-        
+
         /*
          * RETURN the step linked to this key
          * IF found no step return an endStep
@@ -128,7 +128,7 @@ define(
 
             return endStep;
         };
-        
+
         /*
          * SET the data object with the JSON object
          */
@@ -159,7 +159,7 @@ define(
                     'inputLock': 0,
                     'step': newStep
                 });
-                
+
                 /*
                  * UPDATE the next position
                  */
@@ -181,14 +181,14 @@ define(
              * UPDATE viewbox size
              */
             this.viewbox.height = this.nextPosition.y;
-            this.svg.attr('viewBox', 0 + ' ' + 0 + ' ' + this.DEFAULT_SIZE + ' ' + this.viewbox.height),            
-            
+            this.svg.attr('viewBox', 0 + ' ' + 0 + ' ' + this.DEFAULT_SIZE + ' ' + this.viewbox.height),
+
             /*
              * START call graphics functions
-             */    
+             */
             this.draw();
         };
-        
+
         /*
          * FUNCTION draw call each graphics functions
          */
@@ -472,7 +472,7 @@ define(
                     return 'translate(' + d.x + ',' + d.y + ')';
                 }
             );
-        
+
             this.endSteps
                 .attr('cx', function(d) {
                     return d.x;
