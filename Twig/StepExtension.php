@@ -141,7 +141,7 @@ class StepExtension extends \Twig_Extension
     public function draw_step(\Twig_Environment $twig, $json, $theme = null)
     {
         return $twig->render(
-            'IDCIStepBundle:Step:drawing.html.twig',
+            'IDCIStepBundle:Step:step_drawing.html.twig',
             array(
                 'json' => $json,
                 'theme'     => $theme,
