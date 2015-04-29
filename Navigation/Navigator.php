@@ -150,6 +150,11 @@ class Navigator implements NavigatorInterface
                         $stepData,
                         FlowData::TYPE_REMINDED
                     );
+
+                    $this->flowDataStore->reconstructFlowData(
+                        $this->flow->getData(),
+                        $this->map
+                    );
                 }
 
                 $this->save();
