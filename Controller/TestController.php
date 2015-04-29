@@ -147,7 +147,6 @@ class TestController extends Controller
             )
             ->getMap()
         ;
-
         $navigator = $this
             ->get('idci_step.navigator.factory')
             ->createNavigator(
@@ -161,7 +160,7 @@ class TestController extends Controller
             )
         ;
         */
-
+        
         $navigator = $this
             ->get('idci_step.navigator.factory')
             ->createNavigator(
@@ -171,22 +170,18 @@ class TestController extends Controller
                 json_decode('{ "personal":{"first_name": "controller_first_name"} }', true)
             )
         ;
-
-
+        
         if ($navigator->hasFinished()) {
             $navigator->clear();
-
             return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
-
         if ($navigator->hasNavigated()) {
             return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
-
         if ($navigator->hasReturned()) {
             return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
-
+        
         return array('navigator' => $navigator);
     }
 }

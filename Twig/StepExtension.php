@@ -40,6 +40,14 @@ class StepExtension extends \Twig_Extension
                     'needs_environment' => true,
                 )
             ),
+            new \Twig_SimpleFunction(
+                'draw_step',
+                array($this, 'drawStep'),
+                array(
+                    'is_safe'           => array('html', 'js'),
+                    'needs_environment' => true,
+                )
+            ),
         );
     }
 
@@ -117,6 +125,25 @@ class StepExtension extends \Twig_Extension
             array(
                 'navigator' => $navigator,
                 'theme'     => $theme,
+            )
+        );
+    }
+    
+    /**
+     * Returns drawing
+     *
+     * @param Twig_Environment   $twig
+     * @param NavigatorInterface $navigator
+     * @param string             $theme
+     *
+     * @return string
+     */
+    public function drawStep(\Twig_Environment $twig, $json)
+    {
+        return $twig->render(
+            'IDCIStepBundle:Step:step_drawing.html.twig',
+            array(
+                'json' => $json,
             )
         );
     }
