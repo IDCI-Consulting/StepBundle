@@ -1,0 +1,36 @@
+{# empty Twig template #}
+<script type="text/javascript" src="{{ asset('bundles/idcistep/js/lib/require.js') }}"></script>
+<div id="idci_step_drawing_area"></div>
+<script type="text/javascript" >
+    'use strict';
+    requirejs.config(
+        {
+            paths: {
+                'jquery': '{{ asset('bundles/idcistep/js/lib/jquery') }}',
+                'drawer': '{{ asset('bundles/idcistep/js/drawer/drawer') }}'
+            }
+        });
+
+    define('jquery-private', ['jquery'], function(jq)
+    {
+        return jq.noConflict(true);
+    });
+
+    require(
+        [
+            'jquery-private',
+            'drawer'
+        ],
+        function($, Drawer)
+        {
+
+            $(document).ready(function()
+            {
+                var drawer = new Drawer();
+                var json = {{ json|raw }};
+                
+                console.log(json);
+                drawer.setData(json);
+            });
+        });
+</script>
