@@ -7,7 +7,7 @@
         {
             paths: {
                 'jquery': '{{ asset('bundles/idcistep/js/lib/jquery') }}',
-                'drawer': '{{ asset('bundles/idcistep/js/drawer/drawer') }}'
+                'drawer': '{{ asset('bundles/idcistep/js/step_drawer/step_drawer') }}'
             }
         });
 
@@ -29,7 +29,6 @@
                 var drawer = new Drawer();
                 var json = {{ json|raw }};
                 
-                console.log(json);
                 drawer.setData(json);
             });
         });
