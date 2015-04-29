@@ -147,7 +147,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                     $this->navigator->setCurrentStepData(
                         $retrievedData,
-                        array(),
                         FlowData::TYPE_RETRIEVED
                     );
                 }
@@ -232,7 +231,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                         $this->navigator->setCurrentStepData(
                             $retrievedData,
-                            array(),
                             FlowData::TYPE_RETRIEVED
                         );
                     }
