@@ -42,7 +42,7 @@ class StepExtension extends \Twig_Extension
             ),
             new \Twig_SimpleFunction(
                 'draw_step',
-                array($this, 'draw_step'),
+                array($this, 'drawStep'),
                 array(
                     'is_safe'           => array('html', 'js'),
                     'needs_environment' => true,
@@ -138,13 +138,12 @@ class StepExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function draw_step(\Twig_Environment $twig, $json, $theme = null)
+    public function drawStep(\Twig_Environment $twig, $json)
     {
         return $twig->render(
             'IDCIStepBundle:Step:step_drawing.html.twig',
             array(
                 'json' => $json,
-                'theme'     => $theme,
             )
         );
     }
