@@ -395,8 +395,6 @@ class Navigator implements NavigatorInterface
             $this->map,
             $this->request
         );
-
-        $this->initFlow();
     }
 
     /**
