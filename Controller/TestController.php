@@ -160,17 +160,22 @@ class TestController extends Controller
             )
         ;
         */
-        
+
         $navigator = $this
             ->get('idci_step.navigator.factory')
             ->createNavigator(
                 $request,
                 'participation_map',
                 array(),
-                json_decode('{ "personal":{"first_name": "controller_first_name"} }', true)
+                json_decode('{
+                    "personal": {
+                        "first_name": "controller_first_name",
+                        "last_name": "controller_last_name"
+                    }
+                }', true)
             )
         ;
-        
+
         if ($navigator->hasFinished()) {
             $navigator->clear();
             return $this->redirect($this->generateUrl('idci_step_test_1'));
@@ -181,7 +186,7 @@ class TestController extends Controller
         if ($navigator->hasReturned()) {
             return $this->redirect($this->generateUrl('idci_step_test_1'));
         }
-        
+
         return array('navigator' => $navigator);
     }
 }

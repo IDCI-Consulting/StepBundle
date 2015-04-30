@@ -169,11 +169,9 @@ class Navigator implements NavigatorInterface
      */
     protected function getFormBuilder()
     {
-        $data = $this->getCurrentStepData();
-
         return $this->formFactory->createBuilder(
             'idci_step_navigator',
-            !empty($data) ? array('_data' => $data) : null,
+            null,
             array('navigator' => $this)
         );
     }

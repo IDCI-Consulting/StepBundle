@@ -81,6 +81,8 @@ class NavigatorType extends AbstractType
             ));
         }
 
+        $this->buildStep($builder, $options);
+        $this->buildSubmit($builder, $options);
 
         $builder->addEventSubscriber(new NavigationEventSubscriber(
             $options['navigator'],
@@ -89,9 +91,6 @@ class NavigatorType extends AbstractType
             $this->merger,
             $this->securityContext
         ));
-
-        $this->buildStep($builder, $options);
-        $this->buildSubmit($builder, $options);
     }
 
     /**
@@ -160,9 +159,6 @@ class NavigatorType extends AbstractType
     {
         $resolver
             ->setRequired(array('navigator'))
-            ->setDefaults(array(
-                'data' => array()
-            ))
             ->setAllowedTypes(array(
                 'navigator'=> array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface')
             ))

@@ -80,6 +80,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA  => array(
+                array('preSetData', 999),
                 array('addStepEvents', 2),
                 array('addPathEvents', 1),
             ),
@@ -244,6 +245,21 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * Pre set data.
+     *
+     * @param FormEvent $event
+     */
+    public function preSetData(FormEvent $event)
+    {
+        $data = $this->navigator->getCurrentStepData();
+        if ($event->getForm()->has('_data')) {
+            $data = array('_data' => $data);
+        }
+
+        $event->setData($data);
+    }
+
+    /**
      * Post set data.
      *
      * @param FormEvent $event
@@ -278,15 +294,14 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function postSubmit(FormEvent $event)
     {
-        $data = $event->getData();
-        $form = $event->getForm();
-
         if ($this->navigator->hasReturned()) {
             return;
         }
 
-        if (isset($data['_data']) && $form->isValid()) {
-            $this->navigator->setCurrentStepData($data['_data']);
+        $form = $event->getForm();
+
+        if ($form->has('_data') && $form->isValid()) {
+            $this->navigator->setCurrentStepData($form->get('_data')->getData());
         }
     }
 
