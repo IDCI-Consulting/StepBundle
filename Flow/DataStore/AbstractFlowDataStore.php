@@ -46,18 +46,27 @@ abstract class AbstractFlowDataStore implements FlowDataStoreInterface
     /**
      * Transform data
      *
-     * @param mixed $data The data to transform.
-     * @param array $type The expected data type.
+     * @param mixed $data    The data to transform.
+     * @param array $mapping The mapping, containing the expected data type and optionnaly the serialization groups.
      *
      * @return The transformed data.
      */
-    protected function transformData($data, $type)
+    protected function transformData($data, array $mapping)
     {
+        if (gettype($data) === $mapping['type'] || $data instanceof $mapping['type']) {
+            return $data;
+        }
+
+        $context = new DeserializationContext();
+        if (!empty($mapping['groups'])) {
+            $context->setGroups($mapping['groups']);
+        }
+
         return $this->serializer->deserialize(
             json_encode($data),
-            $type,
+            $mapping['type'],
             'json',
-            new DeserializationContext()
+            $context
         );
     }
 
@@ -67,7 +76,7 @@ abstract class AbstractFlowDataStore implements FlowDataStoreInterface
      * @param FlowData     $flowData The flow data.
      * @param MapInterface $map      The map.
      */
-    protected function reconstructFlowData(FlowData $flowData, MapInterface $map)
+    public function reconstructFlowData(FlowData $flowData, MapInterface $map)
     {
         foreach ($map->getSteps() as $stepName => $step) {
             foreach (array(null, FlowData::TYPE_REMINDED) as $dataType) {
@@ -76,6 +85,10 @@ abstract class AbstractFlowDataStore implements FlowDataStoreInterface
                     $data = $flowData->getStepData($stepName, $dataType);
                     $transformed = array();
                     foreach ($data as $field => $value) {
+                        if (null === $value || (is_array($value) && empty($value))) {
+                            continue;
+                        }
+
                         if (isset($mapping[$field])) {
                             $transformed[$field] = $this->transformData($value, $mapping[$field]);
                         }
@@ -97,8 +110,6 @@ abstract class AbstractFlowDataStore implements FlowDataStoreInterface
      */
     public function set(MapInterface $map, Request $request, FlowInterface $flow)
     {
-        $this->reconstructFlowData($flow->getData(), $map);
-
         $this->store(
             $request,
             self::generateDataIdentifier($map),

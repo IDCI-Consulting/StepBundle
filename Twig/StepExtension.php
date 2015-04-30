@@ -41,8 +41,8 @@ class StepExtension extends \Twig_Extension
                 )
             ),
             new \Twig_SimpleFunction(
-                'draw_step',
-                array($this, 'drawStep'),
+                'draw_map',
+                array($this, 'drawMap'),
                 array(
                     'is_safe'           => array('html', 'js'),
                     'needs_environment' => true,
@@ -128,23 +128,20 @@ class StepExtension extends \Twig_Extension
             )
         );
     }
-    
+
     /**
-     * Returns drawing
+     * Render the map drawing template
      *
-     * @param Twig_Environment   $twig
-     * @param NavigatorInterface $navigator
-     * @param string             $theme
+     * @param Twig_Environment $twig
+     * @param string           $jsonMap
      *
      * @return string
      */
-    public function drawStep(\Twig_Environment $twig, $json)
+    public function drawMap(\Twig_Environment $twig, $jsonMap)
     {
         return $twig->render(
-            'IDCIStepBundle:Step:step_drawing.html.twig',
-            array(
-                'json' => $json,
-            )
+            'IDCIStepBundle:Map:drawing.html.twig',
+            array('json' => $jsonMap)
         );
     }
 }
