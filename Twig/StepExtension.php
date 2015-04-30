@@ -139,9 +139,10 @@ class StepExtension extends \Twig_Extension
      */
     public function drawMap(\Twig_Environment $twig, $jsonMap)
     {
+        $escapedJsonMap = str_replace('</script>', '\\<\\/script\\>', $jsonMap);
         return $twig->render(
             'IDCIStepBundle:Map:drawing.html.twig',
-            array('json' => $jsonMap)
+            array('json' => $escapedJsonMap)
         );
     }
 }

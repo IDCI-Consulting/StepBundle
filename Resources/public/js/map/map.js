@@ -4,11 +4,11 @@ requirejs.config(
     {
         paths: {
             'd3': '/bundles/idcistep/js/lib/d3.min',
-            'step': '/bundles/idcistep/js/step_drawer/step',
-            'path': '/bundles/idcistep/js/step_drawer/path',
-            'infos': '/bundles/idcistep/js/step_drawer/infos',
-            'endstep': '/bundles/idcistep/js/step_drawer/endStep',
-            'modal': '/bundles/idcistep/js/step_drawer/modal'
+            'step': '/bundles/idcistep/js/map/step',
+            'path': '/bundles/idcistep/js/map/path',
+            'infos': '/bundles/idcistep/js/map/infos',
+            'endstep': '/bundles/idcistep/js/map/endStep',
+            'modal': '/bundles/idcistep/js/map/modal'
         }
     }
 );
