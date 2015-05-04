@@ -27,6 +27,13 @@ interface NavigatorInterface
     public function goBack($stepName = null);
 
     /**
+     * Get the request.
+     *
+     * @return \Symfony\Component\HttpFoundation\Request|null
+     */
+    public function getRequest();
+
+    /**
      * Get the map.
      *
      * @return MapInterface

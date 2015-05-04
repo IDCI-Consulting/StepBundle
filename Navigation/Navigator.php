@@ -264,6 +264,14 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getMap()
     {
         return $this->map;
