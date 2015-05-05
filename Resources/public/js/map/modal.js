@@ -28,8 +28,8 @@ define(
 
             this.closeButton.attr('src', '/bundles/idcistep/images/close_icon.svg');
 
-            this.closeButton.css('position', 'fixed');
-            this.closeButton.css('right', '20%');
+            this.closeButton.css('position', 'absolute');
+            this.closeButton.css('right', '10px');
             this.closeButton.width(buttonSize);
             this.closeButton.height(buttonSize);
             this.closeButton.css('cursor', 'pointer');
@@ -72,11 +72,11 @@ define(
             this.modal.css('background-color', 'white');
             this.modal.css('border', '2px solid rgb(4, 97, 201)');
             this.modal.css('border-radius', '5px');
-            this.modal.css('width', '60%');
-            this.modal.css('height', '75%');
+            this.modal.css('width', '80%');
+            this.modal.css('height', '80%');
             this.modal.css('position', 'absolute');
-            this.modal.css('left', '20%');
-            this.modal.css('top', '12%');
+            this.modal.css('left', '10%');
+            this.modal.css('top', '10%');
             this.modal.css('padding', '10px');
             this.modal.css('overflow', 'scroll');
             this.modal.css('white-space', 'nowrap');
