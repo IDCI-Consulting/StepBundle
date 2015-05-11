@@ -29,7 +29,6 @@ define(
         function Drawer()
         {
             this.DEFAULT_STEP_DISTANCE = 50;
-            this.DEFAULT_SIZE = 600;
             this.STROKE_COLOR = d3.rgb(4, 97, 201);
             this.ARROW_SIZE = 10;
             this.MARGIN = 100;
@@ -40,8 +39,8 @@ define(
             this.viewbox = {
                 'x': 0,
                 'y': 0,
-                'width': this.DEFAULT_SIZE,
-                'height': this.DEFAULT_SIZE
+                'width': $('#idci_step_drawing_area').width(),
+                'height': $('#idci_step_drawing_area').height()
             };
 
             /*
@@ -60,11 +59,13 @@ define(
                 .attr('id', 'drawingboard')
                 .attr('width', '100%')
                 .attr('height', '100%')
-                .attr('viewBox', 0 + ' ' + 0 + ' ' + this.DEFAULT_SIZE + ' ' + this.DEFAULT_SIZE)
+                .attr('viewBox', 0 + ' ' + 0 + ' ' + this.viewbox.width + ' ' + this.viewbox.height)
                 .attr('preserveAspectRatio', 'xMidYMid meet')
                 .attr('xmlns', 'http://www.w3.org/2000/svg')
                 .style('background-color', d3.rgb(183, 196, 189));
-
+            
+            this.zoomableContainer = this.svg.append('svg:g')
+                .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", (function(){ this.zoom(); }).bind(this)));
             /*
              * INSTANCIATE a Modal object
              */
@@ -81,6 +82,10 @@ define(
                     this.drag(d);
                 }).bind(this));
         }
+        
+        Drawer.prototype.zoom = function() {
+            this.zoomableContainer.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        };
 
         /*
          * FUNCTION The drag function called by the drag listener declared in constructor
@@ -137,7 +142,8 @@ define(
              * RESET graphic
              */
             this.nextPosition.y = 25;
-            this.svg.selectAll('g').remove();
+            this.zoomableContainer.selectAll('g').remove();
+            this.zoomableContainer.select('rect').remove();
             this.data = {
                 'steps': [],
                 'endSteps': [],
@@ -181,7 +187,7 @@ define(
              * UPDATE viewbox size
              */
             this.viewbox.height = this.nextPosition.y;
-            this.svg.attr('viewBox', 0 + ' ' + 0 + ' ' + this.DEFAULT_SIZE + ' ' + this.viewbox.height),
+            this.svg.attr('viewBox', 0 + ' ' + 0 + ' ' + this.viewbox.width + ' ' + this.viewbox.height),
 
             /*
              * START call graphics functions
@@ -193,6 +199,15 @@ define(
          * FUNCTION draw call each graphics functions
          */
         Drawer.prototype.draw = function() {
+            var size = d3.max([this.viewbox.width,this.viewbox.height])*2;
+            
+            this.zoomableContainer.append('svg:rect')
+                .attr('x',this.viewbox.width*0.5 - size*0.5)
+                .attr('y',0)
+                .attr('width',size)
+                .attr('height',size)
+                .style('opacity',0);
+            
             this.drawPaths();
             this.drawEndSteps();
             this.drawSteps();
@@ -202,7 +217,7 @@ define(
          * APPEND end step to SVG
          */
         Drawer.prototype.drawEndSteps = function() {
-            this.endSteps = this.svg
+            this.endSteps = this.zoomableContainer
                 .append('svg:g')
                 .attr('id', 'group_end_steps');
 
@@ -231,7 +246,7 @@ define(
          * APPEND paths to SVG
          */
         Drawer.prototype.drawPaths = function() {
-            this.paths = this.svg
+            this.paths = this.zoomableContainer
                 .append('svg:g')
                 .attr('id', 'paths');
 
@@ -271,7 +286,7 @@ define(
                 .on(
                     'mouseover',
                     (function(d) {
-                        this.svg.select('#group_' + d.path.getKey().replace(/ /g, '_') + '_' + d.source.step.getKey() + '_' + d.target.step.getKey())
+                        this.zoomableContainer.select('#group_' + d.path.getKey().replace(/ /g, '_') + '_' + d.source.step.getKey() + '_' + d.target.step.getKey())
                             .select('image')
                             .style('opacity', 1);
                     }).bind(this)
@@ -279,7 +294,7 @@ define(
                 .on(
                     'mouseout',
                     (function(d) {
-                        this.svg.select('#group_' + d.path.getKey().replace(/ /g, '_') + '_' + d.source.step.getKey() + '_' + d.target.step.getKey())
+                        this.zoomableContainer.select('#group_' + d.path.getKey().replace(/ /g, '_') + '_' + d.source.step.getKey() + '_' + d.target.step.getKey())
                             .select('image')
                             .style('opacity', 0);
                     }).bind(this)
@@ -360,7 +375,7 @@ define(
          * APPEND each step to SVG
          */
         Drawer.prototype.drawSteps = function() {
-            this.steps = this.svg
+            this.steps = this.zoomableContainer
                 .append('svg:g')
                 .attr('id', 'steps');
 
@@ -379,7 +394,7 @@ define(
                 .on(
                     'mouseover',
                     (function(d) {
-                        this.svg.select('#group_' + d.step.getKey())
+                        this.zoomableContainer.select('#group_' + d.step.getKey())
                             .select('image')
                             .style('opacity', 1);
                     }).bind(this)
@@ -387,7 +402,7 @@ define(
                 .on(
                     'mouseout',
                     (function(d) {
-                        this.svg.select('#group_' + d.step.getKey())
+                        this.zoomableContainer.select('#group_' + d.step.getKey())
                             .select('image')
                             .style('opacity', 0);
                     }).bind(this)
