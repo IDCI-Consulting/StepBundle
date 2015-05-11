@@ -57,14 +57,44 @@
 {% endblock %}
 
 {% block panel %}
-    <h2>Step Navigation</h2>
+    <h2>Map</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>{{ collector.map.name }}</td>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <td>{{ collector.map.fingerPrint }}</td>
+        </tr>
+    </table>
+
+    <h2>Navigation</h2>
+
+    <table>
+        <tr>
+            <th>Current step</th>
+            <td>{{ collector.flow.currentStepName }}</td>
+        </tr>
+        <tr>
+            <th>Previous step</th>
+            <td>
+                {% if collector.flow.previousStepName is not null %}
+                    {{ collector.flow.previousStepName }}
+                {% else %}
+                    n/a
+                {% endif %}
+            </td>
+        </tr>
+    </table>
 
     {% if not collector.hasNavigation %}
         <p>
             <em>No step defined and used.</em>
         </p>
     {% else %}
-        <h3>Navigation step data</h3>
+        <h3>Navigation data</h3>
         <table>
             <thead>
                 <tr>
