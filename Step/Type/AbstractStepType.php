@@ -22,7 +22,9 @@ abstract class AbstractStepType implements StepTypeInterface
         $resolver
             ->setDefaults(array(
                 'title'            => null,
+                'nav_title'        => null,
                 'description'      => null,
+                'nav_description'  => null,
                 'is_first'         => false,
                 'data'             => null,
                 'prevent_previous' => false,
@@ -36,7 +38,9 @@ abstract class AbstractStepType implements StepTypeInterface
             ))
             ->setAllowedTypes(array(
                 'title'            => array('null', 'string'),
+                'nav_title'        => array('null', 'string'),
                 'description'      => array('null', 'string'),
+                'nav_description'  => array('null', 'string'),
                 'is_first'         => array('bool'),
                 'data'             => array('null', 'array'),
                 'previous_options' => array('array'),
