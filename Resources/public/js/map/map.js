@@ -63,9 +63,11 @@ define(
                 .attr('preserveAspectRatio', 'xMidYMid meet')
                 .attr('xmlns', 'http://www.w3.org/2000/svg')
                 .style('background-color', d3.rgb(183, 196, 189));
-            
+
             this.zoomableContainer = this.svg.append('svg:g')
-                .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", (function(){ this.zoom(); }).bind(this)));
+                .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", (function() {
+                    this.zoom();
+                }).bind(this)));
             /*
              * INSTANCIATE a Modal object
              */
@@ -82,7 +84,7 @@ define(
                     this.drag(d);
                 }).bind(this));
         }
-        
+
         Drawer.prototype.zoom = function() {
             this.zoomableContainer.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
         };
@@ -176,11 +178,28 @@ define(
              * SET the paths array values
              */
             for (var path in data.paths) {
-                this.data.paths.push({
-                    'source': this.getStep(data.paths[path].options.source, true),
-                    'target': this.getStep(data.paths[path].options.destination, false),
-                    'path': new Path(data.paths[path])
-                });
+                if (data.paths[path].type === 'single' || data.paths[path].type === 'end') {
+                    this.data.paths.push({
+                        'source': this.getStep(data.paths[path].options.source, true),
+                        'target': this.getStep(data.paths[path].options.destination, false),
+                        'path': new Path(data.paths[path])
+                    });
+                } else if (data.paths[path].type === 'conditional_destination') {
+                    var pathObj = new Path(data.paths[path]);
+                    var source = this.getStep(data.paths[path].options.source, true);
+                    for (var dest in data.paths[path].options.destinations) {
+                        this.data.paths.push({
+                            'source' : source,
+                            'target' : this.getStep(dest, false),
+                            'path' : pathObj
+                        });
+                    }
+                    this.data.paths.push({
+                        'source' : this.getStep(dest, true),
+                        'target' : this.getStep(data.paths[path].options.default_destination, false),
+                        'path' : pathObj
+                    });
+                }
             }
 
             /*
@@ -188,26 +207,26 @@ define(
              */
             this.viewbox.height = this.nextPosition.y;
             this.svg.attr('viewBox', 0 + ' ' + 0 + ' ' + this.viewbox.width + ' ' + this.viewbox.height),
-
-            /*
-             * START call graphics functions
-             */
-            this.draw();
+                /*
+                 * START call graphics functions
+                 */
+                this.draw();
         };
 
         /*
          * FUNCTION draw call each graphics functions
          */
         Drawer.prototype.draw = function() {
-            var size = d3.max([this.viewbox.width,this.viewbox.height])*2;
-            
+            var size = d3.max([this.viewbox.width, this.viewbox.height]) * 2;
+
             this.zoomableContainer.append('svg:rect')
-                .attr('x',this.viewbox.width*0.5 - size*0.5)
-                .attr('y',0)
-                .attr('width',size)
-                .attr('height',size)
-                .style('opacity',0);
-            
+                .attr('x', this.viewbox.width * 0.5 - size * 0.5)
+                .attr('y', 0)
+                .attr('width', size)
+                .attr('height', size)
+                .style('opacity', 0);
+
+            console.log(this.data);
             this.drawPaths();
             this.drawEndSteps();
             this.drawSteps();
