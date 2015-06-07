@@ -82,7 +82,6 @@ class NavigatorType extends AbstractType
         }
 
         $this->buildStep($builder, $options);
-        $this->buildSubmit($builder, $options);
 
         $builder->addEventSubscriber(new NavigationEventSubscriber(
             $options['navigator'],
@@ -108,48 +107,6 @@ class NavigatorType extends AbstractType
             $builder,
             $configuration['options']
         );
-    }
-
-    /**
-     * Build submit buttons.
-     *
-     * @param FormBuilderInterface $builder The builder.
-     * @param array                $options The options.
-     */
-    protected function buildSubmit(FormBuilderInterface $builder, array $options)
-    {
-        $map = $options['navigator']->getMap();
-        $currentStep = $options['navigator']->getCurrentStep();
-        $stepConfiguration = $currentStep->getConfiguration();
-
-        if (
-            $currentStep->getName() !== $map->getFirstStepName() &&
-            !$stepConfiguration['options']['prevent_previous']
-        ) {
-            $builder->add(
-                '_back',
-                'submit',
-                array_merge_recursive(
-                    $stepConfiguration['options']['previous_options'],
-                    array('attr' => array('formnovalidate' => 'true'))
-                )
-            );
-        }
-
-        // Do not add path link on steps if this is specified, this allow dynamic changes
-        if ($stepConfiguration['options']['prevent_next']) {
-            return;
-        }
-
-        foreach ($options['navigator']->getAvailablePaths() as $i => $path) {
-            $pathConfiguration = $path->getConfiguration();
-
-            $builder->add(
-                sprintf('_path_%d', $i),
-                $pathConfiguration['options']['type'],
-                $pathConfiguration['options']['next_options']
-            );
-        }
     }
 
     /**

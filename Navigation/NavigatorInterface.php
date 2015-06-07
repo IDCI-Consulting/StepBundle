@@ -8,6 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
+use IDCI\Bundle\StepBundle\Path\PathInterface;
+
 interface NavigatorInterface
 {
     /**
@@ -60,6 +62,22 @@ interface NavigatorInterface
      * @return array
      */
     public function getCurrentPaths();
+
+    /**
+     * Set the chosen path.
+     *
+     * @param PathInterface $path
+     *
+     * @return NavigatorInterface
+     */
+    public function setChosenPath(PathInterface $path);
+
+    /**
+     * Returns the chosen path.
+     *
+     * @return PathInterface|null
+     */
+    public function getChosenPath();
 
     /**
      * Returns the previous step.

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
-use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
@@ -77,6 +77,11 @@ class Navigator implements NavigatorInterface
     protected $currentStep;
 
     /**
+     * @var PathInterface
+     */
+    protected $chosenPath;
+
+    /**
      * @var boolean
      */
     protected $hasNavigated;
@@ -120,6 +125,7 @@ class Navigator implements NavigatorInterface
         $this->logger        = $logger;
         $this->flow          = null;
         $this->currentStep   = null;
+        $this->chosenPath    = null;
         $this->hasNavigated  = false;
         $this->hasReturned   = false;
         $this->hasFinished   = false;
@@ -223,26 +229,6 @@ class Navigator implements NavigatorInterface
     }
 
     /**
-     * Retrieve the choosen path.
-     *
-     * @return PathInterface
-     */
-    protected function getChosenPath()
-    {
-        foreach ($this->getAvailablePaths() as $i => $path) {
-            if ($this->getForm()->get(sprintf('_path_%d', $i))->isClicked()) {
-                $this->getFlow()->takePath($path, $i);
-
-                return $path;
-            }
-        }
-
-        throw new \LogicException(sprintf(
-            'The taken path seems to disapear magically'
-        ));
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function navigate()
@@ -257,6 +243,11 @@ class Navigator implements NavigatorInterface
 
             if (!$this->hasReturned() && $form->isValid()) {
                 $path = $this->getChosenPath();
+                if (null === $path) {
+                    throw new \LogicException(sprintf(
+                        'The taken path seems to disapear magically'
+                    ));
+                }
                 $destinationStep = $path->resolveDestination($this);
 
                 if (null === $destinationStep) {
@@ -331,6 +322,24 @@ class Navigator implements NavigatorInterface
     public function getCurrentPaths()
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setChosenPath(PathInterface $path)
+    {
+        $this->chosenPath = $path;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChosenPath()
+    {
+        return $this->chosenPath;
     }
 
     /**

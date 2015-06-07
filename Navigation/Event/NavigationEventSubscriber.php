@@ -81,6 +81,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         return array(
             FormEvents::PRE_SET_DATA  => array(
                 array('preSetData', 999),
+                array('addNavigationButtons', 100),
                 array('addStepEvents', 2),
                 array('addPathEvents', 1),
             ),
@@ -104,6 +105,48 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 array('addPathEvents', -2),
             ),
         );
+    }
+
+    /**
+     * Add navigation buttons.
+     *
+     * @param FormEvent $event
+     */
+    public function addNavigationButtons(FormEvent $event)
+    {
+        $form              = $event->getForm();
+        $map               = $this->navigator->getMap();
+        $currentStep       = $this->navigator->getCurrentStep();
+        $stepConfiguration = $currentStep->getConfiguration();
+
+        if (
+            $currentStep->getName() !== $map->getFirstStepName() &&
+            !$stepConfiguration['options']['prevent_previous']
+        ) {
+            $form->add(
+                '_back',
+                'submit',
+                array_merge_recursive(
+                    $stepConfiguration['options']['previous_options'],
+                    array('attr' => array('formnovalidate' => 'true'))
+                )
+            );
+        }
+
+        // Do not add path link on steps if this is specified, this allow dynamic changes
+        if ($stepConfiguration['options']['prevent_next']) {
+            return;
+        }
+
+        foreach ($this->navigator->getAvailablePaths() as $i => $path) {
+            $pathConfiguration = $path->getConfiguration();
+
+            $form->add(
+                sprintf('_path_%d', $i),
+                $pathConfiguration['options']['type'],
+                $pathConfiguration['options']['next_options']
+            );
+        }
     }
 
     /**
@@ -175,15 +218,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
-            // Trigger only path event actions on the clicked path during submit events.
-            if (
-                in_array($event->getName(), array(
-                    FormEvents::PRE_SUBMIT,
-                    FormEvents::SUBMIT,
-                    FormEvents::POST_SUBMIT
-                )) &&
-                ($this->navigator->hasReturned() || !$form->get('_path_'.$i)->isClicked())
-            ) {
+            // Trigger only path event actions on the clicked path during POST_SUBMIT event.
+            if ($event->getName() == FormEvents::POST_SUBMIT && (
+                $this->navigator->hasReturned() ||
+                $this->navigator->getChosenPath() !== $path
+            )) {
                 continue;
             }
 
@@ -284,6 +323,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             } else {
                 $this->navigator->goBack($data['_back']);
             }
+        } else {
+            $stepConfiguration = $this->navigator->getCurrentStep()->getConfiguration();
+            if ($stepConfiguration['options']['prevent_next']) {
+                throw new \LogicException(sprintf(
+                    'A disable path has been clicked'
+                ));
+            }
         }
     }
 
@@ -299,6 +345,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         $form = $event->getForm();
+
+        foreach ($this->navigator->getAvailablePaths() as $i => $path) {
+            if ($form->get(sprintf('_path_%d', $i))->isClicked()) {
+                $this->navigator->getFlow()->takePath($path, $i);
+                $this->navigator->setChosenPath($path);
+            }
+        }
 
         if ($form->has('_data') && $form->isValid()) {
             $this->navigator->setCurrentStepData($form->get('_data')->getData());
