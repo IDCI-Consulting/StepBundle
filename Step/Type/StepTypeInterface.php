@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 interface StepTypeInterface
 {
@@ -29,6 +30,17 @@ interface StepTypeInterface
      * @return StepInterface The built step.
      */
     public function buildStep($name, array $options = array());
+
+    /**
+     * Prepare the navigation before building the navigation step form.
+     * Allow to change the step configuration options.
+     *
+     * @param NavigatorInterface $navigator The navigator.
+     * @param array              $options   The configuration options.
+     *
+     * @return array The transformed configuration options.
+     */
+    public function prepareNavigation(NavigatorInterface $navigator, array $options);
 
     /**
      * Build the navigation step form.

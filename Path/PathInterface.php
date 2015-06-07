@@ -20,6 +20,22 @@ interface PathInterface
     public function getConfiguration();
 
     /**
+     * Set the configuration options.
+     *
+     * @param array $options The configuration options.
+     *
+     * @return PathInterface.
+     */
+    public function setOptions($options);
+
+    /**
+     * Get the configuration options.
+     *
+     * @return array The configuration options.
+     */
+    public function getOptions();
+
+    /**
      * Set the source step.
      *
      * @param StepInterface $step The source step.

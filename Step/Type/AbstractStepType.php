@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 abstract class AbstractStepType implements StepTypeInterface
 {
@@ -26,6 +27,7 @@ abstract class AbstractStepType implements StepTypeInterface
                 'description'      => null,
                 'nav_description'  => null,
                 'is_first'         => false,
+                'pre_step_content' => null,
                 'data'             => null,
                 'prevent_previous' => false,
                 'prevent_next'     => false,
@@ -62,6 +64,14 @@ abstract class AbstractStepType implements StepTypeInterface
             'type'      => $this,
             'options'   => $options
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prepareNavigation(NavigatorInterface $navigator, array $options)
+    {
+        return $options;
     }
 
     /**

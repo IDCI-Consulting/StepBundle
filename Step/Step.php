@@ -39,6 +39,24 @@ class Step implements StepInterface
     /**
      * {@inheritdoc}
      */
+    public function setOptions($options)
+    {
+        $this->configuration['options'] = $options;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
+    {
+        return $this->configuration['options'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return $this->configuration['name'];
@@ -76,8 +94,8 @@ class Step implements StepInterface
      */
     public function getPreStepContent()
     {
-        return isset($this->configuration['pre_step_content']) ?
-            $this->configuration['pre_step_content'] :
+        return isset($this->configuration['options']['pre_step_content']) ?
+            $this->configuration['options']['pre_step_content'] :
             null
         ;
     }

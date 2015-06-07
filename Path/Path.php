@@ -54,6 +54,24 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
+    public function setOptions($options)
+    {
+        $this->configuration['options'] = $options;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
+    {
+        return $this->configuration['options'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setSource(StepInterface $step)
     {
         $this->source = $step;

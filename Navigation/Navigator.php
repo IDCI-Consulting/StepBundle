@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
@@ -71,6 +72,11 @@ class Navigator implements NavigatorInterface
     protected $flow;
 
     /**
+     * @var StepInterface
+     */
+    protected $currentStep;
+
+    /**
      * @var boolean
      */
     protected $hasNavigated;
@@ -112,6 +118,8 @@ class Navigator implements NavigatorInterface
         $this->data          = array_replace_recursive($this->map->getData(), $data);
         $this->flowDataStore = $flowDataStore;
         $this->logger        = $logger;
+        $this->flow          = null;
+        $this->currentStep   = null;
         $this->hasNavigated  = false;
         $this->hasReturned   = false;
         $this->hasFinished   = false;
@@ -121,7 +129,7 @@ class Navigator implements NavigatorInterface
         }
 
         $this->initFlow();
-        $this->getForm();
+        $this->prepareCurrentStep();
         $this->navigate();
 
         if ($this->logger) {
@@ -160,6 +168,30 @@ class Navigator implements NavigatorInterface
                 $this->save();
             }
         }
+    }
+
+    /**
+     * Prepare the current step
+     */
+    protected function prepareCurrentStep()
+    {
+        // Clone the map step into the navigation current step.
+        $this->currentStep = clone $this->getMap()->getStep(
+            $this->getFlow()->getCurrentStepName()
+        );
+
+        // Allow StepType to transform step options
+        $this->currentStep->setOptions($this
+            ->currentStep
+            ->getType()
+            ->prepareNavigation(
+                $this,
+                $this->currentStep->getOptions()
+            )
+        );
+
+        // Build the step form
+        $this->getForm();
     }
 
     /**
@@ -290,7 +322,7 @@ class Navigator implements NavigatorInterface
      */
     public function getCurrentStep()
     {
-        return $this->getMap()->getStep($this->getFlow()->getCurrentStepName());
+        return $this->currentStep;
     }
 
     /**

@@ -19,6 +19,22 @@ interface StepInterface
     public function getConfiguration();
 
     /**
+     * Set the configuration options.
+     *
+     * @param array $options The configuration options.
+     *
+     * @return StepInterface.
+     */
+    public function setOptions($options);
+
+    /**
+     * Get the configuration options.
+     *
+     * @return array The configuration options.
+     */
+    public function getOptions();
+
+    /**
      * Returns a boolean to indicate That this step was define as a first step
      *
      * @return boolean.

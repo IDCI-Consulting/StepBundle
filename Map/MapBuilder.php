@@ -293,12 +293,12 @@ class MapBuilder implements MapBuilderInterface
         }
 
         foreach ($options as $k => $v) {
-            // Do not merge events parameters, building objects.
+            // Do not merge events parameters or building objects.
             if ($k == 'events' || is_object($v)) {
                 continue;
             }
 
-            // If ending with '|raw'
+            // Do not merge if ending with '|raw'
             if (substr($k, -4) == '|raw') {
                 $options[substr($k, 0, -4)] = $options[$k];
                 unset($options[$k]);
