@@ -18,7 +18,7 @@ class TestController extends Controller
     /**
      * Test.
      *
-     * @Route("/", name="idci_step_test_1")
+     * @Route("/", name="idci_step_test")
      * @Method({"GET", "POST"})
      * @Template("IDCIStepBundle:Test:test.html.twig")
      */
@@ -178,13 +178,13 @@ class TestController extends Controller
 
         if ($navigator->hasFinished()) {
             $navigator->clear();
-            return $this->redirect($this->generateUrl('idci_step_test_1'));
+            return $this->redirect($this->generateUrl('idci_step_test'));
         }
         if ($navigator->hasNavigated()) {
-            return $this->redirect($this->generateUrl('idci_step_test_1'));
+            return $this->redirect($this->generateUrl('idci_step_test'));
         }
         if ($navigator->hasReturned()) {
-            return $this->redirect($this->generateUrl('idci_step_test_1'));
+            return $this->redirect($this->generateUrl('idci_step_test'));
         }
 
         return array('navigator' => $navigator);
