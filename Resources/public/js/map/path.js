@@ -13,7 +13,7 @@ define(
             this.PADDING = 20;
             this.FONT_FAMILY = 'Arial';
 
-            this.key = path.options.next_options.label;
+            this.key = undefined != path.options.next_options ? path.options.next_options.label : 'next';
             this.path = path;
             this.infos = new Infos(this.path);
 
