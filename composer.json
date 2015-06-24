@@ -22,7 +22,7 @@
         "twig/twig": "*",
         "twig/extensions": "1.0.*",
         "symfony/twig-bundle": "~2.3",
-        "jms/serializer-bundle": "~0.13@dev"
+        "jms/serializer-bundle": ">=1.0"
     },
     "suggest": {
         "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
