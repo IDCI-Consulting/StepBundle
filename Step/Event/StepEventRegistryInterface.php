@@ -12,7 +12,7 @@ use IDCI\Bundle\StepBundle\Step\Event\Action\StepEventActionInterface;
 interface StepEventRegistryInterface
 {
     /**
-     * Sets a step event action identify by a alias.
+     * Sets a step event action identify by alias.
      *
      * @param string                   $alias  The action alias.
      * @param StepEventActionInterface $action The action.

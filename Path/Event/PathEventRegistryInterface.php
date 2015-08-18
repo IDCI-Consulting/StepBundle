@@ -12,7 +12,7 @@ use IDCI\Bundle\StepBundle\Path\Event\Action\PathEventActionInterface;
 interface PathEventRegistryInterface
 {
     /**
-     * Sets a path event action identify by a alias.
+     * Sets a path event action identify by alias.
      *
      * @param string                   $alias  The action alias.
      * @param PathEventActionInterface $action The action.
