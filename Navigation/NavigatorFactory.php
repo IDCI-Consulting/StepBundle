@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
+use JMS\Serializer\SerializerInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilderInterface;
@@ -44,6 +45,11 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $logger;
 
     /**
+     * @var SerializerInterface
+     */
+    protected $serializer;
+
+    /**
      * Constructor
      *
      * @param FormFactoryInterface                  $formFactory                  The form factory.
@@ -51,20 +57,23 @@ class NavigatorFactory implements NavigatorFactoryInterface
      * @param MapConfigurationBuilderInterface      $mapConfigurationBuilder      The map configuration builder.
      * @param ConfigurationFetcherRegistryInterface $configurationFetcherRegistry The configuration fetcher registry.
      * @param NavigationLoggerInterface             $logger                       The logger.
+     * @param SerializerInterface                   $serializer                   The serializer.
      */
     public function __construct(
         FormFactoryInterface                  $formFactory,
         FlowDataStoreRegistryInterface        $flowDataStoreRegistry,
         MapConfigurationBuilderInterface      $mapConfigurationBuilder,
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
-        NavigationLoggerInterface             $logger
+        NavigationLoggerInterface             $logger,
+        SerializerInterface                   $serializer
     )
     {
         $this->formFactory                  = $formFactory;
         $this->flowDataStoreRegistry        = $flowDataStoreRegistry;
-        $this->mapConfigurationBuilder       = $mapConfigurationBuilder;
+        $this->mapConfigurationBuilder      = $mapConfigurationBuilder;
         $this->configurationFetcherRegistry = $configurationFetcherRegistry;
         $this->logger                       = $logger;
+        $this->serializer                   = $serializer;
     }
 
     /**
@@ -96,7 +105,8 @@ class NavigatorFactory implements NavigatorFactoryInterface
             $configuration,
             $data,
             $this->guessFlowDataStore($configuration),
-            $this->logger
+            $this->logger,
+            $this->serializer
         );
     }
 

@@ -18,9 +18,9 @@ interface FlowDataStoreInterface
      *
      * @param MapInterface  $map     The map.
      * @param Request       $request The HTTP request.
-     * @param FlowInterface $flow    The flow.
+     * @param string        $data    The serialized navigation flow.
      */
-    public function set(MapInterface $map, Request $request, FlowInterface $flow);
+    public function set(MapInterface $map, Request $request, $data);
 
     /**
      * Get a flow.
@@ -28,7 +28,7 @@ interface FlowDataStoreInterface
      * @param MapInterface  $map     The map.
      * @param Request       $request The HTTP request.
      *
-     * @return FlowInterface|null The flow or null if there is no corresponding flow.
+     * @return string|null  The serialized navigation flow or null if not found.
      */
     public function get(MapInterface $map, Request $request);
 

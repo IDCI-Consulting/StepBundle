@@ -82,6 +82,7 @@ services:
             - @idci_step.configuration.builder
             - @idci_step.configuration.fetcher_registry
             - @idci_step.navigation.logger
+            - @jms_serializer
 
 
     # Step
@@ -151,7 +152,7 @@ services:
             - { name: idci_step.path_event.action, alias: change_data }
 
 
-    # SerialisationMapper
+    # SerializationMapper
 
     idci_step.serialization_mapper:
         class: IDCI\Bundle\StepBundle\Serialization\SerializationMapper
@@ -162,7 +163,6 @@ services:
 
     idci_step.flow.data_store.session:
         class: %idci_step.flow.data_store.session.class%
-        arguments: [@jms_serializer]
         tags:
             - { name: idci_step.flow.data_store, alias: session }
 
