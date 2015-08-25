@@ -174,10 +174,10 @@ class Navigator implements NavigatorInterface
                         $stepData,
                         FlowData::TYPE_REMINDED
                     );
-
                 }
-                $this->save();
             }
+
+            $this->save();
         } else {
             $this->flow = $this->unserialize($serializedFlow);
         }
@@ -270,29 +270,26 @@ class Navigator implements NavigatorInterface
     public function reconstructFlowData()
     {
         foreach ($this->map->getSteps() as $stepName => $step) {
-            foreach (array(null, FlowData::TYPE_REMINDED) as $dataType) {
-                if ($this->flow->getData()->hasStepData($stepName, $dataType)) {
-                    $mapping = $step->getDataTypeMapping();
-                    $data = $this->flow->getStepData($step, $dataType);
-                    $transformed = array();
+            if ($this->flow->hasStepData($step)) {
+                $mapping = $step->getDataTypeMapping();
+                $data = $this->flow->getStepData($step);
+                $transformed = array();
 
-                    foreach ($data as $field => $value) {
-                        if (null === $value || (is_array($value) && empty($value))) {
-                            continue;
-                        }
-
-                        if (isset($mapping[$field])) {
-                            $transformed[$field] = $this->transformData($value, $mapping[$field]);
-                        }
+                foreach ($data as $field => $value) {
+                    if (null === $value || (is_array($value) && empty($value))) {
+                        continue;
                     }
 
-                    if (!empty($transformed)) {
-                        $this->flow->setStepData(
-                            $step,
-                            array_replace_recursive($data, $transformed),
-                            $dataType
-                        );
+                    if (isset($mapping[$field])) {
+                        $transformed[$field] = $this->transformData($value, $mapping[$field]);
                     }
+                }
+
+                if (!empty($transformed)) {
+                    $this->flow->setStepData(
+                        $step,
+                        array_replace_recursive($data, $transformed)
+                    );
                 }
             }
         }

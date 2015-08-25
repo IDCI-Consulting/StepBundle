@@ -133,20 +133,16 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData(StepInterface $step, array $data, $type = null)
+    public function hasStepData(StepInterface $step, $type = null)
     {
-        $this->data->setStepData(
-            $step->getName(),
-            $data,
-            $type
-        );
+        $stepName = $step->getName();
+
+        if ($this->data->hasStepData($stepName, $type)) {
+            return true;
+        }
 
         if (null === $type) {
-            $this->data->setStepData(
-                $step->getName(),
-                $data,
-                FlowData::TYPE_REMINDED
-            );
+            return $this->hasStepData($step, FlowData::TYPE_REMINDED);
         }
     }
 
@@ -166,6 +162,26 @@ class Flow implements FlowInterface
         }
 
         return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setStepData(StepInterface $step, array $data, $type = null)
+    {
+        $this->data->setStepData(
+            $step->getName(),
+            $data,
+            $type
+        );
+
+        if (null === $type) {
+            $this->data->setStepData(
+                $step->getName(),
+                $data,
+                FlowData::TYPE_REMINDED
+            );
+        }
     }
 
     /**

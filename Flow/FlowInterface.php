@@ -86,10 +86,20 @@ interface FlowInterface
     public function setData(FlowDataInterface $data);
 
     /**
+     * Whether or not it exists a data for a step.
+     *
+     * @param StepInterface $step The step.
+     * @param string|null   $type The data type (null, 'reminded' or 'retrieved').
+     *
+     * @return boolean True if a data exists for the step, false otherwise.
+     */
+    public function hasStepData(StepInterface $step, $type = null);
+
+    /**
      * Returns the flow navigation data for a given step
      *
-     * @param StepInterface $step  The step.
-     * @param string|null   $type  The data type (null, 'reminded' or 'retrieved').
+     * @param StepInterface $step The step.
+     * @param string|null   $type The data type (null, 'reminded' or 'retrieved').
      *
      * @return array
      */
@@ -98,9 +108,9 @@ interface FlowInterface
     /**
      * Set the flow navigation data for a given step
      *
-     * @param StepInterface $step    The step.
-     * @param array         $data    The data to store.
-     * @param string|null   $type    The data type (null, 'reminded' or 'retrieved').
+     * @param StepInterface $step The step.
+     * @param array         $data The data to store.
+     * @param string|null   $type The data type (null, 'reminded' or 'retrieved').
      */
     public function setStepData(StepInterface $step, array $data, $type = null);
 

@@ -88,7 +88,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             FormEvents::POST_SET_DATA => array(
                 array('addStepEvents', 2),
                 array('addPathEvents', 1),
-                array('postSetData', 0),
             ),
             FormEvents::PRE_SUBMIT    => array(
                 array('preSubmit', 0),
@@ -296,16 +295,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         $event->setData($data);
-    }
-
-    /**
-     * Post set data.
-     *
-     * @param FormEvent $event
-     */
-    public function postSetData(FormEvent $event)
-    {
-        $this->navigator->save();
     }
 
     /**

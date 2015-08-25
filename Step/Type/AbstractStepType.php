@@ -22,33 +22,35 @@ abstract class AbstractStepType implements StepTypeInterface
     {
         $resolver
             ->setDefaults(array(
-                'title'            => null,
-                'nav_title'        => null,
-                'description'      => null,
-                'nav_description'  => null,
-                'is_first'         => false,
-                'pre_step_content' => null,
-                'data'             => null,
-                'prevent_previous' => false,
-                'prevent_next'     => false,
-                'previous_options' => array(
+                'title'                 => null,
+                'nav_title'             => null,
+                'description'           => null,
+                'nav_description'       => null,
+                'is_first'              => false,
+                'pre_step_content'      => null,
+                'data'                  => null,
+                'prevent_previous'      => false,
+                'prevent_next'          => false,
+                'previous_options'      => array(
                     'label' => '< Previous'
                 ),
-                'js'               => null,
-                'css'              => null,
-                'events'           => array(),
+                'js'                    => null,
+                'css'                   => null,
+                'events'                => array(),
+                'serialization_mapping' => null,
             ))
             ->setAllowedTypes(array(
-                'title'            => array('null', 'string'),
-                'nav_title'        => array('null', 'string'),
-                'description'      => array('null', 'string'),
-                'nav_description'  => array('null', 'string'),
-                'is_first'         => array('bool'),
-                'data'             => array('null', 'array'),
-                'previous_options' => array('array'),
-                'js'               => array('null', 'string'),
-                'css'              => array('null', 'string'),
-                'events'           => array('array'),
+                'title'                 => array('null', 'string'),
+                'nav_title'             => array('null', 'string'),
+                'description'           => array('null', 'string'),
+                'nav_description'       => array('null', 'string'),
+                'is_first'              => array('bool'),
+                'data'                  => array('null', 'array'),
+                'previous_options'      => array('array'),
+                'js'                    => array('null', 'string'),
+                'css'                   => array('null', 'string'),
+                'events'                => array('array'),
+                'serialization_mapping' => array('null', 'array'),
             ))
         ;
     }
@@ -99,6 +101,10 @@ abstract class AbstractStepType implements StepTypeInterface
      */
     public function getDataTypeMapping($options)
     {
-        return array();
+        if (null === $options['serialization_mapping']) {
+            return array();
+        }
+
+        return $options['serialization_mapping'];
     }
 }
