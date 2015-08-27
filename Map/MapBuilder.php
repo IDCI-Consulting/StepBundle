@@ -59,7 +59,7 @@ class MapBuilder implements MapBuilderInterface
      * @param string                   $name            The map name.
      * @param array                    $data            The map data.
      * @param array                    $options         The map options.
-     * @param StepBuilderInterface     $stepBuilder     The sdtep builder.
+     * @param StepBuilderInterface     $stepBuilder     The step builder.
      * @param PathBuilderInterface     $pathBuilder     The path builder.
      */
     public function __construct(
