@@ -51,7 +51,7 @@ class FormStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options)
+    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('_data', 'idci_step_step_form_form', array(
             'label'         => $options['title'],

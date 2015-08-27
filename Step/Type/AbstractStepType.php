@@ -79,22 +79,7 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
-    {
-        $resolver = new OptionsResolver();
-        $this->setDefaultOptions($resolver);
-        $resolvedOptions = $resolver->resolve($options);
-
-        $this->doBuildNavigationStepForm($builder, $resolvedOptions);
-    }
-
-    /**
-     * Do build the navigation step form.
-     *
-     * @param FormBuilderInterface $builder The builder.
-     * @param array                $options The options.
-     */
-    abstract public function doBuildNavigationStepForm(FormBuilderInterface $builder, array $options);
+    abstract public function buildNavigationStepForm(FormBuilderInterface $builder, array $options);
 
     /**
      * {@inheritdoc}
