@@ -8,10 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use JMS\Serializer\SerializerInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistryInterface;
@@ -52,21 +50,6 @@ class NavigatorFactory implements NavigatorFactoryInterface
     protected $serializer;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $merger;
-
-    /**
-     * @var SecurityContextInterface
-     */
-    private $securityContext;
-
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
      * Constructor
      *
      * @param FormFactoryInterface                  $formFactory                  The form factory.
@@ -75,9 +58,6 @@ class NavigatorFactory implements NavigatorFactoryInterface
      * @param ConfigurationFetcherRegistryInterface $configurationFetcherRegistry The configuration fetcher registry.
      * @param NavigationLoggerInterface             $logger                       The logger.
      * @param SerializerInterface                   $serializer                   The serializer.
-     * @param Twig_Environment                      $merger                       The twig merger.
-     * @param SecurityContextInterface              $securityContext              The security context.
-     * @param SessionInterface                      $session                      The session.
      */
     public function __construct(
         FormFactoryInterface                  $formFactory,
@@ -85,10 +65,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         MapConfigurationBuilderInterface      $mapConfigurationBuilder,
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
         NavigationLoggerInterface             $logger,
-        SerializerInterface                   $serializer,
-        \Twig_Environment                     $merger,
-        SecurityContextInterface              $securityContext,
-        SessionInterface                      $session
+        SerializerInterface                   $serializer
     )
     {
         $this->formFactory                  = $formFactory;
@@ -97,9 +74,6 @@ class NavigatorFactory implements NavigatorFactoryInterface
         $this->configurationFetcherRegistry = $configurationFetcherRegistry;
         $this->logger                       = $logger;
         $this->serializer                   = $serializer;
-        $this->merger                       = $merger;
-        $this->securityContext              = $securityContext;
-        $this->session                      = $session;
     }
 
     /**
@@ -132,10 +106,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
             $data,
             $this->guessFlowDataStore($configuration),
             $this->logger,
-            $this->serializer,
-            $this->merger,
-            $this->securityContext,
-            $this->session
+            $this->serializer
         );
     }
 

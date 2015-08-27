@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
@@ -32,21 +33,29 @@ class NavigatorType extends AbstractType
     protected $merger;
 
     /**
+     * @var SecurityContextInterface
+     */
+    protected $securityContext;
+
+    /**
      * Constructor
      *
      * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
      * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
      * @param Twig_Environment           $merger            The twig merger.
+     * @param SecurityContextInterface   $securityContext   The security context.
      */
     public function __construct(
         StepEventRegistryInterface $stepEventRegistry,
         PathEventRegistryInterface $pathEventRegistry,
-        \Twig_Environment          $merger
+        \Twig_Environment          $merger,
+        SecurityContextInterface   $securityContext
     )
     {
         $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
         $this->merger            = $merger;
+        $this->securityContext   = $securityContext;
     }
 
     /**
@@ -78,7 +87,8 @@ class NavigatorType extends AbstractType
             $options['navigator'],
             $this->stepEventRegistry,
             $this->pathEventRegistry,
-            $this->merger
+            $this->merger,
+            $this->securityContext
         ));
     }
 
@@ -90,8 +100,7 @@ class NavigatorType extends AbstractType
      */
     protected function buildStep(FormBuilderInterface $builder, array $options)
     {
-        $navigator = $options['navigator'];
-        $currentStep = $navigator->getCurrentStep();
+        $currentStep = $options['navigator']->getCurrentStep();
         $configuration = $currentStep->getConfiguration();
 
         $currentStep->getType()->buildNavigationStepForm(
