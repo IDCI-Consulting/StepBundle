@@ -8,8 +8,6 @@
 namespace IDCI\Bundle\StepBundle\Map;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -51,21 +49,6 @@ class MapBuilder implements MapBuilderInterface
     private $pathBuilder;
 
     /**
-     * @var \Twig_Environment
-     */
-    private $merger;
-
-    /**
-     * @var SecurityContextInterface
-     */
-    private $securityContext;
-
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
      * @var MapInterface
      */
     private $map;
@@ -78,19 +61,13 @@ class MapBuilder implements MapBuilderInterface
      * @param array                    $options         The map options.
      * @param StepBuilderInterface     $stepBuilder     The sdtep builder.
      * @param PathBuilderInterface     $pathBuilder     The path builder.
-     * @param Twig_Environment         $merger          The twig merger.
-     * @param SecurityContextInterface $securityContext The security context.
-     * @param SessionInterface         $session         The session.
      */
     public function __construct(
         $name = null,
         $data = array(),
         $options = array(),
         StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder,
-        \Twig_Environment $merger,
-        SecurityContextInterface $securityContext,
-        SessionInterface $session
+        PathBuilderInterface $pathBuilder
     )
     {
         $this->name            = $name;
@@ -98,9 +75,6 @@ class MapBuilder implements MapBuilderInterface
         $this->options         = self::resolveOptions($options);
         $this->stepBuilder     = $stepBuilder;
         $this->pathBuilder     = $pathBuilder;
-        $this->merger          = $merger;
-        $this->securityContext = $securityContext;
-        $this->session         = $session;
         $this->steps           = array();
         $this->paths           = array();
         $this->map             = null;
@@ -243,7 +217,7 @@ class MapBuilder implements MapBuilderInterface
             $step = $this->stepBuilder->build(
                 $name,
                 $parameters['type'],
-                $this->merge($parameters['options'])
+                $parameters['options']
             );
 
             if (null !== $step) {
@@ -275,48 +249,5 @@ class MapBuilder implements MapBuilderInterface
                 );
             }
         }
-    }
-
-    /**
-     * Merge options with the SecurityContext (user)
-     * and the session (session).
-     *
-     * @param array $options The options.
-     *
-     * @return array
-     */
-    protected function merge(array $options = array())
-    {
-        $user = null;
-        if (null !== $this->securityContext->getToken()) {
-            $user = $this->securityContext->getToken()->getUser();
-        }
-
-        foreach ($options as $k => $v) {
-            // Do not merge events parameters or building objects.
-            if ($k == 'events' || is_object($v)) {
-                continue;
-            }
-
-            // Do not merge if ending with '|raw'
-            if (substr($k, -4) == '|raw') {
-                $options[substr($k, 0, -4)] = $options[$k];
-                unset($options[$k]);
-                continue;
-            }
-
-            $options[$k] = json_decode(
-                $this->merger->render(
-                    json_encode($v, JSON_UNESCAPED_UNICODE),
-                    array(
-                        'user'    => $user,
-                        'session' => $this->session->all(),
-                    )
-                ),
-                true
-            );
-        }
-
-        return $options;
     }
 }

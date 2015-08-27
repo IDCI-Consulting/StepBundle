@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
@@ -45,32 +44,24 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     private $merger;
 
     /**
-     * @var SecurityContextInterface
-     */
-    private $securityContext;
-
-    /**
      * Constructor
      *
      * @param NavigatorInterface         $navigator         The navigator.
      * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
      * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
      * @param \Twig_Environment          $merger            The merger.
-     * @param SecurityContextInterface   $securityContext   The security context.
      */
     public function __construct(
         NavigatorInterface $navigator,
         StepEventRegistryInterface $stepEventRegistry,
         PathEventRegistryInterface $pathEventRegistry,
-        \Twig_Environment          $merger,
-        SecurityContextInterface   $securityContext
+        \Twig_Environment          $merger
     )
     {
         $this->navigator         = $navigator;
         $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
         $this->merger            = $merger;
-        $this->securityContext   = $securityContext;
     }
 
     /**
@@ -182,7 +173,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 // TODO: Catch execution exceptions and handle them (clear navigator, log, stop propagation, ...)
                 $result = $action->execute(
                     $stepEvent,
-                    $this->merge($configuration['parameters'])
+                    $configuration['parameters']
                 );
 
                 if (null !== $result) {
@@ -396,8 +387,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Merge parameters with the SecurityContext (user)
-     * and the navigation flow data (flow_data).
+     * Merge parameters with the navigation flow data (flow_data).
      *
      * @param array $parameters The parameters.
      *
@@ -405,24 +395,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     protected function merge(array $parameters = array())
     {
-        $user = null;
-        if (null !== $this->securityContext->getToken()) {
-            $user = $this->securityContext->getToken()->getUser();
-        }
-
-        foreach ($parameters as $k => $v) {
-            $parameters[$k] = json_decode(
-                $this->merger->render(
-                    json_encode($v, JSON_UNESCAPED_UNICODE),
-                    array(
-                        'user'      => $user,
-                        'flow_data' => $this->navigator->getFlow()->getData(),
-                    )
-                ),
-                true
-            );
-        }
-
-        return $parameters;
+        return json_decode(
+            $this->merger->render(
+                json_encode($parameters, JSON_UNESCAPED_UNICODE),
+                array('flow_data' => $this->navigator->getFlow()->getData())
+            ),
+            true
+        );
     }
 }

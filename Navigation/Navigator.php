@@ -8,9 +8,11 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\DeserializationContext;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
@@ -74,6 +76,21 @@ class Navigator implements NavigatorInterface
     protected $serializer;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $merger;
+
+    /**
+     * @var SecurityContextInterface
+     */
+    private $securityContext;
+
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * @var FlowInterface
      */
     protected $flow;
@@ -106,39 +123,48 @@ class Navigator implements NavigatorInterface
     /**
      * Constructor
      *
-     * @param FormFactoryInterface       $formFactory       The form factory.
-     * @param Request                    $request           The HTTP request.
-     * @param MapInterface               $map               The map to navigate.
-     * @param array                      $data              The navigation data.
-     * @param FlowDataStoreInterface     $flowDataStore     The flow data store using to keep the flow.
-     * @param NavigationLoggerInterface  $logger            The logger.
-     * @param SerializerInterface        $serializer        The serializer.
+     * @param FormFactoryInterface      $formFactory     The form factory.
+     * @param Request                   $request         The HTTP request.
+     * @param MapInterface              $map             The map to navigate.
+     * @param array                     $data            The navigation data.
+     * @param FlowDataStoreInterface    $flowDataStore   The flow data store using to keep the flow.
+     * @param NavigationLoggerInterface $logger          The logger.
+     * @param SerializerInterface       $serializer      The serializer.
+     * @param Twig_Environment          $merger          The twig merger.
+     * @param SecurityContextInterface  $securityContext The security context.
+     * @param SessionInterface          $session         The session.
      */
     public function __construct(
-        FormFactoryInterface       $formFactory,
-        Request                    $request,
-        MapInterface               $map,
-        array                      $data = array(),
-        FlowDataStoreInterface     $flowDataStore,
-        NavigationLoggerInterface  $logger = null,
-        SerializerInterface        $serializer
+        FormFactoryInterface      $formFactory,
+        Request                   $request,
+        MapInterface              $map,
+        array                     $data = array(),
+        FlowDataStoreInterface    $flowDataStore,
+        NavigationLoggerInterface $logger = null,
+        SerializerInterface       $serializer,
+        \Twig_Environment         $merger,
+        SecurityContextInterface  $securityContext,
+        SessionInterface          $session
     )
     {
-        $this->form          = null;
-        $this->formView      = null;
-        $this->formFactory   = $formFactory;
-        $this->request       = $request;
-        $this->map           = $map;
-        $this->data          = array_replace_recursive($this->map->getData(), $data);
-        $this->flowDataStore = $flowDataStore;
-        $this->logger        = $logger;
-        $this->serializer    = $serializer;
-        $this->flow          = null;
-        $this->currentStep   = null;
-        $this->chosenPath    = null;
-        $this->hasNavigated  = false;
-        $this->hasReturned   = false;
-        $this->hasFinished   = false;
+        $this->form            = null;
+        $this->formView        = null;
+        $this->formFactory     = $formFactory;
+        $this->request         = $request;
+        $this->map             = $map;
+        $this->data            = array_replace_recursive($this->map->getData(), $data);
+        $this->flowDataStore   = $flowDataStore;
+        $this->logger          = $logger;
+        $this->serializer      = $serializer;
+        $this->merger          = $merger;
+        $this->securityContext = $securityContext;
+        $this->session         = $session;
+        $this->flow            = null;
+        $this->currentStep     = null;
+        $this->chosenPath      = null;
+        $this->hasNavigated    = false;
+        $this->hasReturned     = false;
+        $this->hasFinished     = false;
 
         if ($this->logger) {
             $this->logger->startNavigation();
@@ -186,6 +212,43 @@ class Navigator implements NavigatorInterface
     }
 
     /**
+     * Merge options with:
+     *  . The SecurityContext (user)
+     *  . The session (session)
+     *  . The given vars
+     *
+     * @param array $options The options.
+     * @param array $vars    The variables given to the renderer
+     *
+     * @return array
+     */
+    protected function merge(array $options = array(), array $vars = array())
+    {
+        $vars['session'] = $this->session->all();
+        $vars['user']    = null !== $this->securityContext->getToken() ?
+            $this->securityContext->getToken()->getUser() :
+            null
+        ;
+
+        foreach ($options as $k => $v) {
+            // Do not merge building objects.
+            if (is_object($v)) {
+                continue;
+            }
+
+            $options[$k] = json_decode(
+                $this->merger->render(
+                    json_encode($v, JSON_UNESCAPED_UNICODE),
+                    $vars
+                ),
+                true
+            );
+        }
+
+        return $options;
+    }
+
+    /**
      * Prepare the current step
      */
     protected function prepareCurrentStep()
@@ -201,7 +264,10 @@ class Navigator implements NavigatorInterface
             ->getType()
             ->prepareNavigation(
                 $this,
-                $this->currentStep->getOptions()
+                $this->merge(
+                    $this->currentStep->getOptions(),
+                    array('flow_data' => $this->getFlow()->getData())
+                )
             )
         );
 

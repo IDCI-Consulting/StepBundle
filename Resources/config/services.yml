@@ -70,9 +70,6 @@ services:
         arguments:
             - @idci_step.step.builder
             - @idci_step.path.builder
-            - @idci_step.twig
-            - @security.context
-            - @session
 
     idci_step.navigator.factory:
         class: %idci_step.navigator.factory.class%
@@ -83,6 +80,9 @@ services:
             - @idci_step.configuration.fetcher_registry
             - @idci_step.navigation.logger
             - @jms_serializer
+            - @idci_step.twig
+            - @security.context
+            - @session
 
 
     # Step
@@ -220,7 +220,6 @@ services:
             - @idci_step.step_event.registry
             - @idci_step.path_event.registry
             - @idci_step.twig
-            - @security.context
         tags:
             - { name: form.type, alias: idci_step_navigator }
     # Step
