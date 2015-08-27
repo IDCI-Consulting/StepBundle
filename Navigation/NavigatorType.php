@@ -67,8 +67,8 @@ class NavigatorType extends AbstractType
             ->add('_map_name', 'hidden', array(
                 'data' => $options['navigator']->getMap()->getName())
             )
-            ->add('_map_finger_print', 'hidden', array(
-                'data' => $options['navigator']->getMap()->getFingerPrint())
+            ->add('_map_footprint', 'hidden', array(
+                'data' => $options['navigator']->getMap()->getFootprint())
             )
             ->add('_current_step', 'hidden', array(
                 'data' => $options['navigator']->getCurrentStep()->getName())

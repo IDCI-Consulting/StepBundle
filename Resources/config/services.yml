@@ -17,8 +17,7 @@ parameters:
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
     idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
 
-    idci_step.flow.data_store_registry.class: IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistry
-    idci_step.flow.data_store.session.class: IDCI\Bundle\StepBundle\Flow\DataStore\SessionFlowDataStore
+    idci_step.flow_recorder.class: IDCI\Bundle\StepBundle\Flow\FlowRecorder
 
     idci_step.configuration.builder.class: IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder
     idci_step.configuration.worker_registry.class: IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry
@@ -48,9 +47,6 @@ services:
     idci_step.path_event.registry:
         class: %idci_step.path_event.registry.class%
 
-    idci_step.flow.data_store_registry:
-        class: %idci_step.flow.data_store_registry.class%
-
 
     # Builder
 
@@ -61,6 +57,13 @@ services:
     idci_step.path.builder:
         class: %idci_step.path.builder.class%
         arguments: [@idci_step.path.registry]
+
+
+    # FlowRecorder
+
+    idci_step.flow_recorder:
+        class: %idci_step.flow_recorder.class%
+        arguments: [@jms_serializer]
 
 
     # Factory
@@ -78,7 +81,7 @@ services:
         class: %idci_step.navigator.factory.class%
         arguments:
             - @form.factory
-            - @idci_step.flow.data_store_registry
+            - @idci_step.flow_recorder
             - @idci_step.configuration.builder
             - @idci_step.configuration.fetcher_registry
             - @idci_step.navigation.logger
@@ -157,14 +160,6 @@ services:
     idci_step.serialization_mapper:
         class: IDCI\Bundle\StepBundle\Serialization\SerializationMapper
         arguments: [%idci_step.serialization.mapping%]
-
-
-    # FlowDataStore
-
-    idci_step.flow.data_store.session:
-        class: %idci_step.flow.data_store.session.class%
-        tags:
-            - { name: idci_step.flow.data_store, alias: session }
 
 
     # Configuration

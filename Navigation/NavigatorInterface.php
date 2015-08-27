@@ -141,22 +141,6 @@ interface NavigatorInterface
     public function hasFinished();
 
     /**
-     * Serialize the navigation flow
-     *
-     * @return string
-     */
-    public function serialize();
-
-    /**
-     * Unserialize the navigation flow
-     *
-     * @param string $serializedFlow The serialized flow.
-     *
-     * @return FlowInterface
-     */
-    public function unserialize($serializedFlow);
-
-    /**
      * Save the navigation.
      */
     public function save();

@@ -119,7 +119,6 @@ class MapBuilder implements MapBuilderInterface
         $resolver
             ->setDefaults(array(
                 'browsing'        => 'linear',
-                'data_store'      => 'session',
                 'first_step_name' => null,
             ))
             ->setAllowedValues(array(
@@ -213,10 +212,10 @@ class MapBuilder implements MapBuilderInterface
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $this->map = new Map(array(
-            'name'         => $this->name,
-            'finger_print' => $this->generateFingerPrint(),
-            'data'         => $this->data,
-            'options'      => $this->options
+            'name'      => $this->name,
+            'footprint' => $this->generateFootprint(),
+            'data'      => $this->data,
+            'options'   => $this->options
         ));
 
         // Build steps before paths !
@@ -229,7 +228,7 @@ class MapBuilder implements MapBuilderInterface
      *
      * @return string
      */
-    private function generateFingerPrint()
+    private function generateFootprint()
     {
         return md5(json_encode($this->steps).json_encode($this->paths));
     }

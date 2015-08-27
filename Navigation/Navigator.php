@@ -11,14 +11,11 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use JMS\Serializer\SerializerInterface;
-use JMS\Serializer\DeserializationContext;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
-use IDCI\Bundle\StepBundle\Flow\DataStore\FlowDataStoreInterface;
 
 class Navigator implements NavigatorInterface
 {
@@ -44,14 +41,14 @@ class Navigator implements NavigatorInterface
     protected $formFactory;
 
     /**
+     * @var FlowRecorderInterface
+     */
+    protected $flowRecorder;
+
+    /**
      * @var MapInterface
      */
     protected $map;
-
-    /**
-     * @var array
-     */
-    protected $data;
 
     /**
      * @var Request
@@ -59,19 +56,14 @@ class Navigator implements NavigatorInterface
     protected $request;
 
     /**
-     * @var FlowDataStoreInterface
-     */
-    protected $flowDataStore;
-
-    /**
      * @var NavigationLoggerInterface
      */
     protected $logger;
 
     /**
-     * @var SerializerInterface
+     * @var array
      */
-    protected $serializer;
+    protected $data;
 
     /**
      * @var FlowInterface
@@ -106,39 +98,36 @@ class Navigator implements NavigatorInterface
     /**
      * Constructor
      *
-     * @param FormFactoryInterface       $formFactory       The form factory.
-     * @param Request                    $request           The HTTP request.
-     * @param MapInterface               $map               The map to navigate.
-     * @param array                      $data              The navigation data.
-     * @param FlowDataStoreInterface     $flowDataStore     The flow data store using to keep the flow.
-     * @param NavigationLoggerInterface  $logger            The logger.
-     * @param SerializerInterface        $serializer        The serializer.
+     * @param FormFactoryInterface      $formFactory  The form factory.
+     * @param FlowRecorderInterface     $flowRecorder The flow recorder using to store the flow.
+     * @param MapInterface              $map          The map to navigate.
+     * @param Request                   $request      The HTTP request.
+     * @param NavigationLoggerInterface $logger       The logger.
+     * @param array                     $data         The navigation data.
      */
     public function __construct(
-        FormFactoryInterface       $formFactory,
-        Request                    $request,
-        MapInterface               $map,
-        array                      $data = array(),
-        FlowDataStoreInterface     $flowDataStore,
-        NavigationLoggerInterface  $logger = null,
-        SerializerInterface        $serializer
+        FormFactoryInterface      $formFactory,
+        FlowRecorderInterface     $flowRecorder,
+        MapInterface              $map,
+        Request                   $request,
+        NavigationLoggerInterface $logger = null,
+        array                     $data = array()
     )
     {
-        $this->form          = null;
-        $this->formView      = null;
-        $this->formFactory   = $formFactory;
-        $this->request       = $request;
-        $this->map           = $map;
-        $this->data          = array_replace_recursive($this->map->getData(), $data);
-        $this->flowDataStore = $flowDataStore;
-        $this->logger        = $logger;
-        $this->serializer    = $serializer;
-        $this->flow          = null;
-        $this->currentStep   = null;
-        $this->chosenPath    = null;
-        $this->hasNavigated  = false;
-        $this->hasReturned   = false;
-        $this->hasFinished   = false;
+        $this->form         = null;
+        $this->formView     = null;
+        $this->formFactory  = $formFactory;
+        $this->flowRecorder = $flowRecorder;
+        $this->map          = $map;
+        $this->request      = $request;
+        $this->logger       = $logger;
+        $this->data         = array_replace_recursive($this->map->getData(), $data);
+        $this->flow         = null;
+        $this->currentStep  = null;
+        $this->chosenPath   = null;
+        $this->hasNavigated = false;
+        $this->hasReturned  = false;
+        $this->hasFinished  = false;
 
         if ($this->logger) {
             $this->logger->startNavigation();
@@ -158,12 +147,12 @@ class Navigator implements NavigatorInterface
      */
     protected function initFlow()
     {
-        $serializedFlow = $this->flowDataStore->get(
+        $this->flow = $this->flowRecorder->getFlow(
             $this->map,
             $this->request
         );
 
-        if (null === $serializedFlow) {
+        if (null === $this->flow) {
             $this->flow = new Flow();
             $this->flow->setCurrentStep($this->map->getFirstStep());
 
@@ -178,11 +167,7 @@ class Navigator implements NavigatorInterface
             }
 
             $this->save();
-        } else {
-            $this->flow = $this->unserialize($serializedFlow);
         }
-
-        $this->reconstructFlowData();
     }
 
     /**
@@ -235,64 +220,6 @@ class Navigator implements NavigatorInterface
         }
 
         return $this->form;
-    }
-
-    /**
-     * Transform data
-     *
-     * @param mixed $data    The data to transform.
-     * @param array $mapping The mapping, containing the expected data type and optionnaly the serialization groups.
-     *
-     * @return The transformed data.
-     */
-    protected function transformData($data, array $mapping)
-    {
-        if (gettype($data) === $mapping['type'] || $data instanceof $mapping['type']) {
-            return $data;
-        }
-
-        $context = new DeserializationContext();
-        if (!empty($mapping['groups'])) {
-            $context->setGroups($mapping['groups']);
-        }
-
-        return $this->serializer->deserialize(
-            json_encode($data),
-            $mapping['type'],
-            'json',
-            $context
-        );
-    }
-
-    /**
-     * Transform flow data if a step data type mapping is defined
-     */
-    public function reconstructFlowData()
-    {
-        foreach ($this->map->getSteps() as $stepName => $step) {
-            if ($this->flow->hasStepData($step)) {
-                $mapping = $step->getDataTypeMapping();
-                $data = $this->flow->getStepData($step);
-                $transformed = array();
-
-                foreach ($data as $field => $value) {
-                    if (null === $value || (is_array($value) && empty($value))) {
-                        continue;
-                    }
-
-                    if (isset($mapping[$field])) {
-                        $transformed[$field] = $this->transformData($value, $mapping[$field]);
-                    }
-                }
-
-                if (!empty($transformed)) {
-                    $this->flow->setStepData(
-                        $step,
-                        array_replace_recursive($data, $transformed)
-                    );
-                }
-            }
-        }
     }
 
     /**
@@ -496,32 +423,12 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize()
-    {
-        return $this->serializer->serialize($this->flow, 'json');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serializedFlow)
-    {
-        return $this->serializer->deserialize(
-            $serializedFlow,
-            'IDCI\Bundle\StepBundle\Flow\Flow',
-            'json'
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function save()
     {
-        $this->flowDataStore->set(
+        $this->flowRecorder->setFlow(
             $this->map,
             $this->request,
-            $this->serialize()
+            $this->flow
         );
     }
 
@@ -530,7 +437,7 @@ class Navigator implements NavigatorInterface
      */
     public function clear()
     {
-        $this->flowDataStore->clear(
+        $this->flowRecorder->clear(
             $this->map,
             $this->request
         );

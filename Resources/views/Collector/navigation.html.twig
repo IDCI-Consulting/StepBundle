@@ -8,7 +8,7 @@
         {% else %}
             <span class="sf-toolbar-status">
                 <span class="sf-toolbar-info-class sf-toolbar-info-with-next-pointer">
-                    <abbr title="{{ collector.map.fingerPrint }}">
+                    <abbr title="{{ collector.map.footprint }}">
                         {{ collector.map.name }}
                     </abbr>
                 </span>
@@ -22,7 +22,7 @@
         {% else %}
             <div class="sf-toolbar-info-piece">
                 <b>Map name</b>
-                <abbr title="{{ collector.map.fingerPrint }}">
+                <abbr title="{{ collector.map.footprint }}">
                     {{ collector.map.name }}
                 </abbr>
             </div>
@@ -37,10 +37,6 @@
                 {% else %}
                     n/a
                 {% endif %}
-            </div>
-            <div class="sf-toolbar-info-piece">
-                <b>Data store</b>
-                <span>{{ collector.map.configuration.options.data_store }}</span>
             </div>
         {% endif %}
     {% endset %}
@@ -66,7 +62,7 @@
         </tr>
         <tr>
             <th>ID</th>
-            <td>{{ collector.map.fingerPrint }}</td>
+            <td>{{ collector.map.footprint }}</td>
         </tr>
     </table>
 

@@ -88,7 +88,7 @@ class NavigationLogger implements NavigationLoggerInterface
             $this->logger->info(
                 sprintf('Step navigation [%s - %s]',
                     $navigator->getMap()->getName(),
-                    $navigator->getMap()->getFingerPrint()
+                    $navigator->getMap()->getFootprint()
                 ),
                 array(
                 )
@@ -96,7 +96,7 @@ class NavigationLogger implements NavigationLoggerInterface
             $this->logger->debug(
                 sprintf('Step navigation [%s - %s] debug',
                     $navigator->getMap()->getName(),
-                    $navigator->getMap()->getFingerPrint()
+                    $navigator->getMap()->getFootprint()
                 ),
                 array(
                 )

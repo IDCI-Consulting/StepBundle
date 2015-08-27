@@ -21,11 +21,11 @@ interface MapInterface
     public function getName();
 
     /**
-     * Returns the map finger print.
+     * Returns the map footprint.
      *
-     * @return string The map finger print.
+     * @return string The map footprint.
      */
-    public function getFingerPrint();
+    public function getFootprint();
 
     /**
      * Returns the map data.

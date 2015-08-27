@@ -10,12 +10,11 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
-use JMS\Serializer\SerializerInterface;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowDataStoreRegistryInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilderInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 
 class NavigatorFactory implements NavigatorFactoryInterface
 {
@@ -25,9 +24,9 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $formFactory;
 
     /**
-     * @var FlowDataStoreRegistryInterface
+     * @var FlowRecorderInterface
      */
-    private $flowDataStoreRegistry;
+    private $flowRecorder;
 
     /**
      * @var MapConfigurationBuilderInterface
@@ -45,35 +44,27 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $logger;
 
     /**
-     * @var SerializerInterface
-     */
-    protected $serializer;
-
-    /**
      * Constructor
      *
      * @param FormFactoryInterface                  $formFactory                  The form factory.
-     * @param FlowDataStoreRegistryInterface        $flowDataStoreRegistry        The flow data store registry.
+     * @param FlowRecorderInterface                 $flowRecorder                 The flow recorder.
      * @param MapConfigurationBuilderInterface      $mapConfigurationBuilder      The map configuration builder.
      * @param ConfigurationFetcherRegistryInterface $configurationFetcherRegistry The configuration fetcher registry.
      * @param NavigationLoggerInterface             $logger                       The logger.
-     * @param SerializerInterface                   $serializer                   The serializer.
      */
     public function __construct(
         FormFactoryInterface                  $formFactory,
-        FlowDataStoreRegistryInterface        $flowDataStoreRegistry,
+        FlowRecorderInterface                 $flowRecorder,
         MapConfigurationBuilderInterface      $mapConfigurationBuilder,
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
-        NavigationLoggerInterface             $logger,
-        SerializerInterface                   $serializer
+        NavigationLoggerInterface             $logger
     )
     {
         $this->formFactory                  = $formFactory;
-        $this->flowDataStoreRegistry        = $flowDataStoreRegistry;
+        $this->flowRecorder                 = $flowRecorder;
         $this->mapConfigurationBuilder      = $mapConfigurationBuilder;
         $this->configurationFetcherRegistry = $configurationFetcherRegistry;
         $this->logger                       = $logger;
-        $this->serializer                   = $serializer;
     }
 
     /**
@@ -101,29 +92,11 @@ class NavigatorFactory implements NavigatorFactoryInterface
 
         return new Navigator(
             $this->formFactory,
-            $request,
+            $this->flowRecorder,
             $configuration,
-            $data,
-            $this->guessFlowDataStore($configuration),
+            $request,
             $this->logger,
-            $this->serializer
+            $data
         );
-    }
-
-    /**
-     * Guess a data store based on a map configuration
-     *
-     * @param MapInterface $map The map.
-     *
-     * @return DataStoreInterface
-     */
-    private function guessFlowDataStore(MapInterface $map)
-    {
-        $mapConfig = $map->getConfiguration();
-
-        return $this
-            ->flowDataStoreRegistry
-            ->getStore($mapConfig['options']['data_store'])
-        ;
     }
 }
