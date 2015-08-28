@@ -423,6 +423,14 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function serialize()
+    {
+        return $this->flowRecorder->serialize($this->getFlow());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save()
     {
         $this->flowRecorder->setFlow(

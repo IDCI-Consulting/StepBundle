@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
+use Symfony\Component\HttpFoundation\Request;
 use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface;
 
@@ -45,7 +46,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(array $parameters = array())
+    public function build(Request $request, array $parameters = array())
     {
         $builder = $this
             ->mapBuilderFactory
@@ -75,7 +76,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
             }
         }
 
-        return $builder->getMap();
+        return $builder->getMap($request);
     }
 
     /**

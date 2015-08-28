@@ -71,6 +71,7 @@ services:
     idci_step.map.builder.factory:
         class: %idci_step.map.builder.factory.class%
         arguments:
+            - @idci_step.flow_recorder
             - @idci_step.step.builder
             - @idci_step.path.builder
             - @idci_step.twig

@@ -7,14 +7,17 @@
 
 namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface MapConfigurationBuilderInterface
 {
     /**
      * Build the configuration.
      *
-     * @param array $parameters The parameters used to build the configuration.
+     * @param Request $request    The HTTP request.
+     * @param array   $parameters The parameters used to build the configuration.
      *
      * @return array
      */
-    public function build(array $parameters = array());
+    public function build(Request $request, array $parameters = array());
 }

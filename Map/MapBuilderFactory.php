@@ -9,12 +9,18 @@ namespace IDCI\Bundle\StepBundle\Map;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Map\MapNavigatorInterface;
 
 class MapBuilderFactory implements MapBuilderFactoryInterface
 {
+    /**
+     * @var FlowRecorderInterface
+     */
+    private $flowRecorder;
+
     /**
      * @var StepBuilderInterface
      */
@@ -43,6 +49,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     /**
      * Constructor
      *
+     * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
      * @param StepBuilderInterface     $stepBuilder     The step builder.
      * @param PathBuilderInterface     $pathBuilder     The path builder.
      * @param Twig_Environment         $merger          The twig merger.
@@ -50,6 +57,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
      * @param SessionInterface         $session         The session.
      */
     public function __construct(
+        FlowRecorderInterface    $flowRecorder,
         StepBuilderInterface     $stepBuilder,
         PathBuilderInterface     $pathBuilder,
         \Twig_Environment        $merger,
@@ -57,6 +65,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         SessionInterface         $session
     )
     {
+        $this->flowRecorder    = $flowRecorder;
         $this->stepBuilder     = $stepBuilder;
         $this->pathBuilder     = $pathBuilder;
         $this->merger          = $merger;
@@ -81,6 +90,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
             $name,
             $data,
             $options,
+            $this->flowRecorder,
             $this->stepBuilder,
             $this->pathBuilder,
             $this->merger,

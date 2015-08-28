@@ -34,7 +34,7 @@ class SessionDataStoreTest extends \PHPUnit_Framework_TestCase
         $this->request->setSession($session);
         $this->map = new Map(array(
             'name' => 'foo',
-            'finger_print' => 'abc123'
+            'footprint' => 'abc123'
         ));
     }
 

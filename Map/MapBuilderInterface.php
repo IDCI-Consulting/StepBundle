@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface MapBuilderInterface
 {
     /**
@@ -74,7 +76,9 @@ interface MapBuilderInterface
     /**
      * Get the building map.
      *
+     * @param Request $request The HTTP request.
+     *
      * @return MapInterface The map.
      */
-    public function getMap();
+    public function getMap(Request $request);
 }

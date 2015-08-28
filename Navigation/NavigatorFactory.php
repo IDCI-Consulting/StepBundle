@@ -81,7 +81,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         }
 
         if (is_array($configuration)) {
-            $configuration = $this->mapConfigurationBuilder->build($configuration);
+            $configuration = $this->mapConfigurationBuilder->build($request, $configuration);
         }
 
         if (!$configuration instanceof MapInterface) {

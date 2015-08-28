@@ -10,6 +10,9 @@ namespace IDCI\Bundle\StepBundle\Map;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowData;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -39,6 +42,11 @@ class MapBuilder implements MapBuilderInterface
      * @var array
      */
     private $paths;
+
+    /**
+     * @var FlowRecorderInterface
+     */
+    private $flowRecorder;
 
     /**
      * @var StepBuilderInterface
@@ -76,6 +84,7 @@ class MapBuilder implements MapBuilderInterface
      * @param string                   $name            The map name.
      * @param array                    $data            The map data.
      * @param array                    $options         The map options.
+     * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
      * @param StepBuilderInterface     $stepBuilder     The step builder.
      * @param PathBuilderInterface     $pathBuilder     The path builder.
      * @param Twig_Environment         $merger          The twig merger.
@@ -83,19 +92,21 @@ class MapBuilder implements MapBuilderInterface
      * @param SessionInterface         $session         The session.
      */
     public function __construct(
-        $name = null,
-        $data = array(),
+        $name    = null,
+        $data    = array(),
         $options = array(),
-        StepBuilderInterface $stepBuilder,
-        PathBuilderInterface $pathBuilder,
-        \Twig_Environment $merger,
+        FlowRecorderInterface    $flowRecorder,
+        StepBuilderInterface     $stepBuilder,
+        PathBuilderInterface     $pathBuilder,
+        \Twig_Environment        $merger,
         SecurityContextInterface $securityContext,
-        SessionInterface $session
+        SessionInterface         $session
     )
     {
         $this->name            = $name;
         $this->data            = $data;
         $this->options         = self::resolveOptions($options);
+        $this->flowRecorder    = $flowRecorder;
         $this->stepBuilder     = $stepBuilder;
         $this->pathBuilder     = $pathBuilder;
         $this->merger          = $merger;
@@ -198,17 +209,19 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getMap()
+    public function getMap(Request $request)
     {
-        $this->build();
+        $this->build($request);
 
         return $this->map;
     }
 
     /**
      * Build the map.
+     *
+     * @param Request $request The HTTP request.
      */
-    private function build()
+    private function build(Request $request)
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $this->map = new Map(array(
@@ -219,12 +232,12 @@ class MapBuilder implements MapBuilderInterface
         ));
 
         // Build steps before paths !
-        $this->buildSteps();
-        $this->buildPaths();
+        $this->buildSteps($request);
+        $this->buildPaths($request);
     }
 
     /**
-     * Generate a map unique finger print based on its steps and paths.
+     * Generate a map unique footprint based on its steps and paths.
      *
      * @return string
      */
@@ -235,14 +248,29 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Build steps into the map.
+     *
+     * @param Request $request The HTTP request.
      */
-    private function buildSteps()
+    private function buildSteps(Request $request)
     {
+        $vars = array();
+        $flow = $this->flowRecorder->getFlow($this->map, $request);
+
+        if (null !== $flow) {
+            $vars['flow_data'] = $flow->getData();
+        }
+
         foreach ($this->steps as $name => $parameters) {
+            $stepOptions = $parameters['options'];
+            try {
+                $stepOptions = $this->merge($stepOptions, $vars);
+            } catch (\Exception $e) {
+                var_dump($e->getMessage()); die;
+            }
             $step = $this->stepBuilder->build(
                 $name,
                 $parameters['type'],
-                $this->merge($parameters['options'])
+                $stepOptions
             );
 
             if (null !== $step) {
@@ -257,12 +285,22 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Build paths into the map.
+     *
+     * @param Request $request The HTTP request.
      */
-    private function buildPaths()
+    private function buildPaths(Request $request)
     {
         foreach ($this->paths as $parameters) {
             $path = $this->pathBuilder->build(
                 $parameters['type'],
+                /*
+                $this->merge($parameters['options'], array(
+                    'flow_data' => $this
+                        ->flowRecorder
+                        ->getFlow($this->map, $request)
+                        ->getData()
+                ))
+                */
                 $parameters['options'],
                 $this->map->getSteps()
             );
@@ -280,16 +318,18 @@ class MapBuilder implements MapBuilderInterface
      * Merge options with the SecurityContext (user)
      * and the session (session).
      *
+     * @param array $vars    The merging vars.
      * @param array $options The options.
      *
      * @return array
      */
-    protected function merge(array $options = array())
+    protected function merge(array $options = array(), array $vars = array())
     {
-        $user = null;
-        if (null !== $this->securityContext->getToken()) {
-            $user = $this->securityContext->getToken()->getUser();
-        }
+        $vars['session'] = $this->session->all();
+        $vars['user']    = null !== $this->securityContext->getToken() ?
+            $this->securityContext->getToken()->getUser() :
+            null
+        ;
 
         foreach ($options as $k => $v) {
             // Do not merge events parameters or building objects.
@@ -307,10 +347,7 @@ class MapBuilder implements MapBuilderInterface
             $options[$k] = json_decode(
                 $this->merger->render(
                     json_encode($v, JSON_UNESCAPED_UNICODE),
-                    array(
-                        'user'    => $user,
-                        'session' => $this->session->all(),
-                    )
+                    $vars
                 ),
                 true
             );

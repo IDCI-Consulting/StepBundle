@@ -20,6 +20,17 @@ class FlowRecorder implements FlowRecorderInterface
     protected $serializer;
 
     /**
+     * Build the map id
+     *
+     * @param MapInterface $map The map.
+     *
+     * @return string
+     */
+    public static function buildMapId(MapInterface $map)
+    {
+        return sprintf('idci_step.flow.%s', $map->getFootprint());
+    }
+    /**
      * Constructor
      *
      * @param SerializerInterface $serializer The serializer.
@@ -40,8 +51,8 @@ class FlowRecorder implements FlowRecorderInterface
 
         $flow = $this->unserialize($request
             ->getSession()
-            ->get($map->getFootprint()
-        ));
+            ->get(self::buildMapId($map))
+        );
         $this->reconstructFlowData($map, $flow);
 
         return $flow;
@@ -53,7 +64,7 @@ class FlowRecorder implements FlowRecorderInterface
     public function setFlow(MapInterface $map, Request $request, FlowInterface $flow)
     {
         $request->getSession()->set(
-            $map->getFootprint(),
+            self::buildMapId($map),
             $this->serialize($flow)
         );
     }
@@ -63,7 +74,7 @@ class FlowRecorder implements FlowRecorderInterface
      */
     public function hasFlow(MapInterface $map, Request $request)
     {
-        return $request->getSession()->has($map->getFootprint());
+        return $request->getSession()->has(self::buildMapId($map));
     }
 
     /**
@@ -71,7 +82,7 @@ class FlowRecorder implements FlowRecorderInterface
      */
     public function clearFlow(MapInterface $map, Request $request)
     {
-        $request->getSession()->remove($map->getFootprint());
+        $request->getSession()->remove(self::buildMapId($map));
     }
 
     /**

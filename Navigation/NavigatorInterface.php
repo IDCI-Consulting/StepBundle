@@ -141,6 +141,13 @@ interface NavigatorInterface
     public function hasFinished();
 
     /**
+     * Serialize the navigation flow
+     *
+     * @return string
+     */
+    public function serialize();
+
+    /**
      * Save the navigation.
      */
     public function save();
