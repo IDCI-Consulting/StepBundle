@@ -445,7 +445,7 @@ class Navigator implements NavigatorInterface
      */
     public function clear()
     {
-        $this->flowRecorder->clear(
+        $this->flowRecorder->clearFlow(
             $this->map,
             $this->request
         );
