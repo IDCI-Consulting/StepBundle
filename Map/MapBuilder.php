@@ -318,8 +318,8 @@ class MapBuilder implements MapBuilderInterface
      * Merge options with the SecurityContext (user)
      * and the session (session).
      *
-     * @param array $vars    The merging vars.
      * @param array $options The options.
+     * @param array $vars    The merging vars.
      *
      * @return array
      */
@@ -331,28 +331,65 @@ class MapBuilder implements MapBuilderInterface
             null
         ;
 
-        foreach ($options as $k => $v) {
-            // Do not merge events parameters or building objects.
-            if ($k == 'events' || is_object($v)) {
-                continue;
-            }
+        return $this->mergeValue($options, $vars, false);
+    }
 
-            // Do not merge if ending with '|raw'
-            if (substr($k, -4) == '|raw') {
-                $options[substr($k, 0, -4)] = $options[$k];
-                unset($options[$k]);
-                continue;
+    /**
+     * Merge a value.
+     *
+     * @param mixed $value The value.
+     * @param array $vars  The merging vars.
+     * @param array $try   Whether or not to just try merging.
+     *
+     * @return mixed The merged value.
+     */
+    protected function mergeValue($value, array $vars = array(), $try = true)
+    {
+        // Handle array case.
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                // Do not merge if ending with '|raw'.
+                if (substr($k, -4) == '|raw') {
+                    $value[substr($k, 0, -4)] = $v;
+                    unset($value[$k]);
+                // Do not merge events parameters.
+                } elseif ($k !== 'events') {
+                   $value[$k] = $this->mergeValue($v, $vars, $try);
+                }
             }
+        // Handle object case.
+        } elseif (is_object($value)) {
+            $class = new \ReflectionClass($value);
+            $properties = $class->getProperties();
 
-            $options[$k] = json_decode(
-                $this->merger->render(
-                    json_encode($v, JSON_UNESCAPED_UNICODE),
-                    $vars
-                ),
-                true
-            );
+            foreach ($properties as $property) {
+                $property->setAccessible(true);
+
+                $property->setValue(
+                    $value,
+                    $this->mergeValue(
+                        $property->getValue($value),
+                        $vars
+                    )
+                );
+            }
+        // Handle string case.
+        } elseif (is_string($value)) {
+            try {
+                $value = json_decode(
+                    $this->merger->render(
+                        json_encode($value, JSON_UNESCAPED_UNICODE),
+                        $vars
+                    ),
+                    true
+                );
+            } catch (\Exception $e) {
+                if (!$try) {
+                    throw $e;
+                }
+            }
         }
 
-        return $options;
+        return $value;
     }
 }
