@@ -128,18 +128,6 @@ class Navigator implements NavigatorInterface
         $this->hasNavigated = false;
         $this->hasReturned  = false;
         $this->hasFinished  = false;
-
-        if ($this->logger) {
-            $this->logger->startNavigation();
-        }
-
-        $this->initFlow();
-        $this->prepareCurrentStep();
-        $this->navigate();
-
-        if ($this->logger) {
-            $this->logger->stopNavigation($this);
-        }
     }
 
     /**
@@ -227,6 +215,13 @@ class Navigator implements NavigatorInterface
      */
     public function navigate()
     {
+        if ($this->logger) {
+            $this->logger->startNavigation();
+        }
+
+        $this->initFlow();
+        $this->prepareCurrentStep();
+
         if ($this->hasNavigated() || $this->hasReturned() || $this->hasFinished()) {
             throw new \LogicException('The navigation has already been done');
         }
@@ -256,6 +251,10 @@ class Navigator implements NavigatorInterface
                 // Reset the current form.
                 $this->form = null;
             }
+        }
+
+        if ($this->logger) {
+            $this->logger->stopNavigation($this);
         }
     }
 

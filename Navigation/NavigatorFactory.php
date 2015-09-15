@@ -70,7 +70,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNavigator(Request $request, $configuration, array $parameters = array(), array $data = array())
+    public function createNavigator(Request $request, $configuration, array $parameters = array(), array $data = array(), $navigate = true)
     {
         if (is_string($configuration)) {
             $configuration = $this->configurationFetcherRegistry->getFetcher($configuration);
@@ -90,7 +90,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
             );
         }
 
-        return new Navigator(
+        $navigator = new Navigator(
             $this->formFactory,
             $this->flowRecorder,
             $configuration,
@@ -98,5 +98,11 @@ class NavigatorFactory implements NavigatorFactoryInterface
             $this->logger,
             $data
         );
+
+        if ($navigate) {
+            $navigator->navigate();
+        }
+
+        return $navigator;
     }
 }
