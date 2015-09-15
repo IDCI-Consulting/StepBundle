@@ -261,12 +261,8 @@ class MapBuilder implements MapBuilderInterface
         }
 
         foreach ($this->steps as $name => $parameters) {
-            $stepOptions = $parameters['options'];
-            try {
-                $stepOptions = $this->merge($stepOptions, $vars);
-            } catch (\Exception $e) {
-                var_dump($e->getMessage()); die;
-            }
+            $stepOptions = $this->merge($parameters['options'], $vars);
+
             $step = $this->stepBuilder->build(
                 $name,
                 $parameters['type'],
