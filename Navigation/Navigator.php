@@ -140,6 +140,7 @@ class Navigator implements NavigatorInterface
             $this->request
         );
 
+        // The first time
         if (null === $this->flow) {
             $this->flow = new Flow();
             $this->flow->setCurrentStep($this->map->getFirstStep());
@@ -154,6 +155,7 @@ class Navigator implements NavigatorInterface
                 }
             }
 
+            $this->flowRecorder->reconstructFlowData($this->map, $this->flow);
             $this->save();
         }
     }

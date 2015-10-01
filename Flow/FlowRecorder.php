@@ -106,36 +106,9 @@ class FlowRecorder implements FlowRecorderInterface
     }
 
     /**
-     * Transform data
-     *
-     * @param mixed $data    The data to transform.
-     * @param array $mapping The mapping, containing the expected data type and optionnaly the serialization groups.
-     *
-     * @return The transformed data.
-     */
-    protected function transformData($data, array $mapping)
-    {
-        if (gettype($data) === $mapping['type'] || $data instanceof $mapping['type']) {
-            return $data;
-        }
-
-        $context = new DeserializationContext();
-        if (!empty($mapping['groups'])) {
-            $context->setGroups($mapping['groups']);
-        }
-
-        return $this->serializer->deserialize(
-            json_encode($data),
-            $mapping['type'],
-            'json',
-            $context
-        );
-    }
-
-    /**
      * Transform flow data if a step data type mapping is defined
      */
-    protected function reconstructFlowData(MapInterface $map, FlowInterface & $flow)
+    public function reconstructFlowData(MapInterface $map, FlowInterface $flow)
     {
         foreach ($map->getSteps() as $stepName => $step) {
             if ($flow->hasStepData($step)) {
@@ -161,5 +134,32 @@ class FlowRecorder implements FlowRecorderInterface
                 }
             }
         }
+    }
+
+    /**
+     * Transform data
+     *
+     * @param mixed $data    The data to transform.
+     * @param array $mapping The mapping, containing the expected data type and optionnaly the serialization groups.
+     *
+     * @return The transformed data.
+     */
+    protected function transformData($data, array $mapping)
+    {
+        if (gettype($data) === $mapping['type'] || $data instanceof $mapping['type']) {
+            return $data;
+        }
+
+        $context = new DeserializationContext();
+        if (!empty($mapping['groups'])) {
+            $context->setGroups($mapping['groups']);
+        }
+
+        return $this->serializer->deserialize(
+            json_encode($data),
+            $mapping['type'],
+            'json',
+            $context
+        );
     }
 }
