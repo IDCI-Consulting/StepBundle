@@ -182,6 +182,8 @@ class Flow implements FlowInterface
                 FlowData::TYPE_REMINDED
             );
         }
+
+        return $this;
     }
 
     /**

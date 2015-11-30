@@ -111,6 +111,8 @@ interface FlowInterface
      * @param StepInterface $step The step.
      * @param array         $data The data to store.
      * @param string|null   $type The data type (null, 'reminded' or 'retrieved').
+     *
+     * @return FlowInterface This
      */
     public function setStepData(StepInterface $step, array $data, $type = null);
 

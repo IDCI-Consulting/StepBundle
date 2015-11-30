@@ -15,6 +15,8 @@ interface FlowHistoryInterface
      * Store the current step into the history.
      *
      * @param StepInterface $step The step.
+     *
+     * @return FlowHistoryInterface
      */
     public function setCurrentStep(StepInterface $step);
 
@@ -22,7 +24,7 @@ interface FlowHistoryInterface
      * Add a taken path.
      *
      * @param StepInterface $step The step.
-     * @param string        $path The identifier of the path.
+     * @param integer       $path The identifier of the path.
      */
     public function addTakenPath(StepInterface $step, $pathId = 0);
 

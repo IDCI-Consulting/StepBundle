@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -74,11 +75,6 @@ class MapBuilder implements MapBuilderInterface
     private $session;
 
     /**
-     * @var MapInterface
-     */
-    private $map;
-
-    /**
      * Creates a new map builder.
      *
      * @param string                   $name            The map name.
@@ -114,7 +110,6 @@ class MapBuilder implements MapBuilderInterface
         $this->session         = $session;
         $this->steps           = array();
         $this->paths           = array();
-        $this->map             = null;
     }
 
     /**
@@ -211,20 +206,20 @@ class MapBuilder implements MapBuilderInterface
      */
     public function getMap(Request $request)
     {
-        $this->build($request);
-
-        return $this->map;
+        return $this->build($request);
     }
 
     /**
      * Build the map.
      *
      * @param Request $request The HTTP request.
+     *
+     * @return MapInterface the built map.
      */
     private function build(Request $request)
     {
         // TODO: Use a MapConfig as argument instead of an array.
-        $this->map = new Map(array(
+        $map = new Map(array(
             'name'      => $this->name,
             'footprint' => $this->generateFootprint(),
             'data'      => $this->data,
@@ -232,29 +227,22 @@ class MapBuilder implements MapBuilderInterface
         ));
 
         // Build steps before paths !
-        $this->buildSteps($request);
-        $this->buildPaths($request);
-    }
+        $this->buildSteps($map, $request);
+        $this->buildPaths($map, $request);
 
-    /**
-     * Generate a map unique footprint based on its steps and paths.
-     *
-     * @return string
-     */
-    private function generateFootprint()
-    {
-        return md5(json_encode($this->steps).json_encode($this->paths));
+        return $map;
     }
 
     /**
      * Build steps into the map.
      *
-     * @param Request $request The HTTP request.
+     * @param MapInterface $map     The building map.
+     * @param Request      $request The HTTP request.
      */
-    private function buildSteps(Request $request)
+    private function buildSteps(MapInterface $map, Request $request)
     {
         $vars = array();
-        $flow = $this->flowRecorder->getFlow($this->map, $request);
+        $flow = $this->flowRecorder->getFlow($map, $request);
 
         if (null !== $flow) {
             $vars['flow_data'] = $flow->getData();
@@ -270,11 +258,11 @@ class MapBuilder implements MapBuilderInterface
             );
 
             if (null !== $step) {
-                $this->map->addStep($name, $step);
+                $map->addStep($name, $step);
             }
 
-            if (null === $this->map->getFirstStepName() || $step->isFirst()) {
-                $this->map->setFirstStepName($name);
+            if (null === $map->getFirstStepName() || $step->isFirst()) {
+                $map->setFirstStepName($name);
             }
         }
     }
@@ -282,9 +270,10 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Build paths into the map.
      *
-     * @param Request $request The HTTP request.
+     * @param MapInterface $map     The building map.
+     * @param Request      $request The HTTP request.
      */
-    private function buildPaths(Request $request)
+    private function buildPaths(MapInterface $map, Request $request)
     {
         foreach ($this->paths as $parameters) {
             $path = $this->pathBuilder->build(
@@ -293,21 +282,31 @@ class MapBuilder implements MapBuilderInterface
                 $this->merge($parameters['options'], array(
                     'flow_data' => $this
                         ->flowRecorder
-                        ->getFlow($this->map, $request)
+                        ->getFlow($map, $request)
                         ->getData()
                 ))
                 */
                 $parameters['options'],
-                $this->map->getSteps()
+                $map->getSteps()
             );
 
             if (null !== $path) {
-                $this->map->addPath(
+                $map->addPath(
                     $path->getSource()->getName(),
                     $path
                 );
             }
         }
+    }
+
+    /**
+     * Generate a map unique footprint based on its steps and paths.
+     *
+     * @return string
+     */
+    private function generateFootprint()
+    {
+        return md5(json_encode($this->steps).json_encode($this->paths));
     }
 
     /**
@@ -319,7 +318,7 @@ class MapBuilder implements MapBuilderInterface
      *
      * @return array
      */
-    protected function merge(array $options = array(), array $vars = array())
+    private function merge(array $options = array(), array $vars = array())
     {
         $vars['session'] = $this->session->all();
         $vars['user']    = null !== $this->securityContext->getToken() ?
@@ -339,7 +338,7 @@ class MapBuilder implements MapBuilderInterface
      *
      * @return mixed The merged value.
      */
-    protected function mergeValue($value, array $vars = array(), $try = true)
+    private function mergeValue($value, array $vars = array(), $try = true)
     {
         // Handle array case.
         if (is_array($value)) {

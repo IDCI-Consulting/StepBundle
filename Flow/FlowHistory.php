@@ -54,6 +54,8 @@ class FlowHistory implements FlowHistoryInterface
             $this->takenPaths[count($this->takenPaths) -1]['destination'] = $step->getName();
             $this->fullTakenPaths[count($this->fullTakenPaths) -1]['destination'] = $step->getName();
         }
+
+        return $this;
     }
 
     /**
