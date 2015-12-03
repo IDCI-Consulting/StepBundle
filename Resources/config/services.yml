@@ -7,6 +7,7 @@ parameters:
 
     idci_step.path.registry.class: IDCI\Bundle\StepBundle\Path\PathRegistry
     idci_step.path_event.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventRegistry
+    idci_step.path_destination_rule.registry.class: IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleRegistry
     idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
     idci_step.path.type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
     idci_step.path.type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
@@ -46,6 +47,9 @@ services:
 
     idci_step.path_event.registry:
         class: %idci_step.path_event.registry.class%
+
+    idci_step.path_destination_rule.registry:
+        class: %idci_step.path_destination_rule.registry.class%
 
 
     # Builder
@@ -134,6 +138,7 @@ services:
             - @idci_step.twig
             - @security.context
             - @session
+            - @idci_step.path_destination_rule.registry
         tags:
             - { name: idci_step.path.type, alias: conditional_destination }
 

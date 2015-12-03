@@ -16,6 +16,7 @@ use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathDestinationRuleCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationWorkerCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationFetcherCompilerPass;
@@ -30,6 +31,7 @@ class IDCIStepBundle extends Bundle
         $container->addCompilerPass(new StepEventCompilerPass());
         $container->addCompilerPass(new PathCompilerPass());
         $container->addCompilerPass(new PathEventCompilerPass());
+        $container->addCompilerPass(new PathDestinationRuleCompilerPass());
         $container->addCompilerPass(new FlowDataStoreCompilerPass());
         $container->addCompilerPass(new ConfigurationWorkerCompilerPass());
         $container->addCompilerPass(new ConfigurationFetcherCompilerPass());

@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleRegistry;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class ConditionalDestinationPathType extends AbstractPathType
@@ -30,6 +31,11 @@ class ConditionalDestinationPathType extends AbstractPathType
     private $session;
 
     /**
+     * @var PathDestinationRuleRegistry
+     */
+    private $destinationRuleRegistry;
+
+    /**
      * Constructor
      *
      * @param Twig_Environment         $merger          The twig merger.
@@ -37,14 +43,16 @@ class ConditionalDestinationPathType extends AbstractPathType
      * @param SessionInterface         $session         The session.
      */
     public function __construct(
-        \Twig_Environment        $merger,
-        SecurityContextInterface $securityContext,
-        SessionInterface         $session
+        \Twig_Environment           $merger,
+        SecurityContextInterface    $securityContext,
+        SessionInterface            $session,
+        PathDestinationRuleRegistry $destinationRuleRegistry
     )
     {
-        $this->merger          = $merger;
-        $this->securityContext = $securityContext;
-        $this->session         = $session;
+        $this->merger                  = $merger;
+        $this->securityContext         = $securityContext;
+        $this->session                 = $session;
+        $this->destinationRuleRegistry = $destinationRuleRegistry;
     }
 
     /**
@@ -89,8 +97,16 @@ class ConditionalDestinationPathType extends AbstractPathType
             $user = $this->securityContext->getToken()->getUser();
         }
 
-        foreach ($options['destinations'] as $name => $rule) {
-            $merged = $this->merger->render($rule, array(
+        foreach ($options['destinations'] as $name => $rules) {
+            if (is_array($rules)) {
+                if ($this->matchPathDestinationRule($rules, $navigator)) {
+                    return $name;
+                }
+
+                continue;
+            }
+
+            $merged = $this->merger->render($rules, array(
                 'user'      => $user,
                 'session'   => $this->session->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
@@ -102,5 +118,26 @@ class ConditionalDestinationPathType extends AbstractPathType
         }
 
         return $options['default_destination'];
+    }
+
+    /**
+     * Match the given path destination rules.
+     *
+     * @param NavigatorInterface $navigator  The navigator.
+     * @param array              $rules      The rules to check.
+     *
+     * @return boolean Return true if the rule match, false otherwise.
+     */
+    private function matchPathDestinationRule(array $rules, NavigatorInterface $navigator)
+    {
+        foreach ($rules as $alias => $options) {
+            $destinationRule = $this->destinationRuleRegistry->getRule($alias);
+
+            if (!$destinationRule->match($options, $navigator)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
