@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleRegistry;
+use IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleRegistryInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class ConditionalDestinationPathType extends AbstractPathType
@@ -31,22 +31,23 @@ class ConditionalDestinationPathType extends AbstractPathType
     private $session;
 
     /**
-     * @var PathDestinationRuleRegistry
+     * @var PathDestinationRuleRegistryInterface
      */
     private $destinationRuleRegistry;
 
     /**
      * Constructor
      *
-     * @param Twig_Environment         $merger          The twig merger.
-     * @param SecurityContextInterface $securityContext The security context.
-     * @param SessionInterface         $session         The session.
+     * @param Twig_Environment                     $merger                  The twig merger.
+     * @param SecurityContextInterface             $securityContext         The security context.
+     * @param SessionInterface                     $session                 The session.
+     * @param PathDestinationRuleRegistryInterface $destinationRuleRegistry The destination rule registry.
      */
     public function __construct(
-        \Twig_Environment           $merger,
-        SecurityContextInterface    $securityContext,
-        SessionInterface            $session,
-        PathDestinationRuleRegistry $destinationRuleRegistry
+        \Twig_Environment                    $merger,
+        SecurityContextInterface             $securityContext,
+        SessionInterface                     $session,
+        PathDestinationRuleRegistryInterface $destinationRuleRegistry
     )
     {
         $this->merger                  = $merger;
