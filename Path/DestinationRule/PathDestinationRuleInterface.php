@@ -7,17 +7,14 @@
 
 namespace IDCI\Bundle\StepBundle\Path\DestinationRule;
 
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
-
 interface PathDestinationRuleInterface
 {
     /**
      * Match
      *
-     * @param array              $options   The options to match.
-     * @param NavigatorInterface $navigator The navigator.
+     * @param array $options   The options to match.
      *
      * @return boolean Return true if the destination rule match.
      */
-    public function match(array $options = array(), NavigatorInterface $navigator);
+    public function match(array $options = array());
 }

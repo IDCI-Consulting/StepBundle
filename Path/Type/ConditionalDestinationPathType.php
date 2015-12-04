@@ -100,7 +100,16 @@ class ConditionalDestinationPathType extends AbstractPathType
 
         foreach ($options['destinations'] as $name => $rules) {
             if (is_array($rules)) {
-                if ($this->matchPathDestinationRule($rules, $navigator)) {
+                $mergedRules = json_decode(
+                    $this->merger->render(json_encode($rules), array(
+                        'user'      => $user,
+                        'session'   => $this->session->all(),
+                        'flow_data' => $navigator->getFlow()->getData(),
+                    )),
+                    true
+                );
+
+                if ($this->matchPathDestinationRule($mergedRules)) {
                     return $name;
                 }
 
@@ -124,17 +133,16 @@ class ConditionalDestinationPathType extends AbstractPathType
     /**
      * Match the given path destination rules.
      *
-     * @param NavigatorInterface $navigator  The navigator.
-     * @param array              $rules      The rules to check.
+     * @param array $rules The rules to check.
      *
      * @return boolean Return true if the rule match, false otherwise.
      */
-    private function matchPathDestinationRule(array $rules, NavigatorInterface $navigator)
+    private function matchPathDestinationRule(array $rules)
     {
         foreach ($rules as $alias => $options) {
             $destinationRule = $this->destinationRuleRegistry->getRule($alias);
 
-            if (!$destinationRule->match($options, $navigator)) {
+            if (!$destinationRule->match($options)) {
                 return false;
             }
         }
