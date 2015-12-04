@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\DestinationRule;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract AbstractPathDestinationRule
+abstract class AbstractPathDestinationRule implements PathDestinationRuleInterface
 {
     /**
      * {@inheritdoc}
