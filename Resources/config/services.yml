@@ -222,6 +222,7 @@ services:
             - @idci_step.path_event.registry
             - @idci_step.twig
             - @security.context
+            - @session
         tags:
             - { name: form.type, alias: idci_step_navigator }
     # Step
