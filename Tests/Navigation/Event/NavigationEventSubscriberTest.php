@@ -84,5 +84,26 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ),
             $this->navigationEventSubscriber->merge($parameters)
         );
+
+        $parameters = array(
+            'user' => array(
+                'firstname' => '{{ flow_data.data.step1.firstname }}',
+                'data'      => array(
+                    'message' => '{{ flow_data.data.step1.message }}'
+                )
+            )
+        );
+
+        $this->assertEquals(
+           array(
+                'user' => array(
+                    'firstname' => "john",
+                    'data'      => array(
+                        'message' => "multi\nline\nmessage."
+                    )
+                )
+            ),
+            $this->navigationEventSubscriber->merge($parameters)
+        );
     }
 }

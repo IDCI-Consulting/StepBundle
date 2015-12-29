@@ -406,7 +406,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Merge parameters with the SecurityContext (user)
-     * and the navigation flow data (flow_data).
+     * the navigation flow data (flow_data)
+     * and the session (session)
      *
      * @param array $parameters The parameters.
      *
@@ -420,36 +421,34 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         foreach ($parameters as $k => $v) {
-            $parameters[$k] = json_decode(
-                $this->merger->render(
-                    json_encode($v, JSON_UNESCAPED_UNICODE),
-                    array(
-                        'user'      => $user,
-                        'flow_data' => $this->navigator->getFlow()->getData(),
-                        'session'   => $this->session,
-                    )
-                ),
-                true
-            );
+            $parameters[$k] = $this->mergeValue($v, array(
+                'user'      => $user,
+                'flow_data' => $this->navigator->getFlow()->getData(),
+                'session'   => $this->session,
+            ));
         }
 
         return $parameters;
+    }
 
-        /*
+    /**
+     * Merge a value.
+     *
+     * @param mixed $value The value.
+     * @param array $vars  The merging vars.
+     *
+     * @return mixed The merged value.
+     */
+    private function mergeValue($value, array $vars = array())
+    {
         // Handle array case.
         if (is_array($value)) {
             foreach ($value as $k => $v) {
-                // Do not merge if ending with '|raw'.
-                if (substr($k, -4) == '|raw') {
-                    $value[substr($k, 0, -4)] = $v;
-                    unset($value[$k]);
-                // Do not merge events parameters.
-                } elseif ($k !== 'events') {
-                   $value[$k] = $this->mergeValue($v, $vars, $try);
-                }
+                $value[$k] = $this->mergeValue($v, $vars);
             }
+        }
         // Handle object case.
-        } elseif (is_object($value)) {
+        elseif (is_object($value)) {
             $class = new \ReflectionClass($value);
             $properties = $class->getProperties();
 
@@ -464,18 +463,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     )
                 );
             }
+        }
         // Handle string case.
-        } elseif (is_string($value)) {
-            try {
-                $value = $this->merger->render($value, $vars);
-            } catch (\Exception $e) {
-                if (!$try) {
-                    throw $e;
-                }
-            }
+        elseif (is_string($value)) {
+            $value = $this->merger->render($value, $vars);
         }
 
         return $value;
-        */
     }
 }
