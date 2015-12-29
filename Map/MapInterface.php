@@ -30,7 +30,7 @@ interface MapInterface
     /**
      * Returns the map data.
      *
-     * @return array|null The map data.
+     * @return array The map data.
      */
     public function getData();
 

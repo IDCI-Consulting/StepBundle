@@ -94,7 +94,7 @@ class Map implements MapInterface
     {
         return isset($this->configuration['data']) ?
             $this->configuration['data'] :
-            null
+            array()
         ;
     }
 
