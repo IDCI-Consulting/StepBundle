@@ -412,7 +412,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      *
      * @return array
      */
-    protected function merge(array $parameters = array())
+    public function merge(array $parameters = array())
     {
         $user = null;
         if (null !== $this->securityContext->getToken()) {
@@ -434,5 +434,48 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         return $parameters;
+
+        /*
+        // Handle array case.
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                // Do not merge if ending with '|raw'.
+                if (substr($k, -4) == '|raw') {
+                    $value[substr($k, 0, -4)] = $v;
+                    unset($value[$k]);
+                // Do not merge events parameters.
+                } elseif ($k !== 'events') {
+                   $value[$k] = $this->mergeValue($v, $vars, $try);
+                }
+            }
+        // Handle object case.
+        } elseif (is_object($value)) {
+            $class = new \ReflectionClass($value);
+            $properties = $class->getProperties();
+
+            foreach ($properties as $property) {
+                $property->setAccessible(true);
+
+                $property->setValue(
+                    $value,
+                    $this->mergeValue(
+                        $property->getValue($value),
+                        $vars
+                    )
+                );
+            }
+        // Handle string case.
+        } elseif (is_string($value)) {
+            try {
+                $value = $this->merger->render($value, $vars);
+            } catch (\Exception $e) {
+                if (!$try) {
+                    throw $e;
+                }
+            }
+        }
+
+        return $value;
+        */
     }
 }
