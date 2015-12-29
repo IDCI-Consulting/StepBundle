@@ -35,6 +35,13 @@ interface StepInterface
     public function getOptions();
 
     /**
+     * Returns the step name.
+     *
+     * @return string The step name.
+     */
+    public function getName();
+
+    /**
      * Returns a boolean to indicate That this step was define as a first step
      *
      * @return boolean.
@@ -65,7 +72,7 @@ interface StepInterface
     /**
      * Returns the step data type mapping.
      *
-     * @return array The data tpe mapping.
+     * @return array The data type mapping.
      */
     public function getDataTypeMapping();
 }
