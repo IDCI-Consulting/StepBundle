@@ -371,13 +371,7 @@ class MapBuilder implements MapBuilderInterface
         // Handle string case.
         } elseif (is_string($value)) {
             try {
-                $value = json_decode(
-                    $this->merger->render(
-                        json_encode($value, JSON_UNESCAPED_UNICODE),
-                        $vars
-                    ),
-                    true
-                );
+                $value = $this->merger->render($value, $vars);
             } catch (\Exception $e) {
                 if (!$try) {
                     throw $e;
