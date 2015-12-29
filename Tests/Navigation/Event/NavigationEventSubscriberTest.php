@@ -11,7 +11,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
         $securityContext = $this
             ->getMockBuilder("Symfony\Component\Security\Core\SecurityContextInterface")
             ->disableOriginalConstructor()
-            ->setMethods(array('getToken'))
+            ->setMethods(array('getToken', 'setToken', 'isGranted'))
             ->getMock()
         ;
         $securityContext
