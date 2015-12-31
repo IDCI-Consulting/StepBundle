@@ -424,7 +424,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             $parameters[$k] = $this->mergeValue($v, array(
                 'user'      => $user,
                 'flow_data' => $this->navigator->getFlow()->getData(),
-                'session'   => $this->session,
+                'session'   => $this->session->all(),
             ));
         }
 
