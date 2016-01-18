@@ -9,10 +9,10 @@
             <span class="sf-toolbar-status">
                 <span class="sf-toolbar-info-class sf-toolbar-info-with-next-pointer">
                     <abbr title="{{ collector.map.footprint }}">
-                        {{ collector.map.name }}
+                        {{ collector.map.name|default() }}
                     </abbr>
                 </span>
-                {{ collector.flow.currentStepName }}
+                {{ collector.flow.currentStepName|default() }}
             </span>
         {% endif %}
     {% endset %}
@@ -23,16 +23,16 @@
             <div class="sf-toolbar-info-piece">
                 <b>Map name</b>
                 <abbr title="{{ collector.map.footprint }}">
-                    {{ collector.map.name }}
+                    {{ collector.map.name|default() }}
                 </abbr>
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Current step</b>
-                {{ collector.flow.currentStepName }}
+                {{ collector.flow.currentStepName|default() }}
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Previous step</b>
-                {% if collector.flow.previousStepName is not null %}
+                {% if collector.flow is not null and collector.flow.previousStepName is not null %}
                     {{ collector.flow.previousStepName }}
                 {% else %}
                     n/a
@@ -58,11 +58,11 @@
     <table>
         <tr>
             <th>Name</th>
-            <td>{{ collector.map.name }}</td>
+            <td>{{ collector.map.name|default() }}</td>
         </tr>
         <tr>
             <th>ID</th>
-            <td>{{ collector.map.footprint }}</td>
+            <td>{{ collector.map.footprint|default() }}</td>
         </tr>
     </table>
 
@@ -71,12 +71,12 @@
     <table>
         <tr>
             <th>Current step</th>
-            <td>{{ collector.flow.currentStepName }}</td>
+            <td>{{ collector.flow.currentStepName|default() }}</td>
         </tr>
         <tr>
             <th>Previous step</th>
             <td>
-                {% if collector.flow.previousStepName is not null %}
+                {% if collector.flow is not null and collector.flow.previousStepName is not null %}
                     {{ collector.flow.previousStepName }}
                 {% else %}
                     n/a

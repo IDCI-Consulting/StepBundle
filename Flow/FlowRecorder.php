@@ -14,6 +14,8 @@ use JMS\Serializer\DeserializationContext;
 
 class FlowRecorder implements FlowRecorderInterface
 {
+    const FLOW_NAMESPACE = 'idci_step.flow';
+
     /**
      * @var SerializerInterface
      */
@@ -28,8 +30,12 @@ class FlowRecorder implements FlowRecorderInterface
      */
     public static function buildMapId(MapInterface $map)
     {
-        return sprintf('idci_step.flow.%s', $map->getFootprint());
+        return sprintf('%s/%s',
+            self::FLOW_NAMESPACE,
+            $map->getFootprint()
+        );
     }
+
     /**
      * Constructor
      *
@@ -80,9 +86,17 @@ class FlowRecorder implements FlowRecorderInterface
     /**
      * {@inheritdoc}
      */
-    public function clearFlow(MapInterface $map, Request $request)
+    public function removeFlow(MapInterface $map, Request $request)
     {
         $request->getSession()->remove(self::buildMapId($map));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear(Request $request)
+    {
+        $request->getSession()->remove(self::FLOW_NAMESPACE);
     }
 
     /**

@@ -43,12 +43,19 @@ interface FlowRecorderInterface
     public function hasFlow(MapInterface $map, Request $request);
 
     /**
-     * Clear a flow in relalation with a map and a http request.
+     * Remove a flow in relalation with a map and a http request.
      *
      * @param MapInterface $map     The map.
      * @param Request      $request The HTTP request.
      */
-    public function clearFlow(MapInterface $map, Request $request);
+    public function removeFlow(MapInterface $map, Request $request);
+
+    /**
+     * Clear all flows.
+     *
+     * @param Request $request The HTTP request.
+     */
+    public function clear(Request $request);
 
     /**
      * Serialize the given flow.
