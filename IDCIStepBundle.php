@@ -20,6 +20,7 @@ use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathDestinationRuleCompi
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationWorkerCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationFetcherCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\MergerEnvironmentCompilerPass;
 
 class IDCIStepBundle extends Bundle
 {
@@ -35,5 +36,6 @@ class IDCIStepBundle extends Bundle
         $container->addCompilerPass(new FlowDataStoreCompilerPass());
         $container->addCompilerPass(new ConfigurationWorkerCompilerPass());
         $container->addCompilerPass(new ConfigurationFetcherCompilerPass());
+        $container->addCompilerPass(new MergerEnvironmentCompilerPass());
     }
 }

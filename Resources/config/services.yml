@@ -78,7 +78,7 @@ services:
             - @idci_step.flow_recorder
             - @idci_step.step.builder
             - @idci_step.path.builder
-            - @idci_step.twig
+            - @idci_step.merger
             - @security.context
             - @session
 
@@ -135,7 +135,7 @@ services:
     idci_step.path.type.conditional_destination:
         class: %idci_step.path.type.conditional_destination.class%
         arguments:
-            - @idci_step.twig
+            - @idci_step.merger
             - @security.context
             - @session
             - @idci_step.path_destination_rule.registry
@@ -220,7 +220,7 @@ services:
         arguments:
             - @idci_step.step_event.registry
             - @idci_step.path_event.registry
-            - @idci_step.twig
+            - @idci_step.merger
             - @security.context
             - @session
         tags:
@@ -249,10 +249,10 @@ services:
     # Twig
     idci_step.twig_string_loader:
         class:        "Twig_Loader_String"
-    idci_step.twig:
+    idci_step.merger:
         class:        "%twig.class%"
         arguments:    [@idci_step.twig_string_loader, %twig.options%]
     idci_step.twig.step_extension:
-        class: IDCI\Bundle\StepBundle\Twig\StepExtension
+        class: IDCI\Bundle\StepBundle\Twig\StepTwigExtension
         tags:
             - { name: twig.extension }

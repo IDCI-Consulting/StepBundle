@@ -9,7 +9,7 @@ namespace IDCI\Bundle\StepBundle\Twig;
 
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
-class StepExtension extends \Twig_Extension
+class StepTwigExtension extends \Twig_Extension
 {
     /**
      * {@inheritdoc}
@@ -56,7 +56,7 @@ class StepExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'idci_step_extension';
+        return 'idci_step_twig_extension';
     }
 
     /**
