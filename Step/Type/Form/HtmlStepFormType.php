@@ -7,18 +7,19 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class HtmlStepFormType extends AbstractType
+class HtmlStepFormType extends AbstractStepFormType
 {
     /**
      * {@inheritdoc}
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        parent::buildView($view, $form, $options);
+
         $content = $options['content'];
         if (null !== $form->getData('content')) {
             $content = $form->getData('content');
@@ -34,8 +35,13 @@ class HtmlStepFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        parent::setDefaultOptions($resolver);
+
         $resolver
-            ->setDefaults(array('content' => null))
+            ->setDefaults(array(
+                'content' => null,
+                'attr'    => array('class' => 'html_text'),
+            ))
             ->setAllowedTypes(array('content' => array('null', 'string')))
         ;
     }
