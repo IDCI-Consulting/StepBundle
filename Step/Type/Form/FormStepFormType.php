@@ -36,7 +36,7 @@ class FormStepFormType extends AbstractStepFormType
         $resolver
             ->setRequired(array('builder'))
             ->setAllowedTypes(array(
-                'builder'       => array('Symfony\Component\Form\FormBuilderInterface'),
+                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
             ))
         ;
     }
