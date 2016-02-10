@@ -66,9 +66,9 @@ abstract class AbstractStepType implements StepTypeInterface
     {
         // TODO: Use a StepConfig as argument instead of an array.
         return new Step(array(
-            'name'      => $name,
-            'type'      => $this,
-            'options'   => $options
+            'name'    => $name,
+            'type'    => $this,
+            'options' => $options
         ));
     }
 
