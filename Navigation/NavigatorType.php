@@ -9,6 +9,8 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -65,6 +67,17 @@ class NavigatorType extends AbstractType
         $this->merger            = $merger;
         $this->securityContext   = $securityContext;
         $this->session           = $session;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $stepOptions = $options['navigator']->getCurrentStep()->getOptions();
+        $view->vars = array_merge($view->vars, array(
+            'attr' => $stepOptions['attr'],
+        ));
     }
 
     /**

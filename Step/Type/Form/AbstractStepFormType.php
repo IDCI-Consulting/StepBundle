@@ -21,7 +21,6 @@ abstract class AbstractStepFormType extends AbstractType
     {
         $view->vars = array_merge($view->vars, array(
             'display_title' => $options['display_title'],
-            'attr'          => $options['attr'],
         ));
     }
 
@@ -33,11 +32,9 @@ abstract class AbstractStepFormType extends AbstractType
         $resolver
             ->setDefaults(array(
                 'display_title' => true,
-                'attr'          => array(),
             ))
             ->setAllowedTypes(array(
                 'display_title' => array('bool'),
-                'attr'          => array('array'),
             ))
         ;
     }

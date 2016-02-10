@@ -39,7 +39,7 @@ class FormStepType extends AbstractStepType
         $resolver
             ->setRequired(array('builder'))
             ->setAllowedTypes(array(
-                'builder'       => array('Symfony\Component\Form\FormBuilderInterface'),
+                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
             ))
         ;
     }
@@ -53,7 +53,6 @@ class FormStepType extends AbstractStepType
             'label'         => $options['title'],
             'builder'       => $options['builder'],
             'display_title' => $options['display_title'],
-            'attr'          => $options['attr'],
         ));
     }
 

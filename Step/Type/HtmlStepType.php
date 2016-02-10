@@ -20,7 +20,10 @@ class HtmlStepType extends AbstractStepType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setDefaults(array('content' => null))
+            ->setDefaults(array(
+                'content' => null,
+                'attr'    => array('class' => 'html_text'),
+            ))
             ->setAllowedTypes(array('content' => array('null', 'string')))
         ;
     }
@@ -33,7 +36,6 @@ class HtmlStepType extends AbstractStepType
         $builder->add('content', 'idci_step_step_form_html', array(
             'content'       => $options['content'],
             'display_title' => $options['display_title'],
-            'attr'          => $options['attr'],
         ));
     }
 }

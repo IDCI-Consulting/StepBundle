@@ -1,11 +1,9 @@
 {%- block idci_step_step_form_row -%}
-    <div{%- for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{%- endfor -%}>
-        {% if display_title %}
-            {{- form_label(form) -}}
-        {% endif %}
-        {{- form_errors(form) -}}
-        {{- form_widget(form) -}}
-    </div>
+    {% if display_title %}
+        {{- form_label(form) -}}
+    {% endif %}
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
 {%- endblock idci_step_step_form_row -%}
 
 {%- block idci_step_step_form_html_row -%}
