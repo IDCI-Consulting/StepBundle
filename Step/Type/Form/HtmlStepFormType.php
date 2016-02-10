@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 
 class HtmlStepFormType extends AbstractStepFormType
 {
@@ -40,9 +41,17 @@ class HtmlStepFormType extends AbstractStepFormType
         $resolver
             ->setDefaults(array(
                 'content' => null,
-                'attr'    => array('class' => 'html_text'),
             ))
             ->setAllowedTypes(array('content' => array('null', 'string')))
+            ->setNormalizers(array(
+                'attr' => function (Options $options, $value) {
+                    if (!isset($value['class'])) {
+                        $value['class'] = 'html_text';
+                    }
+
+                    return $value;
+                }
+            ))
         ;
     }
 
