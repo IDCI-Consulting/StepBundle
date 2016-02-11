@@ -42,9 +42,9 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     {
         if (!$this->isValidFlowDataType($type)) {
             throw new \UnexpectedValueException(sprintf(
-                'The flow data type "%s" doesn\'t exist (valid flow data type are: %s)',
-                $stepName,
-                implode(', ', array_keys(self::$flowDataTypeMapping))
+                'The flow data type "%s" doesn\'t exist (valid flow data types are: "%s")',
+                $type,
+                implode('", "', array_keys(self::$flowDataTypeMapping))
             ));
         }
 
