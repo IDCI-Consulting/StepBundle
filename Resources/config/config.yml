@@ -6,6 +6,8 @@ idci_step:
                     type: DateTime
                 checkbox:
                     type: boolean
+                date:
+                    type: DateTime
                 datetime:
                     type: DateTime
                 integer:
