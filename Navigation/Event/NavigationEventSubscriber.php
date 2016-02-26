@@ -99,18 +99,21 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 array('addPathEvents', 1),
             ),
             FormEvents::PRE_SUBMIT    => array(
-                array('preSubmit', 0),
-                array('addStepEvents', -1),
-                array('addPathEvents', -2),
+                array('checkReturn', 100),
+                array('preSubmit', -1),
+                array('addStepEvents', -2),
+                array('addPathEvents', -3),
             ),
             FormEvents::SUBMIT        => array(
+                array('checkReturn', 100),
                 array('addStepEvents', -1),
                 array('addPathEvents', -2),
             ),
             FormEvents::POST_SUBMIT   => array(
-                array('postSubmit', 0),
-                array('addStepEvents', -1),
-                array('addPathEvents', -2),
+                array('checkReturn', 100),
+                array('postSubmit', -1),
+                array('addStepEvents', -2),
+                array('addPathEvents', -3),
             ),
         );
     }
@@ -227,10 +230,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
             // Trigger only path event actions on the clicked path during POST_SUBMIT event.
-            if ($event->getName() == FormEvents::POST_SUBMIT && (
-                $this->navigator->hasReturned() ||
-                $this->navigator->getChosenPath() !== $path
-            )) {
+            if ($event->getName() == FormEvents::POST_SUBMIT && $this->navigator->getChosenPath() !== $path) {
                 continue;
             }
 
@@ -292,6 +292,18 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * Check return.
+     *
+     * @param FormEvent $event
+     */
+    public function checkReturn(FormEvent $event)
+    {
+        if ($this->navigator->hasReturned()) {
+            $event->stopPropagation();
+        }
+    }
+
+    /**
      * Pre set data.
      *
      * @param FormEvent $event
@@ -338,10 +350,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function postSubmit(FormEvent $event)
     {
-        if ($this->navigator->hasReturned()) {
-            return;
-        }
-
         $form = $event->getForm();
 
         foreach ($this->navigator->getAvailablePaths() as $i => $path) {
