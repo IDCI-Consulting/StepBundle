@@ -145,7 +145,7 @@
                 <tr>
                     <td>{{ path.source|default('') }}</td>
                     <td>{{ path.index|default('') }}</td>
-                    <td>{{ path.destination }}</td>
+                    <td>{{ path.destination|default('') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -165,7 +165,7 @@
                 <tr>
                     <td>{{ path.source|default('') }}</td>
                     <td>{{ path.index|default('') }}</td>
-                    <td>{{ path.destination }}</td>
+                    <td>{{ path.destination|default('') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
