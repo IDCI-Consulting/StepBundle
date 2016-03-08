@@ -103,7 +103,7 @@ class Navigator implements NavigatorInterface
      * @param MapInterface              $map          The map to navigate.
      * @param Request                   $request      The HTTP request.
      * @param NavigationLoggerInterface $logger       The logger.
-     * @param array                     $data         The navigation data.
+     * @param array                     $flowData     The navigation flow data.
      */
     public function __construct(
         FormFactoryInterface      $formFactory,
@@ -111,7 +111,7 @@ class Navigator implements NavigatorInterface
         MapInterface              $map,
         Request                   $request,
         NavigationLoggerInterface $logger = null,
-        array                     $data = array()
+        array                     $flowData = array()
     )
     {
         $this->form         = null;
@@ -121,7 +121,7 @@ class Navigator implements NavigatorInterface
         $this->map          = $map;
         $this->request      = $request;
         $this->logger       = $logger;
-        $this->data         = array_replace_recursive($this->map->getData(), $data);
+        $this->flowData     = $flowData;
         $this->flow         = null;
         $this->currentStep  = null;
         $this->chosenPath   = null;
@@ -144,9 +144,42 @@ class Navigator implements NavigatorInterface
         if (null === $this->flow) {
             $this->flow = new Flow();
             $this->flow->setCurrentStep($this->map->getFirstStep());
+            $data = $this->flowData;
 
-            if (!empty($this->data)) {
-                foreach ($this->data as $stepName => $stepData) {
+            if (!empty($data)) {
+                if (isset($data['remindedData'])) {
+                    foreach ($data['remindedData'] as $stepName => $stepData) {
+                        if (!$this->map->hasStep($stepName)) {
+                            continue;
+                        }
+                        $this->flow->setStepData(
+                            $this->map->getStep($stepName),
+                            $stepData,
+                            FlowData::TYPE_REMINDED
+                        );
+                    }
+                }
+
+                if (isset($data['retrievedData'])) {
+                    foreach ($data['retrievedData'] as $stepName => $stepData) {
+                        if (!$this->map->hasStep($stepName)) {
+                            continue;
+                        }
+                        $this->flow->setStepData(
+                            $this->map->getStep($stepName),
+                            $stepData,
+                            FlowData::TYPE_RETRIEVED
+                        );
+                    }
+                }
+
+                // Merge given data with map data.
+                $data['data'] = array_replace_recursive($this->map->getData(), $data['data']);
+
+                foreach ($data['data'] as $stepName => $stepData) {
+                    if (!$this->map->hasStep($stepName)) {
+                        continue;
+                    }
                     $this->flow->setStepData(
                         $this->map->getStep($stepName),
                         $stepData,

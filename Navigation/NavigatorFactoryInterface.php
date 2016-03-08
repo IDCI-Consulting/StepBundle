@@ -19,10 +19,10 @@ interface NavigatorFactoryInterface
      * @param Request                                                   $request        The HTTP request.
      * @param MapInterface|ConfigurationFetcherInterface|array|string   $configuration  The map configuration.
      * @param array                                                     $parameters     The fetcher parameters.
-     * @param array                                                     $data           The navigation data.
+     * @param array                                                     $flowData       The navigation flow data.
      * @param boolean                                                   $navigate       Whether or not to do the navigation during creation.
      *
      * @return NavigatorInterface
      */
-    public function createNavigator(Request $request, $configuration, array $parameters = array(), array $data = array(), $navigate = true);
+    public function createNavigator(Request $request, $configuration, array $parameters = array(), array $flowData = array(), $navigate = true);
 }
