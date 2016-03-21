@@ -89,13 +89,20 @@ interface NavigatorInterface
     public function getPreviousStep($stepName = null);
 
     /**
-     * Returns the current step data.
+     * Set the final destination.
      *
-     * @param string|null $type The data type (null, 'reminded' or 'retrieved').
+     * @param string $url The final destination url.
      *
-     * @return array|null
+     * @return NavigatorInterface
      */
-    public function getCurrentStepData($type = null);
+    public function setFinalDestination($url);
+
+    /**
+     * Returns the final destination (as URL).
+     *
+     * @return string|null
+     */
+    public function getFinalDestination();
 
     /**
      * Set current step data.
@@ -104,6 +111,15 @@ interface NavigatorInterface
      * @param string|null $type    The data type (null, 'reminded' or 'retrieved').
      */
     public function setCurrentStepData(array $data, $type = null);
+
+    /**
+     * Returns the current step data.
+     *
+     * @param string|null $type The data type (null, 'reminded' or 'retrieved').
+     *
+     * @return array|null
+     */
+    public function getCurrentStepData($type = null);
 
     /**
      * Returns the available paths.

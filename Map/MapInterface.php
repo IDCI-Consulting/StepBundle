@@ -118,4 +118,11 @@ interface MapInterface
      * @return PathInterface The path.
      */
     public function getPath($source, $index);
+
+    /**
+     * Returns the final destination (as URL).
+     *
+     * @return string|null
+     */
+    public function getFinalDestination();
 }

@@ -56,14 +56,18 @@
     <h2>Map</h2>
 
     <table>
-        <tr>
-            <th>Name</th>
-            <td>{{ collector.map.name|default() }}</td>
-        </tr>
-        <tr>
-            <th>ID</th>
-            <td>{{ collector.map.footprint|default() }}</td>
-        </tr>
+        {% for key, value in collector.map.configuration %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>
+                    {% if value is iterable %}
+                        {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}
+                    {% else %}
+                        {{ value|default() }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 
     <h2>Navigation</h2>

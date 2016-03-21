@@ -81,6 +81,11 @@ class Navigator implements NavigatorInterface
     protected $chosenPath;
 
     /**
+     * @var string
+     */
+    protected $finalDestination;
+
+    /**
      * @var boolean
      */
     protected $hasNavigated;
@@ -114,20 +119,21 @@ class Navigator implements NavigatorInterface
         array                     $flowData = array()
     )
     {
-        $this->form         = null;
-        $this->formView     = null;
-        $this->formFactory  = $formFactory;
-        $this->flowRecorder = $flowRecorder;
-        $this->map          = $map;
-        $this->request      = $request;
-        $this->logger       = $logger;
-        $this->flowData     = $flowData;
-        $this->flow         = null;
-        $this->currentStep  = null;
-        $this->chosenPath   = null;
-        $this->hasNavigated = false;
-        $this->hasReturned  = false;
-        $this->hasFinished  = false;
+        $this->form             = null;
+        $this->formView         = null;
+        $this->formFactory      = $formFactory;
+        $this->flowRecorder     = $flowRecorder;
+        $this->map              = $map;
+        $this->request          = $request;
+        $this->logger           = $logger;
+        $this->flowData         = $flowData;
+        $this->flow             = null;
+        $this->currentStep      = null;
+        $this->chosenPath       = null;
+        $this->finalDestination = null;
+        $this->hasNavigated     = false;
+        $this->hasReturned      = false;
+        $this->hasFinished      = false;
     }
 
     /**
@@ -135,6 +141,8 @@ class Navigator implements NavigatorInterface
      */
     protected function initFlow()
     {
+        $this->setFinalDestination($this->map->getFinalDestination());
+
         $this->flow = $this->flowRecorder->getFlow(
             $this->map,
             $this->request
@@ -397,9 +405,19 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStepData($type = null)
+    public function setFinalDestination($url)
     {
-        return $this->getFlow()->getStepData($this->getCurrentStep(), $type);
+        $this->finalDestination = $url;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFinalDestination()
+    {
+        return $this->finalDestination;
     }
 
     /**
@@ -412,6 +430,14 @@ class Navigator implements NavigatorInterface
             $data,
             $type
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCurrentStepData($type = null)
+    {
+        return $this->getFlow()->getStepData($this->getCurrentStep(), $type);
     }
 
     /**

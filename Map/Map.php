@@ -207,6 +207,14 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
+    public function getFinalDestination()
+    {
+        return $this->configuration['options']['final_destination'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function __sleep()
     {
         return array('configuration');
