@@ -300,13 +300,13 @@ class MapBuilder implements MapBuilderInterface
     }
 
     /**
-     * Generate a map unique footprint based on its steps and paths.
+     * Generate a map unique footprint based on its name, steps and paths.
      *
      * @return string
      */
     private function generateFootprint()
     {
-        return md5(json_encode($this->steps).json_encode($this->paths));
+        return md5($this->name.json_encode($this->steps).json_encode($this->paths));
     }
 
     /**
