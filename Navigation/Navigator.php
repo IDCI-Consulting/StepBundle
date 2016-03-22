@@ -108,7 +108,7 @@ class Navigator implements NavigatorInterface
      * @param MapInterface              $map          The map to navigate.
      * @param Request                   $request      The HTTP request.
      * @param NavigationLoggerInterface $logger       The logger.
-     * @param array                     $flowData     The navigation flow data.
+     * @param array                     $data         The default navigation flow data.
      */
     public function __construct(
         FormFactoryInterface      $formFactory,
@@ -116,7 +116,7 @@ class Navigator implements NavigatorInterface
         MapInterface              $map,
         Request                   $request,
         NavigationLoggerInterface $logger = null,
-        array                     $flowData = array()
+        array                     $data = array()
     )
     {
         $this->form             = null;
@@ -126,7 +126,6 @@ class Navigator implements NavigatorInterface
         $this->map              = $map;
         $this->request          = $request;
         $this->logger           = $logger;
-        $this->flowData         = $flowData;
         $this->flow             = null;
         $this->currentStep      = null;
         $this->chosenPath       = null;
@@ -134,6 +133,11 @@ class Navigator implements NavigatorInterface
         $this->hasNavigated     = false;
         $this->hasReturned      = false;
         $this->hasFinished      = false;
+
+        $this->data             = array(
+            'remindedData'  => isset($data['data']) ? $data['data'] : array(),
+            'retrievedData' => isset($data['retrievedData']) ? $data['retrievedData'] : array(),
+        );
     }
 
     /**
@@ -152,48 +156,33 @@ class Navigator implements NavigatorInterface
         if (null === $this->flow) {
             $this->flow = new Flow();
             $this->flow->setCurrentStep($this->map->getFirstStep());
-            $data = $this->flowData;
 
-            if (!empty($data)) {
-                if (isset($data['remindedData'])) {
-                    foreach ($data['remindedData'] as $stepName => $stepData) {
-                        if (!$this->map->hasStep($stepName)) {
-                            continue;
-                        }
-                        $this->flow->setStepData(
-                            $this->map->getStep($stepName),
-                            $stepData,
-                            FlowData::TYPE_REMINDED
-                        );
-                    }
-                }
+            $mapData = $this->map->getData();
 
-                if (isset($data['retrievedData'])) {
-                    foreach ($data['retrievedData'] as $stepName => $stepData) {
-                        if (!$this->map->hasStep($stepName)) {
-                            continue;
-                        }
-                        $this->flow->setStepData(
-                            $this->map->getStep($stepName),
-                            $stepData,
-                            FlowData::TYPE_RETRIEVED
-                        );
-                    }
-                }
+            foreach ($this->map->getSteps() as $stepName => $step) {
+                $this->data['remindedData'][$stepName] = array_replace_recursive(
+                    isset($mapData[$stepName]) ?
+                        $mapData[$stepName] : array()
+                    ,
+                    isset($this->data['remindedData'][$stepName]) ?
+                        $this->data['remindedData'][$stepName] : array()
+                );
 
-                // Merge given data with map data.
-                $data['data'] = array_replace_recursive($this->map->getData(), $data['data']);
+                $this->data['retrievedData'][$stepName] = isset($this->data['retrievedData'][$stepName]) ?
+                    $this->data['retrievedData'][$stepName] : array()
+                ;
 
-                foreach ($data['data'] as $stepName => $stepData) {
-                    if (!$this->map->hasStep($stepName)) {
-                        continue;
-                    }
-                    $this->flow->setStepData(
-                        $this->map->getStep($stepName),
-                        $stepData,
-                        FlowData::TYPE_REMINDED
-                    );
-                }
+                $this->flow->setStepData(
+                    $step,
+                    $this->data['remindedData'][$stepName],
+                    FlowData::TYPE_REMINDED
+                );
+
+                $this->flow->setStepData(
+                    $step,
+                    $this->data['retrievedData'][$stepName],
+                    FlowData::TYPE_RETRIEVED
+                );
             }
 
             $this->flowRecorder->reconstructFlowData($this->map, $this->flow);
@@ -334,6 +323,14 @@ class Navigator implements NavigatorInterface
     public function getMap()
     {
         return $this->map;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**

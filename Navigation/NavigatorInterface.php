@@ -43,6 +43,13 @@ interface NavigatorInterface
     public function getMap();
 
     /**
+     * Get the default flow data.
+     *
+     * @return array
+     */
+    public function getData();
+
+    /**
      * Get the flow.
      *
      * @return FlowInterface
