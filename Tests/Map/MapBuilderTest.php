@@ -6,9 +6,20 @@ use IDCI\Bundle\StepBundle\Map\MapBuilder;
 
 class MapBuilderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetMap()
+    public function setUp()
     {
-        $mapBuilder = new MapBuilder(
+        $securityContext = $this
+            ->getMockBuilder('Symfony\Component\Security\Core\SecurityContextInterface')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+        $securityContext
+            ->expects($this->any())
+            ->method('getToken')
+            ->will($this->returnValue(null))
+        ;
+
+        $this->mapBuilder = new MapBuilder(
             "Test MAP",
             array(),
             array(),
@@ -16,11 +27,17 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
             $this->getMock("IDCI\Bundle\StepBundle\Step\StepBuilderInterface"),
             $this->getMock("IDCI\Bundle\StepBundle\Path\PathBuilderInterface"),
             $this->getMock("\Twig_Environment"),
-            $this->getMock("Symfony\Component\Security\Core\SecurityContextInterface"),
+            $securityContext,
             $this->getMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
         );
+    }
 
-        $map = $mapBuilder->getMap($this->getMock("Symfony\Component\HttpFoundation\Request"));
+    public function testGetMap()
+    {
+        $map = $this
+            ->mapBuilder
+            ->getMap($this->getMock("Symfony\Component\HttpFoundation\Request"))
+        ;
 
         $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map);
     }
