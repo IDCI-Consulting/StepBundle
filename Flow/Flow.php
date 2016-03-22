@@ -37,12 +37,12 @@ class Flow implements FlowInterface
         FlowDataInterface    $data         = null
     )
     {
+        $this->history = null === $history ? new FlowHistory() : $history;
+        $this->data    = null === $data ? new FlowData() : $data;
+
         if (null !== $currentStep) {
             $this->setCurrentStep($currentStep);
         }
-
-        $this->history = null === $history ? new FlowHistory() : $history;
-        $this->data    = null === $data ? new FlowData() : $data;
     }
 
     /**
