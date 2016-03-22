@@ -120,10 +120,7 @@ class FlowRecorder implements FlowRecorderInterface
     }
 
     /**
-     * Transform flow data if a step data type mapping is defined
-     *
-     * @param MapInterface $map   The map.
-     * @param FlowInterface $flow The flow.
+     * {@inheritdoc}
      */
     public function reconstructFlowData(MapInterface $map, FlowInterface $flow)
     {

@@ -19,7 +19,7 @@ interface FlowRecorderInterface
      * @param MapInterface $map     The map.
      * @param Request      $request The HTTP request.
      *
-     * @return FlowInterface
+     * @return FlowInterface|null
      */
     public function getFlow(MapInterface $map, Request $request);
 
@@ -72,4 +72,12 @@ interface FlowRecorderInterface
      * @return FlowInterface
      */
     public function unserialize($serializedFlow);
+
+    /**
+     * Transform flow data if a step data type mapping is defined
+     *
+     * @param MapInterface  $map  The map.
+     * @param FlowInterface $flow The flow.
+     */
+    public function reconstructFlowData(MapInterface $map, FlowInterface $flow);
 }
