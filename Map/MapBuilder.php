@@ -223,7 +223,7 @@ class MapBuilder implements MapBuilderInterface
         $map = new Map(array(
             'name'      => $this->name,
             'footprint' => $this->generateFootprint(),
-            'data'      => $this->data,
+            'data'      => $this->merge($this->data),
             'options'   => $this->options
         ));
 
