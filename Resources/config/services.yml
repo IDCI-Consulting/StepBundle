@@ -155,6 +155,11 @@ services:
         tags:
             - { name: idci_step.path_event.action, alias: js_confirm }
 
+    idci_step.path_event.action.change_data:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction
+        tags:
+            - { name: idci_step.path_event.action, alias: change_data }
+
     idci_step.path_event.action.purge_flow_data:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction
         tags:
