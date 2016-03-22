@@ -25,11 +25,15 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
                 'stepA' => array(
                     'field1' => 'MapStepAField1Value',
                     'field2' => 'MapStepAField2Value',
+                    'field3' => 'MapStepAField3Value',
                 ),
                 'stepB' => array(
                     'field1' => 'MapStepBField1Value',
                     'field2' => 'MapStepBField2Value',
-                )
+                ),
+                'stepC' => array(
+                    'field2' => array('d', 'e', 'f')
+                ),
             ),
         ));
 
@@ -42,6 +46,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
                 'options' => array(
                     'data' => array(
                         'field1' => 'StepAField1Value',
+                        'field2' => 'StepAField2Value',
                     )
                 )
             )))
@@ -55,6 +60,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
                 'options' => array(
                     'data' => array(
                         'field1' => 'StepCField1Value',
+                        'field2' => array('a', 'b', 'c')
                     )
                 )
             )))
@@ -87,13 +93,22 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($formBuilder))
         ;
 
+        $this->data = array(
+            'stepA' => array(
+                'field1' => 'FlowStepAField1Value'
+            ),
+            'stepC' => array(
+                'field2' => array('g', 'h', 'i')
+            ),
+        );
+
         $this->navigator = new Navigator(
             $formFactory,
             $flowRecorder,
             $map,
             $this->getMock("Symfony\Component\HttpFoundation\Request"),
             $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface"),
-            array()
+            array('data' => $this->data)
         );
     }
 
@@ -105,7 +120,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->navigator->hasFinished());
         $this->assertEquals(
             array(
-                'remindedData'  => array(),
+                'remindedData'  => $this->data,
                 'retrievedData' => array()
             ),
             $this->navigator->getData()
@@ -119,8 +134,9 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             array(
                 'remindedData'  => array(
                     'stepA' => array(
-                        'field1' => 'StepAField1Value',
-                        'field2' => 'MapStepAField2Value',
+                        'field1' => 'FlowStepAField1Value',
+                        'field2' => 'StepAField2Value',
+                        'field3' => 'MapStepAField3Value',
                     ),
                     'stepB' => array(
                         'field1' => 'MapStepBField1Value',
@@ -128,6 +144,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
                     ),
                     'stepC' => array(
                         'field1' => 'StepCField1Value',
+                        'field2' => array('g', 'h', 'i')
                     ),
                     'stepD' => array(),
                 ),

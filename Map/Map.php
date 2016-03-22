@@ -116,7 +116,7 @@ class Map implements MapInterface
         if (null !== $step->getData()) {
             // Merge step data with map data
             $configurationData = $this->getData();
-            $this->configuration['data'][$name] = array_merge(
+            $this->configuration['data'][$name] = array_replace_recursive(
                 isset($configurationData[$name]) ? $configurationData[$name] : array(),
                 $step->getData()
             );
