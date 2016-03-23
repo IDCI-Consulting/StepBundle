@@ -258,8 +258,17 @@ class Navigator implements NavigatorInterface
             throw new \LogicException('The navigation has already been done');
         }
 
+        /**
+         * This must be done to dispatch form events:
+         *  - 'form.pre_set_data'
+         *  - 'form.post_set_data'
+         * Event if the request is not a Post (For the first step for exemple).
+         *
+         * => Do not move in a condition !
+         */
+        $form = $this->getForm();
+
         if ($this->request->isMethod('POST')) {
-            $form = $this->getForm();
             $form->handleRequest($this->request);
 
             if (!$this->hasReturned() && $form->isValid()) {
