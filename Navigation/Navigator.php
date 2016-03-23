@@ -262,9 +262,7 @@ class Navigator implements NavigatorInterface
          * This must be done to dispatch form events:
          *  - 'form.pre_set_data'
          *  - 'form.post_set_data'
-         * Event if the request is not a Post (For the first step for exemple).
-         *
-         * => Do not move in a condition !
+         * Event if the request is not a 'Post' (For the first step for exemple).
          */
         $form = $this->getForm();
 
@@ -287,12 +285,13 @@ class Navigator implements NavigatorInterface
                     $this->getFlow()->setCurrentStep($destinationStep);
                 }
 
-                $this->save();
-
                 // Reset the current form.
                 $this->form = null;
             }
         }
+
+        // Save the flow even if the the request is not a 'Post'.
+        $this->save();
 
         if ($this->logger) {
             $this->logger->stopNavigation($this);
@@ -515,6 +514,14 @@ class Navigator implements NavigatorInterface
             $this->map,
             $this->request
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function stop()
+    {
+        $this->hasFinished = true;
     }
 
     /**

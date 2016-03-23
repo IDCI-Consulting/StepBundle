@@ -7,13 +7,14 @@ parameters:
 
     idci_step.path.registry.class: IDCI\Bundle\StepBundle\Path\PathRegistry
     idci_step.path_event.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventRegistry
-    idci_step.path_destination_rule.registry.class: IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleRegistry
     idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
     idci_step.path.type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
     idci_step.path.type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
     idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
     idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
     idci_step.path.type.link.class: IDCI\Bundle\StepBundle\Path\Type\LinkPathType
+
+    idci_step.conditional_rule.registry.class: IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry
 
     idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
     idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
@@ -48,8 +49,8 @@ services:
     idci_step.path_event.registry:
         class: %idci_step.path_event.registry.class%
 
-    idci_step.path_destination_rule.registry:
-        class: %idci_step.path_destination_rule.registry.class%
+    idci_step.conditional_rule.registry:
+        class: %idci_step.conditional_rule.registry.class%
 
 
     # Builder
@@ -109,20 +110,27 @@ services:
 
     # StepEvent
 
+    idci_step.step_event.action.add_link:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction
+        tags:
+            - { name: idci_step.step_event.action, alias: add_link }
+
     idci_step.step_event.action.change_data:
         class: IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventAction
         tags:
             - { name: idci_step.step_event.action, alias: change_data }
 
+    idci_step.step_event.action.conditional_stop_navigation:
+        class: IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction
+        arguments:
+            - @idci_step.conditional_rule.registry
+        tags:
+            - { name: idci_step.step_event.action, alias: conditional_stop_navigation }
+
     idci_step.step_event.action.transform_data:
         class: IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventAction
         tags:
             - { name: idci_step.step_event.action, alias: transform_data }
-
-    idci_step.step_event.action.add_link:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction
-        tags:
-            - { name: idci_step.step_event.action, alias: add_link }
 
 
     # Path
@@ -138,7 +146,7 @@ services:
             - @idci_step.merger
             - @security.context
             - @session
-            - @idci_step.path_destination_rule.registry
+            - @idci_step.conditional_rule.registry
         tags:
             - { name: idci_step.path.type, alias: conditional_destination }
 

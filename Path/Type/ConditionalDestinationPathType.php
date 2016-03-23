@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleRegistryInterface;
+use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class ConditionalDestinationPathType extends AbstractPathType
@@ -31,29 +31,29 @@ class ConditionalDestinationPathType extends AbstractPathType
     private $session;
 
     /**
-     * @var PathDestinationRuleRegistryInterface
+     * @var ConditionalRuleRegistryInterface
      */
-    private $destinationRuleRegistry;
+    private $conditionalRuleRegistry;
 
     /**
      * Constructor
      *
-     * @param Twig_Environment                     $merger                  The twig merger.
-     * @param SecurityContextInterface             $securityContext         The security context.
-     * @param SessionInterface                     $session                 The session.
-     * @param PathDestinationRuleRegistryInterface $destinationRuleRegistry The destination rule registry.
+     * @param Twig_Environment                 $merger                  The twig merger.
+     * @param SecurityContextInterface         $securityContext         The security context.
+     * @param SessionInterface                 $session                 The session.
+     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry The conditional rule registry.
      */
     public function __construct(
-        \Twig_Environment                    $merger,
-        SecurityContextInterface             $securityContext,
-        SessionInterface                     $session,
-        PathDestinationRuleRegistryInterface $destinationRuleRegistry
+        \Twig_Environment                $merger,
+        SecurityContextInterface         $securityContext,
+        SessionInterface                 $session,
+        ConditionalRuleRegistryInterface $conditionalRuleRegistry
     )
     {
         $this->merger                  = $merger;
         $this->securityContext         = $securityContext;
         $this->session                 = $session;
-        $this->destinationRuleRegistry = $destinationRuleRegistry;
+        $this->conditionalRuleRegistry = $conditionalRuleRegistry;
     }
 
     /**
@@ -99,50 +99,48 @@ class ConditionalDestinationPathType extends AbstractPathType
         }
 
         foreach ($options['destinations'] as $name => $rules) {
+            $mergedRules = $rules;
             if (is_array($rules)) {
-                $mergedRules = json_decode(
-                    $this->merger->render(json_encode($rules), array(
-                        'user'      => $user,
-                        'session'   => $this->session->all(),
-                        'flow_data' => $navigator->getFlow()->getData(),
-                    )),
-                    true
-                );
-
-                if ($this->matchPathDestinationRule($mergedRules)) {
-                    return $name;
-                }
-
-                continue;
+                $mergedRules = json_encode($rules);
             }
 
-            $merged = $this->merger->render($rules, array(
+            $mergedRules = $this->merger->render($mergedRules, array(
                 'user'      => $user,
                 'session'   => $this->session->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
             ));
 
-            if ($merged === '1') {
+            if (is_array($rules)) {
+                $mergedRules = json_encode($mergedRules, true);
+            }
+
+            if ($this->matchConditionalRules($mergedRules)) {
                 return $name;
             }
+
+            continue;
         }
 
         return $options['default_destination'];
     }
 
     /**
-     * Match the given path destination rules.
+     * Match the given conditional rules.
      *
-     * @param array $rules The rules to check.
+     * @param mixed $rules The rules to check.
      *
-     * @return boolean Return true if the rule match, false otherwise.
+     * @return boolean Return true if the rules match, false otherwise.
      */
-    private function matchPathDestinationRule(array $rules)
+    private function matchConditionalRules($rules)
     {
-        foreach ($rules as $alias => $options) {
-            $destinationRule = $this->destinationRuleRegistry->getRule($alias);
+        if (!is_array($rules)) {
+            return (bool)$rules;
+        }
 
-            if (!$destinationRule->match($options)) {
+        foreach ($rules as $alias => $options) {
+            $rule = $this->conditionalRuleRegistry->getRule($alias);
+
+            if (!$rule->match($options)) {
                 return false;
             }
         }

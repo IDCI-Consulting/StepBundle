@@ -5,12 +5,12 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Path\DestinationRule;
+namespace IDCI\Bundle\StepBundle\ConditionalRule;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractPathDestinationRule implements PathDestinationRuleInterface
+abstract class AbstractConditionalRule implements ConditionalRuleInterface
 {
     /**
      * {@inheritdoc}
@@ -38,7 +38,7 @@ abstract class AbstractPathDestinationRule implements PathDestinationRuleInterfa
      * @param array              $options   The options to match.
      * @param NavigatorInterface $navigator The navigator.
      *
-     * @return boolean Return true if the destination rule match.
+     * @return boolean Return true if the conditional rule match.
      */
     abstract protected function doMatch(array $options = array());
 }

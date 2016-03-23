@@ -181,6 +181,11 @@ interface NavigatorInterface
     public function clear();
 
     /**
+     * Stop the navigation.
+     */
+    public function stop();
+
+    /**
      * Create step view.
      *
      * @return Symfony\Component\Form\FormView

@@ -5,22 +5,22 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Path\DestinationRule;
+namespace IDCI\Bundle\StepBundle\ConditionalRule;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-use IDCI\Bundle\StepBundle\Path\DestinationRule\PathDestinationRuleInterface;
+use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleInterface;
 
-class PathDestinationRuleRegistry implements PathDestinationRuleRegistryInterface
+class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
 {
     /**
-     * @var PathDestinationRuleInterface[]
+     * @var ConditionalRuleInterface[]
      */
     private $rules = array();
 
     /**
      * {@inheritdoc}
      */
-    public function setRule($alias, PathDestinationRuleInterface $rule)
+    public function setRule($alias, ConditionalRuleInterface $rule)
     {
         $this->rules[$alias] = $rule;
 
@@ -37,7 +37,7 @@ class PathDestinationRuleRegistry implements PathDestinationRuleRegistryInterfac
         }
 
         if (!isset($this->rules[$alias])) {
-            throw new \InvalidArgumentException(sprintf('Could not load path destination rule "%s"', $alias));
+            throw new \InvalidArgumentException(sprintf('Could not load conditional rule "%s"', $alias));
         }
 
         return $this->rules[$alias];
