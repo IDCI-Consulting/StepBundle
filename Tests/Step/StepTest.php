@@ -10,7 +10,7 @@ class StepTest extends \PHPUnit_Framework_TestCase
     {
         $this->testConfiguration = array(
             'name'    => 'Step test',
-            'type'    => 'single',
+            'type'    => 'html',
             'options' => array(
                 'data'             => array(),
                 'is_first'         => false,
@@ -28,7 +28,7 @@ class StepTest extends \PHPUnit_Framework_TestCase
 
     public function testType()
     {
-        $this->assertEquals('single', $this->step->getType());
+        $this->assertEquals('html', $this->step->getType());
     }
 
     public function testName()

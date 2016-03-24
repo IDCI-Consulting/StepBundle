@@ -52,6 +52,16 @@ abstract class AbstractPathType implements PathTypeInterface
      */
     public function resolveDestination(array $options, NavigatorInterface $navigator)
     {
-        return null;
+        return $this->doResolveDestination($options, $navigator);
     }
+
+    /**
+     * Do resolve the destination step name.
+     *
+     * @param array              $options   The path options.
+     * @param NavigatorInterface $navigator The navigator.
+     *
+     * @return string|null The resolved destination step name.
+     */
+    abstract public function doResolveDestination(array $options, NavigatorInterface $navigator);
 }

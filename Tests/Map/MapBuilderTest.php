@@ -9,8 +9,9 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $securityContext = $this
-            ->getMockBuilder('Symfony\Component\Security\Core\SecurityContextInterface')
+            ->getMockBuilder("Symfony\Component\Security\Core\SecurityContextInterface")
             ->disableOriginalConstructor()
+            ->setMethods(array('getToken', 'setToken', 'isGranted'))
             ->getMock()
         ;
         $securityContext
@@ -19,6 +20,9 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
+        $twigStringLoader = new \Twig_Loader_String;
+        $twigEnvironment  = new \Twig_Environment($twigStringLoader, array());
+
         $this->mapBuilder = new MapBuilder(
             "Test MAP",
             array(),
@@ -26,7 +30,7 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
             $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface"),
             $this->getMock("IDCI\Bundle\StepBundle\Step\StepBuilderInterface"),
             $this->getMock("IDCI\Bundle\StepBundle\Path\PathBuilderInterface"),
-            $this->getMock("\Twig_Environment"),
+            $twigEnvironment,
             $securityContext,
             $this->getMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
         );
@@ -40,5 +44,40 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
         ;
 
         $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map);
+        $this->assertEquals('Test MAP', $map->getName());
+
+        /*
+        $this
+            ->mapBuilder
+            ->addStep('intro', 'html', array(
+                    'title'       => 'Introduction',
+                    'description' => 'The first step',
+                    'content'     => '<h1>My content</h1>',
+                ))
+            ->addStep('end', 'html', array(
+                'title'       => 'The end',
+                'description' => 'The last data step',
+                'content'     => '<h1>The end</h1>',
+            ))
+            ->addPath('single', array(
+                'source'       => 'intro',
+                'destination'  => 'end',
+                'next_options' => array(
+                    'label' => 'next',
+                ),
+            ))
+            ->addPath('end', array(
+                'source'           => 'end',
+                'next_options'     => array(
+                    'label' => 'end',
+                ),
+            ))
+        ;
+
+        $map = $this
+            ->mapBuilder
+            ->getMap($this->getMock("Symfony\Component\HttpFoundation\Request"))
+        ;
+        */
     }
 }

@@ -209,9 +209,6 @@ class Navigator implements NavigatorInterface
                 $this->currentStep->getOptions()
             )
         );
-
-        // Build the step form
-        $this->getForm();
     }
 
     /**

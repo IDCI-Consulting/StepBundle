@@ -91,7 +91,7 @@ class ConditionalDestinationPathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function resolveDestination(array $options, NavigatorInterface $navigator)
+    public function doResolveDestination(array $options, NavigatorInterface $navigator)
     {
         $user = null;
         if (null !== $this->securityContext->getToken()) {

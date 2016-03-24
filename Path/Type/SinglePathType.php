@@ -44,7 +44,7 @@ class SinglePathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function resolveDestination(array $options, NavigatorInterface $navigator)
+    public function doResolveDestination(array $options, NavigatorInterface $navigator)
     {
         return $options['destination'];
     }

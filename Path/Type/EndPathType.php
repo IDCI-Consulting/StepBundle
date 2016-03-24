@@ -8,7 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class EndPathType extends AbstractPathType
 {
@@ -36,5 +36,13 @@ class EndPathType extends AbstractPathType
         $path = parent::buildPath($steps, $options);
 
         return $path->setSource($steps[$options['source']]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doResolveDestination(array $options, NavigatorInterface $navigator)
+    {
+        return null;
     }
 }
