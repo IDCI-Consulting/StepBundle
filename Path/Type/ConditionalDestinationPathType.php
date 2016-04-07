@@ -111,7 +111,7 @@ class ConditionalDestinationPathType extends AbstractPathType
             ));
 
             if (is_array($rules)) {
-                $mergedRules = json_encode($mergedRules, true);
+                $mergedRules = json_decode($mergedRules, true);
             }
 
             if ($this->matchConditionalRules($mergedRules)) {
