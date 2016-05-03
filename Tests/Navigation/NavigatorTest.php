@@ -158,4 +158,56 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             $this->navigator->getData()
         );
     }
+
+    public function testUrlQueryParameters()
+    {
+        $this->assertEquals(array(), $this->navigator->getUrlQueryParameters());
+
+        $this->navigator
+            ->addUrlQueryParameter('key1', 'value1')
+            ->addUrlQueryParameter('key2', 'value2')
+            ->addUrlQueryParameter('key3', 'value3')
+        ;
+        $this->assertEquals(
+            array(
+                'key1' => 'value1',
+                'key2' => 'value2',
+                'key3' => 'value3',
+            ),
+            $this->navigator->getUrlQueryParameters()
+        );
+
+        $this->navigator->addUrlQueryParameter('key1', 'value1-1');
+        $this->assertEquals(
+            array(
+                'key1' => 'value1-1',
+                'key2' => 'value2',
+                'key3' => 'value3',
+            ),
+            $this->navigator->getUrlQueryParameters()
+        );
+    }
+
+    public function testUrlFragment()
+    {
+        $this->assertEquals(null, $this->navigator->getUrlFragment());
+
+        $this->navigator->setUrlFragment('dummyfragment');
+        $this->assertEquals(
+            '#dummyfragment',
+            $this->navigator->getUrlFragment()
+        );
+
+        $this->navigator->setUrlFragment('#dummyfragment');
+        $this->assertEquals(
+            '#dummyfragment',
+            $this->navigator->getUrlFragment()
+        );
+
+        $this->navigator->setUrlFragment('#dummy#fragment');
+        $this->assertEquals(
+            '#dummy#fragment',
+            $this->navigator->getUrlFragment()
+        );
+    }
 }

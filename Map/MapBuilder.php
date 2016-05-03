@@ -124,9 +124,13 @@ class MapBuilder implements MapBuilderInterface
         $resolver = new OptionsResolver();
         $resolver
             ->setDefaults(array(
-                'browsing'          => 'linear',
-                'first_step_name'   => null,
-                'final_destination' => null,
+                'browsing'            => 'linear',
+                'first_step_name'     => null,
+                'final_destination'   => null,
+                'display_step_in_url' => false,
+            ))
+            ->setAllowedTypes(array(
+                'display_step_in_url' => array('bool'),
             ))
             ->setAllowedValues(array(
                 'browsing' => array('linear', 'free'),

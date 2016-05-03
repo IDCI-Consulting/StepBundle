@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
@@ -81,6 +82,16 @@ class Navigator implements NavigatorInterface
     protected $chosenPath;
 
     /**
+     * @var array
+     */
+    protected $urlQueryParameters;
+
+    /**
+     * @var string
+     */
+    protected $urlFragment;
+
+    /**
      * @var string
      */
     protected $finalDestination;
@@ -119,20 +130,22 @@ class Navigator implements NavigatorInterface
         array                     $data = array()
     )
     {
-        $this->form             = null;
-        $this->formView         = null;
-        $this->formFactory      = $formFactory;
-        $this->flowRecorder     = $flowRecorder;
-        $this->map              = $map;
-        $this->request          = $request;
-        $this->logger           = $logger;
-        $this->flow             = null;
-        $this->currentStep      = null;
-        $this->chosenPath       = null;
-        $this->finalDestination = null;
-        $this->hasNavigated     = false;
-        $this->hasReturned      = false;
-        $this->hasFinished      = false;
+        $this->form               = null;
+        $this->formView           = null;
+        $this->formFactory        = $formFactory;
+        $this->flowRecorder       = $flowRecorder;
+        $this->map                = $map;
+        $this->request            = $request;
+        $this->logger             = $logger;
+        $this->flow               = null;
+        $this->currentStep        = null;
+        $this->chosenPath         = null;
+        $this->urlQueryParameters = array();
+        $this->urlFragment        = null;
+        $this->finalDestination   = null;
+        $this->hasNavigated       = false;
+        $this->hasReturned        = false;
+        $this->hasFinished        = false;
 
         $this->data             = array(
             'remindedData'  => isset($data['data']) ? $data['data'] : array(),
@@ -240,6 +253,21 @@ class Navigator implements NavigatorInterface
     }
 
     /**
+     * Setup the navigation url.
+     *
+     * @param StepInterface $step The step.
+     */
+    protected function setupNavigationUrl(StepInterface $step)
+    {
+        // Add Step information following to the map configuration.
+        $mapConfiguration = $this->getMap()->getConfiguration();
+
+        if ($mapConfiguration['options']['display_step_in_url']) {
+            $this->addUrlQueryParameter('step', $step->getName());
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function navigate()
@@ -280,6 +308,8 @@ class Navigator implements NavigatorInterface
                 } else {
                     $this->hasNavigated = true;
                     $this->getFlow()->setCurrentStep($destinationStep);
+
+                    $this->setupNavigationUrl($destinationStep);
                 }
 
                 // Reset the current form.
@@ -309,6 +339,7 @@ class Navigator implements NavigatorInterface
         $this->getFlow()->retraceTo($destinationStep);
         $this->hasReturned = true;
         $this->save();
+        $this->setupNavigationUrl($destinationStep);
 
         // Reset the current form.
         $this->form = null;
@@ -407,11 +438,55 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function addUrlQueryParameter($key, $value = null)
+    {
+        $this->urlQueryParameters[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUrlQueryParameters()
+    {
+        return $this->urlQueryParameters;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUrlFragment($value)
+    {
+        $this->urlFragment = substr($value, 0, 1) === '#' ? $value : '#'.$value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUrlFragment()
+    {
+        return $this->urlFragment;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setFinalDestination($url)
     {
         $this->finalDestination = $url;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasFinalDestination()
+    {
+        return null !== $this->finalDestination;
     }
 
     /**

@@ -96,6 +96,39 @@ interface NavigatorInterface
     public function getPreviousStep($stepName = null);
 
     /**
+     * Add URL query parameter.
+     *
+     * @param string $key   The URL query parameter key.
+     * @param mixed  $value The URL query parameter value.
+     *
+     * @return NavigatorInterface
+     */
+    public function addUrlQueryParameter($key, $value = null);
+
+    /**
+     * Returns the URL query parameters.
+     *
+     * @return array
+     */
+    public function getUrlQueryParameters();
+
+    /**
+     * Set the URL fragment.
+     *
+     * @param string $value The URL fragment.
+     *
+     * @return NavigatorInterface
+     */
+    public function setUrlFragment($value);
+
+    /**
+     * Returns the URL fragment.
+     *
+     * @return string.
+     */
+    public function getUrlFragment();
+
+    /**
      * Set the final destination.
      *
      * @param string $url The final destination url.
@@ -103,6 +136,13 @@ interface NavigatorInterface
      * @return NavigatorInterface
      */
     public function setFinalDestination($url);
+
+    /**
+     * Returns true if the navigator has a final destination.
+     *
+     * @return boolean
+     */
+    public function hasFinalDestination();
 
     /**
      * Returns the final destination (as URL).
