@@ -470,7 +470,17 @@ class Navigator implements NavigatorInterface
      */
     public function getFinalDestination()
     {
-        return $this->finalDestination;
+        if (empty($this->getUrlQueryParameters())) {
+            return $this->finalDestination;
+        }
+
+        $glue = false !== strpos($this->finalDestination, '?') ? '&' : '?';
+
+        return sprintf('%s%s%s',
+            $this->finalDestination,
+            $glue,
+            http_build_query($this->getUrlQueryParameters())
+        );
     }
 
     /**

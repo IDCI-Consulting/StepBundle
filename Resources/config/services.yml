@@ -120,11 +120,6 @@ services:
         tags:
             - { name: idci_step.step_event.action, alias: change_data }
 
-    idci_step.path_event.action.change_final_destination:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventAction
-        tags:
-            - { name: idci_step.path_event.action, alias: change_final_destination }
-
     idci_step.step_event.action.conditional_stop_navigation:
         class: IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction
         arguments:
@@ -172,6 +167,11 @@ services:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction
         tags:
             - { name: idci_step.path_event.action, alias: change_data }
+
+    idci_step.path_event.action.change_final_destination:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventAction
+        tags:
+            - { name: idci_step.path_event.action, alias: change_final_destination }
 
     idci_step.path_event.action.purge_flow_data:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction
