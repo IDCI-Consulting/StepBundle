@@ -178,6 +178,11 @@ services:
         tags:
             - { name: idci_step.path_event.action, alias: purge_flow_data }
 
+    idci_step.path_event.action.add_url_query_parameter:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction
+        tags:
+            - { name: idci_step.path_event.action, alias: add_url_query_parameter }
+
 
     # SerializationMapper
 

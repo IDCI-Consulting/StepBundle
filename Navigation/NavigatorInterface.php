@@ -113,22 +113,6 @@ interface NavigatorInterface
     public function getUrlQueryParameters();
 
     /**
-     * Set the URL fragment.
-     *
-     * @param string $value The URL fragment.
-     *
-     * @return NavigatorInterface
-     */
-    public function setUrlFragment($value);
-
-    /**
-     * Returns the URL fragment.
-     *
-     * @return string.
-     */
-    public function getUrlFragment();
-
-    /**
      * Set the final destination.
      *
      * @param string $url The final destination url.

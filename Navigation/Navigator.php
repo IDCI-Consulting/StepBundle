@@ -89,11 +89,6 @@ class Navigator implements NavigatorInterface
     /**
      * @var string
      */
-    protected $urlFragment;
-
-    /**
-     * @var string
-     */
     protected $finalDestination;
 
     /**
@@ -141,7 +136,6 @@ class Navigator implements NavigatorInterface
         $this->currentStep        = null;
         $this->chosenPath         = null;
         $this->urlQueryParameters = array();
-        $this->urlFragment        = null;
         $this->finalDestination   = null;
         $this->hasNavigated       = false;
         $this->hasReturned        = false;
@@ -451,24 +445,6 @@ class Navigator implements NavigatorInterface
     public function getUrlQueryParameters()
     {
         return $this->urlQueryParameters;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUrlFragment($value)
-    {
-        $this->urlFragment = substr($value, 0, 1) === '#' ? $value : '#'.$value;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUrlFragment()
-    {
-        return $this->urlFragment;
     }
 
     /**
