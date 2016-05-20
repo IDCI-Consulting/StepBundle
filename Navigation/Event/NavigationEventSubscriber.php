@@ -352,6 +352,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
 
+        if (!$form->isValid()) {
+            $event->stopPropagation();
+
+            return false;
+        }
+
         foreach ($this->navigator->getAvailablePaths() as $i => $path) {
             if ($form->get(sprintf('_path_%d', $i))->isClicked()) {
                 $this->navigator->getFlow()->takePath($path, $i);
