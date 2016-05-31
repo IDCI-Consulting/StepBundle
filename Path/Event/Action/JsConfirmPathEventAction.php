@@ -24,7 +24,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
 
         $form
             ->add('_js_confirm', 'idci_step_action_form_js_confirm', array_merge(
-                $parameters,
+                array('message'    => $parameters['message']),
                 array('path_index' => $event->getPathIndex())
             ))
         ;
