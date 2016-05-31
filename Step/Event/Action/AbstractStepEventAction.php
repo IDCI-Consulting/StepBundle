@@ -9,6 +9,7 @@ namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
 abstract class AbstractStepEventAction implements StepEventActionInterface
