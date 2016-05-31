@@ -94,6 +94,8 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
                 }
             }
         }
+
+        return true;
     }
 
     /**

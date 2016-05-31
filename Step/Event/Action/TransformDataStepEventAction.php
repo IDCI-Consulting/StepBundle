@@ -49,6 +49,8 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         }
 
         $event->setData($formData);
+
+        return true;
     }
 
     /**

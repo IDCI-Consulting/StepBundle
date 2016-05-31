@@ -29,6 +29,8 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
                 $field['value']
             );
         }
+
+        return true;
     }
 
     /**

@@ -43,6 +43,8 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
                 $form->get($field)->setData($newValue);
             }
         }
+
+        return true;
     }
 
     /**

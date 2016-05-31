@@ -22,9 +22,26 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
     )
     {
         $resolver = new OptionsResolver();
-        $this->setDefaultParameters($resolver);
+        $resolver
+            ->setDefaults(array(
+                'logical_expression' => true,
+            ))
+            ->setNormalizers(array(
+                'logical_expression' => function(Options $options, $value) {
+                    return (bool)$value;
+                },
+            ))
+            ->setAllowedTypes(array(
+                'logical_expression' => array('bool'),
+            ))
+        ;
 
-        return $this->doExecute($event, $resolver->resolve($parameters));
+        $this->setDefaultParameters($resolver);
+        $resolvedParameters = $resolver->resolve($parameters);
+
+        if ($resolvedParameters['logical_expression']) {
+            return $this->doExecute($event, $resolvedParameters);
+        }
     }
 
     /**
@@ -32,9 +49,7 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
      *
      * @param OptionsResolverInterface $resolver
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
-    {
-    }
+    abstract protected function setDefaultParameters(OptionsResolverInterface $resolver);
 
     /**
      * Do execute action.

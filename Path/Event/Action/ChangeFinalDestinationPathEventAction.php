@@ -25,6 +25,8 @@ class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
             ->getNavigator()
             ->setFinalDestination($parameters['final_destination'])
         ;
+
+        return true;
     }
 
     /**
