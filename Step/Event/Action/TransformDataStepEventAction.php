@@ -78,7 +78,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
             return $value;
         }
 
-        return strtoupper($value);
+        return mb_strtoupper($value);
     }
 
     /**
@@ -93,6 +93,6 @@ class TransformDataStepEventAction extends AbstractStepEventAction
             return $value;
         }
 
-        return strtolower($value);
+        return mb_strtolower($value);
     }
 }
