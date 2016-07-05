@@ -274,7 +274,7 @@ services:
         class:        "Twig_Loader_String"
     idci_step.merger:
         class:        "%twig.class%"
-        arguments:    [@idci_step.twig_string_loader, %twig.options%]
+        arguments:    [@idci_step.twig_string_loader]
     idci_step.twig.step_extension:
         class: IDCI\Bundle\StepBundle\Twig\StepTwigExtension
         tags:
