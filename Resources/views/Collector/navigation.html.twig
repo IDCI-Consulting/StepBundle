@@ -2,17 +2,19 @@
 
 {% block toolbar %}
     {% set icon %}
-        <img alt="STEP NAVIGATION" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gwYCjANGN2KFgAACA1JREFUSMd1VmtwlOUVfs75bruRhGQTCoEEshsSIJheUEBp1WA3OtZq7XhBsdqOnVG0nYHqtNNO26lTdDpemBEHNdZarbaDimFQ6EVTBa1Vy1WBCZcNbGRDFuSSbDbJftf39Affx6yUfr/e7533Pc97zvOcC6XTHQbOfAKAy9YCgAAQM4OZ1fjYOHuerykVkFIiTKRiFXGJxSyIiCilzt4ps4Oy/0APF9r5DpmWKQBkoP9owvf9ROAHrUqpFgB1IBCBTtJQYR8z9xmGfrqxqWFIBOy6bmQD59rVyzz5Atjtd9/qrnpwdb1ru4tF5EYA3wJgiEhohSAQKF8hQGD7nv+3vv2H1xumseWD3ncGb+pcap3PLqXTHWbooQAAM+Ptt9+1ZzXP/HaggmUEujY8PAhgO4AMgNsABCCsEyUtRDQfwBQAEJFNmqY9deBQ3z86OxfHJXrhGfBAS6WazoYzAmtJph5QSj1MRBcByBPhIdb4MdMy1+7PZLpra2ruEMhIXzZ789Sp9R8AeAuCjIh8mYi+JiJX1CUS/rYdO//d3JzUyzxVWirVxKFYqKdns92STD0gIr8mokkA3jAt87ZEbc27Fy+al2ONnbt+dKd8snX3SWLacv8vl/eNDI/Ys9tn5UpjpR2u670ecnyRiCysrUmMbdux66NUqsmIIkjpdIcOwFh69xL3kV+suiYIgi4imgbg2fqGKffHKmKBKCERoTMkkDi2w0QEwzQAQIX7aGxqCHZt/bSqWCi+CuCbRHSEme95e8+mt354/TILgFA63WGYlqkdyebq7JLdFXK2ob5hyu2maaowGOeSjzAqipnhOA4Vh0cnFEeKPxCRFdXVVXMLheIrAK4WkTfj8di905unn3Js50woCSSu7XaEYHnTMn8aq4gF/w+MiLiqusrzXI+OfjY4LZ87dldxpPiJiDxKRI/N+/pFo6ZlrADkJIDrHce9LLSjmJmR6x+oCaUPEFZPrK7Ki5L/SWAiQmOyIVi4aIHT++m+tsFc/m7XdTeJyBoRmQogVzmx8uXswawxoapyAKDVoXK/O9B/dGJYQFj5vl8b5lmemd9v+2qbE3FWDvZc92r34y1b2159ad2vAj94EcATAGZHymfmh6uqK0siIu3z5trMvIWITgK41nPdGiIifXy8xIEftAAwAWwzDOPIYG5QPzeMPT2b7c6v3LBcRH5MRDOj/bOFgGivYRo9pmkqpRSOHT3OpmUO2CV7m4hc4wfBDM/1+tlzPU0p1RpezOzdt+/oldd2eER0Fmzy1MlqTkvrXBG5E8De84CBiLomTanLK6VARLjk8gXBnt7e/rBQAILZpZINViogALWhjaUtydSe3z/+/M227XDIKf/8kRWe7/tLAPRXVlUuA7CyHAzATk3jf9XU1gQA4DiO/tIzf7l1ZlNyL4Al4ZlJKgiIlRIBgcNNV0SKAMb5zD9XVlX6t1x+54UAOjVdey01Kzl08PCh3xDRyvAOAKx/4sVVe0dHRhkAi4IC4AI0AsCJOgUxEzORItCJ0Jvuvv7sojvu+95fo6QunC5ovh8sBqRomvqH8Yq43HjLd/SKCfE1AN4EcFDTtY3r125gEWEAKha31MPPPNjd1394ERFtFBEI5ISua6LHK+IyPFTYr3wFCFovbJvT+NHmj05ESZ0fOFYP4FYi/uOe3v05pTDD9/xLAxUsJdBUAKv3ZzK7G2ZMi0dVR0TwpzV/Ntrb2upL46VmAGDijGmaiq2YBY25D4BNRPN9z58+ZdpkP+SCXNdNA3A0TXuvJZla5jru80qp5QTaruv6HZns4afT6Y74OVWIEnUJ5TpuI4AFRFTQDf0z0zIDrbk5yePjJfI9vwXAfIj0jY2O77QsSxWHixV2yXkegKuUuk4g7Uzcrev6k/v7Mt3bd/9nqC5Ra50LRkSSz+Wt0nhpKYBrAKy34taGiglxm5VS0tjUMMTM6yGAUvKTwunCtMlTv6SGhwpLRaRVRCYS0QuxWOz7jcmGP8xqb810di62BvqPmuepr0JEUhgqNCqlVoQFYcOMVOOwKGEdAIlSbJrGllLJ3khE13me/+SBPQeWiMhyYrqnuqb6tQsqK9woqSM1RpyVNVgFAMWRou77QRcRVUPweiwee9/3A4peRK7rycbt6/Oapj0F4AiAq4aGCmtr6xLzLr1i4QsTE1WOrusqSmrXdXXHdlCWFkREwswyNjqmnTx+6mUAlwHIssZdjzz30AnXcbWoAWsA6I21m/RtO3YdqEskfBG5BEC7XbIvPj74+TYIFWe3t7qObeOyzm/4H/zzw5vGiqOtD6357e6dH+/iSfV1wWDumHUi/3nTaHHsFQBXAzgFYOXBw4fW5fvzcSJSZ/thNLUREXp6Npdakqn7APwMwAwROU1ETzDzFtMyBvb07svObEp+CoLdl80ubJ8zJ+m6XqOIXKmUWk5E1QCyAB7NZA93naNgFQGeLdYhqD2reeZVgQruheCGMGanzgxRchCgmwH4RPRGOFLMJ6KaMAdf1zSt68ChvndCsPImIFoq1aRH6or4SKWajGe712Q2rfv7e0qprQD8sA3NBbCQiCYAqBKRBQCaicgG0E1MKysuqHjm8Rd+13us/1i8vAFEoorGRD7f0GpZlhAT5bIDVZ7n1QR+MF1EZgOYBEAEcpyJM7qh53RDP93UPH3Y83yKBHKeYdindLpDK5u8vzDiR3FnJhAxeZ7HdslG4AdEzKTrmpimqUzLDAIVkCiJHq7KgMrt4r+IeBruCO8ChwAAAABJRU5ErkJggg==" />
+
+        <svg xml:space="preserve" height="32px" version="1.1" viewBox="0 0 32 32" width="32px" y="0px" x="0px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="3">
+                <g fill="#AAAAAA" id="90 Compass">
+                    <path d="M16,28 C22.6274173,28 28,22.6274173 28,16 C28,9.37258267 22.6274173,4 16,4 C9.37258267,4 4,9.37258267 4,16 C4,22.6274173 9.37258267,28 16,28 Z M16,30 C8.26801312,30 2,23.7319869 2,16 C2,8.26801312 8.26801312,2 16,2 C23.7319869,2 30,8.26801312 30,16 C30,23.7319869 23.7319869,30 16,30 Z M8.22182541,23.7781746 C8.22182541,23.7781746 11.4038059,14.9393398 13.1715729,13.1715729 C14.9393399,11.403806 23.7781746,8.22182541 23.7781746,8.22182541 C23.7781746,8.22182541 20.596194,17.0606601 18.8284271,18.8284271 C17.0606603,20.5961942 8.22182541,23.7781746 8.22182541,23.7781746 Z M17.4142136,17.4142136 L14.5857864,14.5857864 C13.8786797,13.8786797 11.0502525,20.9497475 11.0502525,20.9497475 C11.0502525,20.9497475 18.1213203,18.1213203 17.4142136,17.4142136 Z M17.4142136,17.4142136" />
+                </g>
+            </g>
+        </svg>
         {% if not collector.hasNavigation %}
             <span class="sf-toolbar-status sf-toolbar-status-red"></span>
         {% else %}
-            <span class="sf-toolbar-status">
-                <span class="sf-toolbar-info-class sf-toolbar-info-with-next-pointer">
-                    <abbr title="{{ collector.map.footprint }}">
-                        {{ collector.map.name|default() }}
-                    </abbr>
-                </span>
-                {{ collector.flow.currentStepName|default() }}
+            <span class="sf-toolbar-value">
+                    {{ collector.map.name|default() }}
             </span>
         {% endif %}
     {% endset %}
@@ -28,15 +30,19 @@
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Current step</b>
-                {{ collector.flow.currentStepName|default() }}
+                <span class="sf-toolbar-status">
+                    {{ collector.flow.currentStepName|default() }}
+                </span>
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Previous step</b>
-                {% if collector.flow is not null and collector.flow.previousStepName is not null %}
-                    {{ collector.flow.previousStepName }}
-                {% else %}
-                    n/a
-                {% endif %}
+                <span class="sf-toolbar-status">
+                    {% if collector.flow is not null and collector.flow.previousStepName is not null %}
+                        {{ collector.flow.previousStepName }}
+                    {% else %}
+                        n/a
+                    {% endif %}
+                </span>
             </div>
         {% endif %}
     {% endset %}
@@ -46,7 +52,7 @@
 {% block menu %}
     <span class="label">
         <span class="icon">
-            <img alt="NAVIGATION" src="data:image/png;base64,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" />
+            <svg height="32px" version="1.1" viewBox="0 0 32 32" width="32px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><defs/><g fill="none" fill-rule="evenodd" id="Icons new Arranged Names" stroke="none" stroke-width="1"><g fill="#AAAAAA" id="90 Compass"><path d="M16,28 C22.6274173,28 28,22.6274173 28,16 C28,9.37258267 22.6274173,4 16,4 C9.37258267,4 4,9.37258267 4,16 C4,22.6274173 9.37258267,28 16,28 Z M16,30 C8.26801312,30 2,23.7319869 2,16 C2,8.26801312 8.26801312,2 16,2 C23.7319869,2 30,8.26801312 30,16 C30,23.7319869 23.7319869,30 16,30 Z M8.22182541,23.7781746 C8.22182541,23.7781746 11.4038059,14.9393398 13.1715729,13.1715729 C14.9393399,11.403806 23.7781746,8.22182541 23.7781746,8.22182541 C23.7781746,8.22182541 20.596194,17.0606601 18.8284271,18.8284271 C17.0606603,20.5961942 8.22182541,23.7781746 8.22182541,23.7781746 Z M17.4142136,17.4142136 L14.5857864,14.5857864 C13.8786797,13.8786797 11.0502525,20.9497475 11.0502525,20.9497475 C11.0502525,20.9497475 18.1213203,18.1213203 17.4142136,17.4142136 Z M17.4142136,17.4142136" id="Oval 278"/></g></g></svg>
         </span>
         <strong>STEP NAVIGATION</strong>
     </span>
