@@ -9,7 +9,6 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 
 class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
 {

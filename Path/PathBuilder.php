@@ -8,8 +8,6 @@
 namespace IDCI\Bundle\StepBundle\Path;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Step\StepInterface;
-use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
 
 class PathBuilder implements PathBuilderInterface
 {

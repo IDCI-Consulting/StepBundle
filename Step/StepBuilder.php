@@ -8,7 +8,6 @@
 namespace IDCI\Bundle\StepBundle\Step;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
 class StepBuilder implements StepBuilderInterface
 {

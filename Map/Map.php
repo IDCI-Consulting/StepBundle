@@ -10,8 +10,6 @@ namespace IDCI\Bundle\StepBundle\Map;
 
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Map\View\MapView;
-use IDCI\Bundle\StepBundle\Form\MapStepType;
 use IDCI\Bundle\StepBundle\Exception\StepNotFoundException;
 
 class Map implements MapInterface

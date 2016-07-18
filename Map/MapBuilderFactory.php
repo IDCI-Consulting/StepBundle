@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
-use IDCI\Bundle\StepBundle\Map\MapNavigatorInterface;
 
 class MapBuilderFactory implements MapBuilderFactoryInterface
 {

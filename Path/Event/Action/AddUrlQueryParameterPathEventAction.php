@@ -10,7 +10,6 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 
 class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
 {

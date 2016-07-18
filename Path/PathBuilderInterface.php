@@ -7,8 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Path;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
-
 interface PathBuilderInterface
 {
     /**
