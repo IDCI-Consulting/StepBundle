@@ -22,7 +22,6 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         array $parameters = array()
     )
     {
-        $form          = $event->getForm();
         $formData      = $event->getData();
         $step          = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();

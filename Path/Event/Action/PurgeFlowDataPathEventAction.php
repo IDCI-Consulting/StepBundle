@@ -112,11 +112,6 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
             ))
             ->setNormalizers(array(
                 'steps' => function(Options $options, $value) {
-                    $validDataTypes = array(
-                        FlowData::TYPE_REMINDED,
-                        FlowData::TYPE_RETRIEVED,
-                    );
-
                     foreach ($value as $stepName => $dataTypes) {
                         if (!is_array($dataTypes)) {
                             throw new \UnexpectedValueException(sprintf(
