@@ -130,6 +130,22 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $currentStep       = $this->navigator->getCurrentStep();
         $stepConfiguration = $currentStep->getConfiguration();
 
+        // Add path links as submit input.
+        // Do not add path links on steps if this is specified, this allow dynamic changes.
+        if (!$stepConfiguration['options']['prevent_next']) {
+            foreach ($this->navigator->getAvailablePaths() as $i => $path) {
+                $pathConfiguration = $path->getConfiguration();
+
+                $form->add(
+                    sprintf('_path_%d', $i),
+                    $pathConfiguration['options']['type'],
+                    $pathConfiguration['options']['next_options']
+                );
+            }
+        }
+
+        // Add back link as submit input.
+        // Do not add back link on steps if this is specified, this allow dynamic changes.
         if (
             $currentStep->getName() !== $map->getFirstStepName() &&
             !$stepConfiguration['options']['prevent_previous']
@@ -141,21 +157,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     $stepConfiguration['options']['previous_options'],
                     array('attr' => array('formnovalidate' => 'true'))
                 )
-            );
-        }
-
-        // Do not add path link on steps if this is specified, this allow dynamic changes
-        if ($stepConfiguration['options']['prevent_next']) {
-            return;
-        }
-
-        foreach ($this->navigator->getAvailablePaths() as $i => $path) {
-            $pathConfiguration = $path->getConfiguration();
-
-            $form->add(
-                sprintf('_path_%d', $i),
-                $pathConfiguration['options']['type'],
-                $pathConfiguration['options']['next_options']
             );
         }
     }
