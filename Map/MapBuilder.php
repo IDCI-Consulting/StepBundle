@@ -124,6 +124,7 @@ class MapBuilder implements MapBuilderInterface
         $resolver
             ->setDefaults(array(
                 'browsing'            => 'linear',
+                'form_action'         => null,
                 'first_step_name'     => null,
                 'final_destination'   => null,
                 'display_step_in_url' => false,

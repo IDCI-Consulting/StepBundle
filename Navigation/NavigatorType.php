@@ -103,6 +103,10 @@ class NavigatorType extends AbstractType
             ));
         }
 
+        if (null !== $options['navigator']->getMap()->getFormAction()) {
+            $builder->setAction($options['navigator']->getMap()->getFormAction());
+        }
+
         $this->buildStep($builder, $options);
 
         $builder->addEventSubscriber(new NavigationEventSubscriber(

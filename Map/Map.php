@@ -215,6 +215,14 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
+    public function getFormAction()
+    {
+        return $this->configuration['options']['form_action'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function __sleep()
     {
         return array('configuration');

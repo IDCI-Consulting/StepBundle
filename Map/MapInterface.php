@@ -125,4 +125,11 @@ interface MapInterface
      * @return string|null
      */
     public function getFinalDestination();
+
+    /**
+     * Returns the form action.
+     *
+     * @return string|null
+     */
+    public function getFormAction();
 }
