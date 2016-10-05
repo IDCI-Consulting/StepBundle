@@ -2,7 +2,6 @@
 
 {% block toolbar %}
     {% set icon %}
-
         <svg xml:space="preserve" height="32px" version="1.1" viewBox="0 0 32 32" width="32px" y="0px" x="0px" xmlns="http://www.w3.org/2000/svg" version="1.1">
             <g fill="none" fill-rule="evenodd" stroke="none" stroke-width="3">
                 <g fill="#AAAAAA" id="90 Compass">
@@ -61,124 +60,130 @@
 {% block panel %}
     <h2>Map</h2>
 
-    <table>
-        {% for key, value in collector.map.configuration %}
+    {% if collector.map.configuration is not defined %}
+        <div class="empty">
+            <p>No map configuration was found during the request.</p>
+        </div>
+    {% else %}
+        <table>
+            {% for key, value in collector.map.configuration %}
+                <tr>
+                    <th>{{ key }}</th>
+                    <td>
+                        {% if value is iterable %}
+                            {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}
+                        {% else %}
+                            {{ value|default() }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Navigation</h2>
+
+        <table>
             <tr>
-                <th>{{ key }}</th>
+                <th>Current step</th>
+                <td>{{ collector.flow.currentStepName|default() }}</td>
+            </tr>
+            <tr>
+                <th>Previous step</th>
                 <td>
-                    {% if value is iterable %}
-                        {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}
+                    {% if collector.flow is not null and collector.flow.previousStepName is not null %}
+                        {{ collector.flow.previousStepName }}
                     {% else %}
-                        {{ value|default() }}
+                        n/a
                     {% endif %}
                 </td>
             </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Navigation</h2>
-
-    <table>
-        <tr>
-            <th>Current step</th>
-            <td>{{ collector.flow.currentStepName|default() }}</td>
-        </tr>
-        <tr>
-            <th>Previous step</th>
-            <td>
-                {% if collector.flow is not null and collector.flow.previousStepName is not null %}
-                    {{ collector.flow.previousStepName }}
-                {% else %}
-                    n/a
-                {% endif %}
-            </td>
-        </tr>
-    </table>
-
-    {% if not collector.hasNavigation %}
-        <p>
-            <em>No step defined and used.</em>
-        </p>
-    {% else %}
-        <h3>Navigation data</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Step</th>
-                    <th>Flow data</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for stepName,stepData in collector.flow.data.all %}
-                <tr>
-                    <td>{{ stepName }}</td>
-                    <td>
-                        <table>
-                            <tbody>
-                                {% if stepData.data %}
-                                <tr>
-                                    <th>Data</th>
-                                    <td>{{ stepData.data | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
-                                </tr>
-                                {% endif %}
-                                {% if stepData.remindedData %}
-                                <tr>
-                                    <th>Reminded data</th>
-                                    <td>{{ stepData.remindedData | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
-                                </tr>
-                                {% endif %}
-                                {% if stepData.retrievedData %}
-                                <tr>
-                                    <th>Retrieved data</th>
-                                    <td>{{ stepData.retrievedData | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
         </table>
 
-        <h3>Navigation history</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Source</th>
-                    <th>Link</th>
-                    <th>Destination</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for path in collector.flow.history.all.takenPaths %}
-                <tr>
-                    <td>{{ path.source|default('') }}</td>
-                    <td>{{ path.index|default('') }}</td>
-                    <td>{{ path.destination|default('') }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if not collector.hasNavigation %}
+            <p>
+                <em>No step defined and used.</em>
+            </p>
+        {% else %}
+            <h3>Navigation data</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Flow data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stepName,stepData in collector.flow.data.all %}
+                    <tr>
+                        <td>{{ stepName }}</td>
+                        <td>
+                            <table>
+                                <tbody>
+                                    {% if stepData.data %}
+                                    <tr>
+                                        <th>Data</th>
+                                        <td>{{ stepData.data | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if stepData.remindedData %}
+                                    <tr>
+                                        <th>Reminded data</th>
+                                        <td>{{ stepData.remindedData | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if stepData.retrievedData %}
+                                    <tr>
+                                        <th>Retrieved data</th>
+                                        <td>{{ stepData.retrievedData | json_encode(constant('JSON_PRETTY_PRINT')) }}</td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-        <h3>Navigation history (FULL)</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Source</th>
-                    <th>Link</th>
-                    <th>Destination</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for path in collector.flow.history.all.fullTakenPaths %}
-                <tr>
-                    <td>{{ path.source|default('') }}</td>
-                    <td>{{ path.index|default('') }}</td>
-                    <td>{{ path.destination|default('') }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <h3>Navigation history</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Link</th>
+                        <th>Destination</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for path in collector.flow.history.all.takenPaths %}
+                    <tr>
+                        <td>{{ path.source|default('') }}</td>
+                        <td>{{ path.index|default('') }}</td>
+                        <td>{{ path.destination|default('') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3>Navigation history (FULL)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Link</th>
+                        <th>Destination</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for path in collector.flow.history.all.fullTakenPaths %}
+                    <tr>
+                        <td>{{ path.source|default('') }}</td>
+                        <td>{{ path.index|default('') }}</td>
+                        <td>{{ path.destination|default('') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     {% endif %}
 {% endblock %}
