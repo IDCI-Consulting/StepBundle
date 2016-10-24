@@ -30,7 +30,7 @@ public function registerBundles()
     $bundles = array(
         // ...
         new JMS\SerializerBundle\JMSSerializerBundle(),
-        new IDCI\StepBundle\IDCIStepBundle(),
+        new IDCI\Bundle\StepBundle\IDCIStepBundle(),
     );
 }
 ```
