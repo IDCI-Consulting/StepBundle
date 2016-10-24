@@ -195,7 +195,7 @@ define(
                         });
                     }
                     this.data.paths.push({
-                        'source' : this.getStep(dest, true),
+                        'source' : source,
                         'target' : this.getStep(data.paths[path].options.default_destination, false),
                         'path' : pathObj
                     });
