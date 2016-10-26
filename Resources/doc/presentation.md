@@ -106,6 +106,7 @@ class DefaultController extends Controller
     }
 }
 ```
+![map build example diagram](images/mapBuildExample.png)
 
 Rendering the Map
 ------------------
