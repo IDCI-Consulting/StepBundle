@@ -40,10 +40,9 @@ Documentation
 -------------
 
 * [Introduction](Resources/doc/introduction.md)
-* [Architecture](Resources/doc/architecture.md)
-* [StepBuilder](Resources/doc/step_builder.md)
-* [StepType](Resources/doc/step_type.md)
-* [Configuration reference](Resources/doc/configuration_reference.md)
+* [Presentation](Resources/doc/presentation.md)
+* [Events](Resources/doc/events.md)
+* [Configuration](Resources/doc/configuration.md)
 
 
 Tests
