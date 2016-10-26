@@ -97,6 +97,28 @@ class DefaultController extends Controller
 Rendering the Map
 ------------------
 
+Well, we have created a map, now we need to render it.
+We have to use some functions and write that in the
+`Contact.html.twig` file.
+
+This is the minimal code you need to make StepBundle work.
+
+```twig
+{% block stylesheets %}
+    {{ parent() }}
+    {{ step_stylesheets(navigator) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ step_javascripts(navigator) }}
+{% endblock %}
+
+{% block body %}
+    {{ step(navigator) }}
+{% endblock %}
+```
+
 Handling Map Submissions
 -------------------------
 
