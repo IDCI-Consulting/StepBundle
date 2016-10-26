@@ -7,7 +7,7 @@ Creating a Simple Map
 Building the Map
 -----------------
 
-We have to create a map before rendre it.
+We have to create a map before rendering it.
 For now, this can all be done from inside a controller.
 
 ```php
@@ -51,30 +51,46 @@ class DefaultController extends Controller
                     ->add('last_name', 'text')
                 ,
             ))
-            ->addStep('purchase', 'form', array(
-                'title'       => 'Purchase information',
-                'description' => 'The purchase data step',
-                'builder' => $this->get('form.factory')->createBuilder()
-                    ->add('item', 'text')
-                    ->add('purchase_date', 'datetime')
-                ,
+            ->addStep('end', 'html', array(
+                'title'       => 'End',
+                'description' => 'The last step',
+                'content'     => '<h1>Game over :)</h1>',
             ))
+            ->addPath(
+                'single',
+                array(
+                    'source'       => 'intro',
+                    'destination'  => 'personal',
+                    'next_options' => array(
+                        'label' => 'next',
+                    ),
+                )
+            )
+            ->addPath(
+                'single',
+                array(
+                    'source'       => 'personal',
+                    'destination'  => 'end',
+                    'next_options' => array(
+                        'label' => 'next',
+                    ),
+                )
+            )
+            ->addPath(
+                'end',
+                array(
+                    'source'       => 'end',
+                    'next_options' => array(
+                        'label' => 'end',
+                    ),
+                )
+            )
             ->getMap()
         ;
 
         $navigator = $this
             ->get('idci_step.navigator.factory')
-            ->createNavigator(
-                $request,
-                $map,
-                array(),
-                json_decode('{
-                    "data": {
-                        "personal":{"first_name":"John","last_name":"DOE"},
-                        "purchase":{"item":"Something","purchase_date":{"date":{"month":"10","day":"10","year":"2010"},"time":{"hour":"10","minute":"10"}}}
-                    }
-                }', true)
-            )
+            ->createNavigator($request, $map)
         ;
 
         if ($navigator->hasFinished()) {
@@ -82,10 +98,7 @@ class DefaultController extends Controller
 
             return $this->redirect($navigator->getFinalDestination());
         }
-        if ($navigator->hasNavigated()) {
-            return $this->redirect($this->generateUrl('test'));
-        }
-        if ($navigator->hasReturned()) {
+        if ($navigator->hasNavigated() || $navigator->hasReturned()) {
             return $this->redirect($this->generateUrl('test'));
         }
 
