@@ -154,7 +154,10 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 'submit',
                 array_merge_recursive(
                     $stepConfiguration['options']['previous_options'],
-                    array('attr' => array('formnovalidate' => 'true'))
+                    array(
+                        'attr'              => array('formnovalidate' => 'true'),
+                        'validation_groups' => false,
+                    )
                 )
             );
         }
