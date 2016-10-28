@@ -35,6 +35,13 @@ public function registerBundles()
 }
 ```
 
+Add the IDCIStepBundle resources to your config.yml
+```yml
+// app/config.yml
+imports:
+    ...
+    - { resource: @IDCIStepBundle/Resources/config/config.yml }
+```
 
 Documentation
 -------------
