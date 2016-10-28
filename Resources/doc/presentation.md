@@ -5,7 +5,7 @@ Creating a Simple Map
 ---------------------
 
 Building the Map
------------------
+----------------
 
 We have to create a map before rendering it.
 For now, this can all be done from inside a controller.
@@ -109,7 +109,7 @@ class DefaultController extends Controller
 ![map build example diagram](images/mapBuildExample.png)
 
 Rendering the Map
-------------------
+-----------------
 
 Well, we have created a map, now we need to render it.
 We have to use some functions and write that in the
@@ -118,6 +118,8 @@ We have to use some functions and write that in the
 This is the minimal code you need to make StepBundle work.
 
 ```twig
+{% extends "::base.html.twig" %}
+
 {% block stylesheets %}
     {{ parent() }}
     {{ step_stylesheets(navigator) }}
@@ -134,7 +136,14 @@ This is the minimal code you need to make StepBundle work.
 ```
 
 Handling Map Submissions
--------------------------
+------------------------
+TODO expliquer hasReturn, etc
 
 Built-in Field Types
 --------------------
+
+TODO html/form
+TODO Single/etc
+
+* [Configuration Example](configurationExample.md)
+
