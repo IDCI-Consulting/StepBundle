@@ -216,6 +216,8 @@ class Navigator implements NavigatorInterface
                 $this->currentStep->getOptions()
             )
         );
+
+        $this->setupNavigationUrl($this->currentStep);
     }
 
     /**
