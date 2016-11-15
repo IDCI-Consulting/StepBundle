@@ -85,7 +85,7 @@ class DefaultController extends Controller
                     ),
                 )
             )
-            ->getMap()
+            ->getMap($request)
         ;
 
         $navigator = $this
