@@ -99,7 +99,7 @@ class DefaultController extends Controller
             return $this->redirect($navigator->getFinalDestination());
         }
         if ($navigator->hasNavigated() || $navigator->hasReturned()) {
-            return $this->redirect($this->generateUrl('test'));
+            return $this->redirect($this->generateUrl('contact_named', $navigator->getUrlQueryParameters()));
         }
 
         return array('navigator' => $navigator);
