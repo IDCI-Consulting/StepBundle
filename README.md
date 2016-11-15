@@ -22,8 +22,8 @@ $ php composer.phar update
 
 Register needed bundles in your application kernel:
 ```php
-<?php
 // app/AppKernel.php
+<?php
 
 public function registerBundles()
 {
