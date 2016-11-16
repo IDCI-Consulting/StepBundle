@@ -28,7 +28,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
                 'logical_expression' => true,
             ))
             ->setNormalizer('logical_expression', function(Options $options, $value) {
-                    return (bool)$value;
+                return (bool)$value;
             })
         ;
 
