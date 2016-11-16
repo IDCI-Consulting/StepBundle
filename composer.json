@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=5.3.9",
-        "symfony/symfony": "~2.3",
+        "symfony/symfony": "~3.0",
         "twig/twig": "~1.0",
         "twig/extensions": "~1.0",
         "jms/serializer-bundle": ">=1.0"
