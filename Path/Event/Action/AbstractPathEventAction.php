@@ -32,9 +32,6 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
                     return (bool)$value;
                 },
             ))
-            ->setAllowedTypes(array(
-                'logical_expression' => array('bool'),
-            ))
         ;
 
         $this->setDefaultParameters($resolver);
