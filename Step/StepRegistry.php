@@ -37,7 +37,11 @@ class StepRegistry implements StepRegistryInterface
         }
 
         if (!isset($this->types[$alias])) {
-            throw new \InvalidArgumentException(sprintf('Could not load type "%s"', $alias));
+            throw new \InvalidArgumentException(sprintf(
+                'Could not load type "%s". Available types are %s',
+                $alias,
+                implode(', ', array_keys($this->types))
+            ));
         }
 
         return $this->types[$alias];
