@@ -141,7 +141,7 @@ class Navigator implements NavigatorInterface
         $this->hasReturned        = false;
         $this->hasFinished        = false;
 
-        $this->data             = array(
+        $this->data = array(
             'remindedData'  => isset($data['data']) ? $data['data'] : array(),
             'retrievedData' => isset($data['retrievedData']) ? $data['retrievedData'] : array(),
         );
@@ -472,7 +472,8 @@ class Navigator implements NavigatorInterface
      */
     public function getFinalDestination()
     {
-        if (empty($this->getUrlQueryParameters())) {
+        $urlQueryParameters = $this->getUrlQueryParameters();
+        if (empty($urlQueryParameters)) {
             return $this->finalDestination;
         }
 
