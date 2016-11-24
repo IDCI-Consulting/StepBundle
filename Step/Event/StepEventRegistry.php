@@ -37,7 +37,11 @@ class StepEventRegistry implements StepEventRegistryInterface
         }
 
         if (!isset($this->actions[$alias])) {
-            throw new \InvalidArgumentException(sprintf('Could not load action "%s"', $alias));
+            throw new \InvalidArgumentException(sprintf(
+                'Could not load step event action "%s". Available actions are %s',
+                $alias,
+                implode(', ', array_keys($this->actions))
+            ));
         }
 
         return $this->actions[$alias];
