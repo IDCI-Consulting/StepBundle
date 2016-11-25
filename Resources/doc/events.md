@@ -4,7 +4,7 @@ Events
 Create a Path Event Action Service
 ----------------------------------
 
-If you want to trigger action to path, you'll have to create a PathEventAction Service and stick it to the path.
+If you want to execute event action to path, you'll have to create a PathEventAction Service and stick it to the path.
 
 ```php
 // src\ExampleBundle\Path\Event\Action\ExamplePathEventAction.php
@@ -23,7 +23,7 @@ class ExamplePathEventAction extends AbstractPathEventAction
      */
     protected function doExecute(PathEventInterface $event, array $parameters = array())
     {
-        // your code action here with $parameters['varA']
+        // your action code with $parameters['varA'] here
     }
 
     /**
@@ -54,7 +54,7 @@ class ExamplePathEventAction extends AbstractPathEventAction
 ```
 
 Stick the event action to a path
--------------------------------
+--------------------------------
 
 ```php
 // src\ExampleBundle\Controller\DefaultController.php
@@ -82,7 +82,7 @@ Stick the event action to a path
     ;
 ```
 
-The stickable events names are the same than the symfony form events
+The stickable events names are the same than the symfony form events names
 
 * pre_set_data
 * post_set_data
@@ -95,7 +95,7 @@ More informations in Symfony doc [Symfony form events](https://symfony.com/doc/c
 Create a Step Event Action Service
 ----------------------------------
 
-If you want to trigger action to step, you'll have to create a StepEventAction Service and stick it to the step.
+If you want to execute event action to step, you'll have to create a StepEventAction Service and stick it to the step.
 
 ```php
 // src\ExampleBundle\Step\Event\Action\ExampleStepEventAction.php
@@ -114,7 +114,7 @@ class ExampleStepEventAction extends AbstractStepEventAction
      */
     protected function doExecute(StepEventInterface $event, array $parameters = array())
     {
-        // your code action here with $parameters['varA']
+        // your action code with $parameters['varA'] here
     }
 
     /**
@@ -145,8 +145,8 @@ class ExampleStepEventAction extends AbstractStepEventAction
                 - { name: idci_step.step_event.action, alias: example }
 ```
 
-Stick the event to a step
--------------------------
+Stick the event action to a step
+--------------------------------
 
 ```php
 // src\ExampleBundle\Controller\DefaultController.php
