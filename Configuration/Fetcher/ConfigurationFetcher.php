@@ -8,6 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Configuration\Fetcher;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 class ConfigurationFetcher extends AbstractConfigurationFetcher
 {
     protected $raw;
@@ -27,6 +29,22 @@ class ConfigurationFetcher extends AbstractConfigurationFetcher
      */
     public function doFetch(array $parameters = array())
     {
-        return $this->raw;
+        return array_merge($this->raw, $parameters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    {
+        $resolver
+            ->setOptional(array('name', 'steps', 'paths', 'options'))
+            ->setAllowedTypes(array(
+                'name'    => array('null', 'string'),
+                'steps'   => array('null', 'array'),
+                'paths'   => array('null', 'array'),
+                'options' => array('null', 'array'),
+            ))
+        ;
     }
 }
