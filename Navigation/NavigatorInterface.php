@@ -43,7 +43,7 @@ interface NavigatorInterface
     public function getMap();
 
     /**
-     * Get the default flow data.
+     * Get the navigation data.
      *
      * @return array
      */
@@ -223,3 +223,4 @@ interface NavigatorInterface
      */
     public function getFormView();
 }
+
