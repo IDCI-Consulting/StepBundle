@@ -1,0 +1,9 @@
+version: '2'
+services:
+  php:
+    image: idci/php:5.6-fpm
+    container_name: step-bundle-php
+    build:
+      context: docker/build/php5.6
+    volumes:
+      - ./:/var/www/html
