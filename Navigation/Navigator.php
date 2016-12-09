@@ -11,6 +11,8 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
@@ -67,6 +69,11 @@ class Navigator implements NavigatorInterface
     protected $data;
 
     /**
+     * @var array
+     */
+    protected $navigationData;
+
+    /**
      * @var FlowInterface
      */
     protected $flow;
@@ -114,7 +121,7 @@ class Navigator implements NavigatorInterface
      * @param MapInterface              $map          The map to navigate.
      * @param Request                   $request      The HTTP request.
      * @param NavigationLoggerInterface $logger       The logger.
-     * @param array                     $data         The default navigation flow data.
+     * @param array                     $data         The default navigation data.
      */
     public function __construct(
         FormFactoryInterface      $formFactory,
@@ -132,6 +139,7 @@ class Navigator implements NavigatorInterface
         $this->map                = $map;
         $this->request            = $request;
         $this->logger             = $logger;
+        $this->data               = $data;
         $this->flow               = null;
         $this->currentStep        = null;
         $this->chosenPath         = null;
@@ -140,11 +148,37 @@ class Navigator implements NavigatorInterface
         $this->hasNavigated       = false;
         $this->hasReturned        = false;
         $this->hasFinished        = false;
+    }
 
-        $this->data             = array(
-            'remindedData'  => isset($data['data']) ? $data['data'] : array(),
-            'retrievedData' => isset($data['retrievedData']) ? $data['retrievedData'] : array(),
-        );
+    /**
+     * TODO: This function must be moved into Flow object
+     *
+     * Returns the flow data to initialize navigation
+     *
+     * @return array
+     */
+    protected function getInitFlowData()
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefaults(array(
+                'data'              => array(),
+                'remindedData'      => array(),
+                'retrievedData'     => array(),
+                'current_step_name' => $this->map->getFirstStepName(),
+                'history'           => array(),
+            ))
+            ->setNormalizers(array(
+                'remindedData' => function(Options $options, $value) {
+                    return $options['data'];
+                },
+            ))
+        ;
+
+        $resolvedData = $resolver->resolve($this->getData());
+        unset($resolvedData['data']);
+
+        return $resolvedData;
     }
 
     /**
@@ -161,33 +195,35 @@ class Navigator implements NavigatorInterface
 
         // The first time
         if (null === $this->flow) {
-            $this->flow = new Flow();
-            $this->flow->setCurrentStep($this->map->getFirstStep());
+            $initializedData = $this->getInitFlowData();
+            $this->flow = new Flow(
+                $this->map->getStep($initializedData['current_step_name']),
+                $initializedData['history']
+            );
 
             $mapData = $this->map->getData();
 
             foreach ($this->map->getSteps() as $stepName => $step) {
-                $this->data['remindedData'][$stepName] = array_replace_recursive(
+                $initializedData['remindedData'][$stepName] = array_replace_recursive(
                     isset($mapData[$stepName]) ?
-                        $mapData[$stepName] : array()
-                    ,
-                    isset($this->data['remindedData'][$stepName]) ?
-                        $this->data['remindedData'][$stepName] : array()
+                        $mapData[$stepName] : array(),
+                    isset($initializedData['remindedData'][$stepName]) ?
+                        $initializedData['remindedData'][$stepName] : array()
                 );
 
-                $this->data['retrievedData'][$stepName] = isset($this->data['retrievedData'][$stepName]) ?
-                    $this->data['retrievedData'][$stepName] : array()
+                $initializedData['retrievedData'][$stepName] = isset($initializedData['retrievedData'][$stepName]) ?
+                    $initializedData['retrievedData'][$stepName] : array()
                 ;
 
                 $this->flow->setStepData(
                     $step,
-                    $this->data['remindedData'][$stepName],
+                    $initializedData['remindedData'][$stepName],
                     FlowData::TYPE_REMINDED
                 );
 
                 $this->flow->setStepData(
                     $step,
-                    $this->data['retrievedData'][$stepName],
+                    $initializedData['retrievedData'][$stepName],
                     FlowData::TYPE_RETRIEVED
                 );
             }
@@ -604,3 +640,4 @@ class Navigator implements NavigatorInterface
         return $this->formView;
     }
 }
+

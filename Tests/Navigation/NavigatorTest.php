@@ -119,45 +119,9 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->navigator->hasNavigated());
         $this->assertFalse($this->navigator->hasReturned());
         $this->assertFalse($this->navigator->hasFinished());
-        $this->assertEquals(
-            array(
-                'remindedData'  => $this->data,
-                'retrievedData' => array()
-            ),
-            $this->navigator->getData()
-        );
 
         // Navigate
         $this->navigator->navigate();
-
-        // Tests flow data after that function 'initFlow()' was called.
-        $this->assertEquals(
-            array(
-                'remindedData'  => array(
-                    'stepA' => array(
-                        'field1' => 'FlowStepAField1Value',
-                        'field2' => 'StepAField2Value',
-                        'field3' => 'MapStepAField3Value',
-                    ),
-                    'stepB' => array(
-                        'field1' => 'MapStepBField1Value',
-                        'field2' => 'MapStepBField2Value',
-                    ),
-                    'stepC' => array(
-                        'field1' => 'StepCField1Value',
-                        'field2' => array('g', 'h', 'i')
-                    ),
-                    'stepD' => array(),
-                ),
-                'retrievedData' => array(
-                    'stepA' => array(),
-                    'stepB' => array(),
-                    'stepC' => array(),
-                    'stepD' => array(),
-                )
-            ),
-            $this->navigator->getData()
-        );
     }
 
     public function testUrlQueryParameters()

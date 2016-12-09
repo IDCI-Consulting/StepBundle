@@ -30,19 +30,39 @@ class Flow implements FlowInterface
 
     /**
      * Constructor
+     *
+     * @param StepInterface     $currentStep
+     * @param mixed             $history
+     * @param FlowDataInterface $data
      */
     public function __construct(
-        StepInterface        $currentStep  = null,
-        FlowHistoryInterface $history      = null,
-        FlowDataInterface    $data         = null
+        StepInterface $currentStep = null,
+        $history                   = null,
+        FlowDataInterface $data    = null
     )
     {
-        $this->history = null === $history ? new FlowHistory() : $history;
+        $this->history = $this->buildFlowHistory($history);
         $this->data    = null === $data ? new FlowData() : $data;
 
         if (null !== $currentStep) {
             $this->setCurrentStep($currentStep);
         }
+    }
+
+    /**
+     * Build the FlowHistory object
+     *
+     * @param mixed $history
+     *
+     * @return FlowHistory
+     */
+    protected function buildFlowHistory($history)
+    {
+        if ($history instanceof FlowHistory) {
+            return $history;
+        }
+
+        return new FlowHistory($history, $history);
     }
 
     /**
@@ -211,3 +231,4 @@ class Flow implements FlowInterface
         $this->history->addTakenPath($path->getSource(), $index);
     }
 }
+
