@@ -1,4 +1,4 @@
-FROM php:5.6-fpm
+FROM php:5.4-fpm
 
 RUN apt-get update
 
@@ -11,7 +11,7 @@ RUN apt-get install -y imagemagick
 RUN apt-get install -y zlib1g-dev libicu-dev g++
 
 # extensions
-RUN docker-php-ext-install -j$(nproc) iconv mcrypt
+RUN docker-php-ext-install mcrypt
 RUN docker-php-ext-install pdo
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install mbstring

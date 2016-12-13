@@ -1,8 +1,16 @@
 version: '2'
 services:
-  php:
+  php54:
+    image: idci/php:5.4-fpm
+    container_name: step-bundle-php54
+    build:
+      context: docker/build/php5.4
+    volumes:
+      - ./:/var/www/html
+
+  php56:
     image: idci/php:5.6-fpm
-    container_name: step-bundle-php
+    container_name: step-bundle-php56
     build:
       context: docker/build/php5.6
     volumes:
