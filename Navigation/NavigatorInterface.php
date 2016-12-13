@@ -113,6 +113,13 @@ interface NavigatorInterface
     public function getUrlQueryParameters();
 
     /**
+     * Returns true if contains url query parameters
+     *
+     * @return boolean
+     */
+    public function hasUrlQueryParameters();
+
+    /**
      * Set the final destination.
      *
      * @param string $url The final destination url.
