@@ -488,6 +488,14 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function hasUrlQueryParameters()
+    {
+        return !empty($this->urlQueryParameters);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setFinalDestination($url)
     {
         $this->finalDestination = $url;
@@ -508,7 +516,7 @@ class Navigator implements NavigatorInterface
      */
     public function getFinalDestination()
     {
-        if (empty($this->getUrlQueryParameters())) {
+        if (!$this->hasUrlQueryParameters()) {
             return $this->finalDestination;
         }
 
