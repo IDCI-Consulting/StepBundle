@@ -146,7 +146,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         // Add back link as submit input.
         // Do not add back link on steps if this is specified, this allow dynamic changes.
         if (
-            $currentStep->getName() !== $map->getFirstStepName() &&
+            $currentStep->getName() != $map->getFirstStepName() &&
             !$stepConfiguration['options']['prevent_previous']
         ) {
             $form->add(
