@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -19,7 +20,7 @@ class PathBuilder implements PathBuilderInterface
     /**
      * Constructor
      *
-     * @param StepRegistry  $registry
+     * @param PathRegistryInterface $registry
      */
     public function __construct(PathRegistryInterface $registry)
     {

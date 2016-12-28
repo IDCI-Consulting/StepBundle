@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -23,8 +24,8 @@ interface FlowHistoryInterface
     /**
      * Add a taken path.
      *
-     * @param StepInterface $step The step.
-     * @param integer       $path The identifier of the path.
+     * @param StepInterface $step   The step.
+     * @param integer       $pathId The identifier of the path.
      */
     public function addTakenPath(StepInterface $step, $pathId = 0);
 
@@ -32,7 +33,7 @@ interface FlowHistoryInterface
      * Retrace to a step.
      *
      * @param string        $sourceStepName  The source step name.
-     * @param StepInterface $destinationstep The destination step.
+     * @param StepInterface $destinationStep The destination step.
      */
     public function retraceTakenPath($sourceStepName, StepInterface $destinationStep);
 

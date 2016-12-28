@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -17,7 +18,7 @@ interface PathEventRegistryInterface
      * @param string                   $alias  The action alias.
      * @param PathEventActionInterface $action The action.
      *
-     * @return PathEventActionRegistryInterface
+     * @return PathEventRegistryInterface
      */
     public function setAction($alias, PathEventActionInterface $action);
 

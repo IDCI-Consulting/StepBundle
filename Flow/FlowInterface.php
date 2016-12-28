@@ -3,6 +3,7 @@
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -128,8 +129,8 @@ interface FlowInterface
     /**
      * Take a path
      *
-     * @param PathInterface
-     * @param integer
+     * @param PathInterface $path
+     * @param integer       $index
      */
     public function takePath(PathInterface $path, $index);
 }

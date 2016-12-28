@@ -38,7 +38,7 @@ class ConditionalDestinationPathType extends AbstractPathType
     /**
      * Constructor
      *
-     * @param Twig_Environment                 $merger                  The twig merger.
+     * @param \Twig_Environment                $merger                  The twig merger.
      * @param SecurityContextInterface         $securityContext         The security context.
      * @param SessionInterface                 $session                 The session.
      * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry The conditional rule registry.

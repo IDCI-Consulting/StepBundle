@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -156,7 +157,7 @@ class FlowRecorder implements FlowRecorderInterface
      * @param mixed $data    The data to transform.
      * @param array $mapping The mapping, containing the expected data type and optionnaly the serialization groups.
      *
-     * @return The transformed data.
+     * @return object|array  The transformed data.
      */
     protected function transformData($data, array $mapping)
     {

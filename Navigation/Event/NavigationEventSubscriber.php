@@ -350,6 +350,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      * Post submit.
      *
      * @param FormEvent $event
+     *
+     * @return boolean
      */
     public function postSubmit(FormEvent $event)
     {
