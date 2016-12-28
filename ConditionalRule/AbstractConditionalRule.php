@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -35,8 +36,7 @@ abstract class AbstractConditionalRule implements ConditionalRuleInterface
     /**
      * Do match
      *
-     * @param array              $options   The options to match.
-     * @param NavigatorInterface $navigator The navigator.
+     * @param array $options The options to match.
      *
      * @return boolean Return true if the conditional rule match.
      */

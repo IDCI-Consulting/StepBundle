@@ -2,12 +2,13 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
 namespace IDCI\Bundle\StepBundle\Step;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
 interface StepInterface
 {

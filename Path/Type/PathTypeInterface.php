@@ -2,11 +2,13 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
+use IDCI\Bundle\StepBundle\Path\PathInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 

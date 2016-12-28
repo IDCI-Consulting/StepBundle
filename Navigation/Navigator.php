@@ -252,8 +252,6 @@ class Navigator implements NavigatorInterface
                 $this->currentStep->getOptions()
             )
         );
-
-        $this->setupNavigationUrl($this->currentStep);
     }
 
     /**
@@ -323,6 +321,12 @@ class Navigator implements NavigatorInterface
          */
         $form = $this->getForm();
 
+        // The first http request which start the navigation workflow.
+        if ($this->request->isMethod('GET')) {
+            $this->setupNavigationUrl($this->currentStep);
+        }
+
+        // The others workflow http requests
         if ($this->request->isMethod('POST')) {
             $form->handleRequest($this->request);
 

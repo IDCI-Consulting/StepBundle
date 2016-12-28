@@ -51,7 +51,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
      * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
      * @param StepBuilderInterface     $stepBuilder     The step builder.
      * @param PathBuilderInterface     $pathBuilder     The path builder.
-     * @param Twig_Environment         $merger          The twig merger.
+     * @param \Twig_Environment        $merger          The twig merger.
      * @param SecurityContextInterface $securityContext The security context.
      * @param SessionInterface         $session         The session.
      */
