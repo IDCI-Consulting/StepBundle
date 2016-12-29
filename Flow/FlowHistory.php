@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -88,7 +89,7 @@ class FlowHistory implements FlowHistoryInterface
             $removedPaths[] = $this->takenPaths[$reversedIndex - $i];
             unset($this->takenPaths[$reversedIndex - $i]);
 
-            if ($destinationStep->getName() === $path['source']) {
+            if ($destinationStep->getName() == $path['source']) {
                 break;
             }
         }
@@ -129,7 +130,7 @@ class FlowHistory implements FlowHistoryInterface
     {
         $takenPaths = (bool)$full ? $this->fullTakenPaths : $this->takenPaths;
         foreach ($takenPaths as $takenPath) {
-            if (isset($takenPath['source']) && $takenPath['source'] === $step->getName()) {
+            if (isset($takenPath['source']) && $takenPath['source'] == $step->getName()) {
                 return true;
             }
         }

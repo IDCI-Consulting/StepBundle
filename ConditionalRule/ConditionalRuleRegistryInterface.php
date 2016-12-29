@@ -2,12 +2,13 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
 namespace IDCI\Bundle\StepBundle\ConditionalRule;
 
-use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleInterface;
+use IDCI\Bundle\StepBundle\Exception;
 
 interface ConditionalRuleRegistryInterface
 {
@@ -15,7 +16,7 @@ interface ConditionalRuleRegistryInterface
      * Sets a conditional rule identify by a alias.
      *
      * @param string                   $alias The rule alias.
-     * @param ConditionalRuleInterface $path  The rule.
+     * @param ConditionalRuleInterface $rule  The rule.
      *
      * @return ConditionalRuleRegistryInterface
      */
@@ -29,7 +30,7 @@ interface ConditionalRuleRegistryInterface
      * @return ConditionalRuleInterface The rule
      *
      * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws Exception\InvalidArgumentException if the rule can not be retrieved.
+     * @throws \Exception\InvalidArgumentException if the rule can not be retrieved.
      */
     public function getRule($alias);
 

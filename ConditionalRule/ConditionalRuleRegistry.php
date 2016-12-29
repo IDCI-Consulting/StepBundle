@@ -8,7 +8,6 @@
 namespace IDCI\Bundle\StepBundle\ConditionalRule;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleInterface;
 
 class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
 {

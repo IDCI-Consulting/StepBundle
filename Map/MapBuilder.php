@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
  * @license: MIT
  */
 
@@ -12,7 +13,6 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 
@@ -82,7 +82,7 @@ class MapBuilder implements MapBuilderInterface
      * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
      * @param StepBuilderInterface     $stepBuilder     The step builder.
      * @param PathBuilderInterface     $pathBuilder     The path builder.
-     * @param Twig_Environment         $merger          The twig merger.
+     * @param \Twig_Environment        $merger          The twig merger.
      * @param SecurityContextInterface $securityContext The security context.
      * @param SessionInterface         $session         The session.
      */
@@ -161,7 +161,7 @@ class MapBuilder implements MapBuilderInterface
      */
     public function getOptions()
     {
-        return $this->type;
+        return $this->options;
     }
 
     /**
