@@ -29,9 +29,7 @@ abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInter
      *
      * @param OptionsResolverInterface $resolver
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
-    {
-    }
+    abstract protected function setDefaultParameters(OptionsResolverInterface $resolver);
 
     /**
      * Fetch the configuration.
