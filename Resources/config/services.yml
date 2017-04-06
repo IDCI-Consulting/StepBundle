@@ -8,7 +8,7 @@ parameters:
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
     idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
-    idci_step.path_event.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventRegistry
+    idci_step.path_event_action.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistry
     idci_step.path_type.registry.class: IDCI\Bundle\StepBundle\Path\PathTypeRegistry
     idci_step.path_type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
     idci_step.path_type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
@@ -51,8 +51,8 @@ services:
     idci_step.path_type.registry:
         class: %idci_step.path_type.registry.class%
 
-    idci_step.path_event.registry:
-        class: %idci_step.path_event.registry.class%
+    idci_step.path_event_action.registry:
+        class: %idci_step.path_event_action.registry.class%
 
     idci_step.conditional_rule.registry:
         class: %idci_step.conditional_rule.registry.class%
@@ -169,30 +169,30 @@ services:
 
     # PathEvent
 
-    idci_step.path_event.action.js_confirm:
+    idci_step.path_event_action.js_confirm:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
         tags:
-            - { name: idci_step.path_event.action, alias: js_confirm }
+            - { name: idci_step.path_event_action, alias: js_confirm }
 
-    idci_step.path_event.action.change_data:
+    idci_step.path_event_action.change_data:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction
         tags:
-            - { name: idci_step.path_event.action, alias: change_data }
+            - { name: idci_step.path_event_action, alias: change_data }
 
-    idci_step.path_event.action.change_final_destination:
+    idci_step.path_event_action.change_final_destination:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventAction
         tags:
-            - { name: idci_step.path_event.action, alias: change_final_destination }
+            - { name: idci_step.path_event_action, alias: change_final_destination }
 
-    idci_step.path_event.action.purge_flow_data:
+    idci_step.path_event_action.purge_flow_data:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction
         tags:
-            - { name: idci_step.path_event.action, alias: purge_flow_data }
+            - { name: idci_step.path_event_action, alias: purge_flow_data }
 
-    idci_step.path_event.action.add_url_query_parameter:
+    idci_step.path_event_action.add_url_query_parameter:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction
         tags:
-            - { name: idci_step.path_event.action, alias: add_url_query_parameter }
+            - { name: idci_step.path_event_action, alias: add_url_query_parameter }
 
 
     # SerializationMapper
@@ -253,7 +253,7 @@ services:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
         arguments:
             - @idci_step.step_event.registry
-            - @idci_step.path_event.registry
+            - @idci_step.path_event_action.registry
             - @idci_step.merger
             - @security.context
             - @session

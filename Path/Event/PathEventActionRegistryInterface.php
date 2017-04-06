@@ -8,9 +8,10 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event;
 
+use IDCI\Bundle\ExtraStepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Path\Event\Action\PathEventActionInterface;
 
-interface PathEventRegistryInterface
+interface PathEventActionRegistryInterface
 {
     /**
      * Sets a path event action identify by alias.
@@ -18,7 +19,7 @@ interface PathEventRegistryInterface
      * @param string                   $alias  The action alias.
      * @param PathEventActionInterface $action The action.
      *
-     * @return PathEventRegistryInterface
+     * @return PathEventActionRegistryInterface
      */
     public function setAction($alias, PathEventActionInterface $action);
 
@@ -29,8 +30,8 @@ interface PathEventRegistryInterface
      *
      * @return PathEventActionInterface The action
      *
-     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws Exception\InvalidArgumentException if the action can not be retrieved.
+     * @throws UnexpectedTypeException  if the passed alias is not a string.
+     * @throws \InvalidArgumentException if the action can not be retrieved.
      */
     public function getAction($alias);
 

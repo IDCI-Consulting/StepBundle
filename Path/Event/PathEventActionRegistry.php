@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Event;
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Path\Event\Action\PathEventActionInterface;
 
-class PathEventRegistry implements PathEventRegistryInterface
+class PathEventActionRegistry implements PathEventActionRegistryInterface
 {
     /**
      * @var PathEventActionInterface[]

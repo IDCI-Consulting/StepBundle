@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationWorkerCompilerPass;
@@ -30,7 +30,7 @@ class IDCIStepBundle extends Bundle
         $container->addCompilerPass(new StepTypeConfigurationCompilerPass());
         $container->addCompilerPass(new StepEventCompilerPass());
         $container->addCompilerPass(new PathTypeCompilerPass());
-        $container->addCompilerPass(new PathEventCompilerPass());
+        $container->addCompilerPass(new PathEventActionCompilerPass());
         $container->addCompilerPass(new ConditionalRuleCompilerPass());
         $container->addCompilerPass(new FlowDataStoreCompilerPass());
         $container->addCompilerPass(new ConfigurationWorkerCompilerPass());
