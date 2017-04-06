@@ -8,6 +8,9 @@
 namespace IDCI\Bundle\StepBundle\Step\Event;
 
 
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Symfony\Component\Form\FormInterface;
+
 interface StepEventInterface
 {
     /**
