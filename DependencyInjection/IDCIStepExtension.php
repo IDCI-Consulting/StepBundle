@@ -32,5 +32,9 @@ class IDCIStepExtension extends Extension
 
         $container->setParameter('idci_step.maps', $config['maps']);
         $container->setParameter('idci_step.serialization.mapping', $config['serialization']['mapping']);
+        $container->setParameter('idci_step.step_types', $config['step_types']);
+        $container->setParameter('idci_step.path_types', $config['path_types']);
+        $container->setParameter('idci_step.path_event_actions', $config['path_event_actions']);
+        $container->setParameter('idci_step.step_event_actions', $config['step_event_actions']);
     }
 }

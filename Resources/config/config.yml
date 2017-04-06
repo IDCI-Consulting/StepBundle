@@ -1,3 +1,8 @@
+imports:
+    - { resource: step_types.yml }
+    - { resource: path_types.yml }
+    - { resource: event_actions.yml }
+
 idci_step:
     serialization:
         mapping:

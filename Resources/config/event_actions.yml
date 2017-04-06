@@ -1,0 +1,47 @@
+idci_step:
+
+    path_event_actions:
+
+        "abstract":
+            parent:      ~
+            abstract:    true
+            description: ~
+            extra_form_options: ~
+
+        "change_data":
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                fields: { extra_form_type: "textarea", options: {required: false} }
+
+        "js_confirm":
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                message: { extra_form_type: "textarea", options: {required: false} }
+
+    step_event_actions:
+
+        "abstract":
+            parent:      ~
+            abstract:    true
+            description: ~
+            extra_form_options: ~
+
+        "add_link":
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                link_options: { extra_form_type: "textarea", options: {required: false} }
+
+        "transform_data":
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                fields: { extra_form_type: "textarea", options: {required: false} }
+
+        "change_data":
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                fields: { extra_form_type: "textarea", options: {required: false} }
