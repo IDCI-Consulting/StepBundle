@@ -1,5 +1,7 @@
 parameters:
-    idci_step.step.registry.class: IDCI\Bundle\StepBundle\Step\StepRegistry
+    idci_step.step_type.registry.class: IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry
+    idci_step.step_type_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Configuration\StepTypeConfigurationRegistry
+    idci_step.step_type_configuration.class: IDCI\Bundle\StepBundle\Step\Configuration\StepTypeConfiguration
     idci_step.step_event.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventRegistry
     idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
     idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
@@ -37,8 +39,11 @@ services:
 
     # Registry
 
-    idci_step.step.registry:
-        class: %idci_step.step.registry.class%
+    idci_step.step_type.registry:
+        class: %idci_step.step_type.registry.class%
+
+    idci_step.step_type_configuration.registry:
+        class: %idci_step.step_type_configuration.registry.class%
 
     idci_step.step_event.registry:
         class: %idci_step.step_event.registry.class%
@@ -52,12 +57,18 @@ services:
     idci_step.conditional_rule.registry:
         class: %idci_step.conditional_rule.registry.class%
 
+    # Configurations
+
+    idci_step.step_type_configuration:
+        class: %idci_step.step_type_configuration.class%
+        arguments: [null]
+        abstract: true
 
     # Builder
 
     idci_step.step.builder:
         class: %idci_step.step.builder.class%
-        arguments: [@idci_step.step.registry]
+        arguments: [@idci_step.step_type.registry]
 
     idci_step.path.builder:
         class: %idci_step.path.builder.class%
