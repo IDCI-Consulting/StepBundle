@@ -11,7 +11,7 @@ use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeConfigurationCom
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
@@ -28,7 +28,7 @@ class IDCIStepBundle extends Bundle
 
         $container->addCompilerPass(new StepTypeCompilerPass());
         $container->addCompilerPass(new StepTypeConfigurationCompilerPass());
-        $container->addCompilerPass(new StepEventCompilerPass());
+        $container->addCompilerPass(new StepEventActionCompilerPass());
         $container->addCompilerPass(new PathTypeCompilerPass());
         $container->addCompilerPass(new PathEventActionCompilerPass());
         $container->addCompilerPass(new ConditionalRuleCompilerPass());

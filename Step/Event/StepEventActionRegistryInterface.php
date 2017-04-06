@@ -7,9 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event;
 
+use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Step\Event\Action\StepEventActionInterface;
 
-interface StepEventRegistryInterface
+interface StepEventActionRegistryInterface
 {
     /**
      * Sets a step event action identify by alias.
@@ -28,8 +29,8 @@ interface StepEventRegistryInterface
      *
      * @return StepEventActionInterface The action
      *
-     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws Exception\InvalidArgumentException if the action can not be retrieved.
+     * @throws UnexpectedTypeException if the passed alias is not a string.
+     * @throws \InvalidArgumentException if the action can not be retrieved.
      */
     public function getAction($alias);
 

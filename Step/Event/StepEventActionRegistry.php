@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Event;
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Step\Event\Action\StepEventActionInterface;
 
-class StepEventRegistry implements StepEventRegistryInterface
+class StepEventActionRegistry implements StepEventActionRegistryInterface
 {
     /**
      * @var StepEventActionInterface[]
