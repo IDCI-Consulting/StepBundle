@@ -1,7 +1,7 @@
 parameters:
     idci_step.step_type.registry.class: IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry
-    idci_step.step_type_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Configuration\StepTypeConfigurationRegistry
-    idci_step.step_type_configuration.class: IDCI\Bundle\StepBundle\Step\Configuration\StepTypeConfiguration
+    idci_step.step_type_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry
+    idci_step.step_type_configuration.class: IDCI\Bundle\StepBundle\Step\Configuration\Type\StepTypeConfiguration
     idci_step.step_event.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventRegistry
     idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
     idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
