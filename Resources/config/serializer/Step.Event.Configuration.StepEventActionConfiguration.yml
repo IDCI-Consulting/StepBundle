@@ -1,0 +1,18 @@
+IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfiguration:
+
+    accessor_order: custom
+    custom_accessor_order: [name, description, abstract, extra_form_options]
+
+    exclusion_policy: ALL
+
+    properties:
+        name:
+            expose: true
+        description:
+            expose: true
+        abstract:
+            expose: true
+
+    virtual_properties:
+        getExtraFormOptions:
+            serialized_name: extra_form_options
