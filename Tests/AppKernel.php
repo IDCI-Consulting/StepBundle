@@ -11,8 +11,11 @@ class AppKernel extends Kernel
 
         if (in_array($this->getEnvironment(), array('test'))) {
             $bundles[] = new Symfony\Bundle\FrameworkBundle\FrameworkBundle();
+            $bundles[] = new Symfony\Bundle\SecurityBundle\SecurityBundle();
             $bundles[] = new Symfony\Bundle\TwigBundle\TwigBundle();
+            $bundles[] = new IDCI\Bundle\ExtraFormBundle\IDCIExtraFormBundle();
             $bundles[] = new IDCI\Bundle\StepBundle\IDCIStepBundle();
+            $bundles[] = new JMS\SerializerBundle\JMSSerializerBundle();
         }
 
         return $bundles;

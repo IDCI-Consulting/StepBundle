@@ -1,5 +1,14 @@
 imports:
-    - { resource: @IDCIStepBundle/Resources/config/config.yml }
+    - { resource: "@IDCIExtraFormBundle/Resources/config/config.yml" }
+    - { resource: "@IDCIStepBundle/Resources/config/config.yml" }
+
+security:
+    providers:
+        in_memory:
+            memory: ~
+    firewalls:
+        main:
+            anonymous: ~
 
 framework:
     secret: test
