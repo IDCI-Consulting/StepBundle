@@ -30,10 +30,10 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
         }
 
         $registryDefinition = $container->getDefinition('idci_step.path_event_action_configuration.registry');
-        $pathTypesConfiguration = $container->getParameter('idci_step.path_event_actions');
+        $pathEventActionsConfiguration = $container->getParameter('idci_step.path_event_actions');
         $extraFormOptions = array();
 
-        foreach ($pathTypesConfiguration as $configurationName => $configuration) {
+        foreach ($pathEventActionsConfiguration as $configurationName => $configuration) {
             $serviceDefinition = new DefinitionDecorator('idci_step.path_event_action_configuration');
 
             if (null !== $configuration['parent']) {
