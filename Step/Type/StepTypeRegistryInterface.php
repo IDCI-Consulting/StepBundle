@@ -7,9 +7,10 @@
  
 namespace IDCI\Bundle\StepBundle\Step;
 
+use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
-interface StepRegistryInterface
+interface StepTypeRegistryInterface
 {
     /**
      * Sets a step type identify by a alias.
@@ -17,7 +18,7 @@ interface StepRegistryInterface
      * @param string            $alias  The alias type.
      * @param StepTypeInterface $step   The type.
      *
-     * @return StepRegistryInterface
+     * @return StepTypeRegistryInterface
      */
     public function setType($alias, StepTypeInterface $step);
 
@@ -28,8 +29,8 @@ interface StepRegistryInterface
      *
      * @return StepTypeInterface The type.
      *
-     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws Exception\InvalidArgumentException if the type can not be retrieved.
+     * @throws UnexpectedTypeException if the passed alias is not a string.
+     * @throws \InvalidArgumentException if the type can not be retrieved.
      */
     public function getType($alias);
 

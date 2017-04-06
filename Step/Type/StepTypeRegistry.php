@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step;
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
 
-class StepRegistry implements StepRegistryInterface
+class StepTypeRegistry implements StepTypeRegistryInterface
 {
     /**
      * @var StepTypeInterface[]
