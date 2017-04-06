@@ -5,7 +5,7 @@
  * @license: MIT
  */
  
-namespace IDCI\Bundle\StepBundle\Step;
+namespace IDCI\Bundle\StepBundle\Step\Type;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
