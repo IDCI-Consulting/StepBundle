@@ -11,19 +11,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
-class PathCompilerPass implements CompilerPassInterface
+class PathTypeCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.path.registry')) {
+        if (!$container->hasDefinition('idci_step.path_type.registry')) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.path.registry');
-        foreach ($container->findTaggedServiceIds('idci_step.path.type') as $id => $tags) {
+        $registryDefinition = $container->getDefinition('idci_step.path_type.registry');
+        foreach ($container->findTaggedServiceIds('idci_step.path_type') as $id => $tags) {
             foreach ($tags as $attributes) {
                 $alias = isset($attributes['alias'])
                     ? $attributes['alias']

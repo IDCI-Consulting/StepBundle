@@ -1,20 +1,20 @@
 parameters:
+    idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
+    idci_step.step_event.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventRegistry
     idci_step.step_type.registry.class: IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry
     idci_step.step_type_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry
     idci_step.step_type_configuration.class: IDCI\Bundle\StepBundle\Step\Configuration\Type\StepTypeConfiguration
-    idci_step.step_event.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventRegistry
-    idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
     idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
     idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
 
-    idci_step.path.registry.class: IDCI\Bundle\StepBundle\Path\PathRegistry
-    idci_step.path_event.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventRegistry
     idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
-    idci_step.path.type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
-    idci_step.path.type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
-    idci_step.path.type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
-    idci_step.path.type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
-    idci_step.path.type.link.class: IDCI\Bundle\StepBundle\Path\Type\LinkPathType
+    idci_step.path_event.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventRegistry
+    idci_step.path_type.registry.class: IDCI\Bundle\StepBundle\Path\PathTypeRegistry
+    idci_step.path_type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
+    idci_step.path_type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
+    idci_step.path_type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
+    idci_step.path_type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
+    idci_step.path_type.link.class: IDCI\Bundle\StepBundle\Path\Type\LinkPathType
 
     idci_step.conditional_rule.registry.class: IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry
 
@@ -48,8 +48,8 @@ services:
     idci_step.step_event.registry:
         class: %idci_step.step_event.registry.class%
 
-    idci_step.path.registry:
-        class: %idci_step.path.registry.class%
+    idci_step.path_type.registry:
+        class: %idci_step.path_type.registry.class%
 
     idci_step.path_event.registry:
         class: %idci_step.path_event.registry.class%
@@ -72,7 +72,7 @@ services:
 
     idci_step.path.builder:
         class: %idci_step.path.builder.class%
-        arguments: [@idci_step.path.registry]
+        arguments: [@idci_step.path_type.registry]
 
 
     # FlowRecorder
@@ -146,25 +146,25 @@ services:
 
     # Path
 
-    idci_step.path.type.single:
-        class: %idci_step.path.type.single.class%
+    idci_step.path_type.single:
+        class: %idci_step.path_type.single.class%
         tags:
-            - { name: idci_step.path.type, alias: single }
+            - { name: idci_step.path_type, alias: single }
 
-    idci_step.path.type.conditional_destination:
-        class: %idci_step.path.type.conditional_destination.class%
+    idci_step.path_type.conditional_destination:
+        class: %idci_step.path_type.conditional_destination.class%
         arguments:
             - @idci_step.merger
             - @security.context
             - @session
             - @idci_step.conditional_rule.registry
         tags:
-            - { name: idci_step.path.type, alias: conditional_destination }
+            - { name: idci_step.path_type, alias: conditional_destination }
 
-    idci_step.path.type.end:
-        class: %idci_step.path.type.end.class%
+    idci_step.path_type.end:
+        class: %idci_step.path_type.end.class%
         tags:
-            - { name: idci_step.path.type, alias: end }
+            - { name: idci_step.path_type, alias: end }
 
 
     # PathEvent

@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
@@ -29,7 +29,7 @@ class IDCIStepBundle extends Bundle
         $container->addCompilerPass(new StepTypeCompilerPass());
         $container->addCompilerPass(new StepTypeConfigurationCompilerPass());
         $container->addCompilerPass(new StepEventCompilerPass());
-        $container->addCompilerPass(new PathCompilerPass());
+        $container->addCompilerPass(new PathTypeCompilerPass());
         $container->addCompilerPass(new PathEventCompilerPass());
         $container->addCompilerPass(new ConditionalRuleCompilerPass());
         $container->addCompilerPass(new FlowDataStoreCompilerPass());

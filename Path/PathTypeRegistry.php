@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path;
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
 
-class PathRegistry implements PathRegistryInterface
+class PathTypeRegistry implements PathTypeRegistryInterface
 {
     /**
      * @var PathTypeInterface[]

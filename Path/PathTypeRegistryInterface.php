@@ -7,9 +7,10 @@
  
 namespace IDCI\Bundle\StepBundle\Path;
 
+use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
 
-interface PathRegistryInterface
+interface PathTypeRegistryInterface
 {
     /**
      * Sets a path type identify by a alias.
@@ -17,7 +18,7 @@ interface PathRegistryInterface
      * @param string            $alias  The type alias.
      * @param PathTypeInterface $path   The type.
      *
-     * @return PathRegistryInterface
+     * @return PathTypeRegistryInterface
      */
     public function setType($alias, PathTypeInterface $path);
 
@@ -28,8 +29,8 @@ interface PathRegistryInterface
      *
      * @return PathTypeInterface The type
      *
-     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws Exception\InvalidArgumentException if the type can not be retrieved.
+     * @throws UnexpectedTypeException  if the passed alias is not a string.
+     * @throws \InvalidArgumentException if the type can not be retrieved.
      */
     public function getType($alias);
 
