@@ -7,12 +7,13 @@
 
 namespace IDCI\Bundle\StepBundle;
 
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeConfigurationCompilerPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeConfigurationCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeConfigurationCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
@@ -30,6 +31,7 @@ class IDCIStepBundle extends Bundle
         $container->addCompilerPass(new StepTypeConfigurationCompilerPass());
         $container->addCompilerPass(new StepEventActionCompilerPass());
         $container->addCompilerPass(new PathTypeCompilerPass());
+        $container->addCompilerPass(new PathTypeConfigurationCompilerPass());
         $container->addCompilerPass(new PathEventActionCompilerPass());
         $container->addCompilerPass(new ConditionalRuleCompilerPass());
         $container->addCompilerPass(new FlowDataStoreCompilerPass());

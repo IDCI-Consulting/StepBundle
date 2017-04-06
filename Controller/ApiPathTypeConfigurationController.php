@@ -9,25 +9,25 @@ use FOS\RestBundle\Controller\Annotations as Annotations;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Api StepTypeConfiguration Controller
+ * Api PathTypeConfiguration Controller
  */
-class ApiStepTypeConfigurationController extends FOSRestController
+class ApiPathTypeConfigurationController extends FOSRestController
 {
     /**
-     * [GET] /step-types-configurations
+     * [GET] /path-types-configurations
      *
-     * Retrieve step types configurations
+     * Retrieve path types configurations
      *
-     * @Get("/step-types-configurations.{_format}")
+     * @Get("/path-types-configurations.{_format}")
      *
      * @param string $_format
      *
      * @return Response
      */
-    public function getStepTypesConfigurationsAction($_format)
+    public function getPathTypesConfigurationsAction($_format)
     {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get('idci_step.step_type_configuration.registry')->getConfigurations();
+        $configurations = $this->get('idci_step.path_type_configuration.registry')->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();
