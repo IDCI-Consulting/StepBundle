@@ -1,6 +1,8 @@
 parameters:
     idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
     idci_step.step_event_action.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistry
+    idci_step.step_event_action_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistry
+    idci_step.step_event_action_configuration.class: IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfiguration
     idci_step.step_type.registry.class: IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry
     idci_step.step_type_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry
     idci_step.step_type_configuration.class: IDCI\Bundle\StepBundle\Step\Configuration\Type\StepTypeConfiguration
@@ -52,6 +54,9 @@ services:
     idci_step.step_event_action.registry:
         class: %idci_step.step_event_action.registry.class%
 
+    idci_step.step_event_action_configuration.registry:
+        class: %idci_step.step_event_action_configuration.registry.class%
+
     idci_step.path_type.registry:
         class: %idci_step.path_type.registry.class%
 
@@ -71,6 +76,11 @@ services:
 
     idci_step.step_type_configuration:
         class: %idci_step.step_type_configuration.class%
+        arguments: [null]
+        abstract: true
+
+    idci_step.step_event_action_configuration:
+        class: %idci_step.step_event_action_configuration.class%
         arguments: [null]
         abstract: true
 
