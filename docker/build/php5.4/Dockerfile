@@ -18,9 +18,6 @@ RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install zip
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 
-# xdebug
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-
 # php.ini
 COPY php.ini /usr/local/etc/php/
 
