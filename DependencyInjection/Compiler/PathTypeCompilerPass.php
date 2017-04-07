@@ -30,11 +30,51 @@ class PathTypeCompilerPass implements CompilerPassInterface
                     : $id
                 ;
 
+                $bundleConfiguration = $this->mergeConfigurations($container->getExtensionConfig('idci_step'));
+
+                if (!$this->hasConfiguration($alias, $bundleConfiguration)) {
+                    throw new \Exception(sprintf(
+                        'The path type \'%s\' does not have a configuration.
+                        You must configure the path type under the idci_step.path_types key',
+                        $alias
+                    ));
+                }
+
                 $registryDefinition->addMethodCall(
                     'setType',
                     array($alias, new Reference($id))
                 );
             }
         }
+    }
+
+    /**
+     * Check if a step type has a configuration
+     *
+     * @param $alias
+     * @param $configuration
+     *
+     * @return bool
+     */
+    private function hasConfiguration($alias, $configuration)
+    {
+        return isset($configuration['path_types'][$alias]);
+    }
+
+    /**
+     * Merge all configurations under the idci_step key
+     *
+     * @param array $configurations
+     *
+     * @return array
+     */
+    private function mergeConfigurations(array $configurations)
+    {
+        $mergedConfiguration = array();
+        foreach ($configurations as $configuration) {
+            $mergedConfiguration = array_merge($mergedConfiguration, $configuration);
+        }
+
+        return $mergedConfiguration;
     }
 }

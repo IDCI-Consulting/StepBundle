@@ -2,46 +2,72 @@ idci_step:
 
     path_event_actions:
 
-        "abstract":
+        abstract:
             parent:      ~
             abstract:    true
             description: ~
             extra_form_options: ~
 
-        "change_data":
+        change_data:
             parent:      abstract
             description: ""
             extra_form_options:
-                fields: { extra_form_type: "textarea", options: {required: false} }
+                fields: {extra_form_type: "textarea", options: {required: false}}
 
-        "js_confirm":
+        js_confirm:
             parent:      abstract
             description: ""
             extra_form_options:
-                message: { extra_form_type: "textarea", options: {required: false} }
+                message: {extra_form_type: "textarea", options: {required: false}}
+
+        change_final_destination:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                final_destination: {extra_form_type: "text", options: {required: true}}
+
+        purge_flow_data:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                steps: {extra_form_type: "text", options: {required: true}}
+
+        add_url_query_parameter:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                key:   {extra_form_type: "text", options: {required: true}}
+                value: {extra_form_type: "text", options: {required: false}}
 
     step_event_actions:
 
-        "abstract":
+        abstract:
             parent:      ~
             abstract:    true
             description: ~
             extra_form_options: ~
 
-        "add_link":
+        add_link:
             parent:      abstract
             description: ""
             extra_form_options:
-                link_options: { extra_form_type: "textarea", options: {required: false} }
+                link_options: {extra_form_type: "textarea", options: {required: false}}
 
-        "transform_data":
+        transform_data:
             parent:      abstract
             description: ""
             extra_form_options:
-                fields: { extra_form_type: "textarea", options: {required: false} }
+                fields: {extra_form_type: "textarea", options: {required: false}}
 
-        "change_data":
+        change_data:
             parent:      abstract
             description: ""
             extra_form_options:
-                fields: { extra_form_type: "textarea", options: {required: false} }
+                fields: {extra_form_type: "textarea", options: {required: false}}
+
+        conditional_stop_navigation:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                rules:             {extra_form_type: "text", options: {required: false}}
+                final_destination: {extra_form_type: "text", options: {required: false}}
