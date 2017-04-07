@@ -1,34 +1,62 @@
-container_php54 = step-bundle-php54
-container_php56 = step-bundle-php56
+# Variables
 
-# PHP 5.4
-php54_bash:
-	docker exec -it $(container_php54) bash
+target_container ?= php56
+php_sources ?= .
+js_sources ?= Resources/public/js/editor
 
-php54_composer-add-github-token:
-	docker exec -it $(container_php54) composer config --global github-oauth.github.com $(token)
+# Bash Commands
 
-php54_composer-update:
-	docker exec -it $(container_php54) composer update
+.PHONY: command
+command:
+	docker-compose run --rm $(target_container) $(cmd)
 
-php54_command:
-	docker exec -it $(container_php54) $(cmd)
+# NodeJs commands
 
-php54_run-test:
-	docker exec -it $(container_php54) ./vendor/bin/phpunit --coverage-text
+.PHONY: npm-install
+npm-install:
+	docker-compose run --rm node npm install
 
-# PHP 5.6
-php56_bash:
-	docker exec -it $(container_php56) bash
+.PHONY: gulp
+gulp:
+	docker-compose run --rm node gulp $(task)
 
-php56_composer-add-github-token:
-	docker exec -it $(container_php56) composer config --global github-oauth.github.com $(token)
+.PHONY: eslint
+eslint:
+	docker-compose run --rm node eslint $(js_sources)
 
-php56_composer-update:
-	docker exec -it $(container_php56) composer update
+# PHP commands
 
-php56_command:
-	docker exec -it $(container_php56) $(cmd)
+.PHONY: composer-add-github-token
+composer-add-github-token:
+	docker-compose run --rm $(target_container) composer config --global github-oauth.github.com $(token)
 
-php56_run-test:
-	docker exec -it $(container_php56) ./vendor/bin/phpunit --coverage-text
+.PHONY: composer-update
+composer-update:
+	docker-compose run --rm $(target_container) composer update
+
+.PHONY: composer-install
+composer-install:
+	docker-compose run --rm $(target_container) composer install
+
+.PHONY: phploc
+phploc:
+	docker run -i -v `pwd`:/project jolicode/phaudit bash -c "phploc $(php_sources); exit $$?"
+
+.PHONY: phpcs
+phpcs:
+	docker run -i -v `pwd`:/project jolicode/phaudit bash -c "phpcs $(php_sources) --extensions=php --ignore=vendor,app/cache,Tests/cache    --standard=PSR2; exit $$?"
+
+.PHONY: phpcpd
+phpcpd:
+	docker run -i -v `pwd`:/project jolicode/phaudit bash -c "phpcpd $(php_sources); exit $$?"
+
+.PHONY: phpdcd
+phpdcd:
+	docker run -i -v `pwd`:/project jolicode/phaudit bash -c "phpdcd $(php_sources); exit $$?"
+
+
+# Symfony bundle commands
+
+.PHONY: phpunit
+phpunit: ./vendor/bin/phpunit
+	docker-compose run --rm $(target_container) ./vendor/bin/phpunit --coverage-text
