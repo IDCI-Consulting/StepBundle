@@ -45,7 +45,6 @@ class StepTypeCompilerPass implements CompilerPassInterface
                     'setType',
                     array($alias, new Reference($id))
                 );
-
             }
         }
     }

@@ -43,8 +43,7 @@ class StepEvent implements StepEventInterface
         NavigatorInterface $navigator,
         FormEvent $formEvent,
         $stepEventData
-    )
-    {
+    ) {
         $this->navigator     = $navigator;
         $this->formEvent     = $formEvent;
         $this->stepEventData = $stepEventData;

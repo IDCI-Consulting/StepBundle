@@ -60,8 +60,7 @@ class NavigatorType extends AbstractType
         \Twig_Environment          $merger,
         SecurityContextInterface   $securityContext,
         SessionInterface           $session
-    )
-    {
+    ) {
         $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
         $this->merger            = $merger;
@@ -87,14 +86,14 @@ class NavigatorType extends AbstractType
     {
         $builder
             ->add('_map_name', 'hidden', array(
-                'data' => $options['navigator']->getMap()->getName())
-            )
+                'data' => $options['navigator']->getMap()->getName()
+            ))
             ->add('_map_footprint', 'hidden', array(
-                'data' => $options['navigator']->getMap()->getFootprint())
-            )
+                'data' => $options['navigator']->getMap()->getFootprint()
+            ))
             ->add('_current_step', 'hidden', array(
-                'data' => $options['navigator']->getCurrentStep()->getName())
-            )
+                'data' => $options['navigator']->getCurrentStep()->getName()
+            ))
         ;
 
         if (null !== $options['navigator']->getPreviousStep()) {

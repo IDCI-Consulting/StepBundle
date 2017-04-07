@@ -18,7 +18,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function testConfiguration()
     {
-       $this->assertEquals($this->testConfiguration, $this->path->getConfiguration());
+        $this->assertEquals($this->testConfiguration, $this->path->getConfiguration());
     }
 
     public function testType()

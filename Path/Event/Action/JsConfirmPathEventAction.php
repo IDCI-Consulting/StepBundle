@@ -15,10 +15,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        PathEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(PathEventInterface $event, array $parameters = array())
     {
         $form = $event->getForm();
 

@@ -17,10 +17,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        StepEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(StepEventInterface $event, array $parameters = array())
     {
         $formData      = $event->getData();
         $step          = $event->getNavigator()->getCurrentStep();

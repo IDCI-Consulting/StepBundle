@@ -18,11 +18,11 @@ interface NavigatorFactoryInterface
     /**
      * Create a Navigator
      *
-     * @param Request                                                   $request        The HTTP request.
-     * @param MapInterface|ConfigurationFetcherInterface|array|string   $configuration  The map configuration.
-     * @param array                                                     $parameters     The fetcher parameters.
-     * @param array                                                     $data           The navigation data.
-     * @param boolean                                                   $navigate       Whether or not to do the navigation during creation.
+     * @param Request The HTTP request.
+     * @param MapInterface|ConfigurationFetcherInterface|array|string The map configuration.
+     * @param array The fetcher parameters.
+     * @param array The navigation data.
+     * @param boolean Whether or not to do the navigation during creation.
      *
      * @return NavigatorInterface
      */

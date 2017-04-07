@@ -16,10 +16,7 @@ class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        PathEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(PathEventInterface $event, array $parameters = array())
     {
         $event->getNavigator()->addUrlQueryParameter(
             $parameters['key'],
@@ -38,7 +35,7 @@ class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
             ->setRequired(array('key'))
             ->setDefaults(array('value' => '1'))
             ->setNormalizers(array(
-                'value' => function(Options $options, $value) {
+                'value' => function (Options $options, $value) {
                     return (string)$value;
                 }
             ))

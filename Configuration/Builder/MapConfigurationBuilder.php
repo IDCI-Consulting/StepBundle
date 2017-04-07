@@ -37,8 +37,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     public function __construct(
         MapBuilderFactoryInterface $mapBuilderFactory,
         ConfigurationWorkerRegistryInterface $workerRegistry
-    )
-    {
+    ) {
         $this->mapBuilderFactory = $mapBuilderFactory;
         $this->workerRegistry = $workerRegistry;
     }
@@ -101,7 +100,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
                 unset($options[$key]);
                 $options[substr($key, 1)] = $worker->work($option['parameters']);
             // Case of an embedded array.
-            } else if (is_array($option)) {
+            } elseif (is_array($option)) {
                 $options[$key] = $this->buildOptions($option, null);
             }
         }

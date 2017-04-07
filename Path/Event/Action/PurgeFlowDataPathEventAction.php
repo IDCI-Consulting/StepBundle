@@ -54,10 +54,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        PathEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(PathEventInterface $event, array $parameters = array())
     {
         foreach ($parameters['steps'] as $stepName => $dataTypes) {
             foreach ($dataTypes as $type => $keys) {
@@ -111,7 +108,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
                 'steps' => array('array'),
             ))
             ->setNormalizers(array(
-                'steps' => function(Options $options, $value) {
+                'steps' => function (Options $options, $value) {
                     foreach ($value as $stepName => $dataTypes) {
                         if (!is_array($dataTypes)) {
                             throw new \UnexpectedValueException(sprintf(

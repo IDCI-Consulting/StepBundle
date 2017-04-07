@@ -50,8 +50,7 @@ class PathEvent implements PathEventInterface
         FormEvent $formEvent,
         $pathEventData,
         $pathIndex
-    )
-    {
+    ) {
         $this->navigator     = $navigator;
         $this->formEvent     = $formEvent;
         $this->pathEventData = $pathEventData;

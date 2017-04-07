@@ -58,8 +58,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         MapConfigurationBuilderInterface      $mapConfigurationBuilder,
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
         NavigationLoggerInterface             $logger
-    )
-    {
+    ) {
         $this->formFactory                  = $formFactory;
         $this->flowRecorder                 = $flowRecorder;
         $this->mapConfigurationBuilder      = $mapConfigurationBuilder;
@@ -76,8 +75,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         array $parameters = array(),
         array $data = array(),
         $navigate = true
-    )
-    {
+    ) {
         if (is_string($configuration)) {
             $configuration = $this->configurationFetcherRegistry->getFetcher($configuration);
         }
@@ -92,7 +90,9 @@ class NavigatorFactory implements NavigatorFactoryInterface
 
         if (!$configuration instanceof MapInterface) {
             throw new \InvalidArgumentException(
-                'The map must be an "array", a "reference to a fetcher", an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"'
+                'The map must be an "array", a "reference to a fetcher", '.
+                'an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" '.
+                'or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"'
             );
         }
 

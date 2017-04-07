@@ -30,7 +30,7 @@ class PathBuilder implements PathBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build($typeAlias, array $options = array(), array $steps)
+    public function build($typeAlias, array $options = array(), array $steps = array())
     {
         $type = $this->registry->getType($typeAlias);
 

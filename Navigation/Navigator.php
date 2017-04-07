@@ -130,8 +130,7 @@ class Navigator implements NavigatorInterface
         Request                   $request,
         NavigationLoggerInterface $logger = null,
         array                     $data = array()
-    )
-    {
+    ) {
         $this->form               = null;
         $this->formView           = null;
         $this->formFactory        = $formFactory;
@@ -169,7 +168,7 @@ class Navigator implements NavigatorInterface
                 'history'           => array(),
             ))
             ->setNormalizers(array(
-                'remindedData' => function(Options $options, $value) {
+                'remindedData' => function (Options $options, $value) {
                     return $options['data'];
                 },
             ))
@@ -244,13 +243,14 @@ class Navigator implements NavigatorInterface
         );
 
         // Allow StepType to transform step options
-        $this->currentStep->setOptions($this
-            ->currentStep
-            ->getType()
-            ->prepareNavigation(
-                $this,
-                $this->currentStep->getOptions()
-            )
+        $this->currentStep->setOptions(
+            $this
+                ->currentStep
+                ->getType()
+                ->prepareNavigation(
+                    $this,
+                    $this->currentStep->getOptions()
+                )
         );
     }
 
@@ -526,7 +526,8 @@ class Navigator implements NavigatorInterface
 
         $glue = false !== strpos($this->finalDestination, '?') ? '&' : '?';
 
-        return sprintf('%s%s%s',
+        return sprintf(
+            '%s%s%s',
             $this->finalDestination,
             $glue,
             http_build_query($this->getUrlQueryParameters())
@@ -652,4 +653,3 @@ class Navigator implements NavigatorInterface
         return $this->formView;
     }
 }
-

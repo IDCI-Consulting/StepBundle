@@ -37,10 +37,9 @@ class Flow implements FlowInterface
      */
     public function __construct(
         StepInterface $currentStep = null,
-        $history                   = null,
-        FlowDataInterface $data    = null
-    )
-    {
+        $history = null,
+        FlowDataInterface $data = null
+    ) {
         $this->history = $this->buildFlowHistory($history);
         $this->data    = null === $data ? new FlowData() : $data;
 
@@ -231,4 +230,3 @@ class Flow implements FlowInterface
         $this->history->addTakenPath($path->getSource(), $index);
     }
 }
-

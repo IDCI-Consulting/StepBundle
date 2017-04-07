@@ -87,8 +87,8 @@ class MapBuilder implements MapBuilderInterface
      * @param SessionInterface         $session         The session.
      */
     public function __construct(
-        $name    = null,
-        $data    = array(),
+        $name = null,
+        $data = array(),
         $options = array(),
         FlowRecorderInterface    $flowRecorder,
         StepBuilderInterface     $stepBuilder,
@@ -96,8 +96,7 @@ class MapBuilder implements MapBuilderInterface
         \Twig_Environment        $merger,
         SecurityContextInterface $securityContext,
         SessionInterface         $session
-    )
-    {
+    ) {
         $this->name            = $name;
         $this->data            = $data;
         $this->options         = self::resolveOptions($options);
@@ -346,7 +345,7 @@ class MapBuilder implements MapBuilderInterface
                     unset($value[$k]);
                 // Do not merge events parameters.
                 } elseif ($k !== 'events') {
-                   $value[$k] = $this->mergeValue($v, $vars, $try);
+                    $value[$k] = $this->mergeValue($v, $vars, $try);
                 }
             }
         // Handle object case.

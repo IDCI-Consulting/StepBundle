@@ -234,4 +234,3 @@ interface NavigatorInterface
      */
     public function getFormView();
 }
-

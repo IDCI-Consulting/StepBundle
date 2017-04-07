@@ -71,8 +71,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         \Twig_Environment          $merger,
         SecurityContextInterface   $securityContext,
         SessionInterface           $session
-    )
-    {
+    ) {
         $this->navigator         = $navigator;
         $this->stepEventRegistry = $stepEventRegistry;
         $this->pathEventRegistry = $pathEventRegistry;
@@ -145,8 +144,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         // Add back link as submit input.
         // Do not add back link on steps if this is specified, this allow dynamic changes.
-        if (
-            $currentStep->getName() != $map->getFirstStepName() &&
+        if ($currentStep->getName() != $map->getFirstStepName() &&
             !$stepConfiguration['options']['prevent_previous']
         ) {
             $form->add(
@@ -251,8 +249,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     if (isset($configuration['destinations'])) {
                         $destination = $path->resolveDestination($this->navigator);
 
-                        if (
-                            null === $destination ||
+                        if (null === $destination ||
                             !in_array($destination->getName(), $configuration['destinations'])
                         ) {
                             continue;
@@ -465,9 +462,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             foreach ($value as $k => $v) {
                 $value[$k] = $this->mergeValue($v, $vars);
             }
-        }
+
         // Handle object case.
-        elseif (is_object($value)) {
+        } elseif (is_object($value)) {
             $class = new \ReflectionClass($value);
             $properties = $class->getProperties();
 
@@ -482,9 +479,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     )
                 );
             }
-        }
+
         // Handle string case.
-        elseif (is_string($value)) {
+        } elseif (is_string($value)) {
             $value = $this->merger->render($value, $vars);
         }
 

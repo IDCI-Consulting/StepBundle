@@ -16,10 +16,7 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        PathEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(PathEventInterface $event, array $parameters = array())
     {
         foreach ($parameters['fields'] as $field) {
             $this->change(
@@ -54,12 +51,7 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
      * @param array         $types The flow data types to look at.
      * @param mixed         $value The value.
      */
-    protected function change(
-        FlowInterface $flow,
-        $path,
-        $types,
-        $value
-    )
+    protected function change(FlowInterface $flow, $path, $types, $value)
     {
         foreach ($types as $type) {
             $dataGetter = sprintf('get%s', ucfirst($type));

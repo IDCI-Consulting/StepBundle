@@ -62,7 +62,7 @@ class FormStepType extends AbstractStepType
     public function getDataTypeMapping($options)
     {
         $mapping = parent::getDataTypeMapping($options);
-        foreach($options['builder']->all() as $key => $field) {
+        foreach ($options['builder']->all() as $key => $field) {
             if (isset($mapping[$key])) {
                 continue;
             }

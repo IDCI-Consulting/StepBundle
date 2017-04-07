@@ -86,20 +86,20 @@ class NavigationLogger implements NavigationLoggerInterface
 
         if (null !== $this->logger) {
             $this->logger->info(
-                sprintf('Step navigation [%s - %s]',
+                sprintf(
+                    'Step navigation [%s - %s]',
                     $navigator->getMap()->getName(),
                     $navigator->getMap()->getFootprint()
                 ),
-                array(
-                )
+                array()
             );
             $this->logger->debug(
-                sprintf('Step navigation [%s - %s] debug',
+                sprintf(
+                    'Step navigation [%s - %s] debug',
                     $navigator->getMap()->getName(),
                     $navigator->getMap()->getFootprint()
                 ),
-                array(
-                )
+                array()
             );
         }
     }

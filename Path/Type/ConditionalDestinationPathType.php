@@ -48,8 +48,7 @@ class ConditionalDestinationPathType extends AbstractPathType
         SecurityContextInterface         $securityContext,
         SessionInterface                 $session,
         ConditionalRuleRegistryInterface $conditionalRuleRegistry
-    )
-    {
+    ) {
         $this->merger                  = $merger;
         $this->securityContext         = $securityContext;
         $this->session                 = $session;

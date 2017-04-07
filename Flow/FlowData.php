@@ -41,11 +41,10 @@ class FlowData implements FlowDataInterface
      * @param array $retrievedData   The retrieved steps data
      */
     public function __construct(
-        array $data            = array(),
-        array $remindedData    = array(),
-        array $retrievedData   = array()
-    )
-    {
+        array $data = array(),
+        array $remindedData = array(),
+        array $retrievedData = array()
+    ) {
         $this->data            = $data;
         $this->remindedData    = $remindedData;
         $this->retrievedData   = $retrievedData;

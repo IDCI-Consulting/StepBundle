@@ -15,10 +15,7 @@ class AddLinkStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        StepEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(StepEventInterface $event, array $parameters = array())
     {
         $form = $event->getForm();
 

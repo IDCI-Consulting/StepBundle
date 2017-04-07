@@ -95,10 +95,10 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-           array(
+            array(
                 'user' => array(
                     'firstname' => "john",
-                    'data'      => array(
+                    'data' => array(
                         'message' => "multi\nline\nmessage."
                     )
                 )

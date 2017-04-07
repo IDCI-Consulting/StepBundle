@@ -31,7 +31,8 @@ class FlowRecorder implements FlowRecorderInterface
      */
     public static function buildMapId(MapInterface $map)
     {
-        return sprintf('%s/%s',
+        return sprintf(
+            '%s/%s',
             self::FLOW_NAMESPACE,
             $map->getFootprint()
         );
@@ -56,9 +57,10 @@ class FlowRecorder implements FlowRecorderInterface
             return null;
         }
 
-        $flow = $this->unserialize($request
-            ->getSession()
-            ->get(self::buildMapId($map))
+        $flow = $this->unserialize(
+            $request
+                ->getSession()
+                ->get(self::buildMapId($map))
         );
         $this->reconstructFlowData($map, $flow);
 

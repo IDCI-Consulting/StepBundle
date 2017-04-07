@@ -62,8 +62,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         \Twig_Environment        $merger,
         SecurityContextInterface $securityContext,
         SessionInterface         $session
-    )
-    {
+    ) {
         $this->flowRecorder    = $flowRecorder;
         $this->stepBuilder     = $stepBuilder;
         $this->pathBuilder     = $pathBuilder;

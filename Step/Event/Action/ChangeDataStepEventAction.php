@@ -16,10 +16,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        StepEventInterface $event,
-        array $parameters = array()
-    )
+    protected function doExecute(StepEventInterface $event, array $parameters = array())
     {
         $step = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();

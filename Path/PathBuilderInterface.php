@@ -18,5 +18,5 @@ interface PathBuilderInterface
      *
      * @return PathInterface The step.
      */
-    public function build($typeAlias, array $options = array(), array $steps);
+    public function build($typeAlias, array $options = array(), array $steps = array());
 }

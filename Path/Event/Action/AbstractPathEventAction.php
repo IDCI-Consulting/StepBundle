@@ -17,10 +17,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(
-        PathEventInterface $event,
-        array $parameters = array()
-    )
+    public function execute(PathEventInterface $event, array $parameters = array())
     {
         $resolver = new OptionsResolver();
         $resolver
@@ -28,7 +25,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
                 'logical_expression' => true,
             ))
             ->setNormalizers(array(
-                'logical_expression' => function(Options $options, $value) {
+                'logical_expression' => function (Options $options, $value) {
                     return (bool)$value;
                 }
             ))
@@ -57,8 +54,5 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
      *
      * @return mixed
      */
-    abstract protected function doExecute(
-        PathEventInterface $event,
-        array $parameters = array()
-    );
+    abstract protected function doExecute(PathEventInterface $event, array $parameters = array());
 }

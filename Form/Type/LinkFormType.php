@@ -37,7 +37,7 @@ class LinkFormType extends AbstractType
                 'target' => '_self',
             ))
             ->setNormalizers(array(
-                'label' => function(Options $options, $value) {
+                'label' => function (Options $options, $value) {
                     if (in_array($value, array(null, 'end'))) {
                         return $options['href'];
                     }
