@@ -72,7 +72,7 @@ window.loadExtraStepEditors = function () {
      * Add some colors on empty required inputs
      */
     function colorEmptyRequiredInputs () {
-      extraQuery(document).on('change', '.extra-step-inputs-required input[required="required"]', function () {
+      extraQuery(document).on('change', '.extra-form-inputs-required input[required="required"]', function () {
         if (extraQuery(this).val()) {
           extraQuery(this).css({
             'border-color': '#cccccc',
