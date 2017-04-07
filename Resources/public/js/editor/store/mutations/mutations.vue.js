@@ -381,26 +381,31 @@ var stepEditorMutations = {
       y: -30
     };
 
-    function getPosition() {
-      // set the first element on the top left of th corner
+    /**
+     * Get the initial position of the cell on the diagram
+     *
+     * @returns {{x: number, y: number}}
+     */
+    function getPosition () {
+      // Set the first element on the top left of th corner
       if (firstPosition) {
         position = {
           x: position.x + 50,
           y: position.y + 50
         };
 
-      // set the event element at the right of the last one
-      } else if (0 !== elementNumber % 2) {
-        position = {
-          x: position.x + 100,
-          y: position.y
-        };
-
-      // set the odd element on the bottom of the two last elements
-      } else {
+      // Set the odd element on the bottom of the two last elements
+      } else if (0 === elementNumber % 2) {
         position = {
           x: position.x - 50,
           y: position.y + 100
+        };
+
+      // Set the event element at the right of the last one
+      } else {
+        position = {
+          x: position.x + 100,
+          y: position.y
         };
       }
 

@@ -61,7 +61,7 @@ var formBuilderOption = {
         name: 'extra_form_builder'
       },
       fields: [],
-      raw: {},
+      raw: {}
     };
   },
 

@@ -13,6 +13,7 @@ var stepEditorDiagram = {
   data: function () {
     return {
       diagram: null,
+
       /* global generateUniqueId */
       id: 'paper' + generateUniqueId()
     };
