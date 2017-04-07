@@ -45,3 +45,264 @@
 {%- block idci_step_action_form_link_row -%}
     <a href="{{ form.vars.href }}" target="{{ form.vars.target }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</a>
 {%- endblock idci_step_action_form_link_row -%}
+
+{%- block step_editor_widget -%}
+
+    {#{{- form_widget(form) -}}#}
+    <textarea
+            id="form_step_editor"
+            name="form_step_editor[editor]"
+            class="extra-step-editor"
+            data-configuration-variable="form_step_editor_configuration"
+            >
+        {
+            "steps": {
+                "step1": {
+                    "type": "form",
+                    "options": {
+                        "@builder": {
+                            "worker": "extra_form_builder",
+                            "parameters": {
+                                "configuration": {
+                                    "field_birthday_0awlgldjd": {
+                                        "extra_form_type": "birthday",
+                                        "constraints": [],
+                                        "options": {}
+                                    },
+                                    "field_captcha_v6ceuxl98": {
+                                        "extra_form_type": "captcha",
+                                        "constraints": [],
+                                        "options": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "step2": {
+                    "type": "html",
+                    "options": {}
+                },
+                "step3": {
+                    "type": "html",
+                    "options": {}
+                },
+                "step4": {
+                    "type": "html",
+                    "options": {}
+                },
+                "step5": {
+                    "type": "html",
+                    "options": {}
+                }
+            },
+            "paths": [
+                {
+                    "type": "end",
+                    "options": {
+                        "source": "step3"
+                    }
+                },
+                {
+                    "type": "single",
+                    "options": {
+                        "source": "step1",
+                        "destination": "step2",
+                        "events": {
+                            "form.pre_set_data": [
+                                {
+                                    "action": "js_confirm",
+                                    "name": "js_confirm_2",
+                                    "parameters": {
+                                        "message": "sasasassasasaas"
+                                    }
+                                }
+                            ],
+                            "form.post_bind": [
+                                {
+                                    "action": "change_data",
+                                    "parameters": {
+                                        "fields": "assasaassa"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "type": "conditional_destination",
+                    "options": {
+                        "source": "step1",
+                        "default_destination": "step3",
+                        "destinations": [
+                            {
+                                "step": "step4",
+                                "condition": "toto == tata"
+                            },
+                            {
+                                "step": "step2",
+                                "condition": "toto == titi"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "single",
+                    "options": {
+                        "source": "step2",
+                        "destination": "step5"
+                    }
+                }
+            ],
+            "graphPositions": {
+                "steps": {
+                    "step1": {
+                        "x": 52,
+                        "y": 39
+                    },
+                    "step2": {
+                        "x": 51,
+                        "y": 368
+                    },
+                    "step3": {
+                        "x": 299,
+                        "y": 453
+                    },
+                    "step4": {
+                        "x": 320,
+                        "y": 33
+                    },
+                    "step5": {
+                        "x": 48,
+                        "y": 655
+                    }
+                },
+                "paths": [
+                    {
+                        "endOfPath": {
+                            "x": 358,
+                            "y": 644
+                        },
+                        "vertices": []
+                    },
+                    {
+                        "vertices": []
+                    },
+                    {
+                        "intersection": {
+                            "x": 413,
+                            "y": 238
+                        },
+                        "vertices": []
+                    },
+                    {
+                        "vertices": []
+                    }
+                ]
+            }
+        }
+    </textarea>
+
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            loadExtraStepEditors();
+        });
+
+        var {{ form.vars.id }}_configuration = {
+            editorId: '{{ form.vars.id }}',
+            allow_configured_types_edition: {{ form.vars.allow_configured_types_edition ? 'true' : 'false' }},
+            api_url: {
+                get_extra_path_event_actions: '{{ path('idci_step_apipatheventactionconfiguration_getpatheventactionconfigurations', { '_format': 'json'}) }}',
+                get_extra_path_types: '{{ path('idci_step_apipathtypeconfiguration_getpathtypesconfigurations', { '_format': 'json'}) }}',
+                get_extra_step_event_actions: '{{ path('idci_step_apistepeventactionconfiguration_getstepeventactionconfigurations', { '_format': 'json'}) }}',
+                get_extra_step_types : '{{ path('idci_step_apisteptypeconfiguration_getsteptypesconfigurations', { '_format': 'json'}) }}',
+                get_configured_extra_form_types: '{{ path('idci_extraform_api_getconfiguredextraformtypes', { '_format': 'json' }) }}',
+                post_configured_extra_form_types: '{{ path('idci_extraform_api_postconfiguredextraformtypes') }}',
+                put_configured_extra_form_types: '{{ path('idci_extraform_api_putconfiguredextraformtypes', { 'name': 'XNAME' }) }}',
+                delete_configured_extra_form_types: '{{ path('idci_extraform_api_deleteconfiguredextraformtypes', { 'name': 'XNAME' }) }}',
+                get_extra_form_type_options: '{{ path('idci_extraform_api_getextraformtypesoptions', { '_format': 'json', 'type': 'XTYPE'}) }}',
+                get_extra_form_types: '{{ path('idci_extraform_api_getextraformtypes', { '_format': 'json'}) }}',
+                get_extra_form_constraints: '{{ path('idci_extraform_api_getextraformconstraints', { '_format': 'json'}) }}'
+            }
+        };
+    </script>
+
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/polyfills.js") }}"></script> {# for jointjs #}
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/jquery-2.2.4.min.js") }}"></script> {# for jointjs #}
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/lodash-3.10.1.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/jquery-1.11.3.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/backbone-1.3.3.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/joint-1.1.0.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/bootstrap.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/jquery-no-conflict.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-dev.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-resource-1.2.0.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/sortable.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-multiselect.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-draggable.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vuex-2.1.2.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/utils.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/joint-1.1.0.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/DiagramColors.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/factory/DiagramStepFactory.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/factory/DiagramPathFactory.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/EndOfPathLink.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/IntersectionOfPathLinks.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/PathLink.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/Step.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/MapUtils.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/DiagramUtils.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/Diagram.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/mixins/path-type-options.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/http.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/option.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/raw.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/icon.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/modal.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/options/conditional-destinations-collection.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/options/form-builder.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/checkbox.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/choice.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/integer.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/number.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/text.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/textarea.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/getters.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/store/getters.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/store/mutations.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/mutations/mutations.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/mutations/pathEventActionMutations.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/mutations/stepEventActionMutations.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/store/actions.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/actions.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/new-field-constraint.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field-constraint-options.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field-constraints.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field-options.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/extra-form-fields.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/extra-form-fields-configuration.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/configured-extra-form-type.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/base-extra-form-type.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/extra-form-types.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/editor.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor-raw.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/diagram.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-event-actions/new-step-event-action.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-event-actions/step-event-action-configuration.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-event-actions/step-event-actions.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-event-actions/new-path-event-action.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-event-actions/path-event-action-configuration.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-event-actions/path-event-actions.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-types/new-step-type.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-types/step-type-options.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-types/step-types-configuration.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/path-type-required-options.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/new-path-type.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/path-type-options.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/path-types-configuration.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-editor.vue.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/app.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/load-extra-step-editors.js") }}"></script>
+
+{%- endblock step_editor_widget -%}

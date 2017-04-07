@@ -278,6 +278,11 @@ services:
 
     ## FormType
 
+    form.type.idci_step.editor:
+        class: IDCI\Bundle\StepBundle\Form\Type\StepEditorType
+        tags:
+            - { name: form.type, alias: step_editor }
+
     # Navigator
     form.type.idci_step.navigator:
         class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
