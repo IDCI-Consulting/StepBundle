@@ -3,9 +3,9 @@
 window.loadExtraStepEditors = function () {
 
   /**
-   * Create the editor for each textareas with the class extra-step-editor
+   * Create the editor for each textareas with the class step-editor
    */
-  extraQuery('textarea.extra-step-editor').each(function (index) {
+  extraQuery('textarea.step-editor').each(function (index) {
 
     var editorComponentId = 'extraStepEditorComponent' + index;
 

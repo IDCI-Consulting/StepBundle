@@ -48,160 +48,13 @@
 
 {%- block step_editor_widget -%}
 
-    {#{{- form_widget(form) -}}#}
-    <textarea
-            id="form_step_editor"
-            name="form_step_editor[editor]"
-            class="extra-step-editor"
-            data-configuration-variable="form_step_editor_configuration"
-            >
-        {
-            "steps": {
-                "step1": {
-                    "type": "form",
-                    "options": {
-                        "@builder": {
-                            "worker": "extra_form_builder",
-                            "parameters": {
-                                "configuration": {
-                                    "field_birthday_0awlgldjd": {
-                                        "extra_form_type": "birthday",
-                                        "constraints": [],
-                                        "options": {}
-                                    },
-                                    "field_captcha_v6ceuxl98": {
-                                        "extra_form_type": "captcha",
-                                        "constraints": [],
-                                        "options": {}
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "step2": {
-                    "type": "html",
-                    "options": {}
-                },
-                "step3": {
-                    "type": "html",
-                    "options": {}
-                },
-                "step4": {
-                    "type": "html",
-                    "options": {}
-                },
-                "step5": {
-                    "type": "html",
-                    "options": {}
-                }
-            },
-            "paths": [
-                {
-                    "type": "end",
-                    "options": {
-                        "source": "step3"
-                    }
-                },
-                {
-                    "type": "single",
-                    "options": {
-                        "source": "step1",
-                        "destination": "step2",
-                        "events": {
-                            "form.pre_set_data": [
-                                {
-                                    "action": "js_confirm",
-                                    "name": "js_confirm_2",
-                                    "parameters": {
-                                        "message": "sasasassasasaas"
-                                    }
-                                }
-                            ],
-                            "form.post_bind": [
-                                {
-                                    "action": "change_data",
-                                    "parameters": {
-                                        "fields": "assasaassa"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "type": "conditional_destination",
-                    "options": {
-                        "source": "step1",
-                        "default_destination": "step3",
-                        "destinations": [
-                            {
-                                "step": "step4",
-                                "condition": "toto == tata"
-                            },
-                            {
-                                "step": "step2",
-                                "condition": "toto == titi"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "type": "single",
-                    "options": {
-                        "source": "step2",
-                        "destination": "step5"
-                    }
-                }
-            ],
-            "graphPositions": {
-                "steps": {
-                    "step1": {
-                        "x": 52,
-                        "y": 39
-                    },
-                    "step2": {
-                        "x": 51,
-                        "y": 368
-                    },
-                    "step3": {
-                        "x": 299,
-                        "y": 453
-                    },
-                    "step4": {
-                        "x": 320,
-                        "y": 33
-                    },
-                    "step5": {
-                        "x": 48,
-                        "y": 655
-                    }
-                },
-                "paths": [
-                    {
-                        "endOfPath": {
-                            "x": 358,
-                            "y": 644
-                        },
-                        "vertices": []
-                    },
-                    {
-                        "vertices": []
-                    },
-                    {
-                        "intersection": {
-                            "x": 413,
-                            "y": 238
-                        },
-                        "vertices": []
-                    },
-                    {
-                        "vertices": []
-                    }
-                ]
-            }
-        }
-    </textarea>
+    {{- form_widget(form) -}}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/font-awesome-4.7.0/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/extra-form-editor.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/joint.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/joint-custom.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/extra-step-editor.css') }}" />
 
     <script type="text/javascript">
         window.addEventListener('load', function () {
@@ -210,6 +63,7 @@
 
         var {{ form.vars.id }}_configuration = {
             editorId: '{{ form.vars.id }}',
+            show_configured_types: {{ form.vars.show_configured_types ? 'true' : 'false' }},
             allow_configured_types_edition: {{ form.vars.allow_configured_types_edition ? 'true' : 'false' }},
             api_url: {
                 get_extra_path_event_actions: '{{ path('idci_step_apipatheventactionconfiguration_getpatheventactionconfigurations', { '_format': 'json'}) }}',
