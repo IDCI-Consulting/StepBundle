@@ -102,8 +102,6 @@ var stepEditorPathEventActionConfiguration = {
       if (typeof this.parameters !== 'undefined') {
         return this.parameters[key];
       }
-
-      return '';
     }
 
   }
