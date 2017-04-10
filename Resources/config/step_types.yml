@@ -2,7 +2,7 @@ idci_step:
 
     step_types:
 
-        "abstract":
+        abstract:
             parent:      ~
             abstract:    true
             description: ~
@@ -24,13 +24,13 @@ idci_step:
                 events:                { extra_form_type: "textarea", options: {required: false} }
                 serialization_mapping: { extra_form_type: "textarea", options: {required: false} }
 
-        "html":
+        html:
             parent:      abstract
             description: ""
             extra_form_options:
                 content: { extra_form_type: "textarea", options: {required: false} }
 
-        "form":
+        form:
             parent:      abstract
             description: ""
             extra_form_options:
