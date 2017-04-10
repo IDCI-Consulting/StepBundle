@@ -29,14 +29,14 @@ class IDCIStepBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new StepTypeCompilerPass());
         $container->addCompilerPass(new StepTypeConfigurationCompilerPass());
-        $container->addCompilerPass(new StepEventActionCompilerPass());
         $container->addCompilerPass(new StepEventActionConfigurationCompilerPass());
-        $container->addCompilerPass(new PathTypeCompilerPass());
         $container->addCompilerPass(new PathTypeConfigurationCompilerPass());
-        $container->addCompilerPass(new PathEventActionCompilerPass());
         $container->addCompilerPass(new PathEventActionConfigurationCompilerPass());
+        $container->addCompilerPass(new StepTypeCompilerPass());
+        $container->addCompilerPass(new StepEventActionCompilerPass());
+        $container->addCompilerPass(new PathTypeCompilerPass());
+        $container->addCompilerPass(new PathEventActionCompilerPass());
         $container->addCompilerPass(new ConditionalRuleCompilerPass());
         $container->addCompilerPass(new FlowDataStoreCompilerPass());
         $container->addCompilerPass(new ConfigurationWorkerCompilerPass());

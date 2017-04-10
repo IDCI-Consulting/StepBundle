@@ -30,9 +30,9 @@ class PathTypeCompilerPass implements CompilerPassInterface
                     : $id
                 ;
 
-                $bundleConfiguration = $this->mergeConfigurations($container->getExtensionConfig('idci_step'));
+                $configurationService = sprintf('idci_step.path_type_configuration.%s', $alias);
 
-                if (!$this->hasConfiguration($alias, $bundleConfiguration)) {
+                if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
                         'The path type \'%s\' does not have a configuration.
                         You must configure the path type under the idci_step.path_types key',

@@ -31,9 +31,9 @@ class StepTypeCompilerPass implements CompilerPassInterface
                     : $id
                 ;
 
-                $bundleConfiguration = $this->mergeConfigurations($container->getExtensionConfig('idci_step'));
+                $configurationService = sprintf('idci_step.step_type_configuration.%s', $alias);
 
-                if (!$this->hasConfiguration($alias, $bundleConfiguration)) {
+                if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
                         'The step type \'%s\' does not have a configuration.
                         You must configure the step type under the idci_step.step_types key',

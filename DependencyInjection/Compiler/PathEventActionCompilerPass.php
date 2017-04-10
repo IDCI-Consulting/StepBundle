@@ -30,9 +30,9 @@ class PathEventActionCompilerPass implements CompilerPassInterface
                     : $id
                 ;
 
-                $bundleConfiguration = $this->mergeConfigurations($container->getExtensionConfig('idci_step'));
+                $configurationService = sprintf('idci_step.path_event_action_configuration.%s', $alias);
 
-                if (!$this->hasConfiguration($alias, $bundleConfiguration)) {
+                if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
                         'The path event action \'%s\' does not have a configuration.
                         You must configure the path event action under the idci_step.path_event_actions key',
