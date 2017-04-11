@@ -2,32 +2,32 @@ idci_step:
 
     path_types:
 
-        "abstract":
+        abstract:
             parent:      ~
             abstract:    true
             description: ~
             extra_form_options:
-                # type:         { extra_form_type: "text",     options: {required: false} }
-                next_options: { extra_form_type: "textarea", options: {required: false} }
-                events:       { extra_form_type: "textarea", options: {required: false} }
+                # type:         {extra_form_type: "text",     options: {required: false}}
+                next_options: {extra_form_type: "textarea", options: {required: false}}
+                events:       {extra_form_type: "textarea", options: {required: false}}
 
-        "single":
+        single:
             parent:      abstract
             description: ""
             extra_form_options:
-                source:      { extra_form_type: "text",     options: {required: true} }
-                destination: { extra_form_type: "text",     options: {required: true} }
+                source:      {extra_form_type: "text",     options: {required: true}}
+                destination: {extra_form_type: "text",     options: {required: true}}
 
-        "conditional_destination":
+        conditional_destination:
             parent:      abstract
             description: ""
             extra_form_options:
-                source:              { extra_form_type: "text",     options: {required: true} }
-                destinations:        { extra_form_type: "textarea", options: {required: true} }
-                default_destination: { extra_form_type: "text",     options: {required: true} }
+                source:              {extra_form_type: "text",     options: {required: true}}
+                destinations:        {extra_form_type: "textarea", options: {required: true}}
+                default_destination: {extra_form_type: "text",     options: {required: true}}
 
-        "end":
+        end:
             parent:      abstract
             description: ""
             extra_form_options:
-                source: { extra_form_type: "text",     options: {required: true} }
+                source: {extra_form_type: "text",     options: {required: true}}

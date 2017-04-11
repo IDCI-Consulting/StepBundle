@@ -47,6 +47,7 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
             }
 
             $configuration['name'] = $configurationName;
+            $alias = $configurationName . '_configuration';
 
             $serviceDefinition->setAbstract(false);
             $serviceDefinition->setPublic(!$configuration['abstract']);
@@ -59,7 +60,7 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
 
             $registryDefinition->addMethodCall(
                 'setConfiguration',
-                array($configurationName, new Reference($this->getDefinitionName($configurationName)))
+                array($alias, new Reference($this->getDefinitionName($configurationName)))
             );
 
             $extraFormOptions[$configurationName] = $configuration['extra_form_options'];
