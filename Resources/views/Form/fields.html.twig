@@ -57,9 +57,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/extra-step-editor.css') }}" />
 
     <script type="text/javascript">
-        window.addEventListener('load', function () {
-            loadExtraStepEditors();
-        });
 
         var {{ form.vars.id }}_configuration = {
             editorId: '{{ form.vars.id }}',
@@ -79,84 +76,121 @@
                 get_extra_form_constraints: '{{ path('idci_extraform_api_getextraformconstraints', { '_format': 'json'}) }}'
             }
         };
-    </script>
 
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/polyfills.js") }}"></script> {# for jointjs #}
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/jquery-2.2.4.min.js") }}"></script> {# for jointjs #}
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/lodash-3.10.1.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/jquery-1.11.3.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/backbone-1.3.3.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/joint-1.1.0.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/bootstrap.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/jquery-no-conflict.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-dev.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-resource-1.2.0.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/sortable.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-multiselect.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vue-draggable.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/vuex-2.1.2.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/vendor/utils.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/vendor/joint-1.1.0.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/DiagramColors.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/factory/DiagramStepFactory.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/factory/DiagramPathFactory.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/EndOfPathLink.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/IntersectionOfPathLinks.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/PathLink.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/shapes/Step.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/MapUtils.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/DiagramUtils.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/diagram/Diagram.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/mixins/path-type-options.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/http.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/option.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/raw.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/mixins/icon.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/modal.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/options/conditional-destinations-collection.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/options/form-builder.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/checkbox.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/choice.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/integer.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/number.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/text.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/common/options/textarea.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/getters.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/store/getters.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/store/mutations.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/mutations/mutations.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/mutations/pathEventActionMutations.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/mutations/stepEventActionMutations.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/store/actions.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/store/actions.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/new-field-constraint.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field-constraint-options.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field-constraints.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field-options.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/field.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/extra-form-fields.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/extra-form-fields-configuration.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/configured-extra-form-type.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/base-extra-form-type.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/extra-form-types.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idciextraform/js/editor/components/editor-advanced/editor.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor-raw.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/diagram.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-event-actions/new-step-event-action.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-event-actions/step-event-action-configuration.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-event-actions/step-event-actions.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-event-actions/new-path-event-action.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-event-actions/path-event-action-configuration.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-event-actions/path-event-actions.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-types/new-step-type.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-types/step-type-options.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-types/step-types-configuration.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/path-type-required-options.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/new-path-type.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/path-type-options.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/path-types/path-types-configuration.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/components/step-editor/step-editor.vue.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/app.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/idcistep/js/editor/load-extra-step-editors.js") }}"></script>
+        // We must load the scripts and styles only once, even if many widgets are on the page
+        if (typeof window.loadExtraStepEditors !== 'function') {
+            var scriptsUrls = [
+                '{{ asset('bundles/idciextraform/js/editor.min.js') }}',
+                '{{ asset('bundles/idcistep/js/vendor/polyfills.js') }}', 
+                '{{ asset('bundles/idcistep/js/vendor/lodash-3.10.1.min.js') }}',
+                '{{ asset('bundles/idcistep/js/vendor/backbone-1.3.3.js') }}', 
+                '{{ asset('bundles/idcistep/js/vendor/joint-1.1.0.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/vue-dev.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/vue-resource-1.2.0.min.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/sortable.min.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/vue-multiselect.min.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/vue-draggable.min.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/vuex-2.1.2.js') }}', 
+                '{{ asset('bundles/idciextraform/js/vendor/utils.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/DiagramColors.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/factory/DiagramStepFactory.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/factory/DiagramPathFactory.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/shapes/EndOfPathLink.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/shapes/IntersectionOfPathLinks.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/shapes/PathLink.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/shapes/Step.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/MapUtils.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/DiagramUtils.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/diagram/Diagram.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/mixins/path-type-options.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/mixins/http.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/mixins/option.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/mixins/raw.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/mixins/icon.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/modal.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/options/conditional-destinations-collection.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/options/form-builder.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/options/checkbox.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/options/choice.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/options/integer.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/options/number.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/options/text.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/common/options/textarea.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/store/getters.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/store/getters.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/store/mutations.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/store/mutations/mutations.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/store/mutations/pathEventActionMutations.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/store/mutations/stepEventActionMutations.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/store/actions.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/store/actions.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/new-field-constraint.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/field-constraint-options.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/field-constraints.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/field-options.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/field.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/extra-form-fields.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/extra-form-fields-configuration.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/configured-extra-form-type.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/base-extra-form-type.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/extra-form-types.vue.js') }}', 
+                '{{ asset('bundles/idciextraform/js/editor/components/editor-advanced/editor.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor-raw.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/diagram.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-event-actions/new-step-event-action.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-event-actions/step-event-action-configuration.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-event-actions/step-event-actions.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-event-actions/new-path-event-action.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-event-actions/path-event-action-configuration.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-event-actions/path-event-actions.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-types/new-step-type.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-types/step-type-options.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-types/step-types-configuration.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-types/path-type-required-options.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-types/new-path-type.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-types/path-type-options.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/path-types/path-types-configuration.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/components/step-editor/step-editor.vue.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/app.js') }}', 
+                '{{ asset('bundles/idcistep/js/editor/load-extra-step-editors.js') }}'
+            ];
+
+            /**
+             * Load all scripts in the array from the index
+             * Every script wait for the previous one to be loaded
+             *
+             * @param scriptsUrls
+             * @param callback
+             * @param index
+             */
+            function loadScripts(scriptsUrls, callback, index) {
+
+                // Set the first index
+                if (typeof index === 'undefined') {
+                    index = 0;
+                }
+
+                // Create a script node
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                document.body.appendChild(script);
+                index++;
+
+                script.onload = function () {
+                    loadScripts(scriptsUrls, callback, index);
+                };
+
+                if (typeof scriptsUrls[index] !== 'undefined') {
+                    script.src = scriptsUrls[index];
+                } else {
+                    callback();
+                }
+            }
+
+            loadScripts(scriptsUrls, function () {
+                loadExtraStepEditors();
+            });
+        }
+    </script>
 
 {%- endblock step_editor_widget -%}

@@ -1,11 +1,11 @@
-/* global extraQuery, createAttributeMapObject, createBootstrapModal */
+/* global $, createAttributeMapObject, createBootstrapModal */
 
 window.loadExtraStepEditors = function () {
 
   /**
    * Create the editor for each textareas with the class step-editor
    */
-  extraQuery('textarea.step-editor').each(function (index) {
+  $('textarea.step-editor').each(function (index) {
 
     var editorComponentId = 'extraStepEditorComponent' + index;
 
@@ -33,14 +33,14 @@ window.loadExtraStepEditors = function () {
     /**
      * Insert buttons in place of the textarea
      */
-    extraQuery(this).after(
+    $(this).after(
       '<div class="modal-buttons">' +
          advancedModalButton + ' ' + rawModalButton +
       '</div>'
     );
 
     // Insert the modals editor at the end of the body
-    var $body = extraQuery('body');
+    var $body = $('body');
 
     $body.append(
       '<div id="' + editorComponentId + '">' + rawModal + advancedModal + '</div>'
@@ -72,14 +72,14 @@ window.loadExtraStepEditors = function () {
      * Add some colors on empty required inputs
      */
     function colorEmptyRequiredInputs () {
-      extraQuery(document).on('change', '.extra-form-inputs-required input[required="required"]', function () {
-        if (extraQuery(this).val()) {
-          extraQuery(this).css({
+      $(document).on('change', '.extra-form-inputs-required input[required="required"]', function () {
+        if ($(this).val()) {
+          $(this).css({
             'border-color': '#cccccc',
             'background-color': '#ffffff'
           });
         } else {
-          extraQuery(this).css({
+          $(this).css({
             'border-color': '#c9302c',
             'background-color': '#f3d9d9'
           });
@@ -94,9 +94,9 @@ window.loadExtraStepEditors = function () {
      * @param modalIdentifier
      */
     function showModalOnClick (modalType, modalIdentifier) {
-      extraQuery(document).on('click', 'button.trigger-' + modalType + '-' + modalIdentifier, function (event) {
+      $(document).on('click', 'button.trigger-' + modalType + '-' + modalIdentifier, function (event) {
         event.preventDefault();
-        var $modal = extraQuery('#' + modalType + '-' + modalIdentifier);
+        var $modal = $('#' + modalType + '-' + modalIdentifier);
 
         $modal.modal('show');
       });
@@ -118,9 +118,9 @@ window.loadExtraStepEditors = function () {
           // On the close button on the left bottom of the modal
         '.' + modalType + ' .modal-header > button.close';
 
-      extraQuery(document).on('click', classes, function (event) {
+      $(document).on('click', classes, function (event) {
         event.preventDefault();
-        extraQuery(this)
+        $(this)
           .closest('.modal')
           .modal('hide')
         ;

@@ -1,4 +1,4 @@
-/* global Diagram, DiagramUtils, extraQuery */
+/* global Diagram, DiagramUtils, $ */
 
 /* exported stepEditorDiagram */
 var stepEditorDiagram = {
@@ -22,7 +22,7 @@ var stepEditorDiagram = {
   mounted: function () {
     var self = this;
 
-    extraQuery(this.getModalSelector()).on('shown.bs.modal', function () {
+    $(this.getModalSelector()).on('shown.bs.modal', function () {
       self.generateDiagram(self.map);
     });
   },
@@ -63,11 +63,11 @@ var stepEditorDiagram = {
       }
 
       // Do not generate the map if the modal is closed
-      var $modal = extraQuery(this.getModalSelector());
+      var $modal = $(this.getModalSelector());
       var modalIsOpen = ($modal.data('bs.modal') || {}).isShown;
 
       if ($modal.length > 0 && !modalIsOpen) {
-        extraQuery(self.getModalSelector()).on('shown.bs.modal', function () {
+        $(self.getModalSelector()).on('shown.bs.modal', function () {
           self.generateDiagram(map);
         });
 
