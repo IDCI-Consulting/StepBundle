@@ -86,6 +86,11 @@ var stepEditorStepEventActionMutations = {
       .options
       .events[payload.formEventName][payload.actionIndex];
 
+    // Case when we remove a default option (not option is set but we still try to remove it, wich cause an error)
+    if (0 === payload.option.value.length && 'undefined' === typeof action.parameters) {
+      return;
+    }
+
     if (0 === payload.option.value.length) {
       Vue.delete(action.parameters, payload.option.name);
 
