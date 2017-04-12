@@ -67,10 +67,7 @@ Vue.component('step-editor-raw', {
 
       // Json parsing error
       } catch (e) {
-        $(event.target)
-          .siblings('.json-errors')
-          .text('There are errors in your json : ' + e)
-        ;
+        this.displayJsonParseErrors(event);
       }
     },
 
@@ -127,17 +124,32 @@ Vue.component('step-editor-raw', {
      * @param event - the event triggered by the click on the button
      */
     closeModal: function (event) {
-      // close the modal if everything is fine
-      $(event.target)
-        .closest('.modal')
-        .modal('hide')
-      ;
+      if (typeof event !== 'undefined') {
+        $(event.target)
+          .closest('.modal')
+          .modal('hide')
+        ;
 
-      // Remove last errors
-      $(event.target)
-        .siblings('.json-errors')
-        .empty()
-      ;
+        // Remove last errors
+        $(event.target)
+          .siblings('.json-errors')
+          .empty()
+        ;
+      }
+    },
+
+    /**
+     * Display the errors caused by json parse
+     *
+     * @param event
+     */
+    displayJsonParseErrors: function (event) {
+      if (typeof event !== 'undefined') {
+        $(event.target)
+          .siblings('.json-errors')
+          .text('There are errors in your json : ' + e)
+        ;
+      }
     }
   }
 
