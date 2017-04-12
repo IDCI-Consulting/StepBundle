@@ -8,7 +8,8 @@ Vue.component('step-editor-raw', {
         'style="width: 100%; height: 300px;"' +
       '>' +
       '</textarea>' +
-      '<button @click.prevent="generateMap" class="close-modal" >' +
+      '<div class="json-errors"></div>' +
+      '<button @click.prevent="generateMap">' +
         'Generate the diagram of the map from the json' +
       '</button>' +
     '</div>',
@@ -21,14 +22,11 @@ Vue.component('step-editor-raw', {
   },
 
   created: function () {
-    try {
-      // If the textarea is empty, do not attempt to generate fields
-      if (this.textarea.value !== '') {
-        this.raw = this.textarea.value;
-        this.generateMap();
-      }
-      // Json parsing error
-    } catch (e) {}
+    // If the textarea is empty, do not attempt to generate fields
+    if (this.textarea.value !== '') {
+      this.raw = this.textarea.value;
+      this.generateMap();
+    }
   },
 
   /* global rawMixin */
@@ -54,18 +52,26 @@ Vue.component('step-editor-raw', {
     /**
      * Generate the map from the json
      */
-    generateMap: function () {
+    generateMap: function (event) {
       try {
-        var newMap = JSON.parse(this.raw);
+        // Avoid mutating the raw from the state
+        var clonedRaw = JSON.parse(JSON.stringify(this.raw));
+        var newMap = JSON.parse(jsonifyTwigStrings(clonedRaw));
 
         // Set the first step as active
         var firstStep = Object.keys(newMap.steps)[0];
 
         newMap.steps[firstStep].active = true;
         this.$store.commit('setMap', newMap);
+        this.closeModal(event);
 
-        // Json parsing error
-      } catch (e) {}
+      // Json parsing error
+      } catch (e) {
+        $(event.target)
+          .siblings('.json-errors')
+          .text('There are errors in your json : ' + e)
+        ;
+      }
     },
 
     /**
@@ -93,7 +99,7 @@ Vue.component('step-editor-raw', {
         delete clonedMap.paths[i].active;
       }
 
-      return JSON.stringify(clonedMap, null, 4);
+      return twigifyJsonString(JSON.stringify(clonedMap, null, 4));
     },
 
     /**
@@ -113,6 +119,25 @@ Vue.component('step-editor-raw', {
           }
         }
       }
+    },
+
+    /**
+     * Close the modal
+     *
+     * @param event - the event triggered by the click on the button
+     */
+    closeModal: function (event) {
+      // close the modal if everything is fine
+      $(event.target)
+        .closest('.modal')
+        .modal('hide')
+      ;
+
+      // Remove last errors
+      $(event.target)
+        .siblings('.json-errors')
+        .empty()
+      ;
     }
   }
 
