@@ -29,8 +29,8 @@ Vue.component('step-editor-raw', {
     }
   },
 
-  /* global rawMixin */
-  mixins: [rawMixin],
+  /* global rawMixin, rawModalMixin */
+  mixins: [rawMixin, rawModalMixin],
 
   computed: {
     map: function () {
@@ -56,6 +56,8 @@ Vue.component('step-editor-raw', {
       try {
         // Avoid mutating the raw from the state
         var clonedRaw = JSON.parse(JSON.stringify(this.raw));
+
+        /* global jsonifyTwigStrings */
         var newMap = JSON.parse(jsonifyTwigStrings(clonedRaw));
 
         // Set the first step as active
@@ -66,8 +68,8 @@ Vue.component('step-editor-raw', {
         this.closeModal(event);
 
       // Json parsing error
-      } catch (e) {
-        this.displayJsonParseErrors(event);
+      } catch (error) {
+        this.displayJsonParseErrors(event, error);
       }
     },
 
@@ -96,6 +98,7 @@ Vue.component('step-editor-raw', {
         delete clonedMap.paths[i].active;
       }
 
+      /* global twigifyJsonString */
       return twigifyJsonString(JSON.stringify(clonedMap, null, 4));
     },
 
@@ -116,41 +119,8 @@ Vue.component('step-editor-raw', {
           }
         }
       }
-    },
-
-    /**
-     * Close the modal
-     *
-     * @param event - the event triggered by the click on the button
-     */
-    closeModal: function (event) {
-      if (typeof event !== 'undefined') {
-        $(event.target)
-          .closest('.modal')
-          .modal('hide')
-        ;
-
-        // Remove last errors
-        $(event.target)
-          .siblings('.json-errors')
-          .empty()
-        ;
-      }
-    },
-
-    /**
-     * Display the errors caused by json parse
-     *
-     * @param event
-     */
-    displayJsonParseErrors: function (event) {
-      if (typeof event !== 'undefined') {
-        $(event.target)
-          .siblings('.json-errors')
-          .text('There are errors in your json : ' + e)
-        ;
-      }
     }
+
   }
 
 });
