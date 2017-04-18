@@ -198,5 +198,7 @@ The condidional path is a path that reach different steps according to condition
     )
 ```
 
-* [Configuration Example](configurationExample.md)
+We just showed you how to implement a simple StepMap based form flow.
+For a large presentation of the possibilities, we offer you a large exhaustive configurated map.
+* [Configuration](configuration.md)
 
