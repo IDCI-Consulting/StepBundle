@@ -185,7 +185,8 @@ The single path is a simple path that link two steps.
 )
 ```
 
-The condidional path is a path that reach different steps according to conditions.
+The conditional path is a path that reaches different steps according to conditions.
+
 ```php
 ->addPath(
     'conditional_destination',

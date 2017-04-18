@@ -4,7 +4,9 @@ Events
 Create a Path Event Action Service
 ----------------------------------
 
-If you want to execute event action to path, you'll have to create a PathEventAction Service and stick it to the path.
+If you want to add domain logic to your flow, you can do it by using EventAction.
+
+If you want to execute action on path event, you'll have to create a PathEventAction Service and bind it to the path.
 
 ```php
 // src\ExampleBundle\Path\Event\Action\ExamplePathEventAction.php
@@ -53,7 +55,7 @@ class ExamplePathEventAction extends AbstractPathEventAction
                 - { name: idci_step.path_event.action, alias: example }
 ```
 
-Stick the event action to a path
+Bind the event action to a path
 --------------------------------
 
 ```php
@@ -82,7 +84,8 @@ Stick the event action to a path
     ;
 ```
 
-The stickable events names are the same than the symfony form events names
+The doExecute method will be triggered as soon as symfony dispatches a form event.
+The bind events names are the same as the symfony form events names
 
 * pre_set_data
 * post_set_data
@@ -95,7 +98,8 @@ More informations in Symfony doc [Symfony form events](https://symfony.com/doc/c
 Create a Step Event Action Service
 ----------------------------------
 
-If you want to execute event action to step, you'll have to create a StepEventAction Service and stick it to the step.
+If you want to execute action on step event, you'll have to create a StepEventAction Service and bind it to the step.
+The logic is similar to path event actions logic. There are no advantages or inconvenients using step event actions or path event actions. As they are triggered by the same events, the principle is exactly the same (Path event actions and step event actions will be merged in the future).
 
 ```php
 // src\ExampleBundle\Step\Event\Action\ExampleStepEventAction.php
@@ -144,8 +148,8 @@ class ExampleStepEventAction extends AbstractStepEventAction
             tags:
                 - { name: idci_step.step_event.action, alias: example }
 ```
-
-Stick the event action to a step
+
+Bind the event action to a step
 --------------------------------
 
 ```php

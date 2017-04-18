@@ -1,11 +1,10 @@
 Configurations
 ==============
 
-This page show a exhaustive example configuration
+This page show an exhaustive configuration example
 -------------------------------------------------
 
-TODO fix link
-This file is inspired by the Idci articles [ IDCI StepBundle articles ](https://www.idci-consulting.fr)
+This file is inspired by the Idci articles [ IDCI StepBundle articles ](https://www.idci-consulting.fr/fr/article/step-bundle-introduction)
 
 ```yaml
 idci_step:

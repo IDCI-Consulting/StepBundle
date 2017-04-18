@@ -1,8 +1,8 @@
 Configuration way
 =================
 
-In the previous documentations parts we showed you how to implement Maps in php code.
-We strongly recomment to put you'r code in configurations files.
+In the previous documentation parts we showed how to implement Maps in php code.
+We strongly recommend to write your code in configuration files.
 
 This part will show how to do that.
 
