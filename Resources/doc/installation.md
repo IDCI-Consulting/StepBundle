@@ -1,5 +1,5 @@
-StepBundle
-==========
+Installation
+============
 
 Symfony2 bundle that provides a step system in order to represent an highly customisable workflow
 
@@ -35,20 +35,12 @@ public function registerBundles()
 }
 ```
 
-Add the IDCIStepBundle resources to your config.yml
-```yml
-// app/config.yml
-imports:
-    ...
-    - { resource: @IDCIStepBundle/Resources/config/config.yml }
-```
 
 Documentation
 -------------
 
 * [Introduction](Resources/doc/introduction.md)
 * [Presentation](Resources/doc/presentation.md)
-* [Configuration way](Resources/doc/configurationWay.md)
 * [Events](Resources/doc/events.md)
 * [Configuration](Resources/doc/configuration.md)
 
