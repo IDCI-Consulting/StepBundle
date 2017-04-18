@@ -5,7 +5,6 @@ Vue.component('step-editor-raw', {
     '<div class="extra-step-editor raw-mode">' +
       '<textarea ' +
         'v-model="raw" ' +
-        'style="width: 100%; height: 300px;"' +
       '>' +
       '</textarea>' +
       '<div class="json-errors"></div>' +
@@ -42,6 +41,7 @@ Vue.component('step-editor-raw', {
     map: {
       handler: function (map) {
         this.raw = this.generateRaw(map);
+        this.updateInitialTextareaValue();
       },
       deep: true
     }
@@ -59,7 +59,6 @@ Vue.component('step-editor-raw', {
 
         /* global jsonifyTwigStrings */
         var newMap = JSON.parse(jsonifyTwigStrings(clonedRaw));
-
         // Set the first step as active
         var firstStep = Object.keys(newMap.steps)[0];
 
