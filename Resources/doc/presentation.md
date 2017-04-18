@@ -146,7 +146,7 @@ The hasFinished is true when the navigator reached the end of the map.
 Built-in Field Types
 --------------------
 
-There are multiple step category.
+There are multiple step categories.
 
 The html step is a step that contains pure html code.
 ```php
@@ -172,9 +172,9 @@ The form step is a step that contains symfony builder formated forms.
 ))
 ```
 
-There are two path category.
+There are two path categories.
 
-The single path is a simple path that link two steps.
+The single path is a simple path that links two steps.
 ```php
 ->addPath(
     'single',
