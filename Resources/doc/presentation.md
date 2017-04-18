@@ -137,13 +137,66 @@ This is the minimal code you need to make StepBundle work.
 
 Handling Map Submissions
 ------------------------
-TODO expliquer hasReturn, etc
+
+The hasFinished, hasNavigated, hasReturned are conditionals that are true at some moments in the flow navigation lifecycle.
+The hasNavigated is true when the navigator navigated forward.
+The hasReturned is true when the navigator navigated backward.
+The hasFinished is true when the navigator reached the end of the map.
 
 Built-in Field Types
 --------------------
 
-TODO html/form
-TODO Single/etc
+There are multiple step category.
+
+The html step is a step that contains pure html code.
+```php
+->addStep('intro', 'html', array(
+	'title'       => 'Introduction',
+	'description' => 'The first step',
+	'content'     => '<h1>My content</h1>',
+))
+```
+
+The form step is a step that contains symfony builder formated forms.
+```php
+->addStep('personal', 'form', array(
+    'title'            => 'Personal information',
+    'description'      => 'The personal data step',
+    'builder' => $this->get('form.factory')->createBuilder()
+        ->add('first_name', 'text', array(
+            'constraints' => array(
+                new \Symfony\Component\Validator\Constraints\NotBlank()
+            )
+        ))
+        ->add('last_name', 'text')
+))
+```
+
+There are two path category.
+
+The single path is a simple path that link two steps.
+```php
+->addPath(
+    'single',
+    array(
+        'source'       => 'intro',
+        'destination'  => 'personal',
+    )
+)
+```
+
+The condidional path is a path that reach different steps according to conditions.
+```php
+->addPath(
+    'conditional_destination',
+    array(
+        'source'       => 'intro',
+        'destinations'  => array(
+            'personal' => '{{  flow_data.data.cursus.study_city == 'Lyon' }}',
+            'location' => '{{  flow_data.data.cursus.study_city == 'Paris' }}'
+        )
+    )
+```
 
 * [Configuration Example](configurationExample.md)
 
