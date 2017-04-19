@@ -21,6 +21,7 @@ function triggerExtraStepVueEditor (element, formProperties, configuration) {
     state: {
       configuration: configuration,
       formProperties: formProperties,
+      mapType: {},
       stepTypes: [],
       pathTypes: [],
       pathEventActionTypes: [],
@@ -83,6 +84,7 @@ function triggerExtraStepVueEditor (element, formProperties, configuration) {
       stepEditorStore.dispatch('setPathEventActionTypes', this.$http);
       stepEditorStore.dispatch('setStepEventActionTypes', this.$http);
       stepEditorStore.dispatch('setBaseExtraFormTypes', this.$http);
+      stepEditorStore.dispatch('setMapType', this.$http);
       if (this.$store.getters.showConfiguredTypes) {
         stepEditorStore.dispatch('setConfiguredExtraFormTypes', this.$http);
       }

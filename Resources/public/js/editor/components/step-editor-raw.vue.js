@@ -54,15 +54,19 @@ Vue.component('step-editor-raw', {
      */
     generateMap: function (event) {
       try {
-        // Avoid mutating the raw from the state
-        var clonedRaw = JSON.parse(JSON.stringify(this.raw));
+        // Avoid mutating the raw from the state (create a clone)
+        var raw = JSON.parse(JSON.stringify(this.raw));
+        var strippedRaw = this.stripAutoescape(raw);
 
-        /* global jsonifyTwigStrings */
-        var newMap = JSON.parse(jsonifyTwigStrings(clonedRaw));
-        // Set the first step as active
-        var firstStep = Object.keys(newMap.steps)[0];
+        // If the raw was stripped, then the {% autoescape false %} is present
+        var autoescapeFalseOptionValue = raw !== strippedRaw;
 
-        newMap.steps[firstStep].active = true;
+        /* global transformRawToJson */
+        var newMap = JSON.parse(transformRawToJson(strippedRaw));
+        this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
+
+        newMap.active = true;
+        newMap.active = true;
         this.$store.commit('setMap', newMap);
         this.closeModal(event);
 
@@ -83,6 +87,9 @@ Vue.component('step-editor-raw', {
       // Avoid mutating the map from the state
       var clonedMap = JSON.parse(JSON.stringify(map));
 
+      delete clonedMap.active;
+      this.formatOptions(clonedMap.options);
+
       for (var step in clonedMap.steps) {
         if (clonedMap.steps.hasOwnProperty(step)) {
           this.formatOptions(clonedMap.steps[step].options);
@@ -97,8 +104,14 @@ Vue.component('step-editor-raw', {
         delete clonedMap.paths[i].active;
       }
 
-      /* global twigifyJsonString */
-      return twigifyJsonString(JSON.stringify(clonedMap, null, 4));
+      /* global transformJsonToRaw */
+      var raw = transformJsonToRaw(JSON.stringify(clonedMap, null, 4));
+
+      if (clonedMap.options.autoescape_false) {
+        return '{% autoescape false %}' + raw + '{% endautoescape %}';
+      }
+
+      return raw;
     },
 
     /**
@@ -118,6 +131,39 @@ Vue.component('step-editor-raw', {
           }
         }
       }
+    },
+
+    /**
+     * Strip the twig autoescape block if needed
+     *
+     * @param raw
+     */
+    stripAutoescape: function (raw) {
+      var endAutoescapeString = '{% endautoescape %}';
+      var startAutoescapeString = '{% autoescape false %}';
+      var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
+      if (
+        raw.indexOf(startAutoescapeString) === 0 &&
+        raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
+      ) {
+        return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
+      }
+
+      return raw;
+    },
+
+    /**
+     * Set the value of the autoescape_false option
+     *
+     * @param map
+     * @param autoescapeFalseValue
+     */
+    setAutoescapeFalseOption: function (map, autoescapeFalseValue) {
+      if ('undefined' === typeof map.options) {
+        map.options = {};
+      }
+
+      map.options.autoescape_false = autoescapeFalseValue;
     }
 
   }

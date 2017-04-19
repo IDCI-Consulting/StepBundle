@@ -14,6 +14,16 @@ var stepEditorMutations = {
   },
 
   /**
+   * Set the map type
+   *
+   * @param state
+   * @param type
+   */
+  setMapType: function (state, type) {
+    state.mapType = type;
+  },
+
+  /**
    * Set the step types
    *
    * @param state
@@ -60,6 +70,16 @@ var stepEditorMutations = {
    * @param map
    */
   setMap: function (state, map) {
+
+    // Add name if not set
+    if ('undefined' === typeof map.options) {
+      map.options = {};
+    }
+
+    // Add name if not set
+    if ('undefined' === typeof map.name) {
+      map.name = "";
+    }
 
     // Add steps if not set
     if ('undefined' === typeof map.steps) {
@@ -290,6 +310,20 @@ var stepEditorMutations = {
   },
 
   /**
+   * Update the value of a map option
+   *
+   * @param state
+   * @param option
+   */
+  updateMapOption: function (state, option) {
+    Vue.set(
+      state.map.options,
+      option.name,
+      option.value
+    );
+  },
+
+  /**
    * Update the value of a step option
    *
    * @param state
@@ -318,13 +352,17 @@ var stepEditorMutations = {
   },
 
   /**
-   * Reset the active property on all step, paths or events
+   * Reset the active property on all steps, paths or on the map
    *
    * @param state
    */
   resetActive: function (state) {
     var steps = state.map.steps;
     var paths = state.map.paths;
+
+    if (state.map.active) {
+      Vue.set(state.map, 'active', false);
+    }
 
     for (var step in steps) {
       if (steps.hasOwnProperty(step)) {
@@ -339,6 +377,16 @@ var stepEditorMutations = {
         Vue.set(state.map.paths[i], 'active', false);
       }
     }
+  },
+
+  /**
+   * Set the map as active
+   *
+   * @param state
+   */
+  setActiveMap: function (state) {
+    stepEditorMutations.resetActive(state);
+    Vue.set(state.map, 'active', true);
   },
 
   /**
@@ -404,7 +452,7 @@ var stepEditorMutations = {
       // Set the event element at the right of the last one
       } else {
         position = {
-          x: position.x + 100,
+          x: position.x + 200,
           y: position.y
         };
       }

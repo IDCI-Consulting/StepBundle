@@ -22,6 +22,22 @@ var stepEditorActions = {
   },
 
   /**
+   * Set the map type in the store
+   *
+   * @param $store
+   * @param $http
+   */
+  setMapType: function ($store, $http) {
+    var url = $store.getters.getMapTypeConfigurationApiUrl;
+
+    stepEditorActions.handleGetRequest(url, $store, $http, function (mapType) {
+      stepEditorActions.setComponentNameOnOptionsTypes([mapType]);
+      $store.commit('setMapType', mapType);
+    });
+  },
+
+
+  /**
    * Set the step event action types in the store
    *
    * @param $store

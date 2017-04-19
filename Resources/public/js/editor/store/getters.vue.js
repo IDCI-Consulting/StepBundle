@@ -12,6 +12,16 @@ var stepEditorGetters = {
   },
 
   /**
+   * Get the url of the api to retrieve extra map type
+   *
+   * @param state
+   * @returns string
+   */
+  getMapTypeConfigurationApiUrl: function (state) {
+    return state.configuration.api_url.get_extra_map_type;
+  },
+
+  /**
    * Get the url of the api to retrieve extra path event actions
    *
    * @param state
@@ -195,6 +205,17 @@ var stepEditorGetters = {
   },
 
   /**
+   * Get the map type options
+   *
+   * @param state
+   * @returns Object
+   */
+  getMapTypeOptions: function (state) {
+    return state.mapType.extra_form_options;
+  },
+
+
+  /**
    * Get the steps of the map
    *
    * @param state
@@ -257,6 +278,16 @@ var stepEditorGetters = {
 
       return {};
     };
+  },
+
+  /**
+   * Get the options of the map
+   *
+   * @param state
+   * @returns []
+   */
+  getMapOptions: function (state) {
+    return state.map.options;
   },
 
   /**
