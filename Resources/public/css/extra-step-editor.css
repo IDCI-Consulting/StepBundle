@@ -11,14 +11,14 @@
     overflow: auto;
 }
 
-.extra-step-editor .extra-step-configuration h3 {
+.extra-step-editor .extra-step-configuration h3.heading-configuration {
     border-bottom: 2px solid #514D61;
     color: #514D61;
     margin-top: 0;
     margin-bottom: 20px;
 }
 
-.extra-step-editor .extra-step-configuration h4 {
+.extra-step-editor .extra-step-configuration h4.heading-configuration {
     background-color: #514D61;
     color: #FFF;
     padding: 10px 15px;

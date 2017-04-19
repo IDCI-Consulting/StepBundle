@@ -4,7 +4,7 @@ var stepEditorStepTypesConfiguration = {
   template:
   '<div>' +
     '<div v-for="(step, stepName) in steps" v-if="step.active" :key="stepName">' +
-      '<h3>Step configuration</h3>' +
+      '<h3 class="heading-configuration">Step configuration</h3>' +
       '<ul class="nav nav-pills" role="tablist">' +
         '<li role="presentation" class="active">' +
           '<a role="tab" data-toggle="tab" :href="anchor(\'#\', stepName, \'options\')">Options</a>' +
