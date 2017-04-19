@@ -11,6 +11,20 @@
     overflow: auto;
 }
 
+.extra-step-editor .extra-step-configuration h3 {
+    border-bottom: 2px solid #514D61;
+    color: #514D61;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.extra-step-editor .extra-step-configuration h4 {
+    background-color: #514D61;
+    color: #FFF;
+    padding: 10px 15px;
+    border-radius: 0;
+}
+
 .extra-step-editor .extra-step-actions,
 .extra-step-editor .extra-step-actions .vue-modal-container .vue-modal-footer {
     text-align: center;

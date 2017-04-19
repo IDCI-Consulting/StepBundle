@@ -4,6 +4,7 @@ var stepEditorPathTypesConfiguration = {
   template:
     '<div>' +
       '<div v-for="(path, index) in paths" v-if="path.active" :key="index">' +
+        '<h3>Path configuration</h3>' +
         '<ul class="nav nav-pills" role="tablist">' +
           '<li role="presentation" class="active">' +
             '<a role="tab" data-toggle="tab" :href="anchor(\'#\', index, \'options\')">Options</a>' +
