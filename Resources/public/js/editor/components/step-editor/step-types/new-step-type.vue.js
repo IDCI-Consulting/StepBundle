@@ -4,7 +4,10 @@ var stepEditorNewStepType = {
 
   template:
     '<span>' +
-      '<button class="extra-btn" @click.prevent="openModal">New step</button>' +
+      '<button class="extra-btn" @click.prevent="openModal">' +
+        '<i class="fa fa-stop-circle fa-icon" aria-hidden="true"></i>' +
+        'New step' +
+      '</button>' +
       '<modal v-if="modal.show">' +
         '<h3 slot="header">' +
           'Add a step' +

@@ -4,7 +4,10 @@ var stepEditorNewPathType = {
 
   template:
     '<span>' +
-      '<button class="extra-btn" @click.prevent="openModal">New path</button>' +
+      '<button class="extra-btn" @click.prevent="openModal">' +
+        '<i class="fa fa-arrow-right fa-icon" aria-hidden="true"></i>' +
+        'New path' +
+      '</button>' +
       '<modal v-if="modal.show">' +
         '<h3 slot="header">' +
           'Add a path' +
