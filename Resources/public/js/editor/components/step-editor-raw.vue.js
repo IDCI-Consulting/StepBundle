@@ -56,7 +56,8 @@ Vue.component('step-editor-raw', {
       try {
         // Avoid mutating the raw from the state (create a clone)
         var raw = JSON.parse(JSON.stringify(this.raw));
-        var strippedRaw = this.stripAutoescape(raw);
+        raw = this.stripAutoescape(raw);
+        var strippedRaw = this.stripAutoescapeFalse(raw);
 
         // If the raw was stripped, then the {% autoescape false %} is present
         var autoescapeFalseOptionValue = raw !== strippedRaw;
@@ -65,7 +66,6 @@ Vue.component('step-editor-raw', {
         var newMap = JSON.parse(transformRawToJson(strippedRaw));
         this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
 
-        newMap.active = true;
         newMap.active = true;
         this.$store.commit('setMap', newMap);
         this.closeModal(event);
@@ -87,34 +87,57 @@ Vue.component('step-editor-raw', {
       // Avoid mutating the map from the state
       var clonedMap = JSON.parse(JSON.stringify(map));
 
-      delete clonedMap.active;
-      var autoescapeFalseOptionValue = clonedMap.options.autoescape_false ? true : false;
-      delete clonedMap.options.autoescape_false;
-
-      this.formatOptions(clonedMap.options);
-
-      for (var step in clonedMap.steps) {
-        if (clonedMap.steps.hasOwnProperty(step)) {
-          this.formatOptions(clonedMap.steps[step].options);
-          this.formatEventsParameters(clonedMap.steps[step].options.events);
-          delete clonedMap.steps[step].active;
-        }
-      }
-
-      for (var i = 0, len = clonedMap.paths.length; i < len; i++) {
-        this.formatOptions(clonedMap.paths[i].options);
-        this.formatEventsParameters(clonedMap.paths[i].options.events);
-        delete clonedMap.paths[i].active;
-      }
+      this.formatMapOptions(clonedMap);
+      this.formatStepsOptions(clonedMap.steps);
+      this.formatPathsOptions(clonedMap.paths);
 
       /* global transformJsonToRaw */
       var raw = transformJsonToRaw(JSON.stringify(clonedMap, null, 4));
 
-      if (autoescapeFalseOptionValue) {
+      if (map.options.autoescape_false) {
         return '{% autoescape false %}' + raw + '{% endautoescape %}';
       }
 
       return raw;
+    },
+
+    /**
+     * Format the option of the map
+     *
+     * @param {*} map
+     */
+    formatMapOptions: function (map) {
+      delete map.active;
+      delete map.options.autoescape_false;
+      this.formatOptions(map.options);
+    },
+
+    /**
+     * Format the steps of the map
+     *
+     * @param {*} steps
+     */
+    formatStepsOptions: function (steps) {
+      for (var step in steps) {
+        if (steps.hasOwnProperty(step)) {
+          this.formatOptions(steps[step].options);
+          this.formatEventsParameters(steps[step].options.events);
+          delete steps[step].active;
+        }
+      }
+    },
+
+    /**
+     * Format the paths of the map
+     *
+     * @param {[]} paths
+     */
+    formatPathsOptions: function (paths) {
+      for (var i = 0, len = paths.length; i < len; i++) {
+        this.formatOptions(paths[i].options);
+        this.formatEventsParameters(paths[i].options.events);
+        delete paths[i].active;
+      }
     },
 
     /**
@@ -137,13 +160,33 @@ Vue.component('step-editor-raw', {
     },
 
     /**
-     * Strip the twig autoescape block if needed
+     * Strip the twig autoescape false block if needed
+     *
+     * @param raw
+     */
+    stripAutoescapeFalse: function (raw) {
+      var endAutoescapeString = '{% endautoescape %}';
+      var startAutoescapeString = '{% autoescape false %}';
+      var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
+      if (
+        raw.indexOf(startAutoescapeString) === 0 &&
+        raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
+      ) {
+        return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
+      }
+
+      return raw;
+    },
+
+    /**
+     * Strip the twig autoescape block
+     * This block is useless because autoescape true is the default value
      *
      * @param raw
      */
     stripAutoescape: function (raw) {
       var endAutoescapeString = '{% endautoescape %}';
-      var startAutoescapeString = '{% autoescape false %}';
+      var startAutoescapeString = '{% autoescape %}';
       var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
       if (
         raw.indexOf(startAutoescapeString) === 0 &&
