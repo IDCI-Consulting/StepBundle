@@ -49,7 +49,7 @@ function Diagram (element, map) {
         linkToolsOffset: 100,
 
         // Always scale down to 2 the link tools
-        shortLinkLength: 1000
+        shortLinkLength: 10000
       }, joint.dia.LinkView.prototype.options)
     })
   });
