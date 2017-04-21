@@ -187,12 +187,12 @@ var stepEditorMutations = {
 
           var destinations = path.options.destinations;
 
-          for (var j = 0, len = destinations.length; j < len; j++) {
-            var destination = destinations[j];
-
-            if (stepName === destination.step) {
-              stepEditorMutations.removePath(state, i);
-              break;
+          for (var destinationStepName in destinations) {
+            if (destinations.hasOwnProperty(destinationStepName)) {
+              if (stepName === destinationStepName) {
+                stepEditorMutations.removePath(state, i);
+                break;
+              }
             }
           }
         }

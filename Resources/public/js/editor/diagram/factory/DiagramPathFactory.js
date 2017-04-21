@@ -77,24 +77,26 @@ var DiagramPathFactory = {
       cells.push(intersectionToDefaultDestinationLinkCell);
 
       var destinations = path.options.destinations;
+      var linkIdentifier = 0;
 
-      for (var i = 0, len = destinations.length; i < len; i++) {
-        var destination = destinations[i];
-        var destinationStepCell = DiagramUtils.getStepCell(graph, destination.step);
-        var pathLinkIdentifier = 'intersectionToDestination' + i;
-        var conditionalPathLinkCell = DiagramPathFactory.createPathLink(
-          intersectionOfPathLinksCell,
-          destinationStepCell,
-          index,
-          isActive,
-          position[pathLinkIdentifier],
-          destination.condition,
-          pathLinkIdentifier
-        );
+      for (var stepName in destinations) {
+        if (destinations.hasOwnProperty(stepName)) {
+          var destinationStepCell = DiagramUtils.getStepCell(graph, stepName);
+          var pathLinkIdentifier = 'intersectionToDestination' + linkIdentifier;
+          var conditionalPathLinkCell = DiagramPathFactory.createPathLink(
+            intersectionOfPathLinksCell,
+            destinationStepCell,
+            index,
+            isActive,
+            position[pathLinkIdentifier],
+            destinations[stepName],
+            pathLinkIdentifier
+          );
 
-        cells.push(conditionalPathLinkCell);
+          cells.push(conditionalPathLinkCell);
+          linkIdentifier++;
+        }
       }
-
 
       return cells;
     }
@@ -116,6 +118,20 @@ var DiagramPathFactory = {
    * @returns {joint.shapes.extraStep.PathLink}
    */
   createPathLink: function (source, target, index, isActive, vertices, label, identifier) {
+
+    /**
+     * Reduce the size of the label if too large
+     *
+     * @param length
+     */
+    function getReducedLabel (length) {
+      if (label && label.length > length) {
+        return label.substring(0, length) + '...';
+      }
+
+      return label;
+    }
+
     var pathLinkCell = new joint.shapes.extraStep.PathLink({
       source: {
         id: source.id
@@ -128,7 +144,7 @@ var DiagramPathFactory = {
         position: 0.5,
         attrs: {
           text: {
-            'text': label || '',
+            'text': getReducedLabel(30) || '',
             'font-weight': 'bold'
           }
         }

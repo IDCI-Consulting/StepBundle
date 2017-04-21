@@ -42,7 +42,7 @@ var conditionalDestinationsCollectionOption = {
     if ('undefined' === typeof this.value) {
       this.pathCreation = true;
     } else {
-      this.destinations = this.value;
+      this.destinations = this.convertDestinationObjectToArray(this.value);
     }
   },
 
@@ -51,7 +51,7 @@ var conditionalDestinationsCollectionOption = {
       handler: function (destinations) {
         this.$emit('changed', {
           name: this.name,
-          value: destinations
+          value: this.convertDestinationArrayToObject(destinations)
         });
       },
       deep: true
@@ -95,6 +95,31 @@ var conditionalDestinationsCollectionOption = {
      */
     updateDestinationStep: function (index, value) {
       this.destinations[index].step = value;
+    },
+
+    convertDestinationObjectToArray: function (object) {
+      var array = [];
+
+      for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+          array.push({
+            step: key,
+            condition: object[key]
+          });
+        }
+      }
+
+      return array;
+    },
+
+    convertDestinationArrayToObject: function (array) {
+      var object = {};
+
+      for (var i = 0, len = array.length; i < len; i++) {
+        object[array[i].step] = array[i].condition;
+      }
+
+      return object;
     }
   }
 
