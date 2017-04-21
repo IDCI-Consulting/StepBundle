@@ -79,7 +79,7 @@
         };
 
         // We must load the scripts and styles only once, even if many widgets are on the page
-        if (typeof window.loadExtraStepEditors !== 'function') {
+        if (typeof window.loadScripts !== 'function') {
             var scriptsUrls = [
                 '{{ asset('bundles/idciextraform/js/editor.min.js') }}',
                 '{{ asset('bundles/idcistep/js/vendor/polyfills.js') }}',
@@ -169,7 +169,7 @@
              * @param callback
              * @param index
              */
-            function loadScripts(scriptsUrls, callback, index) {
+             var loadScripts = function(scriptsUrls, callback, index) {
 
                 // Set the first index
                 if (typeof index === 'undefined') {
@@ -191,7 +191,7 @@
                 } else {
                     callback();
                 }
-            }
+            };
 
             loadScripts(scriptsUrls, function () {
                 loadExtraStepEditors();
