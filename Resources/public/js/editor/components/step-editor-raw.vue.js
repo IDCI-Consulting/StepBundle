@@ -88,6 +88,9 @@ Vue.component('step-editor-raw', {
       var clonedMap = JSON.parse(JSON.stringify(map));
 
       delete clonedMap.active;
+      var autoescapeFalseOptionValue = clonedMap.options.autoescape_false ? true : false;
+      delete clonedMap.options.autoescape_false;
+
       this.formatOptions(clonedMap.options);
 
       for (var step in clonedMap.steps) {
@@ -107,7 +110,7 @@ Vue.component('step-editor-raw', {
       /* global transformJsonToRaw */
       var raw = transformJsonToRaw(JSON.stringify(clonedMap, null, 4));
 
-      if (clonedMap.options.autoescape_false) {
+      if (autoescapeFalseOptionValue) {
         return '{% autoescape false %}' + raw + '{% endautoescape %}';
       }
 
