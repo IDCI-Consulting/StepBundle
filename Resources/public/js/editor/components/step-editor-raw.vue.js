@@ -25,6 +25,8 @@ Vue.component('step-editor-raw', {
     if (this.textarea.value !== '') {
       this.raw = this.textarea.value;
       this.generateMap();
+    } else {
+      this.$store.commit('setMap', { active: true });
     }
   },
 
