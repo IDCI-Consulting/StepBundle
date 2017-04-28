@@ -25,11 +25,11 @@ Vue.component('step-editor-raw', {
 
   created: function () {
     // If the textarea is empty, do not attempt to generate fields
-    if (this.textarea.value !== '') {
+    if ('' === this.textarea.value) {
+      this.$store.commit('setMap', { active: true });
+    } else {
       this.raw = this.textarea.value;
       this.generateMap();
-    } else {
-      this.$store.commit('setMap', { active: true });
     }
   },
 
@@ -69,6 +69,7 @@ Vue.component('step-editor-raw', {
       try {
         // Avoid mutating the raw from the state (create a clone)
         var raw = JSON.parse(JSON.stringify(this.raw));
+
         raw = this.stripAutoescape(raw);
         var strippedRaw = this.stripAutoescapeFalse(raw);
 
@@ -77,8 +78,8 @@ Vue.component('step-editor-raw', {
 
         /* global transformRawToJson */
         var newMap = JSON.parse(transformRawToJson(strippedRaw));
-        this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
 
+        this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
         newMap.active = true;
         this.$store.commit('setMap', newMap);
         this.closeModal(event);
@@ -181,8 +182,9 @@ Vue.component('step-editor-raw', {
       var endAutoescapeString = '{% endautoescape %}';
       var startAutoescapeString = '{% autoescape false %}';
       var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
+
       if (
-        raw.indexOf(startAutoescapeString) === 0 &&
+        0 === raw.indexOf(startAutoescapeString) &&
         raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
       ) {
         return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
@@ -201,8 +203,9 @@ Vue.component('step-editor-raw', {
       var endAutoescapeString = '{% endautoescape %}';
       var startAutoescapeString = '{% autoescape %}';
       var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
+
       if (
-        raw.indexOf(startAutoescapeString) === 0 &&
+        0 === raw.indexOf(startAutoescapeString) &&
         raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
       ) {
         return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);

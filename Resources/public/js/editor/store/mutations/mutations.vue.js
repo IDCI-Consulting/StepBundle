@@ -78,7 +78,7 @@ var stepEditorMutations = {
 
     // Add name if not set
     if ('undefined' === typeof map.name) {
-      map.name = "";
+      map.name = '';
     }
 
     // Add steps if not set
@@ -517,7 +517,6 @@ var stepEditorMutations = {
   setConditionalPathPosition: function (state, payload) {
     Vue.set(state.map.graphPositions.paths[payload.identifier], 'intersection', payload.position);
   },
-
 
   /**
    * Set the vertices of a path

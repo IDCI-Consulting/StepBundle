@@ -20,6 +20,7 @@ var stepEditorMapConfiguration = {
   },
 
   components: {
+
     /* global stepEditorMapOptions */
     'map-options': stepEditorMapOptions
   }
