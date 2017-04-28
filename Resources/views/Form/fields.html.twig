@@ -180,21 +180,14 @@
              * @param callback
              * @param index
              */
-            function loadScripts(scriptsUrls, callback, index) {
-
-                // Set the first index
-                if (typeof index === 'undefined') {
-                    index = 0;
-                }
-
+            var loadScripts = function(scriptsUrls, callback, index) {
                 // Create a script node
                 var script = document.createElement('script');
                 script.type = 'text/javascript';
                 document.body.appendChild(script);
-                index++;
 
                 script.onload = function () {
-                    loadScripts(scriptsUrls, callback, index);
+                    loadScripts(scriptsUrls, callback, index+1);
                 };
 
                 if (typeof scriptsUrls[index] !== 'undefined') {
@@ -202,11 +195,11 @@
                 } else {
                     callback();
                 }
-            }
+            };
 
             loadScripts(scriptsUrls, function () {
                 loadExtraStepEditors();
-            });
+            }, 0);
         }
     </script>
 
