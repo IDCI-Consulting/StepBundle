@@ -8,8 +8,11 @@ Vue.component('step-editor-raw', {
       '>' +
       '</textarea>' +
       '<div class="json-errors"></div>' +
-      '<button @click.prevent="generateMap">' +
+      '<button style="margin-right: 20px" @click.prevent="generateMap">' +
         'Generate the diagram of the map from the json' +
+      '</button>' +
+      '<button @click.prevent="saveRaw">' +
+        'Save the content of the textarea (even if the json is not valid)' +
       '</button>' +
     '</div>',
 
@@ -50,6 +53,14 @@ Vue.component('step-editor-raw', {
   },
 
   methods: {
+
+    /**
+     * Save the content of the raw textarea in the initial textarea
+     */
+    saveRaw: function (event) {
+      this.updateInitialTextareaValue();
+      this.closeModal(event);
+    },
 
     /**
      * Generate the map from the json
