@@ -236,21 +236,23 @@ var stepEditorMutations = {
         throw new Error('You must add at least one conditional destination, else you should use a path of type single');
       }
 
-      for (var i = 0, len = destinations.length; i < len; i++) {
-        if (destinations[i].step === newPath.options.source) {
-          throw new Error('The source and the conditional destinations must be different');
-        }
+      for (var stepName in destinations) {
+        if (destinations.hasOwnProperty(stepName)) {
+          if (stepName === newPath.options.source) {
+            throw new Error('The source and the conditional destinations must be different');
+          }
 
-        if (destinations[i].step === newPath.options.default_destination) {
-          throw new Error('The default destination and the conditional destinations must be different');
-        }
+          if (stepName === newPath.options.default_destination) {
+            throw new Error('The default destination and the conditional destinations must be different');
+          }
 
-        if (!destinations[i].condition) {
-          throw new Error('The condition must be defined');
-        }
+          if (!destinations[stepName]) {
+            throw new Error('The condition must be defined');
+          }
 
-        if (!destinations[i].step) {
-          throw new Error('The step must not be defined');
+          if (!stepName) {
+            throw new Error('The step must be defined');
+          }
         }
       }
     }
