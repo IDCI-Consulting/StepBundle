@@ -31,6 +31,7 @@ class StepEditorType extends AbstractType
         $view->vars['attr']['data-configuration-variable']  = $view->vars['id'] . '_configuration';
         $view->vars['allow_configured_types_edition']       = $options['allow_configured_types_edition'];
         $view->vars['show_configured_types']                = $options['show_configured_types'];
+        $view->vars['configured_types_tags']                = $options['configured_types_tags'];
 
         return $view->vars;
     }
@@ -44,9 +45,11 @@ class StepEditorType extends AbstractType
             ->setDefaults(array(
                 'required'                       => false,
                 'allow_configured_types_edition' => false,
-                'show_configured_types'          => false
+                'show_configured_types'          => false,
+                'configured_types_tags'          => array()
             ))
             ->setAllowedTypes(array(
+                'configured_types_tags'          => array('array'),
                 'allow_configured_types_edition' => array('boolean'),
                 'show_configured_types'          => array('boolean')
             ))

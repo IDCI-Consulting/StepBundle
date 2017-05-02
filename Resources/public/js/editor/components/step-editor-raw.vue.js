@@ -8,8 +8,11 @@ Vue.component('step-editor-raw', {
       '>' +
       '</textarea>' +
       '<div class="json-errors"></div>' +
-      '<button @click.prevent="generateMap">' +
+      '<button style="margin-right: 20px" @click.prevent="generateMap">' +
         'Generate the diagram of the map from the json' +
+      '</button>' +
+      '<button @click.prevent="saveRaw">' +
+        'Save the content of the textarea (even if the json is not valid)' +
       '</button>' +
     '</div>',
 
@@ -22,7 +25,9 @@ Vue.component('step-editor-raw', {
 
   created: function () {
     // If the textarea is empty, do not attempt to generate fields
-    if (this.textarea.value !== '') {
+    if ('' === this.textarea.value) {
+      this.$store.commit('setMap', { active: true });
+    } else {
       this.raw = this.textarea.value;
       this.generateMap();
     }
@@ -50,12 +55,21 @@ Vue.component('step-editor-raw', {
   methods: {
 
     /**
+     * Save the content of the raw textarea in the initial textarea
+     */
+    saveRaw: function (event) {
+      this.updateInitialTextareaValue();
+      this.closeModal(event);
+    },
+
+    /**
      * Generate the map from the json
      */
     generateMap: function (event) {
       try {
         // Avoid mutating the raw from the state (create a clone)
         var raw = JSON.parse(JSON.stringify(this.raw));
+
         raw = this.stripAutoescape(raw);
         var strippedRaw = this.stripAutoescapeFalse(raw);
 
@@ -64,8 +78,8 @@ Vue.component('step-editor-raw', {
 
         /* global transformRawToJson */
         var newMap = JSON.parse(transformRawToJson(strippedRaw));
-        this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
 
+        this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
         newMap.active = true;
         this.$store.commit('setMap', newMap);
         this.closeModal(event);
@@ -168,8 +182,9 @@ Vue.component('step-editor-raw', {
       var endAutoescapeString = '{% endautoescape %}';
       var startAutoescapeString = '{% autoescape false %}';
       var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
+
       if (
-        raw.indexOf(startAutoescapeString) === 0 &&
+        0 === raw.indexOf(startAutoescapeString) &&
         raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
       ) {
         return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
@@ -188,8 +203,9 @@ Vue.component('step-editor-raw', {
       var endAutoescapeString = '{% endautoescape %}';
       var startAutoescapeString = '{% autoescape %}';
       var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
+
       if (
-        raw.indexOf(startAutoescapeString) === 0 &&
+        0 === raw.indexOf(startAutoescapeString) &&
         raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
       ) {
         return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
