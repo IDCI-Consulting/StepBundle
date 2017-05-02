@@ -52,6 +52,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/font-awesome-4.7.0/css/font-awesome.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/extra-form-editor.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/codemirror.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/joint.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/joint-custom.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idcistep/css/extra-step-editor.css') }}" />
@@ -92,11 +93,8 @@
         // We must load the scripts and styles only once, even if many widgets are on the page
         if (typeof window.loadScripts !== 'function') {
             var scriptsUrls = [
-                '{{ asset('bundles/idciextraform/js/editor.min.js') }}',
-                '{{ asset('bundles/idcistep/js/vendor/polyfills.js') }}',
-                '{{ asset('bundles/idcistep/js/vendor/lodash-3.10.1.min.js') }}',
-                '{{ asset('bundles/idcistep/js/vendor/backbone-1.3.3.js') }}',
-                '{{ asset('bundles/idcistep/js/vendor/joint-1.1.0.js') }}',
+                '{{ asset('bundles/idciextraform/js/vendor/codemirror.js') }}',
+                '{{ asset('bundles/idciextraform/js/vendor/codemirror-javascript-mode.js') }}',
                 '{{ asset('bundles/idciextraform/js/vendor/vue-dev.js') }}',
                 '{{ asset('bundles/idciextraform/js/vendor/vue-resource-1.2.0.min.js') }}',
                 '{{ asset('bundles/idciextraform/js/vendor/sortable.min.js') }}',
@@ -104,6 +102,10 @@
                 '{{ asset('bundles/idciextraform/js/vendor/vue-draggable.min.js') }}',
                 '{{ asset('bundles/idciextraform/js/vendor/vuex-2.1.2.js') }}',
                 '{{ asset('bundles/idciextraform/js/vendor/utils.js') }}',
+                '{{ asset('bundles/idcistep/js/vendor/polyfills.js') }}',
+                '{{ asset('bundles/idcistep/js/vendor/lodash-3.10.1.min.js') }}',
+                '{{ asset('bundles/idcistep/js/vendor/backbone-1.3.3.js') }}',
+                '{{ asset('bundles/idcistep/js/vendor/joint-1.1.0.js') }}',
                 '{{ asset('bundles/idcistep/js/editor/diagram/DiagramColors.js') }}',
                 '{{ asset('bundles/idcistep/js/editor/diagram/factory/DiagramStepFactory.js') }}',
                 '{{ asset('bundles/idcistep/js/editor/diagram/factory/DiagramPathFactory.js') }}',

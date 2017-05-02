@@ -3,11 +3,8 @@ Vue.component('step-editor-raw', {
 
   template:
     '<div class="extra-step-editor raw-mode">' +
-      '<textarea ' +
-        'v-model="raw" ' +
-      '>' +
-      '</textarea>' +
-      '<div class="json-errors"></div>' +
+      '<textarea v-model="raw" :id="id"></textarea>' +
+      '<div class="json-errors">{{ error.message }}</div>' +
       '<button style="margin-right: 20px" @click.prevent="generateMap">' +
         'Generate the diagram of the map from the json' +
       '</button>' +
@@ -15,13 +12,6 @@ Vue.component('step-editor-raw', {
         'Save the content of the textarea (even if the json is not valid)' +
       '</button>' +
     '</div>',
-
-  data: function () {
-    return {
-      raw: '',
-      textarea: this.$store.state.formProperties
-    };
-  },
 
   created: function () {
     // If the textarea is empty, do not attempt to generate fields
@@ -55,17 +45,9 @@ Vue.component('step-editor-raw', {
   methods: {
 
     /**
-     * Save the content of the raw textarea in the initial textarea
-     */
-    saveRaw: function (event) {
-      this.updateInitialTextareaValue();
-      this.closeModal(event);
-    },
-
-    /**
      * Generate the map from the json
      */
-    generateMap: function (event) {
+    generateMap: function () {
       try {
         // Avoid mutating the raw from the state (create a clone)
         var raw = JSON.parse(JSON.stringify(this.raw));
@@ -77,16 +59,17 @@ Vue.component('step-editor-raw', {
         var autoescapeFalseOptionValue = raw !== strippedRaw;
 
         /* global transformRawToJson */
-        var newMap = JSON.parse(transformRawToJson(strippedRaw));
+        var transformedRaw = transformRawToJson(strippedRaw);
+        var newMap = JSON.parse(transformedRaw);
 
         this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
         newMap.active = true;
         this.$store.commit('setMap', newMap);
-        this.closeModal(event);
+        this.closeModal();
 
       // Json parsing error
       } catch (error) {
-        this.displayJsonParseErrors(event, error);
+        this.handleJsonError(error, transformedRaw);
       }
     },
 
@@ -226,6 +209,15 @@ Vue.component('step-editor-raw', {
       }
 
       map.options.autoescape_false = autoescapeFalseValue;
+    },
+
+    /**
+     * Get the css selector of the modal containing the raw
+     *
+     * @returns {string}
+     */
+    getModalSelector: function () {
+      return '#' + this.$store.state.configuration.componentId + ' .extra-step-raw-mode-modal';
     }
 
   }
