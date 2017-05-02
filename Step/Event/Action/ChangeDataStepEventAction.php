@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormEvents;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
