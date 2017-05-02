@@ -51,6 +51,18 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     {
         $resolver
             ->setDefaults(array('fields' => array()))
+            ->setNormalizers(array(
+                'fields' => function(Options $options, $value) {
+                    foreach ($value as $k => $v) {
+                        if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
+                            $value[$matches['key']] = json_decode($v, true);
+                            unset($value[$k]);
+                        }
+                    }
+
+                    return $value;
+                }
+            ))
             ->setAllowedTypes(array(
                 'fields' => array('array')
             ))
