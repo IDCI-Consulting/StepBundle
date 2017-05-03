@@ -16,9 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
-use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEvent;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
 
@@ -66,8 +66,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function __construct(
         NavigatorInterface $navigator,
-        StepEventRegistryInterface $stepEventRegistry,
-        PathEventRegistryInterface $pathEventRegistry,
+        StepEventActionRegistryInterface $stepEventRegistry,
+        PathEventActionRegistryInterface $pathEventRegistry,
         \Twig_Environment          $merger,
         SecurityContextInterface   $securityContext,
         SessionInterface           $session
