@@ -139,16 +139,16 @@ services:
 
     # Step
 
+    idci_step.step.type.html:
+        class: %idci_step.step.type.html.class%
+        tags:
+            - { name: idci_step.step_type, alias: html }
+
     idci_step.step.type.form:
         class: %idci_step.step.type.form.class%
         arguments: [@idci_step.serialization_mapper]
         tags:
-            - { name: idci_step.step.type, alias: form }
-
-    idci_step.step.type.html:
-        class: %idci_step.step.type.html.class%
-        tags:
-            - { name: idci_step.step.type, alias: html }
+            - { name: idci_step.step_type, alias: form }
 
 
     # StepEvent
