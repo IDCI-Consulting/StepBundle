@@ -24,14 +24,14 @@ idci_step:
                 events:                {extra_form_type: "textarea", options: {required: false}}
                 serialization_mapping: {extra_form_type: "textarea", options: {required: false}}
 
-        html:
-            parent:      abstract
-            description: ""
-            extra_form_options:
-                content: {extra_form_type: "textarea", options: {required: false}}
-
         form:
             parent:      abstract
             description: ""
             extra_form_options:
                 builder:       {extra_form_type: "textarea", options: {required: false} }
+
+        html:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                content: {extra_form_type: "textarea", options: {required: false}}

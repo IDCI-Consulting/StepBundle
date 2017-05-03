@@ -45,42 +45,38 @@ services:
 
     # Registry
 
-    idci_step.step_type.registry:
-        class: %idci_step.step_type.registry.class%
-
-    idci_step.step_type_configuration.registry:
-        class: %idci_step.step_type_configuration.registry.class%
-
-    idci_step.step_event_action.registry:
-        class: %idci_step.step_event_action.registry.class%
-
-    idci_step.step_event_action_configuration.registry:
-        class: %idci_step.step_event_action_configuration.registry.class%
-
-    idci_step.path_type.registry:
-        class: %idci_step.path_type.registry.class%
-
-    idci_step.path_type_configuration.registry:
-        class: %idci_step.path_type_configuration.registry.class%
+    idci_step.path_event_action_configuration.registry:
+        class: %idci_step.path_event_action_configuration.registry.class%
 
     idci_step.path_event_action.registry:
         class: %idci_step.path_event_action.registry.class%
 
-    idci_step.path_event_action_configuration.registry:
-        class: %idci_step.path_event_action_configuration.registry.class%
+    idci_step.path_type_configuration.registry:
+        class: %idci_step.path_type_configuration.registry.class%
+
+    idci_step.path_type.registry:
+        class: %idci_step.path_type.registry.class%
+
+    idci_step.step_event_action_configuration.registry:
+        class: %idci_step.step_event_action_configuration.registry.class%
+
+    idci_step.step_event_action.registry:
+        class: %idci_step.step_event_action.registry.class%
+
+    idci_step.step_type_configuration.registry:
+        class: %idci_step.step_type_configuration.registry.class%
+
+    idci_step.step_type.registry:
+        class: %idci_step.step_type.registry.class%
 
     idci_step.conditional_rule.registry:
         class: %idci_step.conditional_rule.registry.class%
 
+
     # Configurations
 
-    idci_step.step_type_configuration:
-        class: %idci_step.step_type_configuration.class%
-        arguments: [null]
-        abstract: true
-
-    idci_step.step_event_action_configuration:
-        class: %idci_step.step_event_action_configuration.class%
+    idci_step.path_event_action_configuration:
+        class: %idci_step.path_event_action_configuration.class%
         arguments: [null]
         abstract: true
 
@@ -89,20 +85,26 @@ services:
         arguments: [null]
         abstract: true
 
-    idci_step.path_event_action_configuration:
-        class: %idci_step.path_event_action_configuration.class%
+    idci_step.step_event_action_configuration:
+        class: %idci_step.step_event_action_configuration.class%
         arguments: [null]
         abstract: true
 
-    # Builder
+    idci_step.step_type_configuration:
+        class: %idci_step.step_type_configuration.class%
+        arguments: [null]
+        abstract: true
 
-    idci_step.step.builder:
-        class: %idci_step.step.builder.class%
-        arguments: [@idci_step.step_type.registry]
+
+    # Builder
 
     idci_step.path.builder:
         class: %idci_step.path.builder.class%
         arguments: [@idci_step.path_type.registry]
+
+    idci_step.step.builder:
+        class: %idci_step.step.builder.class%
+        arguments: [@idci_step.step_type.registry]
 
 
     # FlowRecorder
@@ -137,16 +139,16 @@ services:
 
     # Step
 
-    idci_step.step.type.html:
-        class: %idci_step.step.type.html.class%
-        tags:
-            - { name: idci_step.step.type, alias: html }
-
     idci_step.step.type.form:
         class: %idci_step.step.type.form.class%
         arguments: [@idci_step.serialization_mapper]
         tags:
             - { name: idci_step.step.type, alias: form }
+
+    idci_step.step.type.html:
+        class: %idci_step.step.type.html.class%
+        tags:
+            - { name: idci_step.step.type, alias: html }
 
 
     # StepEvent
@@ -176,11 +178,6 @@ services:
 
     # Path
 
-    idci_step.path_type.single:
-        class: %idci_step.path_type.single.class%
-        tags:
-            - { name: idci_step.path_type, alias: single }
-
     idci_step.path_type.conditional_destination:
         class: %idci_step.path_type.conditional_destination.class%
         arguments:
@@ -196,13 +193,18 @@ services:
         tags:
             - { name: idci_step.path_type, alias: end }
 
+    idci_step.path_type.single:
+        class: %idci_step.path_type.single.class%
+        tags:
+            - { name: idci_step.path_type, alias: single }
+
 
     # PathEvent
 
-    idci_step.path_event_action.js_confirm:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
+    idci_step.path_event_action.add_url_query_parameter:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction
         tags:
-            - { name: idci_step.path_event_action, alias: js_confirm }
+            - { name: idci_step.path_event_action, alias: add_url_query_parameter }
 
     idci_step.path_event_action.change_data:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction
@@ -214,15 +216,15 @@ services:
         tags:
             - { name: idci_step.path_event_action, alias: change_final_destination }
 
+    idci_step.path_event_action.js_confirm:
+        class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
+        tags:
+            - { name: idci_step.path_event_action, alias: js_confirm }
+
     idci_step.path_event_action.purge_flow_data:
         class: IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction
         tags:
             - { name: idci_step.path_event_action, alias: purge_flow_data }
-
-    idci_step.path_event_action.add_url_query_parameter:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction
-        tags:
-            - { name: idci_step.path_event_action, alias: add_url_query_parameter }
 
 
     # SerializationMapper
@@ -240,8 +242,13 @@ services:
             - @idci_step.map.builder.factory
             - @idci_step.configuration.worker_registry
 
-    idci_step.configuration.worker_registry:
-        class: %idci_step.configuration.worker_registry.class%
+    idci_step.configuration.fetcher.configuration:
+        class: %idci_step.configuration.fetcher.configuration.class%
+        abstract: true
+        arguments: [null]
+
+    idci_step.configuration.fetcher_registry:
+        class: %idci_step.configuration.fetcher_registry.class%
 
     idci_step.configuration.worker.form_builder:
         class: %idci_step.configuration.worker.form_builder.class%
@@ -249,13 +256,8 @@ services:
         tags:
             - { name: idci_step.configuration.worker, alias: form_builder }
 
-    idci_step.configuration.fetcher_registry:
-        class: %idci_step.configuration.fetcher_registry.class%
-
-    idci_step.configuration.fetcher.configuration:
-        class: %idci_step.configuration.fetcher.configuration.class%
-        abstract: true
-        arguments: [null]
+    idci_step.configuration.worker_registry:
+        class: %idci_step.configuration.worker_registry.class%
 
 
     # Logger
@@ -295,20 +297,22 @@ services:
         tags:
             - { name: form.type, alias: idci_step_navigator }
     # Step
+    form.type.idci_step.step_form.form:
+        class: IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType
+        tags:
+            - { name: form.type, alias: idci_step_step_form_form }
+
     form.type.idci_step.step_form.html:
         class: IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType
         tags:
             - { name: form.type, alias: idci_step_step_form_html }
 
-    form.type.idci_step.step_form.form:
-        class: IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType
-        tags:
-            - { name: form.type, alias: idci_step_step_form_form }
     # Action
     form.type.idci_step.action_form.js_confirm:
         class: IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType
         tags:
             - { name: form.type, alias: idci_step_action_form_js_confirm }
+
     form.type.idci_step.action_form.link:
         class: IDCI\Bundle\StepBundle\Form\Type\LinkFormType
         tags:
@@ -316,6 +320,7 @@ services:
 
 
     # Twig
+
     idci_step.twig_string_loader:
         class:        "Twig_Loader_String"
     idci_step.merger:

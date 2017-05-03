@@ -8,17 +8,18 @@ idci_step:
             description: ~
             extra_form_options: ~
 
+        add_url_query_parameter:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                key:   {extra_form_type: "text", options: {required: true}}
+                value: {extra_form_type: "text", options: {required: false}}
+
         change_data:
             parent:      abstract
             description: ""
             extra_form_options:
                 fields: {extra_form_type: "textarea", options: {required: false}}
-
-        js_confirm:
-            parent:      abstract
-            description: ""
-            extra_form_options:
-                message: {extra_form_type: "textarea", options: {required: false}}
 
         change_final_destination:
             parent:      abstract
@@ -26,18 +27,17 @@ idci_step:
             extra_form_options:
                 final_destination: {extra_form_type: "text", options: {required: true}}
 
+        js_confirm:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                message: {extra_form_type: "textarea", options: {required: false}}
+
         purge_flow_data:
             parent:      abstract
             description: ""
             extra_form_options:
                 steps: {extra_form_type: "text", options: {required: true}}
-
-        add_url_query_parameter:
-            parent:      abstract
-            description: ""
-            extra_form_options:
-                key:   {extra_form_type: "text", options: {required: true}}
-                value: {extra_form_type: "text", options: {required: false}}
 
     step_event_actions:
 
@@ -53,12 +53,6 @@ idci_step:
             extra_form_options:
                 link_options: {extra_form_type: "textarea", options: {required: false}}
 
-        transform_data:
-            parent:      abstract
-            description: ""
-            extra_form_options:
-                fields: {extra_form_type: "textarea", options: {required: false}}
-
         change_data:
             parent:      abstract
             description: ""
@@ -71,3 +65,9 @@ idci_step:
             extra_form_options:
                 rules:             {extra_form_type: "text", options: {required: false}}
                 final_destination: {extra_form_type: "text", options: {required: false}}
+
+        transform_data:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                fields: {extra_form_type: "textarea", options: {required: false}}

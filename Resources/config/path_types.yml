@@ -11,13 +11,6 @@ idci_step:
                 next_options: {extra_form_type: "textarea", options: {required: false}}
                 events:       {extra_form_type: "textarea", options: {required: false}}
 
-        single:
-            parent:      abstract
-            description: ""
-            extra_form_options:
-                source:      {extra_form_type: "text",     options: {required: true}}
-                destination: {extra_form_type: "text",     options: {required: true}}
-
         conditional_destination:
             parent:      abstract
             description: ""
@@ -31,3 +24,10 @@ idci_step:
             description: ""
             extra_form_options:
                 source: {extra_form_type: "text",     options: {required: true}}
+
+        single:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                source:      {extra_form_type: "text",     options: {required: true}}
+                destination: {extra_form_type: "text",     options: {required: true}}
