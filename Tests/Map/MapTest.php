@@ -31,7 +31,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     public function testStep()
     {
-        $step1 = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step1 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step1
             ->expects($this->any())
             ->method('getData')
@@ -44,7 +44,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->map->countSteps());
         $this->assertEquals($step1, $this->map->getStep('step1'));
 
-        $step2 = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step2 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step2
             ->expects($this->any())
             ->method('getData')
@@ -69,7 +69,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     public function testPath()
     {
-        $step1 = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step1 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step1
             ->expects($this->any())
             ->method('getData')
@@ -77,7 +77,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
         ;
         $this->map->addStep('step1', $step1);
 
-        $step2 = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step2 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step2
             ->expects($this->any())
             ->method('getData')
@@ -85,9 +85,9 @@ class MapTest extends \PHPUnit_Framework_TestCase
         ;
         $this->map->addStep('step2', $step2);
 
-        $path1 = $this->getMock("IDCI\Bundle\StepBundle\Path\PathInterface");
-        $path2 = $this->getMock("IDCI\Bundle\StepBundle\Path\PathInterface");
-        $pathE = $this->getMock("IDCI\Bundle\StepBundle\Path\PathInterface");
+        $path1 = $this->createMock("IDCI\Bundle\StepBundle\Path\PathInterface");
+        $path2 = $this->createMock("IDCI\Bundle\StepBundle\Path\PathInterface");
+        $pathE = $this->createMock("IDCI\Bundle\StepBundle\Path\PathInterface");
 
         $this->map->addPath('step1', $path1);
         $this->map->addPath('step2', $path2);

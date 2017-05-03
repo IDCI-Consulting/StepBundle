@@ -10,11 +10,11 @@ class ConditionalStopNavigationStepEventActionTest extends \PHPUnit_Framework_Te
 {
     public function setUp()
     {
-        $this->event = $this->getMock("IDCI\Bundle\StepBundle\Step\Event\StepEventInterface");
+        $this->event = $this->createMock("IDCI\Bundle\StepBundle\Step\Event\StepEventInterface");
         $this->event
             ->expects($this->any())
             ->method('getNavigator')
-            ->will($this->returnValue($this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface")))
+            ->will($this->returnValue($this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface")))
         ;
 
         $registry = new ConditionalRuleRegistry;

@@ -20,7 +20,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
-        $flow = $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
+        $flow = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
         $flow
             ->expects($this->any())
             ->method('getData')
@@ -34,7 +34,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
                 )
             )))
         ;
-        $navigator = $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
         $navigator
             ->expects($this->any())
             ->method('getFlow')
@@ -46,11 +46,11 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->navigationEventSubscriber = new NavigationEventSubscriber(
             $navigator,
-            $this->getMock("IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface"),
-            $this->getMock("IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface"),
+            $this->createMock("IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface"),
+            $this->createMock("IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface"),
             $twigEnvironment,
             $securityContext,
-            $this->getMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
+            $this->createMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
         );
     }
 

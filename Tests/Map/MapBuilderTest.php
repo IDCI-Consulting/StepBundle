@@ -3,50 +3,38 @@
 namespace IDCI\Bundle\StepBundle\Tests\Map;
 
 use IDCI\Bundle\StepBundle\Map\MapBuilder;
+use PHPUnit\Framework\TestCase;
 
-class MapBuilderTest extends \PHPUnit_Framework_TestCase
+class MapBuilderTest extends TestCase
 {
     public function setUp()
     {
-        $securityContext = $this
-            ->getMockBuilder("Symfony\Component\Security\Core\SecurityContextInterface")
-            ->disableOriginalConstructor()
-            ->setMethods(array('getToken', 'setToken', 'isGranted'))
-            ->getMock()
-        ;
-        $securityContext
-            ->expects($this->any())
-            ->method('getToken')
-            ->will($this->returnValue(null))
-        ;
+        require_once __DIR__.'/../AppKernel.php';
+        $kernel = new \AppKernel('test', true);
+        $kernel->boot();
+        $this->container = $kernel->getContainer();
 
-        $twigStringLoader = new \Twig_Loader_String;
-        $twigEnvironment  = new \Twig_Environment($twigStringLoader, array());
-
-        $this->mapBuilder = new MapBuilder(
-            "Test MAP",
-            array(),
-            array(),
-            $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface"),
-            $this->getMock("IDCI\Bundle\StepBundle\Step\StepBuilderInterface"),
-            $this->getMock("IDCI\Bundle\StepBundle\Path\PathBuilderInterface"),
-            $twigEnvironment,
-            $securityContext,
-            $this->getMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
-        );
+        $this->mapBuilder = $this->container
+            ->get('idci_step.map.builder.factory')
+            ->createNamedBuilder('Test MAP')
+        ;
     }
 
     public function testGetMap()
     {
-        $map = $this
-            ->mapBuilder
-            ->getMap($this->getMock("Symfony\Component\HttpFoundation\Request"))
+        $request = $this->createMock("Symfony\Component\HttpFoundation\Request");
+        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
+
+        $request->expects($this->any())
+            ->method('getSession')
+            ->will($this->returnValue($session))
         ;
+
+        $map = $this->mapBuilder->getMap($request);
 
         $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map);
         $this->assertEquals('Test MAP', $map->getName());
 
-        /*
         $this
             ->mapBuilder
             ->addStep('intro', 'html', array(
@@ -76,8 +64,7 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
 
         $map = $this
             ->mapBuilder
-            ->getMap($this->getMock("Symfony\Component\HttpFoundation\Request"))
+            ->getMap($request)
         ;
-        */
     }
 }

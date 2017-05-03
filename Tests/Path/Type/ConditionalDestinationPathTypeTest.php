@@ -27,14 +27,14 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->pathType = new ConditionalDestinationPathType(
             $twigEnvironment,
             $securityContext,
-            $this->getMock("Symfony\Component\HttpFoundation\Session\SessionInterface"),
-            $this->getMock("IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface")
+            $this->createMock("Symfony\Component\HttpFoundation\Session\SessionInterface"),
+            $this->createMock("IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface")
         );
     }
 
     public function testResolveDestination()
     {
-        $flow = $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
+        $flow = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
         $flow
             ->expects($this->any())
             ->method('getData')
@@ -48,7 +48,7 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             )))
         ;
 
-        $navigator = $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
         $navigator
             ->expects($this->any())
             ->method('getFlow')
@@ -151,13 +151,13 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $flow = $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
+        $flow = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
         $flow
             ->expects($this->any())
             ->method('getData')
             ->will($this->returnValue(null))
         ;
-        $navigator = $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
         $navigator
             ->expects($this->any())
             ->method('getFlow')

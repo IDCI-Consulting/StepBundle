@@ -28,7 +28,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function testSource()
     {
-        $step = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step
             ->expects($this->once())
             ->method('getName')
@@ -41,14 +41,14 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function testDestination()
     {
-        $step1 = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step1 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step1
             ->expects($this->once())
             ->method('getName')
             ->will($this->returnValue('step1'))
         ;
 
-        $step2 = $this->getMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step2 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
         $step2
             ->expects($this->once())
             ->method('getName')

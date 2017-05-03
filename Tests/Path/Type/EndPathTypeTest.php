@@ -14,7 +14,7 @@ class EndPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveDestination()
     {
-        $navigator = $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
 
         $this->assertEquals(
             null,
@@ -49,13 +49,13 @@ class EndPathTypeTest extends \PHPUnit_Framework_TestCase
             array()
         );
 
-        $flow = $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
+        $flow = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
         $flow
             ->expects($this->any())
             ->method('getData')
             ->will($this->returnValue(null))
         ;
-        $navigator = $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
         $navigator
             ->expects($this->any())
             ->method('getFlow')

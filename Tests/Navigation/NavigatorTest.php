@@ -38,7 +38,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             ),
         ));
 
-        $stepType = $this->getMock("IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface");
+        $stepType = $this->createMock("IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface");
 
         $map
             ->addStep('stepA', new Step(array(
@@ -71,7 +71,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             )))
         ;
 
-        $flowRecorder = $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface");
+        $flowRecorder = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface");
         $flowRecorder
             ->expects($this->any())
             ->method('getFlow')
@@ -88,7 +88,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
-        $formFactory = $this->getMock("Symfony\Component\Form\FormFactoryInterface");
+        $formFactory = $this->createMock("Symfony\Component\Form\FormFactoryInterface");
         $formFactory->expects($this->any())
             ->method('createBuilder')
             ->will($this->returnValue($formBuilder))
@@ -107,8 +107,8 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             $formFactory,
             $flowRecorder,
             $map,
-            $this->getMock("Symfony\Component\HttpFoundation\Request"),
-            $this->getMock("IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface"),
+            $this->createMock("Symfony\Component\HttpFoundation\Request"),
+            $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface"),
             array('data' => $this->data)
         );
     }
