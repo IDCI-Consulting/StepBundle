@@ -34,9 +34,9 @@ It allows to define some simple process (one step, one path) and complex (more s
 and more conditionnals's paths) easily starting from a configuration which represents
 the map, using yml or json.
 Also, you can represente a map using directement the object's programmation but this
-is less maintanable and readable.
+is less maintainable and readable.
 
-You can use this Bundle to create a contact form, a inscription process, a questionnaire,
+You can use this Bundle to create a contact form, a inscription process, a survey,
 an enquiry...
 
 
