@@ -9,20 +9,21 @@
 namespace IDCI\Bundle\StepBundle\Path;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistryInterface;
 
 class PathBuilder implements PathBuilderInterface
 {
     /**
-     * @var PathRegistryInterface
+     * @var PathTypeRegistryInterface
      */
     private $registry;
 
     /**
      * Constructor
      *
-     * @param PathRegistryInterface $registry
+     * @param PathTypeRegistryInterface $registry
      */
-    public function __construct(PathRegistryInterface $registry)
+    public function __construct(PathTypeRegistryInterface $registry)
     {
         $this->registry = $registry;
     }

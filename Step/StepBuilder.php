@@ -9,20 +9,21 @@
 namespace IDCI\Bundle\StepBundle\Step;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistryInterface;
 
 class StepBuilder implements StepBuilderInterface
 {
     /**
-     * @var StepRegistryInterface
+     * @var StepTypeRegistryInterface
      */
     private $registry;
 
     /**
      * Constructor
      *
-     * @param StepRegistryInterface $registry
+     * @param StepTypeRegistryInterface $registry
      */
-    public function __construct(StepRegistryInterface $registry)
+    public function __construct(StepTypeRegistryInterface $registry)
     {
         $this->registry = $registry;
     }
