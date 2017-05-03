@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Path;
+namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;

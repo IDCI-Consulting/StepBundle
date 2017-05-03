@@ -13,7 +13,7 @@ parameters:
     idci_step.path_event_action.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistry
     idci_step.path_event_action_configuration.registry.class: IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry
     idci_step.path_event_action_configuration.class: IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration
-    idci_step.path_type.registry.class: IDCI\Bundle\StepBundle\Path\PathTypeRegistry
+    idci_step.path_type.registry.class: IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistry
     idci_step.path_type_configuration.registry.class: IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistry
     idci_step.path_type_configuration.class: IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfiguration
     idci_step.path_type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
