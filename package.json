@@ -1,0 +1,37 @@
+{
+  "name": "idci",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Gulpfile.js",
+  "dependencies": {
+    "bower": "^1.4.1"
+  },
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-chmod": "^1.2.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-image-resize": "^0.7.1",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-jshint": "^1.10.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-minify-css": "^1.0.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^3.0.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp.spritesmith": "^3.6.1",
+    "imagemin-pngquant": "^4.2.0",
+    "jasmine-core": "^2.6.1",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "^2.1.0",
+    "karma-jasmine": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

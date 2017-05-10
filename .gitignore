@@ -37,3 +37,6 @@ composer.lock
 # Tests
 /Tests/cache
 /Tests/logs
+
+# Node modules
+node_modules/
