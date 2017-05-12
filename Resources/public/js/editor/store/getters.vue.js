@@ -214,7 +214,6 @@ var stepEditorGetters = {
     return state.mapType.extra_form_options;
   },
 
-
   /**
    * Get the steps of the map
    *
