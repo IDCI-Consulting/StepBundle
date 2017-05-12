@@ -64,7 +64,7 @@ window.loadExtraStepEditors = function () {
     });
 
     /* global triggerExtraStepVueEditor */
-    triggerExtraStepVueEditor('#' + editorComponentId, formProperties, configuration);
+    triggerExtraStepVueEditor('#' + editorComponentId, configuration, formProperties);
 
     /* global colorEmptyRequiredInputs */
     colorEmptyRequiredInputs(editorComponentId, 'extra-form-inputs-required');

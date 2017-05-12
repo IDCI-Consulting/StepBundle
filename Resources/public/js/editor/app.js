@@ -4,10 +4,10 @@
  * The function that will trigger the editor
  *
  * @param element {string|Object} The dom element to trigger the editor
- * @param formProperties : Object containing the properties of the default form
  * @param configuration : Object containing the editor configuration (api url, etc)
+ * @param [formProperties] : Object containing the properties of the default form
  */
-function triggerExtraStepVueEditor (element, formProperties, configuration) {
+function triggerExtraStepVueEditor (element, configuration, formProperties) {
 
   /* global Vue VueResource VueMultiselect Vuex */
   Vue.use(VueResource);
