@@ -5,20 +5,20 @@ services:
   php54:
     image: idci-step-bundle/php:5.4-fpm
     build:
-      context: docker/build/php5.4
+      context: .docker/build/php5.4
     volumes:
       - ./:/var/www/html
 
   php56:
     image: idci-step-bundle/php:5.6-fpm
     build:
-      context: docker/build/php5.6
+      context: .docker/build/php5.6
     volumes:
       - ./:/var/www/html
 
   node:
     image: idci-step-bundle/node:6.9.5
     build:
-      context: docker/build/node6.9.5
+      context: .docker/build/node6.9.5
     volumes:
       - ./:/usr/src/app
