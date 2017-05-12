@@ -16,6 +16,10 @@ command:
 npm-install:
 	docker-compose run --rm node npm install
 
+.PHONY: karma
+karma:
+	./node_modules/karma/bin/karma start $(options)
+
 .PHONY: gulp
 gulp:
 	docker-compose run --rm node gulp $(task)

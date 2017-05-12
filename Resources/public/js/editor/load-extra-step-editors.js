@@ -64,10 +64,10 @@ window.loadExtraStepEditors = function () {
     });
 
     /* global triggerExtraStepVueEditor */
-    triggerExtraStepVueEditor('#' + editorComponentId, formProperties, configuration);
+    triggerExtraStepVueEditor('#' + editorComponentId, configuration, formProperties);
 
     /* global colorEmptyRequiredInputs */
-    colorEmptyRequiredInputs(editorComponentId, '.extra-form-inputs-required');
+    colorEmptyRequiredInputs(editorComponentId, 'extra-form-inputs-required');
 
     /**
      * Show modal on click on trigger button
