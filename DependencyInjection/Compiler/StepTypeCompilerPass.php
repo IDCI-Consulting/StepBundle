@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
-use IDCI\Bundle\StepBundle\Step\Type\StepTypeConfiguration;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
