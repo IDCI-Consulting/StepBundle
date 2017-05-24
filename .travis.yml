@@ -1,18 +1,28 @@
 language: php
 
+sudo: required
+
+services:
+  - docker
+
 php:
-  - 5.3
-  - 5.4
+  - '5.6'
 
-env:
-  - SYMFONY_VERSION="2.3.*"
-  - SYMFONY_VERSION="2.4.*"
-  - SYMFONY_VERSION="2.5.*"
-  - SYMFONY_VERSION="2.6.*"
-
-services: mongodb
+before_install:
+  - composer install --prefer-source --no-interaction --dev >> /dev/null
+  - docker-compose build >> /dev/null
+  - docker-compose run --rm node npm install --loglevel error
 
 before_script:
-  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --dev
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 
-script: phpunit --coverage-text
+script:
+  - make phpunit
+  - make phpcs
+  - make karma options='--single-run'
+
+notifications:
+    on_success: never
+    on_failure: always
+
