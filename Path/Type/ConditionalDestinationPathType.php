@@ -63,7 +63,10 @@ class ConditionalDestinationPathType extends AbstractPathType
         parent::setDefaultOptions($resolver);
 
         $resolver
-            ->setRequired(array('source', 'destinations', 'default_destination'))
+            ->setRequired(array('source', 'destinations'))
+            ->setDefaults(array(
+                'default_destination' => null,
+            ))
             ->setAllowedTypes(array(
                 'source'       => 'string',
                 'destinations' => 'array',
@@ -82,7 +85,10 @@ class ConditionalDestinationPathType extends AbstractPathType
         foreach ($options['destinations'] as $name => $rule) {
             $path->addDestination($steps[$name]);
         }
-        $path->addDestination($steps[$options['default_destination']]);
+
+        if (null !== $options['default_destination']) {
+            $path->addDestination($steps[$options['default_destination']]);
+        }
 
         return $path;
     }
