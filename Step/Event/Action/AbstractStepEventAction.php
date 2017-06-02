@@ -32,9 +32,6 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
                     return (bool)$value;
                 },
             ))
-            ->setAllowedTypes(array(
-                'logical_expression' => array('bool'),
-            ))
         ;
 
         $this->setDefaultParameters($resolver);
