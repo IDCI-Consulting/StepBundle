@@ -17,7 +17,11 @@ idci_step:
             extra_form_options:
                 source:              {extra_form_type: "text",     options: {required: true}}
                 destinations:        {extra_form_type: "textarea", options: {required: true}}
-                default_destination: {extra_form_type: "text",     options: {required: true}}
+                default_destination:
+                    extra_form_type: "text"
+                    options:
+                        required: true
+                        help: "If empty, a path of type end will be automatically added as default path"
 
         end:
             parent:      abstract
