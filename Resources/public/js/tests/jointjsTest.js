@@ -121,8 +121,65 @@ describe("Test the jointjs diagram generation", function() {
     }
   };
 
-  it("Should create a graph with 3 step cells, one conditional cell and 3 links", function() {
+  it("Should create a graph with 3 step cells, 1 conditional cell and 3 links", function() {
     var diagram = new Diagram(document.getElementById('joint-element'), mapWithConditionalPath);
+    var elements = diagram.graph.getElements();
+    var links = diagram.graph.getLinks();
+
+    expect(elements.length).toEqual(4);
+    expect(links.length).toEqual(3);
+  });
+  
+  var mapWithConditionalPathWithoutDefault = {
+    name: '',
+    options: {},
+    steps: {
+      step1: {
+        type: 'html',
+        options: {}
+      },
+      step2: {
+        type: 'html',
+        options: {}
+      }
+    },
+    paths: [{
+        type: 'conditional_destination',
+        options: {
+        source: 'step1',
+        destinations: {
+          step2: 'test here'
+        }
+      }
+    }],
+    graphPositions: {
+      steps: {
+        step1: {
+          x: 20,
+          y: 20
+        },
+        step2: {
+          x: 220,
+          y: 20
+        }
+      },
+      paths: [
+        {
+          intersection: {
+            x: 170,
+            y: 120
+          },
+          endOfPath: {
+            x: 220,
+            y: 120
+          }
+        }
+      ]
+    }
+  };
+
+  it("Should create a graph with 2 step cells, 1 conditional cell, 1 end path cell and 3 links", function() {
+    var diagram = new Diagram(document.getElementById('joint-element'), mapWithConditionalPathWithoutDefault);
     var elements = diagram.graph.getElements();
     var links = diagram.graph.getLinks();
 

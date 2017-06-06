@@ -17,91 +17,150 @@ var DiagramPathFactory = {
       throw new Error('A path must always have a source');
     }
 
-    var cells = [];
-    var isActive = path.active;
-    var sourceCell = DiagramUtils.getStepCell(graph, path.options.source);
-
     if ('single' === path.type) {
-      var destinationCell = DiagramUtils.getStepCell(graph, path.options.destination);
-      var singlePathLinkCell = DiagramPathFactory.createPathLink(
-        sourceCell,
-        destinationCell,
-        index,
-        isActive,
-        position.vertices
-      );
-
-      cells.push(singlePathLinkCell);
-
-      return cells;
+      return DiagramPathFactory.createSinglePathCells(graph, path, index, position);
     }
 
     if ('end' === path.type) {
-      var endCell = DiagramPathFactory.createEndOfPathLinkCell(index, isActive, position);
-      var endPathLinkCell = DiagramPathFactory.createPathLink(sourceCell, endCell, index, isActive, position.vertices);
-
-      cells.push(endCell);
-      cells.push(endPathLinkCell);
-
-      return cells;
+      return DiagramPathFactory.createEndOfPathCells(graph, path, index, position);
     }
 
     if ('conditional_destination' === path.type) {
-      var intersectionOfPathLinksCell = DiagramPathFactory.createIntersectionOfPathLinksCell(index, isActive, position);
-
-      cells.push(intersectionOfPathLinksCell);
-
-      var defaultDestinationCell = DiagramUtils.getStepCell(graph, path.options.default_destination);
-      var sourceToIntersectionLinkCell = DiagramPathFactory.createPathLink(
-        sourceCell,
-        intersectionOfPathLinksCell,
-        index,
-        isActive,
-        position.sourceToIntersectionLinkCell,
-        null,
-        'sourceToIntersectionLinkCell'
-      );
-
-      cells.push(sourceToIntersectionLinkCell);
-
-      var intersectionToDefaultDestinationLinkCell = DiagramPathFactory.createPathLink(
-        intersectionOfPathLinksCell,
-        defaultDestinationCell,
-        index,
-        isActive,
-        position.intersectionToDefaultDestination,
-        'default',
-        'intersectionToDefaultDestination'
-      );
-
-      cells.push(intersectionToDefaultDestinationLinkCell);
-
-      var destinations = path.options.destinations;
-      var linkIdentifier = 0;
-
-      for (var stepName in destinations) {
-        if (destinations.hasOwnProperty(stepName)) {
-          var destinationStepCell = DiagramUtils.getStepCell(graph, stepName);
-          var pathLinkIdentifier = 'intersectionToDestination' + linkIdentifier;
-          var conditionalPathLinkCell = DiagramPathFactory.createPathLink(
-            intersectionOfPathLinksCell,
-            destinationStepCell,
-            index,
-            isActive,
-            position[pathLinkIdentifier],
-            destinations[stepName],
-            pathLinkIdentifier
-          );
-
-          cells.push(conditionalPathLinkCell);
-          linkIdentifier++;
-        }
-      }
-
-      return cells;
+      return DiagramPathFactory.createConditionalPathCells(graph, path, index, position);
     }
 
     throw new Error('Unrecognized path type \'' + path.type + '\'');
+  },
+
+  /**
+   * Create the cells representing a single path
+   * In that case, it is composed of 1 link cell
+   *
+   * @param graph
+   * @param path
+   * @param index
+   * @param position
+   *
+   * @returns {Array}
+   */
+  createSinglePathCells: function (graph, path, index, position) {
+    var cells = [];
+    var isActive = path.active;
+    var sourceCell = DiagramUtils.getStepCell(graph, path.options.source);
+    var destinationCell = DiagramUtils.getStepCell(graph, path.options.destination);
+
+    var singlePathLinkCell = DiagramPathFactory.createPathLink(
+      sourceCell,
+      destinationCell,
+      index,
+      isActive,
+      position.vertices
+    );
+
+    cells.push(singlePathLinkCell);
+
+    return cells;
+  },
+
+  /**
+   * Create the cells representing an end of path
+   * In that case, it is composed of 1 link cell connected to 1 end cell
+   *
+   * @param graph
+   * @param path
+   * @param index
+   * @param position
+   *
+   * @returns {Array}
+   */
+  createEndOfPathCells: function (graph, path, index, position) {
+    var cells = [];
+    var isActive = path.active;
+    var sourceCell = DiagramUtils.getStepCell(graph, path.options.source);
+    var endCell = DiagramPathFactory.createEndOfPathLinkCell(index, isActive, position);
+    var endPathLinkCell = DiagramPathFactory.createPathLink(sourceCell, endCell, index, isActive, position.vertices);
+
+    cells.push(endCell);
+    cells.push(endPathLinkCell);
+
+    return cells;
+  },
+
+  /**
+   * Create the cells representing an conditional path
+   * In that case, it is composed of 1 link cell connected to 1 end cell
+   *
+   * @param graph
+   * @param path
+   * @param index
+   * @param position
+   *
+   * @returns {*}
+   */
+  createConditionalPathCells: function (graph, path, index, position) {
+    var cells = [];
+    var isActive = path.active;
+    var sourceCell = DiagramUtils.getStepCell(graph, path.options.source);
+    var defaultDestinationCell = null;
+    var intersectionOfPathLinksCell = DiagramPathFactory.createIntersectionOfPathLinksCell(index, isActive, position);
+
+    cells.push(intersectionOfPathLinksCell);
+
+    // If the default_destination is not defined, then we set a path of type end by default
+    if ('undefined' === typeof path.options.default_destination) {
+      defaultDestinationCell = DiagramPathFactory.createEndOfPathLinkCell(index, isActive, position);
+      cells.push(defaultDestinationCell);
+    } else {
+      defaultDestinationCell = DiagramUtils.getStepCell(graph, path.options.default_destination);
+    }
+
+    var sourceToIntersectionLinkCell = DiagramPathFactory.createPathLink(
+      sourceCell,
+      intersectionOfPathLinksCell,
+      index,
+      isActive,
+      position.sourceToIntersectionLinkCell,
+      null,
+      'sourceToIntersectionLinkCell'
+    );
+
+    cells.push(sourceToIntersectionLinkCell);
+
+    var intersectionToDefaultDestinationLinkCell = DiagramPathFactory.createPathLink(
+      intersectionOfPathLinksCell,
+      defaultDestinationCell,
+      index,
+      isActive,
+      position.intersectionToDefaultDestination,
+      'default',
+      'intersectionToDefaultDestination'
+    );
+
+    cells.push(intersectionToDefaultDestinationLinkCell);
+
+    var destinations = path.options.destinations;
+    var linkIdentifier = 0;
+
+    for (var stepName in destinations) {
+      if (destinations.hasOwnProperty(stepName)) {
+        var destinationStepCell = DiagramUtils.getStepCell(graph, stepName);
+        var pathLinkIdentifier = 'intersectionToDestination' + linkIdentifier;
+        var conditionalPathLinkCell = DiagramPathFactory.createPathLink(
+          intersectionOfPathLinksCell,
+          destinationStepCell,
+          index,
+          isActive,
+          position[pathLinkIdentifier],
+          destinations[stepName],
+          pathLinkIdentifier
+        );
+
+        cells.push(conditionalPathLinkCell);
+        linkIdentifier++;
+      }
+    }
+
+    return cells;
   },
 
   /**
@@ -174,7 +233,7 @@ var DiagramPathFactory = {
   },
 
   /**
-   * Create a cell representing a end
+   * Create a cell representing a end of a path link
    *
    * @param index
    * @param isActive
