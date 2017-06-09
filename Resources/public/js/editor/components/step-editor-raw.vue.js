@@ -48,29 +48,19 @@ Vue.component('step-editor-raw', {
      * Generate the map from the json
      */
     generateMap: function () {
-      try {
-        // Avoid mutating the raw from the state (create a clone)
-        var raw = JSON.parse(JSON.stringify(this.raw));
+      var self = this;
 
-        raw = this.stripAutoescape(raw);
-        var strippedRaw = this.stripAutoescapeFalse(raw);
-
-        // If the raw was stripped, then the {% autoescape false %} is present
-        var autoescapeFalseOptionValue = raw !== strippedRaw;
-
-        /* global transformRawToJson */
-        var transformedRaw = transformRawToJson(strippedRaw);
-        var newMap = JSON.parse(transformedRaw);
-
-        this.setAutoescapeFalseOption(newMap, autoescapeFalseOptionValue);
-        newMap.active = true;
-        this.$store.commit('setMap', newMap);
-        this.closeModal();
-
-      // Json parsing error
-      } catch (error) {
-        this.handleJsonError(error, transformedRaw);
-      }
+      MapUtils.transformRawToJson(
+        this.raw,
+        function (map) {
+          map.active = true;
+          self.$store.commit('setMap', map);
+          self.closeModal();
+        },
+        function (error, wrongJson) {
+          self.handleJsonError(error, wrongJson);
+        }
+      );
     },
 
     /**
@@ -88,8 +78,8 @@ Vue.component('step-editor-raw', {
       this.formatStepsOptions(clonedMap.steps);
       this.formatPathsOptions(clonedMap.paths);
 
-      /* global transformJsonToRaw */
-      var raw = transformJsonToRaw(JSON.stringify(clonedMap, null, 4));
+      /* global JsonToTwigTransformer */
+      var raw = JsonToTwigTransformer.toRaw(JSON.stringify(clonedMap, null, 4));
 
       if (map.options.autoescape_false) {
         return '{% autoescape false %}' + raw + '{% endautoescape %}';
@@ -154,61 +144,6 @@ Vue.component('step-editor-raw', {
           }
         }
       }
-    },
-
-    /**
-     * Strip the twig autoescape false block if needed
-     *
-     * @param raw
-     */
-    stripAutoescapeFalse: function (raw) {
-      var endAutoescapeString = '{% endautoescape %}';
-      var startAutoescapeString = '{% autoescape false %}';
-      var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
-
-      if (
-        0 === raw.indexOf(startAutoescapeString) &&
-        raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
-      ) {
-        return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
-      }
-
-      return raw;
-    },
-
-    /**
-     * Strip the twig autoescape block
-     * This block is useless because autoescape true is the default value
-     *
-     * @param raw
-     */
-    stripAutoescape: function (raw) {
-      var endAutoescapeString = '{% endautoescape %}';
-      var startAutoescapeString = '{% autoescape %}';
-      var endAutoescapeStringPosition = raw.length - endAutoescapeString.length;
-
-      if (
-        0 === raw.indexOf(startAutoescapeString) &&
-        raw.indexOf(endAutoescapeString) === endAutoescapeStringPosition
-      ) {
-        return raw.substring(startAutoescapeString.length, endAutoescapeStringPosition);
-      }
-
-      return raw;
-    },
-
-    /**
-     * Set the value of the autoescape_false option
-     *
-     * @param map
-     * @param autoescapeFalseValue
-     */
-    setAutoescapeFalseOption: function (map, autoescapeFalseValue) {
-      if ('undefined' === typeof map.options) {
-        map.options = {};
-      }
-
-      map.options.autoescape_false = autoescapeFalseValue;
     },
 
     /**
