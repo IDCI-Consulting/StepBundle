@@ -3,7 +3,7 @@
 
 module.exports = function(config) {
 
-  var extraFormPath = '../../../../../../../extra-form-bundle/IDCI/Bundle/ExtraFormBundle/Resources/public/js/';
+  var extraFormPath = '../../../vendor/idci/extra-form-bundle/IDCI/Bundle/ExtraFormBundle/Resources/public/js/';
 
   config.set({
 
