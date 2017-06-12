@@ -118,6 +118,10 @@
         MapUtils.transformRawToJson(
             raw,
             function setDiagram (map) {
+                if (typeof map.graphPositions === 'undefined') {
+                    map.graphPositions = stepEditorMutations.setInitialGraphPositions(map);
+                }
+
                 new Diagram(document.getElementById(diagramId), map);
                 updateStyle();
                 hideCloseButtons();
