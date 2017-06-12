@@ -55,6 +55,11 @@
         var diagramId = 'svg-' + id;
         var raw = document.querySelectorAll('#' + id + ' .json-map')[0].innerHTML;
 
+        // Leave if the field is empty
+        if (raw == '') {
+            return;
+        }
+
         /**
          * Disable pointer events on svg and update the diagram height according to the svg height
          */
