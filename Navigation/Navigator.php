@@ -186,10 +186,10 @@ class Navigator implements NavigatorInterface
      */
     protected function initFlow()
     {
-        $this->setFinalDestination($this->map->getFinalDestination());
+        $this->setFinalDestination($this->getMap()->getFinalDestination());
 
         $this->flow = $this->flowRecorder->getFlow(
-            $this->map,
+            $this->getMap(),
             $this->request
         );
 
@@ -197,13 +197,13 @@ class Navigator implements NavigatorInterface
         if (null === $this->flow) {
             $initializedData = $this->getInitFlowData();
             $this->flow = new Flow(
-                $this->map->getStep($initializedData['current_step_name']),
+                $this->getMap()->getStep($initializedData['current_step_name']),
                 $initializedData['history']
             );
 
-            $mapData = $this->map->getData();
+            $mapData = $this->getMap()->getData();
 
-            foreach ($this->map->getSteps() as $stepName => $step) {
+            foreach ($this->getMap()->getSteps() as $stepName => $step) {
                 $initializedData['remindedData'][$stepName] = array_replace_recursive(
                     isset($mapData[$stepName]) ?
                         $mapData[$stepName] : array(),
@@ -214,6 +214,13 @@ class Navigator implements NavigatorInterface
                 $initializedData['retrievedData'][$stepName] = isset($initializedData['retrievedData'][$stepName]) ?
                     $initializedData['retrievedData'][$stepName] : array()
                 ;
+
+                if (!$this->getMap()->isResetFlowDataOnInitEnabled()) {
+                    $this->flow->setStepData(
+                        $step,
+                        $initializedData['remindedData'][$stepName]
+                    );
+                }
 
                 $this->flow->setStepData(
                     $step,
@@ -228,7 +235,7 @@ class Navigator implements NavigatorInterface
                 );
             }
 
-            $this->flowRecorder->reconstructFlowData($this->map, $this->flow);
+            $this->flowRecorder->reconstructFlowData($this->getMap(), $this->flow);
             $this->save();
         }
     }
@@ -290,9 +297,7 @@ class Navigator implements NavigatorInterface
     protected function setupNavigationUrl(StepInterface $step)
     {
         // Add Step information following to the map configuration.
-        $mapConfiguration = $this->getMap()->getConfiguration();
-
-        if ($mapConfiguration['options']['display_step_in_url']) {
+        if ($this->getMap()->isDisplayStepInUrlEnabled()) {
             $this->addUrlQueryParameter('step', $step->getName());
         }
     }

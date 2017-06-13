@@ -8,32 +8,11 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $securityContext = $this
-            ->getMockBuilder("Symfony\Component\Security\Core\SecurityContextInterface")
-            ->disableOriginalConstructor()
-            ->setMethods(array('getToken', 'setToken', 'isGranted'))
-            ->getMock()
-        ;
-        $securityContext
-            ->expects($this->any())
-            ->method('getToken')
-            ->will($this->returnValue(null))
-        ;
+        require_once __DIR__.'/../AppKernel.php';
 
-        $twigStringLoader = new \Twig_Loader_String;
-        $twigEnvironment  = new \Twig_Environment($twigStringLoader, array());
-
-        $this->mapBuilder = new MapBuilder(
-            "Test MAP",
-            array(),
-            array(),
-            $this->getMock("IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface"),
-            $this->getMock("IDCI\Bundle\StepBundle\Step\StepBuilderInterface"),
-            $this->getMock("IDCI\Bundle\StepBundle\Path\PathBuilderInterface"),
-            $twigEnvironment,
-            $securityContext,
-            $this->getMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
-        );
+        $kernel = new \AppKernel('test', true);
+        $kernel->boot();
+        $this->container = $kernel->getContainer();
     }
 
     public function testGetMap()
@@ -43,8 +22,34 @@ class MapBuilderTest extends \PHPUnit_Framework_TestCase
             ->getMap($this->getMock("Symfony\Component\HttpFoundation\Request"))
         ;
 
-        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map);
-        $this->assertEquals('Test MAP', $map->getName());
+        // Default map 0
+        $mapBuilder0 = $this->container
+            ->get('idci_step.map.builder.factory')
+            ->createNamedBuilder('Test default MAP 0')
+        ;
+
+        $map0 = $mapBuilder0->getMap($request);
+
+        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map0);
+        $this->assertEquals('Test default MAP 0', $map0->getName());
+        $this->assertFalse($map0->isDisplayStepInUrlEnabled());
+        $this->assertFalse($map0->isResetFlowDataOnInitEnabled());
+
+        // Default map 1
+        $mapBuilder1 = $this->container
+            ->get('idci_step.map.builder.factory')
+            ->createNamedBuilder('Test default MAP 1', array(), array(
+                'display_step_in_url'     => true,
+                'reset_flow_data_on_init' => true,
+            ))
+        ;
+
+        $map1 = $mapBuilder1->getMap($request);
+
+        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map1);
+        $this->assertEquals('Test default MAP 1', $map1->getName());
+        $this->assertTrue($map1->isDisplayStepInUrlEnabled());
+        $this->assertTrue($map1->isResetFlowDataOnInitEnabled());
 
         /*
         $this
