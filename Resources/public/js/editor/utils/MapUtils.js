@@ -1,3 +1,4 @@
+/* exported MapUtils */
 var MapUtils = {
 
   /**
@@ -11,10 +12,12 @@ var MapUtils = {
     var raw = JSON.parse(JSON.stringify(rawMap));
     var strippedRaw = MapUtils.stripAutoescapeFalse(MapUtils.stripAutoescape(raw));
     var autoescapeFalseOptionValue = raw !== strippedRaw;
+    /* global JsonToTwigTransformer */
     var transformedRaw = JsonToTwigTransformer.toJson(strippedRaw);
 
     try {
       var map = JSON.parse(transformedRaw);
+
       MapUtils.setAutoescapeFalseOption(map, autoescapeFalseOptionValue);
       successCallback(map);
     } catch (error) {

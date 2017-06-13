@@ -50,6 +50,7 @@ Vue.component('step-editor-raw', {
     generateMap: function () {
       var self = this;
 
+      /* global MapUtils */
       MapUtils.transformRawToJson(
         this.raw,
         function (map) {
