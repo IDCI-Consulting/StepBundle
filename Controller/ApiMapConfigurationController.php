@@ -42,15 +42,11 @@ class ApiMapConfigurationController extends FOSRestController
                         'required' => false
                     )
                 ),
-                'browsing' => array(
-                    'extra_form_type' => 'choice',
+                'reset_flow_data_on_init' => array(
+                    'extra_form_type' => 'checkbox',
                     'options' => array(
-                        'choices'  => array(
-                            'linear' => 'linear',
-                            'free' => 'free'
-                        ),
-                        'data' => 'linear',
-                        'required' => false
+                        'required' => false,
+                        'data'     => false
                     )
                 ),
                 'form_action' => array(
