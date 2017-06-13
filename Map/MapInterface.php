@@ -132,4 +132,18 @@ interface MapInterface
      * @return string|null
      */
     public function getFormAction();
+
+    /**
+     * Returns the display step in url status information (enabled/disabled).
+     *
+     * @return boolean True if enabled false otherwise.
+     */
+    public function isDisplayStepInUrlEnabled();
+
+    /**
+     * Returns the reset flow data on init status information (enabled/disabled).
+     *
+     * @return boolean True if enabled false otherwise.
+     */
+    public function isResetFlowDataOnInitEnabled();
 }

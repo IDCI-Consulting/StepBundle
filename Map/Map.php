@@ -223,6 +223,22 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
+    public function isDisplayStepInUrlEnabled()
+    {
+        return $this->configuration['options']['display_step_in_url'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isResetFlowDataOnInitEnabled()
+    {
+        return $this->configuration['options']['reset_flow_data_on_init'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function __sleep()
     {
         return array('configuration');

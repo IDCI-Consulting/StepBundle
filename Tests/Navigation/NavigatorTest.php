@@ -17,9 +17,9 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
             'name'      => 'Test Map',
             'footprint' => 'DUMMYF00TPR1NT',
             'options'   => array(
-                'browsing'          => 'linear',
-                'first_step_name'   => 'stepA',
-                'final_destination' => null,
+                'first_step_name'     => 'stepA',
+                'final_destination'   => null,
+                'display_step_in_url' => false,
             ),
             'data'      => array(
                 'stepA' => array(
