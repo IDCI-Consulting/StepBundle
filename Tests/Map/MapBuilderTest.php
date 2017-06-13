@@ -13,11 +13,6 @@ class MapBuilderTest extends TestCase
         $kernel = new \AppKernel('test', true);
         $kernel->boot();
         $this->container = $kernel->getContainer();
-
-        $this->mapBuilder = $this->container
-            ->get('idci_step.map.builder.factory')
-            ->createNamedBuilder('Test MAP')
-        ;
     }
 
     public function testGetMap()
@@ -30,11 +25,36 @@ class MapBuilderTest extends TestCase
             ->will($this->returnValue($session))
         ;
 
-        $map = $this->mapBuilder->getMap($request);
+        // Default map 0
+        $mapBuilder0 = $this->container
+            ->get('idci_step.map.builder.factory')
+            ->createNamedBuilder('Test default MAP 0')
+        ;
 
-        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map);
-        $this->assertEquals('Test MAP', $map->getName());
+        $map0 = $mapBuilder0->getMap($request);
 
+        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map0);
+        $this->assertEquals('Test default MAP 0', $map0->getName());
+        $this->assertFalse($map0->isDisplayStepInUrlEnabled());
+        $this->assertFalse($map0->isResetFlowDataOnInitEnabled());
+
+        // Default map 1
+        $mapBuilder1 = $this->container
+            ->get('idci_step.map.builder.factory')
+            ->createNamedBuilder('Test default MAP 1', array(), array(
+                'display_step_in_url'     => true,
+                'reset_flow_data_on_init' => true,
+            ))
+        ;
+
+        $map1 = $mapBuilder1->getMap($request);
+
+        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map1);
+        $this->assertEquals('Test default MAP 1', $map1->getName());
+        $this->assertTrue($map1->isDisplayStepInUrlEnabled());
+        $this->assertTrue($map1->isResetFlowDataOnInitEnabled());
+
+        /*
         $this
             ->mapBuilder
             ->addStep('intro', 'html', array(
@@ -66,5 +86,6 @@ class MapBuilderTest extends TestCase
             ->mapBuilder
             ->getMap($request)
         ;
+        */
     }
 }
