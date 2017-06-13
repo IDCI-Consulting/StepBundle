@@ -161,16 +161,13 @@ class Navigator implements NavigatorInterface
 
         // The first time
         if (null === $this->flow) {
-            $initializedData = $this->getInitFlowData();
-            $this->flow = new Flow(
-                $this->getMap()->getStep($initializedData['current_step_name']),
-                $initializedData['history']
-            );
+            $this->flow = new Flow();
+            $this->flow->setCurrentStep($this->map->getFirstStep());
 
             $mapData = $this->getMap()->getData();
 
             foreach ($this->getMap()->getSteps() as $stepName => $step) {
-                $initializedData['remindedData'][$stepName] = array_replace_recursive(
+                $this->data['remindedData'][$stepName] = array_replace_recursive(
                     isset($mapData[$stepName]) ?
                         $mapData[$stepName] : array()
                     ,
@@ -185,7 +182,7 @@ class Navigator implements NavigatorInterface
                 if (!$this->getMap()->isResetFlowDataOnInitEnabled()) {
                     $this->flow->setStepData(
                         $step,
-                        $initializedData['remindedData'][$stepName]
+                        $this->data['remindedData'][$stepName]
                     );
                 }
 
