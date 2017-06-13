@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as Annotations;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Api MapConfiguration Controller
@@ -27,43 +28,7 @@ class ApiMapConfigurationController extends FOSRestController
     public function getMapConfigurationAction($_format)
     {
         $view = View::create()->setFormat($_format);
-        $configuration = array(
-            'extra_form_options' => array(
-                'display_step_in_url' => array(
-                    'extra_form_type' => 'checkbox',
-                    'options' => array(
-                        'required' => false,
-                        'data'     => false
-                    )
-                ),
-                'final_destination' => array(
-                    'extra_form_type' => 'text',
-                    'options' => array(
-                        'required' => false
-                    )
-                ),
-                'reset_flow_data_on_init' => array(
-                    'extra_form_type' => 'checkbox',
-                    'options' => array(
-                        'required' => false,
-                        'data'     => false
-                    )
-                ),
-                'form_action' => array(
-                    'extra_form_type' => 'text',
-                    'options' => array(
-                        'required' => false
-                    )
-                ),
-                'first_step_name' => array(
-                    'extra_form_type' => 'text',
-                    'options' => array(
-                        'required' => false
-                    )
-                ),
-            )
-        );
-
+        $configuration = Yaml::parse(sprintf('%s/../Resources/config/map_options.yml', __DIR__));
         $view->setData($configuration);
 
         return $this->handleView($view);

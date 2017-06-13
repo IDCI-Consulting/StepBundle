@@ -1,0 +1,6 @@
+extra_form_options:
+    display_step_in_url:     {extra_form_type: "checkbox", options: {required: false, data: false}}
+    final_destination:       {extra_form_type: "text",     options: {required: false}}
+    reset_flow_data_on_init: {extra_form_type: "checkbox", options: {required: false, data: false}}
+    form_action:             {extra_form_type: "text",     options: {required: false}}
+    first_step_name:         {extra_form_type: "text",     options: {required: false}}
