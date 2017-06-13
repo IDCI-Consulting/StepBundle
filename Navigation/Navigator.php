@@ -150,37 +150,6 @@ class Navigator implements NavigatorInterface
     }
 
     /**
-     * TODO: This function must be moved into Flow object
-     *
-     * Returns the flow data to initialize navigation
-     *
-     * @return array
-     */
-    protected function getInitFlowData()
-    {
-        $resolver = new OptionsResolver();
-        $resolver
-            ->setDefaults(array(
-                'data'              => array(),
-                'remindedData'      => array(),
-                'retrievedData'     => array(),
-                'current_step_name' => $this->map->getFirstStepName(),
-                'history'           => array(),
-            ))
-            ->setNormalizers(array(
-                'remindedData' => function (Options $options, $value) {
-                    return $options['data'];
-                },
-            ))
-        ;
-
-        $resolvedData = $resolver->resolve($this->getData());
-        unset($resolvedData['data']);
-
-        return $resolvedData;
-    }
-
-    /**
      * Init the flow
      */
     protected function initFlow()
@@ -194,42 +163,39 @@ class Navigator implements NavigatorInterface
 
         // The first time
         if (null === $this->flow) {
-            $initializedData = $this->getInitFlowData();
-            $this->flow = new Flow(
-                $this->getMap()->getStep($initializedData['current_step_name']),
-                $initializedData['history']
-            );
+            $this->flow = new Flow();
+            $this->flow->setCurrentStep($this->map->getFirstStep());
 
             $mapData = $this->getMap()->getData();
 
             foreach ($this->getMap()->getSteps() as $stepName => $step) {
-                $initializedData['remindedData'][$stepName] = array_replace_recursive(
+                $this->data['remindedData'][$stepName] = array_replace_recursive(
                     isset($mapData[$stepName]) ?
                         $mapData[$stepName] : array(),
-                    isset($initializedData['remindedData'][$stepName]) ?
-                        $initializedData['remindedData'][$stepName] : array()
+                    isset($this->data['remindedData'][$stepName]) ?
+                        $this->data['remindedData'][$stepName] : array()
                 );
 
-                $initializedData['retrievedData'][$stepName] = isset($initializedData['retrievedData'][$stepName]) ?
-                    $initializedData['retrievedData'][$stepName] : array()
+                $this->data['retrievedData'][$stepName] = isset($this->data['retrievedData'][$stepName]) ?
+                    $this->data['retrievedData'][$stepName] : array()
                 ;
 
                 if (!$this->getMap()->isResetFlowDataOnInitEnabled()) {
                     $this->flow->setStepData(
                         $step,
-                        $initializedData['remindedData'][$stepName]
+                        $this->data['remindedData'][$stepName]
                     );
                 }
 
                 $this->flow->setStepData(
                     $step,
-                    $initializedData['remindedData'][$stepName],
+                    $this->data['remindedData'][$stepName],
                     FlowData::TYPE_REMINDED
                 );
 
                 $this->flow->setStepData(
                     $step,
-                    $initializedData['retrievedData'][$stepName],
+                    $this->data['retrievedData'][$stepName],
                     FlowData::TYPE_RETRIEVED
                 );
             }
