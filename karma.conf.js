@@ -34,6 +34,7 @@ module.exports = function(config) {
       extraFormPath + 'vendor/vue-resource-1.2.0.min.js',
       extraFormPath + 'editor/utils/utils.js',
       extraFormPath + 'editor/utils/JsonToTwigTransformer.js',
+      extraFormPath + 'editor/mixins/waitForIt.vue.js',
       extraFormPath + 'editor/mixins/option.vue.js',
       extraFormPath + 'editor/mixins/jsonOption.vue.js',
       extraFormPath + 'editor/mixins/http.vue.js',
