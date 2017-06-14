@@ -20,15 +20,19 @@ var stepEditorNewStepType = {
           '</div>' +
           '<div class="form-group">' +
             '<label>step type</label>' +
-            '<select class="form-control" v-model="newStep.type">' +
-              '<option v-for="type in stepTypes" :value="type.name">' +
-                '{{ type.name }}' +
-              '</option>' +
-            '</select>' +
+            '<div class="form-control-wrapper">' +
+              '<select class="form-control" v-model="newStep.type">' +
+                '<option v-for="type in stepTypes" :value="type.name">' +
+                  '{{ type.name }}' +
+                '</option>' +
+              '</select>' +
+            '</div>' +
           '</div>' +
           '<div class="form-group">' +
             '<label>step name</label>' +
-            '<input class="form-control" v-model="newStep.name" type="text">' +
+            '<div class="form-control-wrapper">' +
+              '<input class="form-control" v-model="newStep.name" type="text">' +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div slot="footer">' +

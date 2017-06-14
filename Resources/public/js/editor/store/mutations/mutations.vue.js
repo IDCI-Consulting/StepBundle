@@ -222,10 +222,6 @@ var stepEditorMutations = {
     }
 
     if ('conditional_destination' === newPath.type) {
-      if ('undefined' === typeof(newPath.options.default_destination)) {
-        throw new Error('The default_destination must be defined');
-      }
-
       if (newPath.options.source === newPath.options.default_destination) {
         throw new Error('The source and the default destination must be different');
       }
@@ -287,8 +283,7 @@ var stepEditorMutations = {
     }
 
     stepEditorMutations.setPathVertices(state, {
-      pathIndex: pathIndex,
-      vertices: []
+      pathIndex: pathIndex
     });
   },
 
@@ -480,6 +475,11 @@ var stepEditorMutations = {
         graphPositions.paths[i] = {
           intersection: getPosition()
         };
+
+        // If the default_destination is not defined, then we set a path of type end instead
+        if ('undefined' === typeof map.paths[i].options.default_destination) {
+          graphPositions.paths[i].endOfPath = getPosition();
+        }
       } else {
         graphPositions.paths[i] = {};
       }

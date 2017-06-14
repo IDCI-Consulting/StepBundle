@@ -3,7 +3,7 @@
 
 module.exports = function(config) {
 
-  var extraFormPath = '../../../../../../../extra-form-bundle/IDCI/Bundle/ExtraFormBundle/Resources/public/js/';
+  var extraFormPath = '../../../vendor/idci/extra-form-bundle/IDCI/Bundle/ExtraFormBundle/Resources/public/js/';
 
   config.set({
 
@@ -32,7 +32,9 @@ module.exports = function(config) {
       extraFormPath + 'vendor/vue-multiselect.min.js',
       extraFormPath + 'vendor/vue-draggable.min.js',
       extraFormPath + 'vendor/vue-resource-1.2.0.min.js',
-      extraFormPath + 'vendor/utils.js',
+      extraFormPath + 'editor/utils/utils.js',
+      extraFormPath + 'editor/utils/JsonToTwigTransformer.js',
+      extraFormPath + 'editor/mixins/waitForIt.vue.js',
       extraFormPath + 'editor/mixins/option.vue.js',
       extraFormPath + 'editor/mixins/jsonOption.vue.js',
       extraFormPath + 'editor/mixins/http.vue.js',
@@ -81,9 +83,9 @@ module.exports = function(config) {
       'editor/diagram/shapes/IntersectionOfPathLinks.js',
       'editor/diagram/shapes/PathLink.js',
       'editor/diagram/shapes/Step.js',
-      'editor/diagram/MapUtils.js',
       'editor/diagram/DiagramUtils.js',
       'editor/diagram/Diagram.js',
+      'editor/utils/MapUtils.js',
       'editor/mixins/path-type-options.vue.js',
       'editor/components/step-editor/options/conditional-destinations-collection.vue.js',
       'editor/components/step-editor/options/form-builder.vue.js',
@@ -146,7 +148,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chromium'],
+    browsers: ['Chromium', 'Firefox'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

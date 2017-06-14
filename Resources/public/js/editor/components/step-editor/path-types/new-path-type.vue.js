@@ -20,11 +20,13 @@ var stepEditorNewPathType = {
           '</div>' +
           '<div class="form-group">' +
             '<label>path type</label>' +
-            '<select class="form-control" v-model="newPath.type">' +
-              '<option v-for="type in pathTypes" :value="type.name">' +
-                '{{ type.name }}' +
-              '</option>' +
-            '</select>' +
+            '<div class="form-control-wrapper">' +
+              '<select class="form-control" v-model="newPath.type">' +
+                '<option v-for="type in pathTypes" :value="type.name">' +
+                  '{{ type.name }}' +
+                '</option>' +
+              '</select>' +
+            '</div>' +
           '</div>' +
           '<path-type-required-options ' +
             '@updateOptions="updateRequiredOptions" ' +
