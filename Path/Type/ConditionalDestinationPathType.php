@@ -109,7 +109,8 @@ class ConditionalDestinationPathType extends AbstractPathType
                 $mergedRules = json_encode($rules);
             }
 
-            $mergedRules = $this->merger->render($mergedRules, array(
+            $template = $this->merger->createTemplate($mergedRules);
+            $mergedRules = $template->render(array(
                 'user'      => $user,
                 'session'   => $this->session->all(),
                 'flow_data' => $navigator->getFlow()->getData(),

@@ -365,7 +365,8 @@ class MapBuilder implements MapBuilderInterface
         // Handle string case.
         } elseif (is_string($value)) {
             try {
-                $value = $this->merger->render($value, $vars);
+                $template = $this->merger->createTemplate($value);
+                $value = $template->render($vars);
             } catch (\Exception $e) {
                 if (!$try) {
                     throw $e;
