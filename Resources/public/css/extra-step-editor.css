@@ -4,6 +4,16 @@
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 
+.extra-step-editor .collapsed-block.form-type-not-configured {
+    background-color: #d43f3a;
+    border: 1px solid #d43f3a;
+}
+
+.extra-step-editor .collapsed-block.form-type-not-configured .fa-icon {
+    float: right;
+    font-size: 20px;
+}
+
 .extra-step-editor .extra-step-configuration,
 .extra-step-editor .extra-step-map  {
     max-height: 80vh;

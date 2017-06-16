@@ -6,20 +6,16 @@ var stepEditorPathEventActions = {
     '<div>' +
       '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent">' +
         '<strong>{{ formEvent.name }}</strong>' +
-        '<div ' +
-          'v-for="(action, index) in getFormEventPathEventActions(formEvent)" ' +
+        '<path-event-action-configuration ' +
           ':key="action" ' +
-          'class="collapsed-block"' +
-        '>' +
-          '<path-event-action-configuration ' +
-            ':action="action.action" ' +
-            ':name="action.name" ' +
-            ':parameters="action.parameters" ' +
-            '@remove="removePathEventAction(formEvent, index)" ' +
-            '@updateName="updatePathEventActionName($event, formEvent, index)" ' +
-            '@updateOption="updatePathEventActionOption($event, formEvent, index)" ' +
-          '></path-event-action-configuration>' +
-        '</div>' +
+          'v-for="(action, index) in getFormEventPathEventActions(formEvent)" ' +
+          ':action="action.action" ' +
+          ':name="action.name" ' +
+          ':parameters="action.parameters" ' +
+          '@remove="removePathEventAction(formEvent, index)" ' +
+          '@updateName="updatePathEventActionName($event, formEvent, index)" ' +
+          '@updateOption="updatePathEventActionOption($event, formEvent, index)" ' +
+        '></path-event-action-configuration>' +
       '</div>' +
     '</div>',
 

@@ -4,29 +4,34 @@
 var stepEditorStepEventActionConfiguration = {
 
   template:
-    '<div>' +
-      '<button @click.prevent="remove" aria-label="Close" class="close">' +
-        '<span aria-hidden="true">×</span>' +
-      '</button>' +
-      '<strong>{{ action }}</strong>' +
-      '<div class="options extra-form-inputs-required">' +
-        '<div class="form-group">' +
-          '<label>name</label>' +
-          '<input class="form-control" v-model="stepEventActionName" type="text"/>' +
-        '</div>' +
-        '<a role="button" data-toggle="collapse" :href="\'#\' + id">' +
-          'Parameters<span class="toggle"></span>' +
-        '</a>' +
-        '<div :id="id" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" :aria-controls="id">' +
-          '<component ' +
-            ':is="option.component_name" ' +
-            'v-for="(option, key) in stepEventActionType.extra_form_options" ' +
-            ':option="option" ' +
-            ':name="key" ' +
-            ':key="option"' +
-            ':value="getParameterValue(key)" ' +
-            '@changed="updateOption"' +
-          '/>' +
+    '<div class="collapsed-block" :class="{ \'form-type-not-configured\': !hasConfiguration() }">' +
+      '<div>' +
+        '<button @click.prevent="remove" aria-label="Close" class="close">' +
+          '<span aria-hidden="true">×</span>' +
+        '</button>' +
+        '<strong>{{ action }}</strong>' +
+        '<div class="options extra-form-inputs-required">' +
+          '<div class="form-group">' +
+            '<label>name</label>' +
+            '<input class="form-control" v-model="stepEventActionName" type="text"/>' +
+          '</div>' +
+          '<a v-if="hasConfiguration()" role="button" data-toggle="collapse" :href="\'#\' + id">' +
+            'Parameters<span class="toggle"></span>' +
+          '</a>' +
+          '<div v-else>' +
+            'This path event action was not configured <i class="fa-icon fa fa-exclamation-triangle" aria-hidden="true"></i>' +
+          '</div>' +
+          '<div :id="id" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" :aria-controls="id">' +
+            '<component ' +
+              ':is="option.component_name" ' +
+              'v-for="(option, key) in stepEventActionType.extra_form_options" ' +
+              ':option="option" ' +
+              ':name="key" ' +
+              ':key="option"' +
+              ':value="getParameterValue(key)" ' +
+              '@changed="updateOption"' +
+            '/>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</div>',
@@ -76,6 +81,15 @@ var stepEditorStepEventActionConfiguration = {
   },
 
   methods: {
+
+    /**
+     * Check if the step event action type has a configuration
+     *
+     * @returns {boolean}
+     */
+    hasConfiguration: function () {
+      return Object.keys(this.stepEventActionType).length > 0;
+    },
 
     /**
      * Remove a step event action
