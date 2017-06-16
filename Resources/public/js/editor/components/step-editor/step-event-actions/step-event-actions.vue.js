@@ -6,20 +6,16 @@ var stepEditorStepEventActions = {
     '<div>' +
       '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent">' +
         '<strong>{{ formEvent.name }}</strong>' +
-        '<div ' +
-          'v-for="(action, index) in getFormEventStepEventActions(formEvent)" ' +
+        '<step-event-action-configuration ' +
           ':key="action" ' +
-          'class="collapsed-block"' +
-        '>' +
-          '<step-event-action-configuration ' +
-            ':action="action.action" ' +
-            ':name="action.name" ' +
-            ':parameters="action.parameters" ' +
-            '@remove="removeStepEventAction(formEvent, index)" ' +
-            '@updateName="updateStepEventActionName($event, formEvent, index)" ' +
-            '@updateOption="updateStepEventActionOption($event, formEvent, index)" ' +
-          '></step-event-action-configuration>' +
-        '</div>' +
+          'v-for="(action, index) in getFormEventStepEventActions(formEvent)" ' +
+          ':action="action.action" ' +
+          ':name="action.name" ' +
+          ':parameters="action.parameters" ' +
+          '@remove="removeStepEventAction(formEvent, index)" ' +
+          '@updateName="updateStepEventActionName($event, formEvent, index)" ' +
+          '@updateOption="updateStepEventActionOption($event, formEvent, index)" ' +
+        '></step-event-action-configuration>' +
       '</div>' +
     '</div>',
 
