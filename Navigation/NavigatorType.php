@@ -15,20 +15,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
-use IDCI\Bundle\StepBundle\Step\Event\StepEventRegistryInterface;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
 
 class NavigatorType extends AbstractType
 {
     /**
-     * @var StepEventRegistryInterface
+     * @var StepEventActionRegistryInterface
      */
-    protected $stepEventRegistry;
+    protected $stepEventActionRegistry;
 
     /**
-     * @var PathEventRegistryInterface
+     * @var PathEventActionRegistryInterface
      */
-    protected $pathEventRegistry;
+    protected $pathEventActionRegistry;
 
     /**
      * @var \Twig_Environment
@@ -48,24 +48,24 @@ class NavigatorType extends AbstractType
     /**
      * Constructor
      *
-     * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
-     * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
-     * @param Twig_Environment           $merger            The twig merger.
-     * @param SecurityContextInterface   $securityContext   The security context.
-     * @param SessionInterface           $session           The session.
+     * @param StepEventActionRegistryInterface $stepEventActionRegistry The step event action registry.
+     * @param PathEventActionRegistryInterface $pathEventActionRegistry The path event action registry.
+     * @param Twig_Environment                 $merger                  The twig merger.
+     * @param SecurityContextInterface         $securityContext         The security context.
+     * @param SessionInterface                 $session                 The session.
      */
     public function __construct(
-        StepEventRegistryInterface $stepEventRegistry,
-        PathEventRegistryInterface $pathEventRegistry,
-        \Twig_Environment          $merger,
-        SecurityContextInterface   $securityContext,
-        SessionInterface           $session
+        StepEventActionRegistryInterface $stepEventActionRegistry,
+        PathEventActionRegistryInterface $pathEventActionRegistry,
+        \Twig_Environment                $merger,
+        SecurityContextInterface         $securityContext,
+        SessionInterface                 $session
     ) {
-        $this->stepEventRegistry = $stepEventRegistry;
-        $this->pathEventRegistry = $pathEventRegistry;
-        $this->merger            = $merger;
-        $this->securityContext   = $securityContext;
-        $this->session           = $session;
+        $this->stepEventActionRegistry = $stepEventActionRegistry;
+        $this->pathEventActionRegistry = $pathEventActionRegistry;
+        $this->merger                  = $merger;
+        $this->securityContext         = $securityContext;
+        $this->session                 = $session;
     }
 
     /**
@@ -110,8 +110,8 @@ class NavigatorType extends AbstractType
 
         $builder->addEventSubscriber(new NavigationEventSubscriber(
             $options['navigator'],
-            $this->stepEventRegistry,
-            $this->pathEventRegistry,
+            $this->stepEventActionRegistry,
+            $this->pathEventActionRegistry,
             $this->merger,
             $this->securityContext,
             $this->session

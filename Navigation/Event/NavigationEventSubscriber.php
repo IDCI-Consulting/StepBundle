@@ -30,14 +30,14 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     private $navigator;
 
     /**
-     * @var StepEventRegistryInterface
+     * @var StepEventActionRegistryInterface
      */
-    private $stepEventRegistry;
+    private $stepEventActionRegistry;
 
     /**
-     * @var PathEventRegistryInterface
+     * @var PathEventActionRegistryInterface
      */
-    private $pathEventRegistry;
+    private $pathEventActionRegistry;
 
     /**
      * @var \Twig_Environment
@@ -57,27 +57,27 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * Constructor
      *
-     * @param NavigatorInterface         $navigator         The navigator.
-     * @param StepEventRegistryInterface $stepEventRegistry The step event registry.
-     * @param PathEventRegistryInterface $pathEventRegistry The path event registry.
-     * @param \Twig_Environment          $merger            The merger.
-     * @param SecurityContextInterface   $securityContext   The security context.
-     * @param SessionInterface           $session           The session.
+     * @param NavigatorInterface               $navigator               The navigator.
+     * @param StepEventActionRegistryInterface $stepEventActionRegistry The step event registry.
+     * @param PathEventActionRegistryInterface $pathEventActionRegistry The path event registry.
+     * @param \Twig_Environment                $merger                  The merger.
+     * @param SecurityContextInterface         $securityContext         The security context.
+     * @param SessionInterface                 $session                 The session.
      */
     public function __construct(
         NavigatorInterface $navigator,
-        StepEventActionRegistryInterface $stepEventRegistry,
-        PathEventActionRegistryInterface $pathEventRegistry,
-        \Twig_Environment          $merger,
-        SecurityContextInterface   $securityContext,
-        SessionInterface           $session
+        StepEventActionRegistryInterface $stepEventActionRegistry,
+        PathEventActionRegistryInterface $pathEventActionRegistry,
+        \Twig_Environment                $merger,
+        SecurityContextInterface         $securityContext,
+        SessionInterface                 $session
     ) {
-        $this->navigator         = $navigator;
-        $this->stepEventRegistry = $stepEventRegistry;
-        $this->pathEventRegistry = $pathEventRegistry;
-        $this->merger            = $merger;
-        $this->securityContext   = $securityContext;
-        $this->session           = $session;
+        $this->navigator               = $navigator;
+        $this->stepEventActionRegistry = $stepEventActionRegistry;
+        $this->pathEventActionRegistry = $pathEventActionRegistry;
+        $this->merger                  = $merger;
+        $this->securityContext         = $securityContext;
+        $this->session                 = $session;
     }
 
     /**
@@ -181,7 +181,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 $configuration = $resolver->resolve($configuration);
 
                 $action = $this
-                    ->stepEventRegistry
+                    ->stepEventActionRegistry
                     ->getAction($configuration['action'])
                 ;
 
@@ -257,7 +257,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     }
 
                     $action = $this
-                        ->pathEventRegistry
+                        ->pathEventActionRegistry
                         ->getAction($configuration['action'])
                     ;
 
