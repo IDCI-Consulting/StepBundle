@@ -1,0 +1,14 @@
+#!/bin/bash
+
+_kill_procs() {
+  kill -TERM $firefox
+  wait $firefox
+}
+
+# Setup a trap to catch SIGTERM and relay it to child processes
+trap _kill_procs SIGTERM
+
+xvfb-run -n 99 firefox-browser $@ &
+firefox=$!
+
+wait $firefox
