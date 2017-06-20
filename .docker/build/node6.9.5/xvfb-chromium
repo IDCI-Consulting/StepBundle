@@ -1,14 +1,3 @@
 #!/bin/bash
 
-_kill_procs() {
-  kill -TERM $chromium
-  wait $chromium
-}
-
-# Setup a trap to catch SIGTERM and relay it to child processes
-trap _kill_procs SIGTERM
-
-xvfb-run -n 98 chromium --no-sandbox $@ &
-chromium=$!
-
-wait $chromium
+xvfb-run -a chromium-browser --no-sandbox $@
