@@ -7,19 +7,49 @@
 
 namespace IDCI\Bundle\StepBundle\Form\Type;
 
+use IDCI\Bundle\AssetLoaderBundle\AssetProvider\AssetProviderInterface;
+use IDCI\Bundle\AssetLoaderBundle\Model\Asset;
+use IDCI\Bundle\AssetLoaderBundle\Model\AssetCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class StepEditorType extends AbstractType
+class StepEditorType extends AbstractType implements AssetProviderInterface
 {
+    /**
+     * @var AssetCollection
+     */
+    private $assetCollection;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->assetCollection = new AssetCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAssetCollection()
+    {
+        return $this->assetCollection;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $this->assetCollection->add(new Asset('IDCIStepBundle:Form:step_editor_assets.html.twig', array(), 1));
+        $this->assetCollection->add(new Asset('IDCIStepBundle:Form:step_editor_configuration.html.twig', array(
+            'options' => $options,
+            'form'    => $view
+        ), 0));
+
         $attrClass = 'step-editor';
 
         if (isset($options['attr']) && isset($options['attr']['class'])) {
