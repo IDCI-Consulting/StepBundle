@@ -30,6 +30,7 @@ public function registerBundles()
         // ...
         new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
         new JMS\SerializerBundle\JMSSerializerBundle(),
+        new IDCI\Bundle\AssetLoaderBundle\IDCIAssetLoaderBundle(),
         new IDCI\Bundle\ExtraFormBundle\IDCIExtraFormBundle(),
         new IDCI\Bundle\StepBundle\IDCIStepBundle(),
     );
@@ -43,6 +44,9 @@ imports:
     ...
     - { resource: @IDCIExtraFormBundle/Resources/config/config.yml }
     - { resource: @IDCIStepBundle/Resources/config/config.yml }
+
+idci_asset_loader:
+    auto_load: true
 ```
 
 Use the editor
