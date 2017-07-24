@@ -156,10 +156,10 @@ module.exports = jQuery;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export filterObject */
-/* unused harmony export sortObject */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return generateUniqueId; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return hashCode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return filterObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return sortObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return generateUniqueId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return hashCode; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return createBootstrapModal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return colorEmptyRequiredInputs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createAttributeMapObject; });

@@ -1,3 +1,5 @@
+import { sortObject, filterObject } from 'ExtraFormBundle/utils/utils.js';
+
 export default {
 
   /**
@@ -151,7 +153,6 @@ export default {
         if (state.pathTypes.hasOwnProperty(pathType) && state.pathTypes[pathType].name === type) {
           var options = state.pathTypes[pathType].extra_form_options;
 
-          /* global filterObject */
           return filterObject(options, function (option) {
             return true === option.options.required;
           });
@@ -247,7 +248,6 @@ export default {
         if (state.stepTypes.hasOwnProperty(stepType) && state.stepTypes[stepType].name === type) {
           if ('form' === type) {
 
-            /* global sortObject */
             return sortObject(state.stepTypes[stepType].extra_form_options, ['title', '@builder'], false);
           }
 

@@ -31,7 +31,7 @@ var stepEditorStepEventActionConfiguration = {
               'v-for="(option, key) in stepEventActionType.extra_form_options" ' +
               ':option="option" ' +
               ':name="key" ' +
-              ':key="option"' +
+              ':key="key"' +
               ':value="getParameterValue(key)" ' +
               '@changed="updateOption"' +
             '/>' +

@@ -14,6 +14,7 @@ var stepEditorStepTypeOptions = {
         ':is="typeOption.component_name" ' +
         'v-for="(typeOption, key) in typeOptions" ' +
         ':option="typeOption" ' +
+        ':key="key" ' +
         ':name="key"' +
         ':value="stepOptions[key]" ' +
         '@changed="updateStepOption"' +

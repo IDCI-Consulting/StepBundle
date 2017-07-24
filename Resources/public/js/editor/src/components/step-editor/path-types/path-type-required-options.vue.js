@@ -16,6 +16,7 @@ var stepEditorPathTypeRequiredOptions = {
         'v-for="(pathTypeRequiredOption, key) in pathTypeRequiredOptions" ' +
         ':option="pathTypeRequiredOption" ' +
         ':name="key" ' +
+        ':key="key" '+
         ':value="pathOptions[key]" ' +
         '@changed=setOption' +
       '>' +

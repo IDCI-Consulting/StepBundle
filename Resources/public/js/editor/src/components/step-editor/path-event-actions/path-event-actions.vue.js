@@ -4,10 +4,10 @@ var stepEditorPathEventActions = {
 
   template:
     '<div>' +
-      '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent">' +
+      '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent.name">' +
         '<strong>{{ formEvent.name }}</strong>' +
         '<path-event-action-configuration ' +
-          ':key="action" ' +
+          ':key="index" ' +
           'v-for="(action, index) in getFormEventPathEventActions(formEvent)" ' +
           ':action="action.action" ' +
           ':name="action.name" ' +

@@ -4,10 +4,10 @@ var stepEditorStepEventActions = {
 
   template:
     '<div>' +
-      '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent">' +
+      '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent.name">' +
         '<strong>{{ formEvent.name }}</strong>' +
         '<step-event-action-configuration ' +
-          ':key="action" ' +
+          ':key="index" ' +
           'v-for="(action, index) in getFormEventStepEventActions(formEvent)" ' +
           ':action="action.action" ' +
           ':name="action.name" ' +
@@ -31,8 +31,6 @@ var stepEditorStepEventActions = {
   },
 
   components: {
-
-    /* global stepEditorStepEventActionConfiguration */
     'step-event-action-configuration': stepEditorStepEventActionConfiguration
   },
 

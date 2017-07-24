@@ -12,9 +12,14 @@ import stepEditorMutations from './store/mutations/mutations.js';
 import stepEditorPathEventActionMutations from './store/mutations/pathEventActionMutations.js';
 import stepEditorStepEventActionMutations from './store/mutations/stepEventActionMutations.js';
 import extraFormEditorMutations from 'ExtraFormBundle/store//mutations.js';
+import modalComponent from 'ExtraFormBundle/components/common/modal.vue';
+import formEditorAdvancedComponent from 'ExtraFormBundle/components/editor-advanced/editor.vue';
 
+Vue.component('modal', modalComponent);
 Vue.component('step-editor-raw', stepEditorRawComponent);
 Vue.component('step-editor', stepEditorComponent);
+Vue.component('multiselect', Multiselect);
+Vue.component('form-editor-advanced', formEditorAdvancedComponent);
 
 /**
  * The function that will trigger the editor

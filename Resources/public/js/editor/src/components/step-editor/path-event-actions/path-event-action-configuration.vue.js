@@ -31,6 +31,7 @@ var stepEditorPathEventActionConfiguration = {
               'v-for="(option, key) in pathEventActionType.extra_form_options" ' +
               ':option="option" ' +
               ':name="key" ' +
+              ':key="key" ' +
               ':value="getParameterValue(key)" ' +
               '@changed="updateOption"' +
             '/>' +

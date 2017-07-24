@@ -12,7 +12,8 @@ var stepEditorPathTypeOptions = {
 
   template:
     '<div>' +
-      '<component :key="getKey(typeOption)" ' +
+      '<component ' +
+        ':key="getKey(typeOption)" ' +
         ':is="typeOption.component_name" ' +
         'v-for="(typeOption, key) in typeOptions" ' +
         ':option="typeOption" ' +
