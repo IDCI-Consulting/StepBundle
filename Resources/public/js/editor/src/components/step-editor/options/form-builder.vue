@@ -125,7 +125,7 @@ export default {
         .first();
 
       $modal.modal('show');
-      $modal.find('.close').on('click', function (e) {
+      $modal.find('.modal-header .close').on('click', function (e) {
         e.preventDefault();
         $(this)
           .closest('.modal')
