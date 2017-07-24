@@ -22,3 +22,9 @@ ENV CHROMIUM_BIN=/usr/bin/xvfb-chromium
 ADD xvfb-firefox /usr/bin/xvfb-firefox
 RUN chmod +x /usr/bin/xvfb-firefox
 ENV FIREFOX_BIN=/usr/bin/xvfb-firefox
+
+# Install yarn
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn
