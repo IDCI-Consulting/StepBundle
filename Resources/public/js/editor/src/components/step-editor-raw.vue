@@ -1,3 +1,20 @@
+<template>
+
+  <div class="extra-step-editor raw-mode">
+    <textarea v-model="raw" :id="id"></textarea>
+    <div class="json-errors">{{ error.message }}</div>
+    <button style="margin-right: 20px" @click.prevent="generateMap">
+      Generate the diagram of the map from the json
+    </button>
+    <button @click.prevent="saveRaw">
+      Save the content of the textarea (even if the json is not valid)
+    </button>
+  </div>
+
+</template>
+
+<script>
+
 import Vue                   from 'vue';
 import rawMixin              from 'ExtraFormBundle/mixins/raw.vue';
 import rawModalMixin         from 'ExtraFormBundle/mixins/rawModal.vue';
@@ -8,18 +25,6 @@ import 'ExtraFormBundle/styles/codemirror.css';
 import 'ExtraFormBundle/styles/codemirror-dialog.css';
 
 export default {
-
-  template:
-    '<div class="extra-step-editor raw-mode">' +
-      '<textarea v-model="raw" :id="id"></textarea>' +
-      '<div class="json-errors">{{ error.message }}</div>' +
-      '<button style="margin-right: 20px" @click.prevent="generateMap">' +
-        'Generate the diagram of the map from the json' +
-      '</button>' +
-      '<button @click.prevent="saveRaw">' +
-        'Save the content of the textarea (even if the json is not valid)' +
-      '</button>' +
-    '</div>',
 
   created: function () {
     // If the textarea is empty, do not attempt to generate fields
@@ -164,3 +169,5 @@ export default {
   }
 
 };
+
+</script>

@@ -1,3 +1,22 @@
+<template>
+
+  <div>
+    <component
+      :is="mapTypeOption.component_name"
+      v-for="(mapTypeOption, key) in mapTypeOptions"
+      :key="key"
+      :option="mapTypeOption"
+      :name="key"
+      :value="mapOptions[key]"
+      @changed="updateMapOption"
+    >
+    </component>
+  </div>
+
+</template>
+
+<script>
+
 import checkboxOption from 'ExtraFormBundle/components/common/options/checkbox.vue';
 import textareaOption from 'ExtraFormBundle/components/common/options/textarea.vue';
 import choiceOption   from 'ExtraFormBundle/components/common/options/choice.vue';
@@ -6,21 +25,7 @@ import numberOption   from 'ExtraFormBundle/components/common/options/number.vue
 import integerOption  from 'ExtraFormBundle/components/common/options/integer.vue';
 import httpMixin      from 'ExtraFormBundle/mixins/http.vue';
 
-var stepEditorMapOptions = {
-
-  template:
-  '<div>' +
-    '<component ' +
-      ':is="mapTypeOption.component_name" ' +
-      'v-for="(mapTypeOption, key) in mapTypeOptions" ' +
-      ':key=key ' +
-      ':option="mapTypeOption" ' +
-      ':name="key" ' +
-      ':value="mapOptions[key]" ' +
-      '@changed="updateMapOption"' +
-    '>' +
-    '</component>' +
-  '</div>',
+export default {
 
   computed: {
     mapTypeOptions: function () {
@@ -33,7 +38,6 @@ var stepEditorMapOptions = {
   },
 
   components: {
-
     'option-checkbox': checkboxOption,
     'option-textarea': textareaOption,
     'option-choice': choiceOption,
@@ -43,7 +47,6 @@ var stepEditorMapOptions = {
   },
 
   methods: {
-
     /**
      * Update an option
      *
@@ -76,4 +79,4 @@ var stepEditorMapOptions = {
 
 };
 
-export default stepEditorMapOptions;
+</script>

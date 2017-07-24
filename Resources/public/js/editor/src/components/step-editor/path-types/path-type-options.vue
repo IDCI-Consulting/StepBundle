@@ -1,3 +1,22 @@
+<template>
+
+  <div>
+    <component
+      :key="getKey(typeOption)"
+      :is="typeOption.component_name"
+      v-for="(typeOption, key) in typeOptions"
+      :option="typeOption"
+      :name="key"
+      :value="pathOptions[key]"
+      @changed="updatePathOption"
+    >
+    </component>
+  </div>
+
+</template>
+
+<script>
+
 import { hashCode }                            from 'ExtraFormBundle/utils/utils.js';
 import checkboxOption                          from 'ExtraFormBundle/components/common/options/checkbox.vue';
 import textareaOption                          from 'ExtraFormBundle/components/common/options/textarea.vue';
@@ -8,21 +27,7 @@ import integerOption                           from 'ExtraFormBundle/components/
 import pathTypeOptionMixin                     from 'StepBundle/mixins/path-type-options.vue';
 import conditionalDestinationsCollectionOption from 'StepBundle/components/step-editor/options/conditional-destinations-collection.vue';
 
-var stepEditorPathTypeOptions = {
-
-  template:
-    '<div>' +
-      '<component ' +
-        ':key="getKey(typeOption)" ' +
-        ':is="typeOption.component_name" ' +
-        'v-for="(typeOption, key) in typeOptions" ' +
-        ':option="typeOption" ' +
-        ':name="key"' +
-        ':value="pathOptions[key]" ' +
-        '@changed="updatePathOption"' +
-      '>' +
-      '</component>' +
-    '</div>',
+export default {
 
   props: ['path', 'index'],
 
@@ -82,4 +87,4 @@ var stepEditorPathTypeOptions = {
 
 };
 
-export default stepEditorPathTypeOptions;
+</script>

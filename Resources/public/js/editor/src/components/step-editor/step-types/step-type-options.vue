@@ -1,3 +1,23 @@
+<template>
+
+  <div>
+    <component
+      :is="typeOption.component_name"
+      v-for="(typeOption, key) in typeOptions"
+      :option="typeOption"
+      :key="key"
+      :name="key"
+      :value="stepOptions[key]"
+      @changed="updateStepOption"
+    >
+    </component>
+  </div>
+
+</template>
+
+
+<script>
+
 import checkboxOption    from 'ExtraFormBundle/components/common/options/checkbox.vue';
 import textareaOption    from 'ExtraFormBundle/components/common/options/textarea.vue';
 import choiceOption      from 'ExtraFormBundle/components/common/options/choice.vue';
@@ -6,21 +26,7 @@ import numberOption      from 'ExtraFormBundle/components/common/options/number.
 import integerOption     from 'ExtraFormBundle/components/common/options/integer.vue';
 import formBuilderOption from 'StepBundle/components/step-editor/options/form-builder.vue';
 
-var stepEditorStepTypeOptions = {
-
-  template:
-    '<div>' +
-      '<component ' +
-        ':is="typeOption.component_name" ' +
-        'v-for="(typeOption, key) in typeOptions" ' +
-        ':option="typeOption" ' +
-        ':key="key" ' +
-        ':name="key"' +
-        ':value="stepOptions[key]" ' +
-        '@changed="updateStepOption"' +
-      '>' +
-      '</component>' +
-    '</div>',
+export default {
 
   props: ['step', 'name'],
 
@@ -82,4 +88,4 @@ var stepEditorStepTypeOptions = {
 
 };
 
-export default stepEditorStepTypeOptions;
+</script>

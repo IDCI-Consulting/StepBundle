@@ -1,12 +1,7 @@
 import joint from 'jointjs';
 import _     from 'underscore';
 
-// Ensure the extraStep object is defined
-if ('undefined' === typeof joint.shapes.extraStep) {
-  joint.shapes.extraStep = {};
-}
-
-joint.shapes.extraStep.PathLink = joint.dia.Link.extend({
+export default joint.dia.Link.extend({
 
   // Initial markup
   markup: [

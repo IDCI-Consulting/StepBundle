@@ -1,14 +1,19 @@
-import $            from 'jquery';
-import Diagram      from 'StepBundle/diagram/Diagram.js';
-import DiagramUtils from 'StepBundle/diagram/DiagramUtils.js';
+<template>
+
+  <div>
+    <div class="joint-paper" :id="id"></div>
+  </div>
+
+</template>
+
+<script>
+
+import $                    from 'jquery';
+import Diagram              from 'StepBundle/diagram/Diagram.js';
+import DiagramUtils         from 'StepBundle/diagram/DiagramUtils.js';
 import { generateUniqueId } from 'ExtraFormBundle/utils/utils.js';
 
-var stepEditorDiagram = {
-
-  template:
-    '<div>' +
-      '<div class="joint-paper" :id="id"></div>' +
-    '</div>',
+export default {
 
   props: ['map'],
 
@@ -151,4 +156,4 @@ var stepEditorDiagram = {
 
 };
 
-export default stepEditorDiagram;
+</script>

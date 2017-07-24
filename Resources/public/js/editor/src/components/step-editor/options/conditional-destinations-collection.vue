@@ -1,29 +1,35 @@
-var conditionalDestinationsCollectionOption = {
+<template>
 
-  template:
-    '<div class="form-group">' +
-      '<label :for="name">{{ name }}</label>' +
-      // Only allow the add button when creating a new path, else we can only update
-      '<button v-if="pathCreation" @click.prevent="addDestination">Add</button>' +
-      '<div class="conditional-destination form-group" v-for="(destination, index) in destinations">' +
-        '<select class="form-control" ' +
-          'v-model="destination.step" ' +
-          ':required="option.options.required" ' +
-          ':name="name" ' +
-          '@change="updateDestinationStep(index, $event.target.value)" ' +
-        '>' +
-          '<option :value="key" v-for="(choice, key) in option.options.choices">{{ choice }}</option>' +
-        '</select>' +
-        '<div>' +
-          '<input class="form-control" ' +
-            'type="text" ' +
-            'v-model="destination.condition" ' +
-            '@input="updateDestinationCondition(index, $event.target.value)" ' +
-          '>' +
-          '<button v-if="pathCreation" @click.prevent="removeDestination(index)">x</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>',
+  <div class="form-group">
+    <label :for="name">{{ name }}</label>
+    // Only allow the add button when creating a new path, else we can only update
+    <button v-if="pathCreation" @click.prevent="addDestination">Add</button>
+    <div class="conditional-destination form-group" v-for="(destination, index) in destinations">
+      <select
+        class="form-control"
+        v-model="destination.step"
+        :required="option.options.required"
+        :name="name"
+        @change="updateDestinationStep(index, $event.target.value)"
+      >
+        <option :value="key" v-for="(choice, key) in option.options.choices">{{ choice }}</option>
+      </select>
+      <div>
+        <input class="form-control"
+          type="text"
+          v-model="destination.condition"
+          @input="updateDestinationCondition(index, $event.target.value)"
+        >
+        <button v-if="pathCreation" @click.prevent="removeDestination(index)">x</button>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
+export default {
 
   props: ['option', 'name', 'value'],
 
@@ -124,4 +130,4 @@ var conditionalDestinationsCollectionOption = {
 
 };
 
-export default conditionalDestinationsCollectionOption;
+</script>

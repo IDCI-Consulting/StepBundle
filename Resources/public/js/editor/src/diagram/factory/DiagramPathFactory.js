@@ -2,9 +2,9 @@ import joint         from 'jointjs';
 import DiagramColors from 'StepBundle/diagram/DiagramColors.js';
 import DiagramUtils  from 'StepBundle/diagram/DiagramUtils.js';
 
-import 'StepBundle/diagram/shapes/EndOfPathLink.js';
-import 'StepBundle/diagram/shapes/IntersectionOfPathLinks.js';
-import 'StepBundle/diagram/shapes/PathLink.js';
+import EndOfPathLink from 'StepBundle/diagram/shapes/EndOfPathLink.js';
+import IntersectionOfPathLinks from 'StepBundle/diagram/shapes/IntersectionOfPathLinks.js';
+import PathLink from 'StepBundle/diagram/shapes/PathLink.js';
 
 var DiagramPathFactory = {
 
@@ -197,7 +197,7 @@ var DiagramPathFactory = {
       return label;
     }
 
-    var pathLinkCell = new joint.shapes.extraStep.PathLink({
+    var pathLinkCell = new PathLink({
       source: {
         id: source.id
       },
@@ -248,7 +248,7 @@ var DiagramPathFactory = {
    * @returns {joint.shapes.extraStep.EndOfPathLink}
    */
   createEndOfPathLinkCell: function (index, isActive, position) {
-    var endOfPathLinkCell = new joint.shapes.extraStep.EndOfPathLink({
+    var endOfPathLinkCell = new EndOfPathLink({
       position: {
         x: position.endOfPath.x,
         y: position.endOfPath.y
@@ -290,7 +290,7 @@ var DiagramPathFactory = {
    * @returns {joint.shapes.extraStep.IntersectionOfPathLinks}
    */
   createIntersectionOfPathLinksCell: function (index, isActive, position) {
-    var intersectionOfPathLinksCell = new joint.shapes.extraStep.IntersectionOfPathLinks({
+    var intersectionOfPathLinksCell = new IntersectionOfPathLinks({
       position: {
         x: position.intersection.x,
         y: position.intersection.y

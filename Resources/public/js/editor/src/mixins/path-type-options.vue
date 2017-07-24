@@ -1,4 +1,6 @@
-var pathTypeOptionMixin = {
+<script>
+
+export default {
 
   methods: {
 
@@ -50,4 +52,4 @@ var pathTypeOptionMixin = {
 
 };
 
-export default pathTypeOptionMixin;
+</script>

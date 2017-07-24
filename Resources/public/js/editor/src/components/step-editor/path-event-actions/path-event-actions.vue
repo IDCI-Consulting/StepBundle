@@ -1,23 +1,28 @@
+<template>
+
+  <div>
+    <div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent.name">
+      <strong>{{ formEvent.name }}</strong>
+      <path-event-action-configuration
+        :key="index"
+        v-for="(action, index) in getFormEventPathEventActions(formEvent)"
+        :action="action.action"
+        :name="action.name"
+        :parameters="action.parameters"
+        @remove="removePathEventAction(formEvent, index)"
+        @updateName="updatePathEventActionName($event, formEvent, index)"
+        @updateOption="updatePathEventActionOption($event, formEvent, index)"
+      ></path-event-action-configuration>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
 import stepEditorPathEventActionConfiguration from './path-event-action-configuration.vue';
 
-var stepEditorPathEventActions = {
-
-  template:
-    '<div>' +
-      '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent.name">' +
-        '<strong>{{ formEvent.name }}</strong>' +
-        '<path-event-action-configuration ' +
-          ':key="index" ' +
-          'v-for="(action, index) in getFormEventPathEventActions(formEvent)" ' +
-          ':action="action.action" ' +
-          ':name="action.name" ' +
-          ':parameters="action.parameters" ' +
-          '@remove="removePathEventAction(formEvent, index)" ' +
-          '@updateName="updatePathEventActionName($event, formEvent, index)" ' +
-          '@updateOption="updatePathEventActionOption($event, formEvent, index)" ' +
-        '></path-event-action-configuration>' +
-      '</div>' +
-    '</div>',
+export default {
 
   props: ['index'],
 
@@ -112,4 +117,4 @@ var stepEditorPathEventActions = {
   }
 };
 
-export default stepEditorPathEventActions;
+</script>

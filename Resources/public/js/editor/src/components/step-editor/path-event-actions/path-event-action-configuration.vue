@@ -1,3 +1,41 @@
+<template>
+
+  <div class="collapsed-block" :class="{ 'form-type-not-configured': !hasConfiguration() }">
+    <div>
+      <button @click.prevent="remove" aria-label="Close" class="close">
+        <span aria-hidden="true">×</span>
+      </button>
+      <strong>{{ action }}</strong>
+      <div class="options extra-form-inputs-required">
+        <div class="form-group">
+          <label>name</label>
+          <input class="form-control" v-model="pathEventActionName" type="text"/>
+        </div>
+        <a v-if="hasConfiguration()" role="button" data-toggle="collapse" :href="'#'+ id">
+          Parameters<span class="toggle"></span>
+        </a>
+        <div v-else>
+            This path event action was not configured <i class="fa-icon fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </div>
+        <div :id="id" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" :aria-controls="id">
+          <component
+            :is="option.component_name"
+            v-for="(option, key) in pathEventActionType.extra_form_options"
+            :option="option"
+            :name="key"
+            :key="key"
+            :value="getParameterValue(key)"
+            @changed="updateOption"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
 import checkboxOption       from 'ExtraFormBundle/components/common/options/checkbox.vue';
 import textareaOption       from 'ExtraFormBundle/components/common/options/textarea.vue';
 import choiceOption         from 'ExtraFormBundle/components/common/options/choice.vue';
@@ -5,40 +43,7 @@ import textOption           from 'ExtraFormBundle/components/common/options/text
 import numberOption         from 'ExtraFormBundle/components/common/options/number.vue';
 import { generateUniqueId } from 'ExtraFormBundle/utils/utils.js';
 
-var stepEditorPathEventActionConfiguration = {
-
-  template:
-    '<div class="collapsed-block" :class="{ \'form-type-not-configured\': !hasConfiguration() }">' +
-      '<div>' +
-        '<button @click.prevent="remove" aria-label="Close" class="close">' +
-          '<span aria-hidden="true">×</span>' +
-        '</button>' +
-        '<strong>{{ action }}</strong>' +
-        '<div class="options extra-form-inputs-required">' +
-          '<div class="form-group">' +
-            '<label>name</label>' +
-            '<input class="form-control" v-model="pathEventActionName" type="text"/>' +
-          '</div>' +
-          '<a v-if="hasConfiguration()" role="button" data-toggle="collapse" :href="\'#\' + id">' +
-            'Parameters<span class="toggle"></span>' +
-          '</a>' +
-          '<div v-else>' +
-              'This path event action was not configured <i class="fa-icon fa fa-exclamation-triangle" aria-hidden="true"></i>' +
-          '</div>' +
-          '<div :id="id" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" :aria-controls="id">' +
-            '<component ' +
-              ':is="option.component_name" ' +
-              'v-for="(option, key) in pathEventActionType.extra_form_options" ' +
-              ':option="option" ' +
-              ':name="key" ' +
-              ':key="key" ' +
-              ':value="getParameterValue(key)" ' +
-              '@changed="updateOption"' +
-            '/>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-    '</div>',
+export default {
 
   props: ['action', 'name', 'parameters'],
 
@@ -116,4 +121,4 @@ var stepEditorPathEventActionConfiguration = {
 
 };
 
-export default stepEditorPathEventActionConfiguration;
+</script>

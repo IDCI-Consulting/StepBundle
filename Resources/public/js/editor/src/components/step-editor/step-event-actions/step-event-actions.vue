@@ -1,23 +1,28 @@
+<template>
+
+  <div>
+    <div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent.name">
+      <strong>{{ formEvent.name }}</strong>
+      <step-event-action-configuration
+        :key="index"
+        v-for="(action, index) in getFormEventStepEventActions(formEvent)"
+        :action="action.action"
+        :name="action.name"
+        :parameters="action.parameters"
+        @remove="removeStepEventAction(formEvent, index)"
+        @updateName="updateStepEventActionName($event, formEvent, index)"
+        @updateOption="updateStepEventActionOption($event, formEvent, index)"
+      ></step-event-action-configuration>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
 import stepEditorStepEventActionConfiguration from './step-event-action-configuration.vue';
 
-var stepEditorStepEventActions = {
-
-  template:
-    '<div>' +
-      '<div v-for="formEvent in formEvents" v-if="formEventHasActions(formEvent)" :key="formEvent.name">' +
-        '<strong>{{ formEvent.name }}</strong>' +
-        '<step-event-action-configuration ' +
-          ':key="index" ' +
-          'v-for="(action, index) in getFormEventStepEventActions(formEvent)" ' +
-          ':action="action.action" ' +
-          ':name="action.name" ' +
-          ':parameters="action.parameters" ' +
-          '@remove="removeStepEventAction(formEvent, index)" ' +
-          '@updateName="updateStepEventActionName($event, formEvent, index)" ' +
-          '@updateOption="updateStepEventActionOption($event, formEvent, index)" ' +
-        '></step-event-action-configuration>' +
-      '</div>' +
-    '</div>',
+export default {
 
   props: ['name'],
 
@@ -111,4 +116,4 @@ var stepEditorStepEventActions = {
   }
 };
 
-export default stepEditorStepEventActions;
+</script>

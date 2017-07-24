@@ -1,55 +1,61 @@
+<template>
+
+  <div class="form-group">
+    <label :for="name">worker</label>
+    <multiselect
+      class="multiselect-form-control"
+      v-model="selectedWorker"
+      :options="workers"
+      label="name"
+      key="name"
+      selectLabel=""
+      placeholder="Select a worker"
+    >
+    </multiselect>
+    <div v-if="selectedWorker.name === 'extra_form_builder'" class="extra-form-builder-container">
+      <button :id="id" class="extra-btn" @click.prevent="triggerModal">
+        Extra form builder
+      </button>
+      <div class="modal fade modal-fullscreen" :id="'modal_' + id">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Advanced visual mode</h4>
+            </div>
+            <div class="modal-body">
+              <form-editor-advanced :fields="fields"></form-editor-advanced>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-default close-modal">
+                Go back to the step editor <i class="fa fa-times"></i>
+              </button>
+              <em>All your changes are automatically saved</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="selectedWorker.name === 'form_builder'" class="extra-form-builder-container">
+      <textarea v-model="raw"></textarea>
+      <button class="extra-btn" @click.prevent="setExtraFormRaw">
+        Validate modifications
+      </button>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
 import $                    from 'jquery';
 import httpMixin            from 'ExtraFormBundle/mixins/http.vue';
 import rawMixin             from 'ExtraFormBundle/mixins/raw.vue';
 import { generateUniqueId } from 'ExtraFormBundle/utils/utils.js';
 
-var formBuilderOption = {
-
-  template:
-    '<div class="form-group">' +
-      '<label :for="name">worker</label>' +
-      '<multiselect ' +
-        'class="multiselect-form-control" ' +
-        'v-model="selectedWorker" ' +
-        ':options="workers" ' +
-        'label="name" ' +
-        'key="name" ' +
-        'selectLabel="" ' +
-        'placeholder="Select a worker">' +
-      '</multiselect>' +
-      '<div v-if="selectedWorker.name === \'extra_form_builder\'" class="extra-form-builder-container">' +
-        '<button :id="id" class="extra-btn" @click.prevent="triggerModal">' +
-          'Extra form builder' +
-        '</button> ' +
-        '<div class="modal fade modal-fullscreen" :id="\'modal_\' + id">' +
-          '<div class="modal-dialog" role="document">' +
-            '<div class="modal-content">' +
-              '<div class="modal-header">' +
-                '<button type="button" class="close" aria-label="Close">' +
-                  '<span aria-hidden="true">&times;</span>' +
-                '</button>' +
-                '<h4 class="modal-title">Advanced visual mode</h4>' +
-              '</div>' +
-              '<div class="modal-body">' +
-                '<form-editor-advanced :fields="fields"></form-editor-advanced>' +
-              '</div>' +
-              '<div class="modal-footer">' +
-                '<button class="btn btn-default close-modal">' +
-                  'Go back to the step editor <i class="fa fa-times"></i>' +
-                '</button>' +
-                '<em>All your changes are automatically saved</em>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div v-if="selectedWorker.name === \'form_builder\'" class="extra-form-builder-container">' +
-        '<textarea v-model="raw"></textarea>' +
-        '<button class="extra-btn" @click.prevent="setExtraFormRaw">' +
-          'Validate modifications' +
-        '</button>' +
-      '</div>' +
-    '</div>',
+export default {
 
   props: ['option', 'value', 'name'],
 
@@ -163,4 +169,4 @@ var formBuilderOption = {
 
 };
 
-export default formBuilderOption;
+</script>

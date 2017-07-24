@@ -1,27 +1,34 @@
-var stepEditorNewStepEventAction = {
+<template>
 
-  template:
-    '<div>' +
-      '<multiselect ' +
-        'v-model="selectedFormEvent" ' +
-        ':options="formEvents" ' +
-        'label="name" ' +
-        'key="name" ' +
-        'selectLabel="" ' +
-        'placeholder="Select a form event">' +
-      '</multiselect>' +
-      '<multiselect ' +
-        'v-model="selectedStepEventActionType" ' +
-        ':options="stepEventActionTypes" ' +
-        'label="name" ' +
-        'key="name" ' +
-        'selectLabel="" ' +
-        'placeholder="Select a step event">' +
-      '</multiselect>' +
-      '<button @click.prevent="createStepEventAction" type="button" class="extra-btn" aria-label="Create">' +
-        'Add' +
-      '</button>' +
-    '</div>',
+  <div>
+    <multiselect
+      v-model="selectedFormEvent"
+      :options="formEvents"
+      label="name"
+      key="name"
+      selectLabel=""
+      placeholder="Select a form event"
+    >
+    </multiselect>
+    <multiselect
+      v-model="selectedStepEventActionType"
+      :options="stepEventActionTypes"
+      label="name"
+      key="name"
+      selectLabel=""
+      placeholder="Select a step event"
+    >
+    </multiselect>
+    <button @click.prevent="createStepEventAction" type="button" class="extra-btn" aria-label="Create">
+      Add
+    </button>
+  </div>
+
+</template>
+
+<script>
+
+export default {
 
   props: ['name'],
 
@@ -72,4 +79,4 @@ var stepEditorNewStepEventAction = {
 
 };
 
-export default stepEditorNewStepEventAction;
+</script>

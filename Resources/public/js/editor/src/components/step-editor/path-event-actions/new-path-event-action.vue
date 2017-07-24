@@ -1,27 +1,32 @@
-var stepEditorNewPathEventAction = {
+<template>
 
-  template:
-    '<div>' +
-      '<multiselect ' +
-        'v-model="selectedFormEvent" ' +
-        ':options="formEvents" ' +
-        'label="name" ' +
-        'key="name" ' +
-        'selectLabel="" ' +
-        'placeholder="Select a form event">' +
-      '</multiselect>' +
-      '<multiselect ' +
-        'v-model="selectedPathEventActionType" ' +
-        ':options="pathEventActionTypes" ' +
-        'label="name" ' +
-        'key="name" ' +
-        'selectLabel="" ' +
-        'placeholder="Select a path event">' +
-      '</multiselect>' +
-      '<button @click.prevent="createPathEventAction" type="button" class="extra-btn" aria-label="Create">' +
-        'Add' +
-      '</button>' +
-    '</div>',
+  <div>
+    <multiselect
+      v-model="selectedFormEvent"
+      :options="formEvents"
+      label="name"
+      key="name"
+      selectLabel=""
+      placeholder="Select a form event">
+    </multiselect>
+    <multiselect
+      v-model="selectedPathEventActionType"
+      :options="pathEventActionTypes"
+      label="name"
+      key="name"
+      selectLabel=""
+      placeholder="Select a path event">
+    </multiselect>
+    <button @click.prevent="createPathEventAction" type="button" class="extra-btn" aria-label="Create">
+      Add
+    </button>
+  </div>
+
+</template>
+
+<script>
+
+export default {
 
   props: ['index'],
 
@@ -72,4 +77,4 @@ var stepEditorNewPathEventAction = {
 
 };
 
-export default stepEditorNewPathEventAction;
+</script>

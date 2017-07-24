@@ -1,3 +1,22 @@
+<template>
+
+  <div>
+    <component
+      :is="pathTypeRequiredOption.component_name"
+      v-for="(pathTypeRequiredOption, key) in pathTypeRequiredOptions"
+      :option="pathTypeRequiredOption"
+      :name="key"
+      :key="key"
+      :value="pathOptions[key]"
+      @changed="setOption"
+    >
+    </component>
+  </div>
+
+</template>
+
+<script>
+
 import checkboxOption                          from 'ExtraFormBundle/components/common/options/checkbox.vue';
 import textareaOption                          from 'ExtraFormBundle/components/common/options/textarea.vue';
 import choiceOption                            from 'ExtraFormBundle/components/common/options/choice.vue';
@@ -7,21 +26,7 @@ import integerOption                           from 'ExtraFormBundle/components/
 import conditionalDestinationsCollectionOption from 'StepBundle/components/step-editor/options/conditional-destinations-collection.vue';
 import pathTypeOptionMixin                     from 'StepBundle/mixins/path-type-options.vue';
 
-var stepEditorPathTypeRequiredOptions = {
-
-  template:
-    '<div>' +
-      '<component ' +
-        ':is="pathTypeRequiredOption.component_name" ' +
-        'v-for="(pathTypeRequiredOption, key) in pathTypeRequiredOptions" ' +
-        ':option="pathTypeRequiredOption" ' +
-        ':name="key" ' +
-        ':key="key" '+
-        ':value="pathOptions[key]" ' +
-        '@changed=setOption' +
-      '>' +
-      '</component>' +
-    '</div>',
+export default {
 
   props: ['type'],
 
@@ -83,4 +88,4 @@ var stepEditorPathTypeRequiredOptions = {
 
 };
 
-export default stepEditorPathTypeRequiredOptions;
+</script>
