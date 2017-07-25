@@ -1,0 +1,36 @@
+<script type="text/javascript" src="{{ asset('bundles/idcistep/js/editor/dist/display-maps.js') }}"></script>
+
+<style>
+    .step-diagram {
+        position: relative;
+    }
+
+    .step-diagram .error {
+        color: #C0392B;
+        font-style: italic
+    }
+
+    svg {
+        position: relative;
+    }
+
+    .json-raw-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 20px;
+        padding: 10px 10px 0;
+        cursor: pointer;
+        z-index: 20;
+    }
+
+    .json-raw-button:hover {
+        color: #514D61;
+    }
+
+    .modal-json {
+        width: 100%;
+        height: 80vh;
+        border: none;
+    }
+</style>

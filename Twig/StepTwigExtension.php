@@ -141,7 +141,7 @@ class StepTwigExtension extends \Twig_Extension
     public function drawMap(\Twig_Environment $twig, $jsonMap, $id)
     {
         return $twig->render(
-            'IDCIStepBundle:Map:drawing.html.twig',
+            'IDCIStepBundle:Map:map_diagram.html.twig',
             array(
                 'jsonMap' => $jsonMap,
                 'id'      => $id

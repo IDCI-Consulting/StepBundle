@@ -28,6 +28,14 @@ gulp:
 eslint:
 	docker-compose run --rm node eslint $(js_sources)
 
+.PHONY: webpack-build-dev
+webpack-build-dev:
+	docker-compose run --rm node npm run build
+
+.PHONY: webpack-build-prod
+webpack-build-prod:
+	docker-compose run --rm node npm run build-prod
+
 # PHP commands
 
 .PHONY: composer-add-github-token
