@@ -20,15 +20,25 @@ import stepEditorMutations from 'StepBundle/store/mutations/mutations.js';
      * Disable pointer events on svg and update the diagram height according to the svg height
      */
     function updateStyle () {
-        var svg = document.querySelectorAll('#' + id + ' svg > g')[0];
+        var g = document.querySelector('#' + id + ' svg > g');
+        var svg = document.querySelector('#' + id + ' svg');
+        var wrapper = document.getElementById('svg-' + id);
 
-        svg.setAttribute('style', 'pointer-events: none');
+        var svgHeight = g.getBoundingClientRect().height + 50;
+        var svgWidth = g.getBoundingClientRect().width + 50;
 
-        var diagramId = 'svg-' + id;
-        var diagram = document.getElementById(diagramId);
-        var height = svg.getBoundingClientRect().height + 50;
+        g.style.pointerEvents = 'none';
 
-        diagram.setAttribute('style', 'height: ' + height + 'px;');
+        var heightMargin = g.getBoundingClientRect().top - svg.getBoundingClientRect().top;
+        svgHeight += heightMargin;
+        var widthMargin = g.getBoundingClientRect().left - svg.getBoundingClientRect().left;
+        svgWidth += widthMargin;
+
+        svg.setAttribute('height', svgHeight + 'px');
+        svg.setAttribute('width', svgWidth + 'px');
+
+        wrapper.style.height = svgHeight + 'px';
+        wrapper.style.overflow = 'auto';
     }
 
     /**
@@ -83,13 +93,12 @@ import stepEditorMutations from 'StepBundle/store/mutations/mutations.js';
             hideCloseButtons();
         },
         function setErrorMessage (e) {
-          console.log(e);
-            document.getElementById(diagramId).innerHTML =
-                '<div class="error">' +
-                'Ce parcours contient du json invalide, le diagramme ne peut donc pas être généré.' +
-                '</div>' +
-                '<br>'
-            ;
+          document.getElementById(diagramId).innerHTML =
+            '<div class="error">' +
+            'Ce parcours contient du json invalide, le diagramme ne peut donc pas être généré.' +
+            '</div>' +
+            '<br>'
+          ;
         }
     );
 
