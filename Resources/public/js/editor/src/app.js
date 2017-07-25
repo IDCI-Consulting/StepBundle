@@ -15,6 +15,8 @@ import extraFormEditorMutations from 'ExtraFormBundle/store//mutations.js';
 import modalComponent from 'ExtraFormBundle/components/common/modal.vue';
 import formEditorAdvancedComponent from 'ExtraFormBundle/components/editor-advanced/editor.vue';
 
+import 'ExtraFormBundle/styles/editor-common.css';
+
 Vue.component('modal', modalComponent);
 Vue.component('step-editor-raw', stepEditorRawComponent);
 Vue.component('step-editor', stepEditorComponent);

@@ -1,1 +1,597 @@
-!function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var r=window.webpackJsonp;window.webpackJsonp=function(e,n,a){for(var i,c,d=0,u=[];d<e.length;d++)c=e[d],o[c]&&u.push(o[c][0]),o[c]=0;for(i in n)Object.prototype.hasOwnProperty.call(n,i)&&(t[i]=n[i]);for(r&&r(e,n,a);u.length;)u.shift()()};var n={},o={1:0};e.e=function(t){function r(){c.onerror=c.onload=null,clearTimeout(d);var e=o[t];0!==e&&(e&&e[1](new Error("Loading chunk "+t+" failed.")),o[t]=void 0)}var n=o[t];if(0===n)return new Promise(function(t){t()});if(n)return n[2];var a=new Promise(function(e,r){n=o[t]=[e,r]});n[2]=a;var i=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.charset="utf-8",c.async=!0,c.timeout=12e4,e.nc&&c.setAttribute("nonce",e.nc),c.src=e.p+""+({0:"bootstrap-vue-step-editor"}[t]||t)+".async.js";var d=setTimeout(r,12e4);return c.onerror=c.onload=r,i.appendChild(c),a},e.m=t,e.c=n,e.d=function(t,r,n){e.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(r,"a",r),r},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/bundles/idcistep/js/editor/dist/",e.oe=function(t){throw console.error(t),t},e(e.s=2)}([function(t,e){t.exports=jQuery},function(t,e,r){"use strict";function n(t,e){var r={};for(var n in t)t.hasOwnProperty(n)&&e(t[n])&&(r[n]=t[n]);return r}function o(t,e,r){var n={};void 0===r&&(r=!0),void 0===e&&(e=[]);for(var o=0,a=e.length;o<a;o++){var i=e[o];n[i]=t[i]}if(r)Object.keys(t).sort().forEach(function(r){-1===e.indexOf(r)&&(n[r]=t[r])});else for(var c in t)t.hasOwnProperty(c)&&-1===e.indexOf(c)&&(n[c]=t[c]);return n}function a(){return Math.random().toString(36).substr(2,9)}function i(t){var e=0;if(0===t.length)return e.toString();for(var r=0;r<t.length;r++){e=(e<<5)-e+t.charCodeAt(r),e|=0}return e.toString()}function c(t){for(var e,r=t.attributes,n={},o=0,a=r.length;o<a;o++)e=r[o],n[e.nodeName]=e.nodeValue;return n.value=t.value,n}function d(t,e,r,n,o,a){return'<div id="'+e+"-"+t+'" class="editor-modal modal fade '+r+" "+e+'"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">'+n+'</h4></div><div class="modal-body">'+o+'</div><div class="modal-footer">'+(a||"")+"</div></div></div></div>"}function u(t,e){function r(t){t.val()?t.css({"border-color":"#cccccc","background-color":"#ffffff"}):t.css({"border-color":"#c9302c","background-color":"#f3d9d9"})}var n="."+e+' input[required="required"]';l()(document).on("change",n,function(){r(l()(this))});var o=document.getElementById(t),a={childList:!0,characterData:!0,subtree:!0};new MutationObserver(function(t){t.forEach(function(t){var o=[];o=l()(t.target).hasClass(e)?l()(t.target).find('input[required="required"]'):l()(t.target).find(n),o.each(function(){r(l()(this))})})}).observe(o,a)}r.d(e,"d",function(){return n}),r.d(e,"g",function(){return o}),r.d(e,"e",function(){return a}),r.d(e,"f",function(){return i}),r.d(e,"c",function(){return d}),r.d(e,"a",function(){return u}),r.d(e,"b",function(){return c});var s=r(0),l=r.n(s);String.prototype.removeLineBreaksAnsExtraSpaces=function(){return this.replace(/\r?\n|\r/g," ").replace(/ {2,}/g," ")}},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(3);Object(n.a)()},function(t,e,r){"use strict";function n(){i()("textarea.step-editor").each(function(t){var e=this;r.e(0).then(r.bind(null,4)).then(function(r){function n(t,e){i()(document).on("click","button.trigger-"+t+"-"+e,function(r){r.preventDefault(),i()("#"+t+"-"+e).modal("show")})}function a(t){var e="."+t+" .modal-body button.close-modal, ."+t+" .modal-footer > button.close-modal, ."+t+" .modal-header > button.close";i()(document).on("click",e,function(t){t.preventDefault(),i()(this).closest(".modal").modal("hide")})}var c="extraStepEditorComponent"+t;if(!document.getElementById(c)){var d=Object(o.b)(e),u=window[d["data-configuration-variable"]];u.componentId=c;var s=function(){return Object(o.c)(t,"extra-step-raw-mode-modal","modal-fullscreen","Editor in raw mode",'<div class="editor"><step-editor-raw></step-editor-raw></div><br>')}(),l='<button class="trigger-extra-step-raw-mode-modal-'+t+'">Raw mode</button>',f=function(){return Object(o.c)(t,"extra-step-advanced-visual-mode-modal","modal-fullscreen","Visual mode",'<div class="editor extra-step-editor"><step-editor></step-editor></div>',"<em>All your changes are automatically saved</em>")}(),v='<button class="trigger-extra-step-advanced-visual-mode-modal-'+t+'">Visual mode</button>';i()(e).after('<div class="modal-buttons">'+v+" "+l+"</div>");i()("body").append('<div id="'+c+'">'+s+f+"</div>"),e.style.display="none";var m=["extra-step-advanced-visual-mode-modal","extra-step-raw-mode-modal"];m.forEach(function(e){n(e,t)}),m.forEach(function(t){a(t)}),r.triggerVueStepEditor("#"+c,u,d),Object(o.a)(c,"extra-form-inputs-required")}})})}e.a=n;var o=r(1),a=r(0),i=r.n(a)}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// objects to store loaded and loading chunks
+/******/ 	var installedChunks = {
+/******/ 		2: 0
+/******/ 	};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData === 0) {
+/******/ 			return new Promise(function(resolve) { resolve(); });
+/******/ 		}
+/******/
+/******/ 		// a Promise means "currently loading".
+/******/ 		if(installedChunkData) {
+/******/ 			return installedChunkData[2];
+/******/ 		}
+/******/
+/******/ 		// setup Promise in chunk cache
+/******/ 		var promise = new Promise(function(resolve, reject) {
+/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 		});
+/******/ 		installedChunkData[2] = promise;
+/******/
+/******/ 		// start chunk loading
+/******/ 		var head = document.getElementsByTagName('head')[0];
+/******/ 		var script = document.createElement('script');
+/******/ 		script.type = 'text/javascript';
+/******/ 		script.charset = 'utf-8';
+/******/ 		script.async = true;
+/******/ 		script.timeout = 120000;
+/******/
+/******/ 		if (__webpack_require__.nc) {
+/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 		}
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"bootstrap-vue-step-editor"}[chunkId]||chunkId) + ".async.js";
+/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
+/******/ 		script.onerror = script.onload = onScriptComplete;
+/******/ 		function onScriptComplete() {
+/******/ 			// avoid mem leaks in IE.
+/******/ 			script.onerror = script.onload = null;
+/******/ 			clearTimeout(timeout);
+/******/ 			var chunk = installedChunks[chunkId];
+/******/ 			if(chunk !== 0) {
+/******/ 				if(chunk) {
+/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
+/******/ 				}
+/******/ 				installedChunks[chunkId] = undefined;
+/******/ 			}
+/******/ 		};
+/******/ 		head.appendChild(script);
+/******/
+/******/ 		return promise;
+/******/ 	};
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/bundles/idcistep/js/editor/dist/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 79);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 10:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return filterObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return sortObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return generateUniqueId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return hashCode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return createBootstrapModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return colorEmptyRequiredInputs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createAttributeMapObject; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+
+
+
+/**
+ * Remove all lines breaks and "extra" spaces, when there are more than 1 spaces in a row
+ *
+ * @returns {string}
+ */
+String.prototype.removeLineBreaksAnsExtraSpaces = function () {
+  return this
+    // Replace line breaks by spaces
+    .replace(/\r?\n|\r/g, ' ')
+    // Replace 2 or more spaces by only one
+    .replace(/ {2,}/g, ' ');
+};
+
+/**
+ * Create and return an object which contains all elements for which the callback returns true
+ *
+ * @param {object} object
+ * @param {function} callable
+ *
+ * @return {object}
+ */
+function filterObject (object, callable) {
+  var filteredObject = {};
+
+  for (var property in object) {
+    if (object.hasOwnProperty(property)) {
+      if (callable(object[property])) {
+        filteredObject[property] = object[property];
+      }
+    }
+  }
+
+  return filteredObject;
+}
+
+/**
+ * Sort an object by keys
+ *
+ *
+ * @param {object} object
+ * @param {[]} [firstKeys] : if the firstKeys param is set, set them at the beginning of the object
+ * @param {boolean} [sortAll] : if false, only sort by first keys
+ *
+ * @returns {{}}
+ */
+function sortObject (object, firstKeys, sortAll) {
+  var ordered = {};
+
+  if ('undefined' === typeof sortAll) {
+    sortAll = true;
+  }
+
+  if ('undefined' === typeof firstKeys) {
+    firstKeys = [];
+  }
+
+  for (var i = 0, len = firstKeys.length; i < len; i++) {
+    var k = firstKeys[i];
+
+    ordered[k] = object[k];
+  }
+
+  if (sortAll) {
+    Object
+      .keys(object)
+      .sort()
+      .forEach(function (key) {
+        if (-1 === firstKeys.indexOf(key)) {
+          ordered[key] = object[key];
+        }
+      });
+  } else {
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        if (-1 === firstKeys.indexOf(key)) {
+          ordered[key] = object[key];
+        }
+      }
+    }
+  }
+
+  return ordered;
+}
+
+/**
+ * Generate a unique id for the fields default names
+ *
+ * @returns {string}
+ */
+function generateUniqueId () {
+  return Math
+    .random()
+    .toString(36)
+    .substr(2, 9)
+    ;
+}
+
+/**
+ * Hash a string to a 32 bit integer
+ *
+ * @param {string} string
+ * @returns {string}
+ */
+function hashCode (string) {
+  var hash = 0;
+
+  if (0 === string.length) {
+    return hash.toString();
+  }
+
+  for (var i = 0; i < string.length; i++) {
+    var chr = string.charCodeAt(i);
+
+    hash = (hash << 5) - hash + chr;
+    // Convert to 32bit integer
+    hash |= 0;
+  }
+
+  return hash.toString();
+}
+
+/**
+ * Create a javascript object to get the map all the attribute of the given element, as well as the value
+ *
+ * @param element
+ *
+ * @return {object}
+ */
+function createAttributeMapObject (element) {
+  var attributes = element.attributes;
+  var object = {};
+
+  for (var attribute, i = 0, length = attributes.length; i < length; i++) {
+    attribute = attributes[i];
+    object[attribute.nodeName] = attribute.nodeValue;
+  }
+
+  object.value = element.value;
+
+  return object;
+}
+
+/**
+ * Create the html for a bootstrap modal
+ *
+ * @param id
+ * @param name
+ * @param extraClasses
+ * @param title
+ * @param body
+ * @param [modalFooter]
+ *
+ * @returns {string}
+ */
+function createBootstrapModal (id, name, extraClasses, title, body, modalFooter) {
+  var footer = modalFooter ? modalFooter : '';
+
+  return '' +
+    '<div id="' + name + '-' + id + '" class="editor-modal modal fade ' + extraClasses + ' ' + name + '">' +
+      '<div class="modal-dialog" role="document">' +
+        '<div class="modal-content">' +
+          '<div class="modal-header">' +
+            '<button type="button" class="close" aria-label="Close">' +
+              '<span aria-hidden="true">&times;</span>' +
+            '</button>' +
+            '<h4 class="modal-title">' + title + '</h4>' +
+          '</div>' +
+          '<div class="modal-body">' +
+            body +
+          '</div>' +
+          '<div class="modal-footer">' +
+            footer +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>'
+    ;
+}
+
+/**
+ * Add some colors on empty required inputs
+ *
+ * @param elementId - the if of the element wrapping the inputs
+ * @param parentClass - the class of the parent of the required input, in case we don't want to select every inputs
+ */
+function colorEmptyRequiredInputs (elementId, parentClass) {
+  var inputSelector = '.' + parentClass + ' input[required="required"]';
+
+  /**
+   * Color in red when empty, in white when filled
+   *
+   * @param $input
+   */
+  function color($input) {
+    if ($input.val()) {
+      $input.css({
+        'border-color': '#cccccc',
+        'background-color': '#ffffff'
+      });
+    } else {
+      $input.css({
+        'border-color': '#c9302c',
+        'background-color': '#f3d9d9'
+      });
+    }
+  }
+
+  // Color on change when the input is empty
+  __WEBPACK_IMPORTED_MODULE_0_jquery___default()(document).on('change', inputSelector, function () {
+    color(__WEBPACK_IMPORTED_MODULE_0_jquery___default()(this));
+  });
+
+  // Color when new children are added to the dom
+  // Sometimes they are added but already filled by vuejs, sometimes they are empty
+  var target = document.getElementById(elementId);
+  var config = {
+    childList: true,
+    characterData: true,
+    subtree: true
+  };
+
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      var $inputs = [];
+
+      if (__WEBPACK_IMPORTED_MODULE_0_jquery___default()(mutation.target).hasClass(parentClass)) {
+        $inputs = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(mutation.target).find('input[required="required"]');
+      } else {
+        $inputs = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(mutation.target).find(inputSelector);
+      }
+
+      $inputs.each(function () {
+        color(__WEBPACK_IMPORTED_MODULE_0_jquery___default()(this));
+      });
+    });
+  });
+
+  observer.observe(target, config);
+}
+
+
+
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+
+/***/ 79:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__load_step_editors_js__ = __webpack_require__(80);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__load_step_editors_js__["a" /* default */])();
+
+
+/***/ }),
+
+/***/ 80:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = loadStepEditors;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ExtraFormBundle_utils_utils_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
+
+
+
+
+function loadStepEditors () {
+
+  /**
+   * Create the editor for each textareas with the class step-editor
+   */
+  __WEBPACK_IMPORTED_MODULE_1_jquery___default()('textarea.step-editor').each(function (index) {
+
+    var textarea = this;
+
+    __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 82)).then(function (app) {
+      var editorComponentId = 'extraStepEditorComponent' + index;
+
+      // Do not load the editor if it was already loaded
+      if (document.getElementById(editorComponentId)) {
+        return;
+      }
+
+      // Retrieve the textarea attributes and value
+      var formProperties = Object(__WEBPACK_IMPORTED_MODULE_0_ExtraFormBundle_utils_utils_js__["b" /* createAttributeMapObject */])(textarea);
+      var configuration = window[formProperties['data-configuration-variable']];
+
+      configuration.componentId = editorComponentId;
+      var rawModal = createRawModal();
+      var rawModalButton =
+        '<button class="trigger-extra-step-raw-mode-modal-' + index + '">' +
+          'Raw mode' +
+        '</button>';
+      var advancedModal = createAdvancedModal();
+      var advancedModalButton =
+        '<button class="trigger-extra-step-advanced-visual-mode-modal-' + index + '">' +
+          'Visual mode' +
+        '</button>';
+
+      /**
+       * Insert buttons in place of the textarea
+       */
+      __WEBPACK_IMPORTED_MODULE_1_jquery___default()(textarea).after(
+        '<div class="modal-buttons">' +
+           advancedModalButton + ' ' + rawModalButton +
+        '</div>'
+      );
+
+      // Insert the modals editor at the end of the body
+      var $body = __WEBPACK_IMPORTED_MODULE_1_jquery___default()('body');
+
+      $body.append(
+        '<div id="' + editorComponentId + '">' + rawModal + advancedModal + '</div>'
+      );
+
+      // Hide the initial textarea
+      textarea.style.display = 'none';
+
+      // Display / Hide the modals
+      var modalTypes = [
+        'extra-step-advanced-visual-mode-modal',
+        'extra-step-raw-mode-modal'
+      ];
+
+      modalTypes.forEach(function (modalType) {
+        showModalOnClick(modalType, index);
+      });
+
+      modalTypes.forEach(function (modalType) {
+        hideModalOnClick(modalType);
+      });
+
+      app.triggerVueStepEditor('#' + editorComponentId, configuration, formProperties);
+
+      Object(__WEBPACK_IMPORTED_MODULE_0_ExtraFormBundle_utils_utils_js__["a" /* colorEmptyRequiredInputs */])(editorComponentId, 'extra-form-inputs-required');
+
+      /**
+       * Show modal on click on trigger button
+       *
+       * @param modalType
+       * @param modalIdentifier
+       */
+      function showModalOnClick (modalType, modalIdentifier) {
+        __WEBPACK_IMPORTED_MODULE_1_jquery___default()(document).on('click', 'button.trigger-' + modalType + '-' + modalIdentifier, function (event) {
+          event.preventDefault();
+          var $modal = __WEBPACK_IMPORTED_MODULE_1_jquery___default()('#' + modalType + '-' + modalIdentifier);
+
+          $modal.modal('show');
+        });
+      }
+
+      /**
+       * Hide modal on click on close button
+       *
+       * @param modalType
+       */
+      function hideModalOnClick (modalType) {
+        var classes =
+          // On the generate field button from the editor-raw
+          '.' + modalType + ' .modal-body button.close-modal, ' +
+
+            // On the upper right cross of the modal
+          '.' + modalType + ' .modal-footer > button.close-modal, ' +
+
+            // On the close button on the left bottom of the modal
+          '.' + modalType + ' .modal-header > button.close';
+
+        __WEBPACK_IMPORTED_MODULE_1_jquery___default()(document).on('click', classes, function (event) {
+          event.preventDefault();
+          __WEBPACK_IMPORTED_MODULE_1_jquery___default()(this)
+            .closest('.modal')
+            .modal('hide')
+          ;
+        });
+      }
+
+      /**
+       * Create the raw modal
+       *
+       * @returns {string}
+       */
+      function createRawModal () {
+        return Object(__WEBPACK_IMPORTED_MODULE_0_ExtraFormBundle_utils_utils_js__["c" /* createBootstrapModal */])(
+          index,
+          'extra-step-raw-mode-modal',
+          'modal-fullscreen',
+          'Editor in raw mode',
+          '<div class="editor">' +
+            '<step-editor-raw></step-editor-raw>' +
+          '</div><br>'
+        );
+      }
+
+      /**
+       * Create the advanced modal
+       *
+       * @returns {string}
+       */
+      function createAdvancedModal () {
+        return Object(__WEBPACK_IMPORTED_MODULE_0_ExtraFormBundle_utils_utils_js__["c" /* createBootstrapModal */])(
+          index,
+          'extra-step-advanced-visual-mode-modal',
+          'modal-fullscreen',
+          'Visual mode',
+          '<div class="editor extra-step-editor">' +
+            '<step-editor></step-editor>' +
+          '</div>',
+          '<em>All your changes are automatically saved</em>'
+        );
+      }
+
+    });
+
+  });
+
+};
+
+
+/***/ })
+
+/******/ });

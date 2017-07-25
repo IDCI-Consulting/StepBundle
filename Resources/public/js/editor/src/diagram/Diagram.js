@@ -4,7 +4,10 @@ import $                  from 'jquery';
 import DiagramPathFactory from 'StepBundle/diagram/factory/DiagramPathFactory.js';
 import DiagramStepFactory from 'StepBundle/diagram/factory/DiagramStepFactory.js';
 import DiagramColors      from 'StepBundle/diagram/DiagramColors.js';
-import DiagramUtils       from  'StepBundle/diagram/DiagramUtils.js';
+import DiagramUtils       from 'StepBundle/diagram/DiagramUtils.js';
+
+import 'StepBundle/styles/joint.css';
+import 'StepBundle/styles/joint-custom.css';
 
 /**
  * Object representing the map diagram

@@ -3,7 +3,8 @@ var path    = require('path');
 
 module.exports = {
   entry: {
-    'step-editor': './Resources/public/js/editor/src/entrypoint.js'
+    'load-step-editors': './Resources/public/js/editor/src/entrypoint.js',
+    'display-maps': './Resources/public/js/map/src/entrypoint.js'
   },
   output: {
     path: __dirname + '/Resources/public/js/editor/dist',
