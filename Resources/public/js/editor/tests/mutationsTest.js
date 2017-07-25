@@ -1,3 +1,6 @@
+import stepEditorMutations from 'StepBundle/store/mutations/mutations.js';
+import stepEditorGetters from 'StepBundle/store/getters.js';
+
 describe("Test the step editor mutations", function() {
 
   it("Should remove all associated paths", function() {

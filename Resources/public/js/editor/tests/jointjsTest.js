@@ -1,3 +1,5 @@
+import Diagram from 'StepBundle/diagram/Diagram.js';
+
 describe("Test the jointjs diagram generation", function() {
 
   var mapWithSinglePath = {
@@ -129,7 +131,7 @@ describe("Test the jointjs diagram generation", function() {
     expect(elements.length).toEqual(4);
     expect(links.length).toEqual(3);
   });
-  
+
   var mapWithConditionalPathWithoutDefault = {
     name: '',
     options: {},
