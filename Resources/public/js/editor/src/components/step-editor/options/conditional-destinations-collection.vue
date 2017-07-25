@@ -2,7 +2,7 @@
 
   <div class="form-group">
     <label :for="name">{{ name }}</label>
-    // Only allow the add button when creating a new path, else we can only update
+    <!-- Only allow the add button when creating a new path, else we can only update -->
     <button v-if="pathCreation" @click.prevent="addDestination">Add</button>
     <div class="conditional-destination form-group" v-for="(destination, index) in destinations">
       <select
