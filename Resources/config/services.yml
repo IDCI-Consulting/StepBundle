@@ -40,6 +40,7 @@ parameters:
 
     idci_step.serialization.serializer_provider.class: IDCI\Bundle\StepBundle\Serialization\SerializerProvider
 
+    idci_step.asset_provider.map.class: IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider
 
 services:
 
@@ -284,6 +285,7 @@ services:
         class: IDCI\Bundle\StepBundle\Form\Type\StepEditorType
         tags:
             - { name: form.type, alias: step_editor }
+            - { name: idci_asset_loader.asset_provider, alias: step_editor }
 
     # Navigator
     form.type.idci_step.navigator:
@@ -330,3 +332,9 @@ services:
         class: IDCI\Bundle\StepBundle\Twig\StepTwigExtension
         tags:
             - { name: twig.extension }
+
+    # Asset Provider
+    idci_step.asset_provider.map:
+        class: %idci_step.asset_provider.map.class%
+        tags:
+            - { name: idci_asset_loader.asset_provider, alias: map_diagram }

@@ -6,7 +6,8 @@ idci_step:
             parent:      ~
             abstract:    true
             description: ~
-            extra_form_options: ~
+            extra_form_options:
+                logical_expression: {extra_form_type: "text", options: {required: false}}
 
         add_url_query_parameter:
             parent:      abstract
@@ -45,7 +46,8 @@ idci_step:
             parent:      ~
             abstract:    true
             description: ~
-            extra_form_options: ~
+            extra_form_options:
+                logical_expression: {extra_form_type: "text", options: {required: false}}
 
         add_link:
             parent:      abstract

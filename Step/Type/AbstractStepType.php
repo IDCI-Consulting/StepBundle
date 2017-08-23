@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,7 +48,7 @@ abstract class AbstractStepType implements StepTypeInterface
                 'nav_title'             => array('null', 'string'),
                 'description'           => array('null', 'string'),
                 'nav_description'       => array('null', 'string'),
-                'is_first'              => array('bool'),
+                'is_first'              => array('bool', 'string'),
                 'data'                  => array('null', 'array'),
                 'previous_options'      => array('array'),
                 'js'                    => array('null', 'string'),
@@ -55,6 +56,11 @@ abstract class AbstractStepType implements StepTypeInterface
                 'attr'                  => array('array'),
                 'events'                => array('array'),
                 'serialization_mapping' => array('null', 'array'),
+            ))
+            ->setNormalizers(array(
+                'is_first' => function (Options $options, $value) {
+                    return (bool)$value;
+                }
             ))
         ;
     }
