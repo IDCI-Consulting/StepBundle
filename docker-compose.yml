@@ -2,23 +2,17 @@ version: '2'
 
 services:
 
-  php54:
-    image: idci-step-bundle/php:5.4-fpm
-    build:
-      context: .docker/build/php5.4
-    volumes:
-      - ./:/var/www/html
-
-  php56:
+  php:
     image: idci-step-bundle/php:5.6-fpm
     build:
-      context: .docker/build/php5.6
+      context: .docker/build/php
+      dockerfile: Dockerfile-5.6
     volumes:
       - ./:/var/www/html
 
   node:
-    image: idci-step-bundle/node:6.9.5
+    image: idci-step-bundle/node:8.4.0-stretch
     build:
-      context: .docker/build/node6.9.5
+      context: .docker/build/node
     volumes:
       - ./:/usr/src/app
