@@ -1,6 +1,6 @@
 # Variables
 
-target_container ?= php56
+target_container ?= php
 php_sources ?= .
 js_sources ?= Resources/public/js/editor
 
@@ -11,6 +11,10 @@ command:
 	docker-compose run --rm $(target_container) $(cmd)
 
 # NodeJs commands
+
+.PHONY: yarn
+yarn:
+	docker-compose run --rm node yarn $(cmd) $(options)
 
 .PHONY: npm-install
 npm-install:

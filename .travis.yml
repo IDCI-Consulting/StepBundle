@@ -9,9 +9,10 @@ php:
   - '5.6'
 
 before_install:
-  - composer install --prefer-source --no-interaction --dev >> /dev/null
-  - docker-compose build >> /dev/null
-  - docker-compose run --rm node npm install --loglevel error
+  - docker-compose up -d --build
+  - docker-compose run --rm php composer require idci/extra-form-bundle:~2.0
+  - make composer-install options="--no-interaction"
+  - make yarn cmd="install"
 
 before_script:
   - export DISPLAY=:99.0
