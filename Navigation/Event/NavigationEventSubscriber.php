@@ -482,7 +482,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         // Handle string case.
         } elseif (is_string($value)) {
-            $value = $this->merger->render($value, $vars);
+            $template = $this->merger->createTemplate($value);
+            $value = $template->render($vars);
         }
 
         return $value;
