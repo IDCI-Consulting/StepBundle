@@ -44,9 +44,6 @@ imports:
     ...
     - { resource: @IDCIExtraFormBundle/Resources/config/config.yml }
     - { resource: @IDCIStepBundle/Resources/config/config.yml }
-
-idci_asset_loader:
-    auto_load: true
 ```
 
 Use the editor
