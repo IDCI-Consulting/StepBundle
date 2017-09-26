@@ -112,7 +112,7 @@ class StepTwigExtension extends \Twig_Extension
     /**
      * Returns step
      *
-     * @param Twig_Environment   $twig
+     * @param \Twig_Environment   $twig
      * @param NavigatorInterface $navigator
      * @param string             $theme
      *
@@ -132,7 +132,7 @@ class StepTwigExtension extends \Twig_Extension
     /**
      * Render the map drawing template
      *
-     * @param Twig_Environment $twig
+     * @param \Twig_Environment $twig
      * @param string           $jsonMap
      * @param string           $id
      *
