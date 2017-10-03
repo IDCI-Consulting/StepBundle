@@ -17,7 +17,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     protected $configurations;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setConfiguration($alias, PathTypeConfigurationInterface $configuration)
     {
@@ -27,7 +27,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigurations()
     {
@@ -35,7 +35,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfiguration($alias)
     {
@@ -55,7 +55,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasConfiguration($alias)
     {

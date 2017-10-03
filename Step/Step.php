@@ -7,8 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Step;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
-
 class Step implements StepInterface
 {
     /**
@@ -21,7 +19,7 @@ class Step implements StepInterface
     /**
      * Constructor.
      *
-     * @param array $configuration The configuration.
+     * @param array $configuration the configuration
      */
     public function __construct(array $configuration = array())
     {

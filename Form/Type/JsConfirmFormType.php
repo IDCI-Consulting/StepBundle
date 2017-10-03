@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 
 class JsConfirmFormType extends AbstractType
 {
@@ -46,15 +46,13 @@ class JsConfirmFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(Options $resolver)
     {
         $resolver
             ->setRequired(array('path_index'))
-            ->setDefaults(array('message' => "Are you sure ?"))
-            ->setAllowedTypes(array(
-                'path_index' => array('integer'),
-                'message'    => array('string')
-            ))
+            ->setDefaults(array('message' => 'Are you sure ?'))
+            ->setAllowedTypes('path_index', array('integer'))
+            ->setAllowedTypes('message', array('string'))
         ;
     }
 

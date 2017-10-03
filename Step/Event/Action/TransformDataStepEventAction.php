@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Doctrine\Common\Util\Inflector;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\Step\Type\FormStepType;
@@ -19,8 +19,8 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      */
     protected function doExecute(StepEventInterface $event, array $parameters = array())
     {
-        $formData      = $event->getData();
-        $step          = $event->getNavigator()->getCurrentStep();
+        $formData = $event->getData();
+        $step = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();
 
         if (empty($formData) ||
@@ -52,20 +52,19 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(Options $resolver)
     {
         $resolver
             ->setDefaults(array('fields' => array()))
-            ->setAllowedTypes(array(
-                'fields' => array('array')
-            ))
+            ->setAllowedTypes('fields', array('array'))
         ;
     }
 
     /**
-     * Upper transformer
+     * Upper transformer.
      *
      * @param string $value The value to transform
+     *
      * @return mixed
      */
     public static function transformUpper($value)
@@ -78,9 +77,10 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     }
 
     /**
-     * Lower transformer
+     * Lower transformer.
      *
      * @param string $value The value to transform
+     *
      * @return mixed
      */
     public static function transformLower($value)

@@ -36,7 +36,7 @@ class StepTwigExtension extends \Twig_Extension
                 'step',
                 array($this, 'step'),
                 array(
-                    'is_safe'           => array('html', 'js'),
+                    'is_safe' => array('html', 'js'),
                     'needs_environment' => true,
                 )
             ),
@@ -44,7 +44,7 @@ class StepTwigExtension extends \Twig_Extension
                 'draw_map',
                 array($this, 'drawMap'),
                 array(
-                    'is_safe'           => array('html', 'js'),
+                    'is_safe' => array('html', 'js'),
                     'needs_environment' => true,
                 )
             ),
@@ -60,7 +60,7 @@ class StepTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Returns step stylesheets
+     * Returns step stylesheets.
      *
      * @param NavigatorInterface $navigator
      *
@@ -79,7 +79,7 @@ class StepTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Returns step javascripts
+     * Returns step javascripts.
      *
      * @param NavigatorInterface $navigator
      *
@@ -98,7 +98,7 @@ class StepTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Returns the pre step content
+     * Returns the pre step content.
      *
      * @param NavigatorInterface $navigator
      *
@@ -110,9 +110,9 @@ class StepTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Returns step
+     * Returns step.
      *
-     * @param \Twig_Environment   $twig
+     * @param \Twig_Environment  $twig
      * @param NavigatorInterface $navigator
      * @param string             $theme
      *
@@ -124,17 +124,17 @@ class StepTwigExtension extends \Twig_Extension
             'IDCIStepBundle:Step:default.html.twig',
             array(
                 'navigator' => $navigator,
-                'theme'     => $theme,
+                'theme' => $theme,
             )
         );
     }
 
     /**
-     * Render the map drawing template
+     * Render the map drawing template.
      *
      * @param \Twig_Environment $twig
-     * @param string           $jsonMap
-     * @param string           $id
+     * @param string            $jsonMap
+     * @param string            $id
      *
      * @return string
      */
@@ -144,7 +144,7 @@ class StepTwigExtension extends \Twig_Extension
             'IDCIStepBundle:Map:map_diagram.html.twig',
             array(
                 'jsonMap' => $jsonMap,
-                'id'      => $id
+                'id' => $id,
             )
         );
     }

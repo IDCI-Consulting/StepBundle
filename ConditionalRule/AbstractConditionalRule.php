@@ -8,7 +8,7 @@
 
 namespace IDCI\Bundle\StepBundle\ConditionalRule;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConditionalRule implements ConditionalRuleInterface
@@ -27,18 +27,18 @@ abstract class AbstractConditionalRule implements ConditionalRuleInterface
     /**
      * Set default options.
      *
-     * @param OptionsResolverInterface $resolver
+     * @param Options $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(Options $resolver)
     {
     }
 
     /**
-     * Do match
+     * Do match.
      *
-     * @param array $options The options to match.
+     * @param array $options the options to match
      *
-     * @return boolean Return true if the conditional rule match.
+     * @return bool return true if the conditional rule match
      */
     abstract protected function doMatch(array $options = array());
 }

@@ -25,7 +25,7 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
     protected $description;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $abstract;
 
@@ -35,21 +35,21 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
     protected $extraFormOptions;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $configuration
      */
     public function __construct(array $configuration)
     {
-        $this->name                 = $configuration['name'];
-        $this->parent               = $configuration['parent'];
-        $this->description          = $configuration['description'];
-        $this->abstract             = $configuration['abstract'];
-        $this->extraFormOptions     = $configuration['extra_form_options'];
+        $this->name = $configuration['name'];
+        $this->parent = $configuration['parent'];
+        $this->description = $configuration['description'];
+        $this->abstract = $configuration['abstract'];
+        $this->extraFormOptions = $configuration['extra_form_options'];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -57,7 +57,7 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -65,7 +65,7 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -73,7 +73,7 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isAbstract()
     {
@@ -81,7 +81,7 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getExtraFormOptions()
     {

@@ -14,6 +14,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\SecurityBundle\SecurityBundle();
             $bundles[] = new Symfony\Bundle\TwigBundle\TwigBundle();
             $bundles[] = new IDCI\Bundle\ExtraFormBundle\IDCIExtraFormBundle();
+            $bundles[] = new IDCI\Bundle\AssetLoaderBundle\IDCIAssetLoaderBundle();
             $bundles[] = new IDCI\Bundle\StepBundle\IDCIStepBundle();
             $bundles[] = new JMS\SerializerBundle\JMSSerializerBundle();
         }

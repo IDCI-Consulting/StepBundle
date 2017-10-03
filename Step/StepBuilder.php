@@ -19,7 +19,7 @@ class StepBuilder implements StepBuilderInterface
     private $registry;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param StepTypeRegistryInterface $registry
      */

@@ -9,8 +9,8 @@ class PathTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->testConfiguration = array(
-            'type'    => 'single',
-            'options' => array()
+            'type' => 'single',
+            'options' => array(),
         );
 
         $this->path = new Path($this->testConfiguration);

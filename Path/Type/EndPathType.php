@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class EndPathType extends AbstractPathType
@@ -15,16 +15,14 @@ class EndPathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(Options $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver
             ->setRequired(array('source'))
             ->setDefaults(array('label' => 'end'))
-            ->setAllowedTypes(array(
-                'source' => 'string'
-            ))
+            ->setAllowedTypes('source', array('string'))
         ;
     }
 

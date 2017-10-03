@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
 class AddLinkStepEventAction extends AbstractStepEventAction
@@ -29,7 +29,7 @@ class AddLinkStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(Options $resolver)
     {
         $resolver
             ->setDefaults(array(

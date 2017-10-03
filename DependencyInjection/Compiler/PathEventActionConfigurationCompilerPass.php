@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.path_event_actions key
- * It creates a service for each configuration, and inject it in the configuration registry
+ * It creates a service for each configuration, and inject it in the configuration registry.
  */
 class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
 {
@@ -47,7 +47,7 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
             }
 
             $configuration['name'] = $configurationName;
-            $alias = $configurationName . '_configuration';
+            $alias = $configurationName.'_configuration';
 
             $serviceDefinition->setAbstract(false);
             $serviceDefinition->setPublic(!$configuration['abstract']);
@@ -81,9 +81,10 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * Get definition name
+     * Get definition name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getDefinitionName($name)

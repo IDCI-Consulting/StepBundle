@@ -8,7 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 
 class FormStepFormType extends AbstractStepFormType
 {
@@ -29,15 +29,13 @@ class FormStepFormType extends AbstractStepFormType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(Options $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver
             ->setRequired(array('builder'))
-            ->setAllowedTypes(array(
-                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
-            ))
+            ->setAllowedTypes('builder', array('Symfony\Component\Form\FormBuilderInterface'))
         ;
     }
 

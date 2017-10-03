@@ -23,7 +23,7 @@ class NavigationDataCollector extends DataCollector
     protected $logger;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param NavigationLoggerInterface $logger
      */
@@ -49,9 +49,9 @@ class NavigationDataCollector extends DataCollector
     }
 
     /**
-     * Has navigation
+     * Has navigation.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasNavigation()
     {
@@ -59,7 +59,7 @@ class NavigationDataCollector extends DataCollector
     }
 
     /**
-     * Get map
+     * Get map.
      *
      * @return MapInterface|null
      */
@@ -73,7 +73,7 @@ class NavigationDataCollector extends DataCollector
     }
 
     /**
-     * Get flow
+     * Get flow.
      *
      * @return FlowInterface|null
      */

@@ -538,7 +538,7 @@
       </UML:Class>
       <UML:Generalization xmi.id="I6sBYoQkXclO" name="" parent="nDKn2qcogIFm" isSpecification="false" visibility="public" namespace="Logical View" child="PoHKcL86BmDT" discriminator=""/>
       <UML:Generalization xmi.id="DtSiTC4jRgQU" name="" parent="nDKn2qcogIFm" isSpecification="false" visibility="public" namespace="Logical View" child="EiC1tgVGSma5" discriminator=""/>
-      <UML:Class isLeaf="false" xmi.id="gq0bev1ct8zW" name="OptionsResolverInterface" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" namespace="Logical View"/>
+      <UML:Class isLeaf="false" xmi.id="gq0bev1ct8zW" name="Options" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" namespace="Logical View"/>
       <UML:Class isLeaf="false" xmi.id="y4iP5b490P72" name="EndPathType" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" namespace="Logical View">
        <UML:GeneralizableElement.generalization>
         <UML:Generalization xmi.idref="NVnAepHdtx0y"/>

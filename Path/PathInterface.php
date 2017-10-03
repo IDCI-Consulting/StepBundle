@@ -15,89 +15,89 @@ interface PathInterface
     /**
      * Get the configuration.
      *
-     * @return array The configuration.
+     * @return array the configuration
      */
     public function getConfiguration();
 
     /**
      * Set the configuration options.
      *
-     * @param array $options The configuration options.
+     * @param array $options the configuration options
      *
-     * @return PathInterface.
+     * @return pathInterface
      */
     public function setOptions($options);
 
     /**
      * Get the configuration options.
      *
-     * @return array The configuration options.
+     * @return array the configuration options
      */
     public function getOptions();
 
     /**
      * Set the source step.
      *
-     * @param StepInterface $step The source step.
+     * @param StepInterface $step the source step
      *
-     * @return PathInterface This.
+     * @return PathInterface this
      */
     public function setSource(StepInterface $step);
 
     /**
      * Get the source step.
      *
-     * @return StepInterface The source step.
+     * @return StepInterface the source step
      */
     public function getSource();
 
     /**
      * Add a destination step.
      *
-     * @param StepInterface $step The step.
+     * @param StepInterface $step the step
      *
-     * @return PathInterface This.
+     * @return PathInterface this
      */
     public function addDestination(StepInterface $step);
 
     /**
      * Get the destination steps.
      *
-     * @return array The steps.
+     * @return array the steps
      */
     public function getDestinations();
 
     /**
      * Has the destination step.
      *
-     * @param string $name A step name to test.
+     * @param string $name a step name to test
      *
-     * @return boolean True if the step has been defined as one of the path destinations.
+     * @return bool true if the step has been defined as one of the path destinations
      */
     public function hasDestination($name);
 
     /**
      * Get the destination step.
      *
-     * @param string $name The destination step name to retrieve.
+     * @param string $name the destination step name to retrieve
      *
-     * @return StepInterface|null The destination step if exists.
+     * @return StepInterface|null the destination step if exists
      */
     public function getDestination($name);
 
     /**
      * Resolve the destination step.
      *
-     * @param NavigatorInterface $navigator.
+     * @param navigatorInterface $navigator
      *
-     * @return StepInterface|null The resolved destination step if exists.
+     * @return StepInterface|null the resolved destination step if exists
      */
     public function resolveDestination(NavigatorInterface $navigator);
 
     /**
      * Returns the path types used to construct the path.
      *
-     * @return PathTypeInterface The path's type.
+     * @return PathTypeInterface the path's type
      */
     public function getType();
 }

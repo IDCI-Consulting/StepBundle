@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class SinglePathType extends AbstractPathType
@@ -15,16 +15,14 @@ class SinglePathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(Options $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver
             ->setRequired(array('source', 'destination'))
-            ->setAllowedTypes(array(
-                'source'      => 'string',
-                'destination' => 'string',
-            ))
+            ->setAllowedTypes('source', 'string')
+            ->setAllowedTypes('destination', 'string')
         ;
     }
 

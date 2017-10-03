@@ -11,8 +11,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
@@ -36,9 +36,9 @@ class NavigatorType extends AbstractType
     protected $merger;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    protected $securityContext;
+    private $tokenStorage;
 
     /**
      * @var SessionInterface
@@ -46,26 +46,26 @@ class NavigatorType extends AbstractType
     private $session;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param StepEventActionRegistryInterface $stepEventActionRegistry The step event action registry.
-     * @param PathEventActionRegistryInterface $pathEventActionRegistry The path event action registry.
-     * @param Twig_Environment                 $merger                  The twig merger.
-     * @param SecurityContextInterface         $securityContext         The security context.
-     * @param SessionInterface                 $session                 The session.
+     * @param StepEventActionRegistryInterface $stepEventActionRegistry the step event action registry
+     * @param PathEventActionRegistryInterface $pathEventActionRegistry the path event action registry
+     * @param Twig_Environment                 $merger                  the twig merger
+     * @param TokenStorageInterface            $tokenStorage            the security context
+     * @param SessionInterface                 $session                 the session
      */
     public function __construct(
         StepEventActionRegistryInterface $stepEventActionRegistry,
         PathEventActionRegistryInterface $pathEventActionRegistry,
         \Twig_Environment                $merger,
-        SecurityContextInterface         $securityContext,
+        TokenStorageInterface            $tokenStorage,
         SessionInterface                 $session
     ) {
         $this->stepEventActionRegistry = $stepEventActionRegistry;
         $this->pathEventActionRegistry = $pathEventActionRegistry;
-        $this->merger                  = $merger;
-        $this->securityContext         = $securityContext;
-        $this->session                 = $session;
+        $this->merger = $merger;
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
     }
 
     /**
@@ -86,19 +86,19 @@ class NavigatorType extends AbstractType
     {
         $builder
             ->add('_map_name', 'hidden', array(
-                'data' => $options['navigator']->getMap()->getName()
+                'data' => $options['navigator']->getMap()->getName(),
             ))
             ->add('_map_footprint', 'hidden', array(
-                'data' => $options['navigator']->getMap()->getFootprint()
+                'data' => $options['navigator']->getMap()->getFootprint(),
             ))
             ->add('_current_step', 'hidden', array(
-                'data' => $options['navigator']->getCurrentStep()->getName()
+                'data' => $options['navigator']->getCurrentStep()->getName(),
             ))
         ;
 
         if (null !== $options['navigator']->getPreviousStep()) {
             $builder->add('_previous_step', 'hidden', array(
-                'data' => $options['navigator']->getPreviousStep()->getName()
+                'data' => $options['navigator']->getPreviousStep()->getName(),
             ));
         }
 
@@ -113,7 +113,7 @@ class NavigatorType extends AbstractType
             $this->stepEventActionRegistry,
             $this->pathEventActionRegistry,
             $this->merger,
-            $this->securityContext,
+            $this->tokenStorage,
             $this->session
         ));
     }
@@ -121,8 +121,8 @@ class NavigatorType extends AbstractType
     /**
      * Build step.
      *
-     * @param FormBuilderInterface $builder The builder.
-     * @param array                $options The options.
+     * @param FormBuilderInterface $builder the builder
+     * @param array                $options the options
      */
     protected function buildStep(FormBuilderInterface $builder, array $options)
     {
@@ -138,13 +138,11 @@ class NavigatorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(Options $resolver)
     {
         $resolver
             ->setRequired(array('navigator'))
-            ->setAllowedTypes(array(
-                'navigator'=> array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface')
-            ))
+            ->setAllowedTypes('navigator', array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface'))
         ;
     }
 

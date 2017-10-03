@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 
@@ -33,23 +33,21 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(Options $resolver)
     {
         $resolver
             ->setDefaults(array('fields' => array()))
-            ->setAllowedTypes(array(
-                'fields' => array('array')
-            ))
+            ->setAllowedTypes('fields', array('array'))
         ;
     }
 
     /**
      * Change the flow data.
      *
-     * @param FlowInterface $flow  The flow data to change.
-     * @param array         $path  The target path to change.
-     * @param array         $types The flow data types to look at.
-     * @param mixed         $value The value.
+     * @param FlowInterface $flow  the flow data to change
+     * @param array         $path  the target path to change
+     * @param array         $types the flow data types to look at
+     * @param mixed         $value the value
      */
     protected function change(FlowInterface $flow, $path, $types, $value)
     {
@@ -66,11 +64,11 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
     /**
      * Do the flow data change.
      *
-     * @param array $data  The flow data.
-     * @param array $path  The target path to change.
-     * @param mixed $value The value.
+     * @param array $data  the flow data
+     * @param array $path  the target path to change
+     * @param mixed $value the value
      *
-     * @return array The changed data.
+     * @return array the changed data
      */
     protected function doChange(array $data, array $path, $value)
     {

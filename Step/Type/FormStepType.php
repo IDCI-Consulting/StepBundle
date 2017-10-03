@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Serialization\SerializationMapper;
@@ -20,9 +19,9 @@ class FormStepType extends AbstractStepType
     protected $serializationMapper;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param SerializationMapper $serializationMapper The serialization mapper.
+     * @param SerializationMapper $serializationMapper the serialization mapper
      */
     public function __construct(SerializationMapper $serializationMapper)
     {
@@ -32,15 +31,13 @@ class FormStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(Options $resolver)
     {
         parent::setDefaultOptions($resolver);
 
         $resolver
             ->setRequired(array('builder'))
-            ->setAllowedTypes(array(
-                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
-            ))
+            ->setAllowedTypes('builder', array('Symfony\Component\Form\FormBuilderInterface'))
         ;
     }
 
@@ -50,8 +47,8 @@ class FormStepType extends AbstractStepType
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('_data', 'idci_step_step_form_form', array(
-            'label'         => $options['title'],
-            'builder'       => $options['builder'],
+            'label' => $options['title'],
+            'builder' => $options['builder'],
             'display_title' => $options['display_title'],
         ));
     }

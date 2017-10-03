@@ -15,65 +15,65 @@ interface StepInterface
     /**
      * Get the configuration.
      *
-     * @return array The configuration.
+     * @return array the configuration
      */
     public function getConfiguration();
 
     /**
      * Set the configuration options.
      *
-     * @param array $options The configuration options.
+     * @param array $options the configuration options
      *
-     * @return StepInterface.
+     * @return stepInterface
      */
     public function setOptions($options);
 
     /**
      * Get the configuration options.
      *
-     * @return array The configuration options.
+     * @return array the configuration options
      */
     public function getOptions();
 
     /**
      * Returns the step name.
      *
-     * @return string The step name.
+     * @return string the step name
      */
     public function getName();
 
     /**
-     * Returns a boolean to indicate That this step was define as a first step
+     * Returns a boolean to indicate That this step was define as a first step.
      *
-     * @return boolean.
+     * @return boolean
      */
     public function isFirst();
 
     /**
      * Returns the step types used to construct the step.
      *
-     * @return StepTypeInterface The step's type.
+     * @return StepTypeInterface the step's type
      */
     public function getType();
 
     /**
      * Returns the step data.
      *
-     * @return array|null The step's data.
+     * @return array|null the step's data
      */
     public function getData();
 
     /**
      * Returns the form pre step content.
      *
-     * @return string|null The content.
+     * @return string|null the content
      */
     public function getPreStepContent();
 
     /**
      * Returns the step data type mapping.
      *
-     * @return array The data type mapping.
+     * @return array the data type mapping
      */
     public function getDataTypeMapping();
 }

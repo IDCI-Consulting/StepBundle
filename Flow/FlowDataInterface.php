@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Flow;
 interface FlowDataInterface
 {
     /**
-     * Returns the data
+     * Returns the data.
      *
      * @return array
      */
@@ -19,14 +19,14 @@ interface FlowDataInterface
     /**
      * Set data.
      *
-     * @param array $data The data.
+     * @param array $data the data
      *
      * @return FlowDataInterface
      */
     public function setData(array $data);
 
     /**
-     * Returns the reminded  data
+     * Returns the reminded  data.
      *
      * @return array
      */
@@ -35,14 +35,14 @@ interface FlowDataInterface
     /**
      * Set reminded data.
      *
-     * @param array $remindedData The reminded data.
+     * @param array $remindedData the reminded data
      *
      * @return FlowDataInterface
      */
     public function setRemindedData(array $remindedData);
 
     /**
-     * Returns the retrieved data
+     * Returns the retrieved data.
      *
      * @return array
      */
@@ -51,7 +51,7 @@ interface FlowDataInterface
     /**
      * Set retrieved data.
      *
-     * @param array $retrievedData The retrieved data.
+     * @param array $retrievedData the retrieved data
      *
      * @return FlowDataInterface
      */
@@ -60,31 +60,31 @@ interface FlowDataInterface
     /**
      * Whether or not it exists a data for a step.
      *
-     * @param string      $name The identifier name of the step.
-     * @param string|null $type The data type (null, 'reminded' or 'retrieved').
+     * @param string      $name the identifier name of the step
+     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      *
-     * @return boolean True if a data exists for the step, false otherwise.
+     * @return bool true if a data exists for the step, false otherwise
      */
     public function hasStepData($name, $type = null);
 
     /**
      * Returns the data of a step.
      *
-     * @param string      $name The identifier name of the step.
-     * @param string|null $type The data type (null, 'reminded' or 'retrieved').
+     * @param string      $name the identifier name of the step
+     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      *
-     * @return array The associated data.
+     * @return array the associated data
      *
-     * @throws \InvalidArgumentException if there is no associated data for the step.
+     * @throws \InvalidArgumentException if there is no associated data for the step
      */
     public function getStepData($name, $type = null);
 
     /**
      * Set the data of a step.
      *
-     * @param string      $name    The identifier name of the step.
-     * @param array       $data    The associated data.
-     * @param string|null $type    The data type (null, 'reminded' or 'retrieved').
+     * @param string      $name the identifier name of the step
+     * @param array       $data the associated data
+     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      *
      * @return FlowDataInterface
      */
@@ -93,8 +93,8 @@ interface FlowDataInterface
     /**
      * Unset the data for a step.
      *
-     * @param string      $name The identifier name of the step.
-     * @param string|null $type The data type (null, 'reminded' or 'retrieved').
+     * @param string      $name the identifier name of the step
+     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      *
      * @return FlowDataInterface
      */
@@ -103,7 +103,7 @@ interface FlowDataInterface
     /**
      * Returns all data steps in an array.
      *
-     * @return array The data.
+     * @return array the data
      */
     public function getAll();
 }

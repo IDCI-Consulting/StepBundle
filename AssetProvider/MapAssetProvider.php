@@ -19,7 +19,7 @@ class MapAssetProvider implements AssetProviderInterface
     private $collection;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -35,7 +35,7 @@ class MapAssetProvider implements AssetProviderInterface
     }
 
     /**
-     * register the assets
+     * register the assets.
      */
     public function registerAssets()
     {

@@ -44,13 +44,13 @@ class NavigatorFactory implements NavigatorFactoryInterface
     private $logger;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param FormFactoryInterface                  $formFactory                  The form factory.
-     * @param FlowRecorderInterface                 $flowRecorder                 The flow recorder.
-     * @param MapConfigurationBuilderInterface      $mapConfigurationBuilder      The map configuration builder.
-     * @param ConfigurationFetcherRegistryInterface $configurationFetcherRegistry The configuration fetcher registry.
-     * @param NavigationLoggerInterface             $logger                       The logger.
+     * @param FormFactoryInterface                  $formFactory                  the form factory
+     * @param FlowRecorderInterface                 $flowRecorder                 the flow recorder
+     * @param MapConfigurationBuilderInterface      $mapConfigurationBuilder      the map configuration builder
+     * @param ConfigurationFetcherRegistryInterface $configurationFetcherRegistry the configuration fetcher registry
+     * @param NavigationLoggerInterface             $logger                       the logger
      */
     public function __construct(
         FormFactoryInterface                  $formFactory,
@@ -59,11 +59,11 @@ class NavigatorFactory implements NavigatorFactoryInterface
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
         NavigationLoggerInterface             $logger
     ) {
-        $this->formFactory                  = $formFactory;
-        $this->flowRecorder                 = $flowRecorder;
-        $this->mapConfigurationBuilder      = $mapConfigurationBuilder;
+        $this->formFactory = $formFactory;
+        $this->flowRecorder = $flowRecorder;
+        $this->mapConfigurationBuilder = $mapConfigurationBuilder;
         $this->configurationFetcherRegistry = $configurationFetcherRegistry;
-        $this->logger                       = $logger;
+        $this->logger = $logger;
     }
 
     /**

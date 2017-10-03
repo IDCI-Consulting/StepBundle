@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
@@ -36,9 +36,9 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $merger;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * @var SessionInterface
@@ -46,29 +46,29 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $session;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
-     * @param StepBuilderInterface     $stepBuilder     The step builder.
-     * @param PathBuilderInterface     $pathBuilder     The path builder.
-     * @param \Twig_Environment        $merger          The twig merger.
-     * @param SecurityContextInterface $securityContext The security context.
-     * @param SessionInterface         $session         The session.
+     * @param FlowRecorderInterface $flowRecorder the flow recorder
+     * @param StepBuilderInterface  $stepBuilder  the step builder
+     * @param PathBuilderInterface  $pathBuilder  the path builder
+     * @param \Twig_Environment     $merger       the twig merger
+     * @param TokenStorageInterface $tokenStorage the security context
+     * @param SessionInterface      $session      the session
      */
     public function __construct(
-        FlowRecorderInterface    $flowRecorder,
-        StepBuilderInterface     $stepBuilder,
-        PathBuilderInterface     $pathBuilder,
-        \Twig_Environment        $merger,
-        SecurityContextInterface $securityContext,
-        SessionInterface         $session
+        FlowRecorderInterface $flowRecorder,
+        StepBuilderInterface  $stepBuilder,
+        PathBuilderInterface  $pathBuilder,
+        \Twig_Environment     $merger,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface      $session
     ) {
-        $this->flowRecorder    = $flowRecorder;
-        $this->stepBuilder     = $stepBuilder;
-        $this->pathBuilder     = $pathBuilder;
-        $this->merger          = $merger;
-        $this->securityContext = $securityContext;
-        $this->session         = $session;
+        $this->flowRecorder = $flowRecorder;
+        $this->stepBuilder = $stepBuilder;
+        $this->pathBuilder = $pathBuilder;
+        $this->merger = $merger;
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
     }
 
     /**
@@ -85,15 +85,15 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     public function createNamedBuilder($name = null, array $data = array(), array $options = array())
     {
         return new MapBuilder(
-            $name,
-            $data,
-            $options,
             $this->flowRecorder,
             $this->stepBuilder,
             $this->pathBuilder,
             $this->merger,
-            $this->securityContext,
-            $this->session
+            $this->tokenStorage,
+            $this->session,
+            $name,
+            $data,
+            $options
         );
     }
 }
