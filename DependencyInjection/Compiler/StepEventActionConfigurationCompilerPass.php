@@ -9,6 +9,8 @@ namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
+use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationInterface;
+use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,16 +27,16 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.step_event_action_configuration.registry')) {
+        if (!$container->hasDefinition(StepEventActionConfigurationRegistry::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.step_event_action_configuration.registry');
+        $registryDefinition = $container->getDefinition(StepEventActionConfigurationRegistry::class);
         $stepEventActionsConfiguration = $container->getParameter('idci_step.step_event_actions');
         $extraFormOptions = array();
 
         foreach ($stepEventActionsConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator('idci_step.step_event_action_configuration');
+            $serviceDefinition = new DefinitionDecorator(StepEventActionConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

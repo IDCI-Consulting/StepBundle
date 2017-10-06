@@ -2,6 +2,7 @@
 
 namespace IDCI\Bundle\StepBundle\Controller;
 
+use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistryInterface;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
@@ -26,7 +27,7 @@ class ApiPathTypeConfigurationController extends FOSRestController
     public function getPathTypesConfigurationsAction($_format)
     {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get('idci_step.path_type_configuration.registry')->getConfigurations();
+        $configurations = $this->get(PathTypeConfigurationRegistryInterface::class)->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();

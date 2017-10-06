@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
+use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfiguration;
+use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry;
 use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,16 +27,16 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.step_type_configuration.registry')) {
+        if (!$container->hasDefinition(StepTypeConfigurationRegistry::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.step_type_configuration.registry');
+        $registryDefinition = $container->getDefinition(StepTypeConfigurationRegistry::class);
         $stepTypesConfiguration = $container->getParameter('idci_step.step_types');
         $extraFormOptions = array();
 
         foreach ($stepTypesConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator('idci_step.step_type_configuration');
+            $serviceDefinition = new DefinitionDecorator(StepTypeConfiguration::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

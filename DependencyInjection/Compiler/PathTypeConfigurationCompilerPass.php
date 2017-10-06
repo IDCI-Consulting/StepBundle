@@ -9,6 +9,8 @@ namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
+use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfiguration;
+use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,16 +27,16 @@ class PathTypeConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.path_type_configuration.registry')) {
+        if (!$container->hasDefinition(PathTypeConfigurationRegistry::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.path_type_configuration.registry');
+        $registryDefinition = $container->getDefinition(PathTypeConfigurationRegistry::class);
         $pathTypesConfiguration = $container->getParameter('idci_step.path_types');
         $extraFormOptions = array();
 
         foreach ($pathTypesConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator('idci_step.path_type_configuration');
+            $serviceDefinition = new DefinitionDecorator(PathTypeConfiguration::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

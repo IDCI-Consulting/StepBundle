@@ -2,6 +2,7 @@
 
 namespace IDCI\Bundle\StepBundle\Controller;
 
+use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistryInterface;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
@@ -26,7 +27,7 @@ class ApiStepEventActionConfigurationController extends FOSRestController
     public function getStepEventActionConfigurationsAction($_format)
     {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get('idci_step.step_event_action_configuration.registry')->getConfigurations();
+        $configurations = $this->get(StepEventActionConfigurationRegistryInterface::class)->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();
