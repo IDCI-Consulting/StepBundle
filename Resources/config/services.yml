@@ -56,6 +56,9 @@ services:
         abstract: true
     IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationInterface: '@IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfiguration'
 
+    IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry: ~
+    IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface: '@IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry'
+
 
     # Builder
 
