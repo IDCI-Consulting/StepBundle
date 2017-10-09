@@ -9,8 +9,8 @@ php:
   - '5.6'
 
 before_install:
-  - docker-compose up -d --build
-  - docker-compose run --rm php composer install --prefer-source --no-interaction --dev >> /dev/null
+  - docker-compose up -d --build >> /dev/null
+  - docker-compose run --rm php composer install --prefer-source --no-interaction --dev
   - make yarn cmd="install"
 
 before_script:
