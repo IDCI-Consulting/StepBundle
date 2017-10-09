@@ -314,7 +314,7 @@ class MapBuilder implements MapBuilderInterface
     {
         $vars['session'] = $this->session->all();
         $vars['user'] = null !== $this->tokenStorage->getToken() ?
-            $this->tokenStorageInterface->getToken()->getUser() :
+            $this->tokenStorage->getToken()->getUser() :
             null
         ;
 
