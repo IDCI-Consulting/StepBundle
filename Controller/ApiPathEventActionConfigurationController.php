@@ -24,10 +24,12 @@ class ApiPathEventActionConfigurationController extends FOSRestController
      *
      * @return Response
      */
-    public function getPathEventActionConfigurationsAction($_format)
-    {
+    public function getPathEventActionConfigurationsAction(
+        $_format,
+        PathEventActionConfigurationRegistryInterface $registry
+    ) {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get(PathEventActionConfigurationRegistryInterface::class)->getConfigurations();
+        $configurations = $registry->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();

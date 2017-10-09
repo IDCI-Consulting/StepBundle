@@ -24,10 +24,12 @@ class ApiStepTypeConfigurationController extends FOSRestController
      *
      * @return Response
      */
-    public function getStepTypesConfigurationsAction($_format)
-    {
+    public function getStepTypesConfigurationsAction(
+        $_format,
+        StepTypeConfigurationRegistryInterface $registry
+    ) {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get(StepTypeConfigurationRegistryInterface::class)->getConfigurations();
+        $configurations = $registry->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();

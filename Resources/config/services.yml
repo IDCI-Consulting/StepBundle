@@ -4,6 +4,12 @@ services:
         autoconfigure: true
         public: true
 
+    # Controller
+    IDCI\Bundle\StepBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
     # Registry
 
     IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry: ~

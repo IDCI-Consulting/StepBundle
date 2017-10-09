@@ -24,10 +24,12 @@ class ApiPathTypeConfigurationController extends FOSRestController
      *
      * @return Response
      */
-    public function getPathTypesConfigurationsAction($_format)
-    {
+    public function getPathTypesConfigurationsAction(
+        $_format,
+        PathTypeConfigurationRegistryInterface $registry
+    ) {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get(PathTypeConfigurationRegistryInterface::class)->getConfigurations();
+        $configurations = $registry->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();

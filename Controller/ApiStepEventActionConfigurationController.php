@@ -24,10 +24,12 @@ class ApiStepEventActionConfigurationController extends FOSRestController
      *
      * @return Response
      */
-    public function getStepEventActionConfigurationsAction($_format)
-    {
+    public function getStepEventActionConfigurationsAction(
+        $_format,
+        StepEventActionConfigurationRegistryInterface $registry
+    ) {
         $view = View::create()->setFormat($_format);
-        $configurations = $this->get(StepEventActionConfigurationRegistryInterface::class)->getConfigurations();
+        $configurations = $registry->getConfigurations();
 
         $configurations = array_filter($configurations, function ($configuration) {
             return !$configuration->isAbstract();
