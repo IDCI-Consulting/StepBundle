@@ -9,8 +9,8 @@ namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
-use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration;
-use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry;
+use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationInterface;
+use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -27,16 +27,16 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition(PathEventActionConfigurationRegistry::class)) {
+        if (!$container->has(PathEventActionConfigurationRegistryInterface::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition(PathEventActionConfigurationRegistry::class);
+        $registryDefinition = $container->findDefinition(PathEventActionConfigurationRegistryInterface::class);
         $pathEventActionsConfiguration = $container->getParameter('idci_step.path_event_actions');
         $extraFormOptions = array();
 
         foreach ($pathEventActionsConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(PathEventActionConfiguration::class);
+            $serviceDefinition = new DefinitionDecorator(PathEventActionConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

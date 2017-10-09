@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
-use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistry;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -19,11 +19,11 @@ class StepEventActionCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition(StepEventActionRegistry::class)) {
+        if (!$container->has(StepEventActionRegistryInterface::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition(StepEventActionRegistry::class);
+        $registryDefinition = $container->findDefinition(StepEventActionRegistryInterface::class);
         foreach ($container->findTaggedServiceIds('idci_step.step_event_action') as $id => $tags) {
             foreach ($tags as $attributes) {
                 $alias = isset($attributes['alias'])

@@ -18,11 +18,11 @@ class FlowDataStoreCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.flow.data_store_registry')) {
+        if (!$container->has('idci_step.flow.data_store_registry')) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.flow.data_store_registry');
+        $registryDefinition = $container->findDefinition('idci_step.flow.data_store_registry');
         foreach ($container->findTaggedServiceIds('idci_step.flow.data_store') as $id => $tags) {
             foreach ($tags as $attributes) {
                 $alias = isset($attributes['alias'])
