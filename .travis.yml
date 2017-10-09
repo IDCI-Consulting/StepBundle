@@ -10,8 +10,7 @@ php:
 
 before_install:
   - docker-compose up -d --build
-  - docker-compose run --rm php composer require idci/extra-form-bundle:~2.0
-  - make composer-install options="--no-interaction"
+  - docker-compose run --rm php composer install --prefer-source --no-interaction --dev >> /dev/null
   - make yarn cmd="install"
 
 before_script:
