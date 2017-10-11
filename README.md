@@ -42,8 +42,8 @@ Add the following resources to your config.yml
 // app/config.yml
 imports:
     ...
-    - { resource: @IDCIExtraFormBundle/Resources/config/config.yml }
-    - { resource: @IDCIStepBundle/Resources/config/config.yml }
+    - { resource: '@IDCIExtraFormBundle/Resources/config/config.yml' }
+    - { resource: '@IDCIStepBundle/Resources/config/config.yml' }
 ```
 
 Use the editor

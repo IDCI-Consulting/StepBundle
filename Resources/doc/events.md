@@ -14,7 +14,7 @@ If you want to execute action on path event, you'll have to create a PathEventAc
 
 namespace ExampleBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Path\Event\Action\AbstractPathEventAction;
 
@@ -31,15 +31,13 @@ class ExamplePathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array(
                 'varA',
             ))
-            ->setAllowedTypes(array(
-                'varA' => array('string'),
-            ))
+            ->setAllowedTypes('varA', array('string'))
         ;
     }
 }
@@ -52,7 +50,17 @@ class ExamplePathEventAction extends AbstractPathEventAction
         examplebundle.path_event.action.example:
             class: ExampleBundle\Path\Event\Action\ExamplePathEventAction
             tags:
-                - { name: idci_step.path_event.action, alias: example }
+                - { name: idci_step.path_event_action, alias: example }
+```
+
+```yaml
+# app\config\config.yml
+idci_step:
+    path_event_actions:
+        example:
+            parent: abstract
+            description: ""
+            extra_form_options: ~
 ```
 
 Bind the event action to a path
@@ -107,7 +115,7 @@ The logic is similar to path event actions logic. There are no advantages or inc
 
 namespace ExampleBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\Step\Event\Action\AbstractStepEventAction;
 
@@ -124,15 +132,13 @@ class ExampleStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array(
                 'varA',
             ))
-            ->setAllowedTypes(array(
-                'varA' => array('string'),
-            ))
+            ->setAllowedTypes('varA', array('string'))
         ;
     }
 }
@@ -146,7 +152,17 @@ class ExampleStepEventAction extends AbstractStepEventAction
         examplebundle.step_event.example:
             class: ExampleBundle\Step\Event\Action\ExamplePathEventAction
             tags:
-                - { name: idci_step.step_event.action, alias: example }
+                - { name: idci_step.step_event_action, alias: example }
+```
+
+```yaml
+# app\config\config.yml
+idci_step:
+    step_event_actions:
+        example:
+            parent: abstract
+            description: ""
+            extra_form_options: ~
 ```
 
 Bind the event action to a step
@@ -157,8 +173,8 @@ Bind the event action to a step
     $map = $this
         ...
         ->addStep('step_name', 'form', array(
-                'title'            => 'step title',
-                'description'      => 'step description',
+                'title' => 'step title',
+                'description' => 'step description',
                 'builder' => $this->get('form.factory')->createBuilder()
                     ->add('varA', 'text', array(
                         'constraints' => array(

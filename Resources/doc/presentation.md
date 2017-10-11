@@ -14,11 +14,13 @@ For now, this can all be done from inside a controller.
 // src/AppBundle/Controller/DefaultController.php
 namespace AppBundle\Controller;
 
+use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class DefaultController extends Controller
 {
@@ -29,20 +31,24 @@ class DefaultController extends Controller
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function contactAction(Request $request)
+    public function indexAction(
+        Request $request,
+        FormFactoryInterface $formFactory,
+        NavigatorFactoryInterface $navigatorFactory,
+        MapBuilderFactoryInterface $mapBuilderFactory
+    ) {
     {
-        $map = $this
-            ->get('idci_step.map.builder.factory')
+        $map = $mapBuilderFactory
             ->createNamedBuilder('test map')
             ->addStep('intro', 'html', array(
-                'title'       => 'Introduction',
+                'title' => 'Introduction',
                 'description' => 'The first step',
-                'content'     => '<h1>My content</h1>',
+                'content' => '<h1>My content</h1>',
             ))
             ->addStep('personal', 'form', array(
-                'title'            => 'Personal information',
-                'description'      => 'The personal data step',
-                'builder' => $this->get('form.factory')->createBuilder()
+                'title' => 'Personal information',
+                'description' => 'The personal data step',
+                'builder' => $formFactory->createBuilder()
                     ->add('first_name', 'text', array(
                         'constraints' => array(
                             new \Symfony\Component\Validator\Constraints\NotBlank()
@@ -52,15 +58,15 @@ class DefaultController extends Controller
                 ,
             ))
             ->addStep('end', 'html', array(
-                'title'       => 'End',
+                'title' => 'End',
                 'description' => 'The last step',
-                'content'     => '<h1>Game over :)</h1>',
+                'content' => '<h1>Game over :)</h1>',
             ))
             ->addPath(
                 'single',
                 array(
-                    'source'       => 'intro',
-                    'destination'  => 'personal',
+                    'source' => 'intro',
+                    'destination' => 'personal',
                     'next_options' => array(
                         'label' => 'next',
                     ),
@@ -69,8 +75,8 @@ class DefaultController extends Controller
             ->addPath(
                 'single',
                 array(
-                    'source'       => 'personal',
-                    'destination'  => 'end',
+                    'source' => 'personal',
+                    'destination' => 'end',
                     'next_options' => array(
                         'label' => 'next',
                     ),
@@ -79,7 +85,7 @@ class DefaultController extends Controller
             ->addPath(
                 'end',
                 array(
-                    'source'       => 'end',
+                    'source' => 'end',
                     'next_options' => array(
                         'label' => 'end',
                     ),
@@ -88,8 +94,7 @@ class DefaultController extends Controller
             ->getMap($request)
         ;
 
-        $navigator = $this
-            ->get('idci_step.navigator.factory')
+        $navigator = $navigatorFactory
             ->createNavigator($request, $map)
         ;
 
@@ -151,17 +156,17 @@ There are multiple step categories.
 The html step is a step that contains pure html code.
 ```php
 ->addStep('intro', 'html', array(
-	'title'       => 'Introduction',
+	'title' => 'Introduction',
 	'description' => 'The first step',
-	'content'     => '<h1>My content</h1>',
+	'content' => '<h1>My content</h1>',
 ))
 ```
 
 The form step is a step that contains symfony builder formated forms.
 ```php
 ->addStep('personal', 'form', array(
-    'title'            => 'Personal information',
-    'description'      => 'The personal data step',
+    'title' => 'Personal information',
+    'description' => 'The personal data step',
     'builder' => $this->get('form.factory')->createBuilder()
         ->add('first_name', 'text', array(
             'constraints' => array(
@@ -179,8 +184,8 @@ The single path is a simple path that links two steps.
 ->addPath(
     'single',
     array(
-        'source'       => 'intro',
-        'destination'  => 'personal',
+        'source' => 'intro',
+        'destination' => 'personal',
     )
 )
 ```
@@ -191,10 +196,10 @@ The conditional path is a path that reaches different steps according to conditi
 ->addPath(
     'conditional_destination',
     array(
-        'source'       => 'intro',
-        'destinations'  => array(
-            'personal' => '{{  flow_data.data.cursus.study_city == 'Lyon' }}',
-            'location' => '{{  flow_data.data.cursus.study_city == 'Paris' }}'
+        'source' => 'intro',
+        'destinations' => array(
+            'personal' => '{{ flow_data.data.cursus.study_city == 'Lyon' }}',
+            'location' => '{{ flow_data.data.cursus.study_city == 'Paris' }}'
         )
     )
 ```
