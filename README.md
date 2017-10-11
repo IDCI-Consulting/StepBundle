@@ -113,7 +113,7 @@ The editor requires bootstrap and jquery >= 2.2.4. If you don't use it already i
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/idciextraform/css/bootstrap-theme.min.css') }}" />
-{% endlbock %}
+{% endblock %}
 ```
 
 Documentation

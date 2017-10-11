@@ -11,6 +11,7 @@ use IDCI\Bundle\AssetLoaderBundle\AssetProvider\AssetProviderInterface;
 use IDCI\Bundle\AssetLoaderBundle\Model\Asset;
 use IDCI\Bundle\AssetLoaderBundle\Model\AssetCollection;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -97,14 +98,6 @@ class StepEditorType extends AbstractType implements AssetProviderInterface
      */
     public function getParent()
     {
-        return 'textarea';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'step_editor';
+        return TextareaType::class;
     }
 }
