@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 
 class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
@@ -28,14 +28,14 @@ class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(Options $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array('key'))
             ->setDefaults(array('value' => '1'))
             ->setNormalizer(
                 'value',
-                function (Options $options, $value) {
+                function (OptionsResolver $options, $value) {
                     return (string) $value;
                 }
             )

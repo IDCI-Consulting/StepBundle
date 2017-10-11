@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractStepFormType extends AbstractType
 {
@@ -27,7 +27,7 @@ abstract class AbstractStepFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(Options $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(

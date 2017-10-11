@@ -36,7 +36,7 @@ class PathBuilder implements PathBuilderInterface
         $type = $this->registry->getType($typeAlias);
 
         $resolver = new OptionsResolver();
-        $type->setDefaultOptions($resolver);
+        $type->configureOptions($resolver);
         $resolvedOptions = $resolver->resolve($options);
 
         return $type->buildPath(

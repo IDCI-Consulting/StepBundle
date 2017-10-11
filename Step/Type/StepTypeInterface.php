@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
@@ -17,9 +17,9 @@ interface StepTypeInterface
     /**
      * Sets the default options for this type.
      *
-     * @param Options $resolver the options resolver
+     * @param OptionsResolver $resolver the options resolver
      */
-    public function setDefaultOptions(Options $resolver);
+    public function configureOptions(OptionsResolver $resolver);
 
     /**
      * Build a step.

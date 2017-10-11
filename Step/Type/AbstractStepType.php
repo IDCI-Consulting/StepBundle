@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\Step;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
@@ -17,7 +17,7 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(Options $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(
@@ -55,7 +55,7 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setAllowedTypes('serialization_mapping', array('null', 'array'))
             ->setNormalizer(
                 'is_first',
-                function (Options $options, $value) {
+                function (OptionsResolver $options, $value) {
                     return (bool) $value;
                 }
             )

@@ -7,7 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\Options;
+use IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class HtmlStepType extends AbstractStepType
@@ -15,9 +16,9 @@ class HtmlStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(Options $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver
             ->setDefaults(array(
@@ -33,7 +34,7 @@ class HtmlStepType extends AbstractStepType
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'idci_step_step_form_html', array(
+        $builder->add('content', HtmlStepFormType::class, array(
             'content' => $options['content'],
             'display_title' => $options['display_title'],
         ));

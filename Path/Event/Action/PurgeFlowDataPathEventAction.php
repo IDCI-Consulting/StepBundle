@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
 
@@ -98,7 +98,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(Options $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array(
@@ -107,7 +107,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
             ->setAllowedTypes('steps', array('array'))
             ->setNormalizer(
                 'steps',
-                function (Options $options, $value) {
+                function (OptionsResolver $options, $value) {
                     foreach ($value as $stepName => $dataTypes) {
                         if (!is_array($dataTypes)) {
                             throw new \UnexpectedValueException(sprintf(

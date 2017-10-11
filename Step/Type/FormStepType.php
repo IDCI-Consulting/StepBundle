@@ -7,9 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Serialization\SerializationMapper;
+use IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType;
 
 class FormStepType extends AbstractStepType
 {
@@ -31,9 +32,9 @@ class FormStepType extends AbstractStepType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(Options $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver
             ->setRequired(array('builder'))
@@ -46,7 +47,7 @@ class FormStepType extends AbstractStepType
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('_data', 'idci_step_step_form_form', array(
+        $builder->add('_data', FormStepFormType::class, array(
             'label' => $options['title'],
             'builder' => $options['builder'],
             'display_title' => $options['display_title'],
@@ -68,7 +69,7 @@ class FormStepType extends AbstractStepType
                 ->serializationMapper
                 ->map(
                     'form_types',
-                    $field->getType()->getName()
+                    $field->getType()->getBlockPrefix()
                 )
             ;
         }

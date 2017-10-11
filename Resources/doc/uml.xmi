@@ -306,7 +306,7 @@
       <UML:Dependency xmi.id="rZ173mlew5PD" name="" isSpecification="false" visibility="public" client="vx50iGPBSVnD" namespace="Logical View" supplier="jUKy6BAdCvOz"/>
       <UML:Interface isLeaf="false" xmi.id="jxvd2JoQlYDv" name="StepTypeInterface" isSpecification="false" visibility="public" isRoot="false" stereotype="interface" isAbstract="true" namespace="Logical View">
        <UML:Classifier.feature>
-        <UML:Operation isLeaf="false" xmi.id="Wz2mN93qmcVo" name="setDefaultOptions" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" isQuery="false">
+        <UML:Operation isLeaf="false" xmi.id="Wz2mN93qmcVo" name="configureOptions" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" isQuery="false">
          <UML:BehavioralFeature.parameter>
           <UML:Parameter xmi.id="erzNM49s19cP" name="resolver" isSpecification="false" visibility="private" type="gq0bev1ct8zW" value=""/>
          </UML:BehavioralFeature.parameter>
@@ -460,7 +460,7 @@
       <UML:Class isLeaf="false" xmi.id="OO0vBLMMBouh" name="Request" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" namespace="Logical View"/>
       <UML:Interface isLeaf="false" xmi.id="h1uWmHDNaBAq" name="PathTypeInterface" isSpecification="false" visibility="public" isRoot="false" stereotype="interface" isAbstract="true" namespace="Logical View">
        <UML:Classifier.feature>
-        <UML:Operation isLeaf="false" xmi.id="hTlaal5Ec2bw" name="setDefaultOptions" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" isQuery="false">
+        <UML:Operation isLeaf="false" xmi.id="hTlaal5Ec2bw" name="configureOptions" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" isQuery="false">
          <UML:BehavioralFeature.parameter>
           <UML:Parameter xmi.id="4im6qPT52i6G" name="resolver" isSpecification="false" visibility="private" type="gq0bev1ct8zW" value=""/>
          </UML:BehavioralFeature.parameter>
@@ -1701,7 +1701,7 @@
       </UML:Association>
       <UML:Class isLeaf="false" xmi.id="EOYXsS9lMCTE" name="AbstractPathDestinationRule" isSpecification="false" visibility="public" isRoot="false" isAbstract="true" namespace="Logical View">
        <UML:Classifier.feature>
-        <UML:Operation isLeaf="false" xmi.id="6b7Dmc9NFsG1" name="setDefaultOptions" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" isQuery="false">
+        <UML:Operation isLeaf="false" xmi.id="6b7Dmc9NFsG1" name="configureOptions" isSpecification="false" visibility="public" isRoot="false" isAbstract="false" isQuery="false">
          <UML:BehavioralFeature.parameter>
           <UML:Parameter xmi.id="2QdXIdck2smk" name="resolver" isSpecification="false" visibility="private" type="gq0bev1ct8zW" value=""/>
          </UML:BehavioralFeature.parameter>

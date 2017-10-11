@@ -8,10 +8,11 @@
 namespace IDCI\Bundle\StepBundle\Navigation;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
@@ -85,19 +86,19 @@ class NavigatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('_map_name', 'hidden', array(
+            ->add('_map_name', HiddenType::class, array(
                 'data' => $options['navigator']->getMap()->getName(),
             ))
-            ->add('_map_footprint', 'hidden', array(
+            ->add('_map_footprint', HiddenType::class, array(
                 'data' => $options['navigator']->getMap()->getFootprint(),
             ))
-            ->add('_current_step', 'hidden', array(
+            ->add('_current_step', HiddenType::class, array(
                 'data' => $options['navigator']->getCurrentStep()->getName(),
             ))
         ;
 
         if (null !== $options['navigator']->getPreviousStep()) {
-            $builder->add('_previous_step', 'hidden', array(
+            $builder->add('_previous_step', HiddenType::class, array(
                 'data' => $options['navigator']->getPreviousStep()->getName(),
             ));
         }
@@ -138,7 +139,7 @@ class NavigatorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(Options $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array('navigator'))
@@ -149,7 +150,7 @@ class NavigatorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'idci_step_navigator';
     }

@@ -7,20 +7,21 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Path;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 abstract class AbstractPathType implements PathTypeInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(Options $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(
-                'type' => 'submit',
+                'type' => SubmitType::class,
                 'next_options' => array(
                     'label' => 'Next >',
                 ),

@@ -9,10 +9,10 @@ namespace IDCI\Bundle\StepBundle\Navigation\Event;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
@@ -120,7 +120,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      *
      * @param FormEvent $event
      */
-    public function addNavigationButtons(FormEvent $event)
+    public function addNavigationButtons(FormEvent $event, $name)
     {
         $form = $event->getForm();
         $map = $this->navigator->getMap();
@@ -148,7 +148,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         ) {
             $form->add(
                 '_back',
-                'submit',
+                SubmitType::class,
                 array_merge_recursive(
                     $stepConfiguration['options']['previous_options'],
                     array(
@@ -165,7 +165,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      *
      * @param FormEvent $event
      */
-    public function addStepEvents(FormEvent $event)
+    public function addStepEvents(FormEvent $event, $name)
     {
         $retrievedData = array();
 
@@ -173,8 +173,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $configuration = $step->getConfiguration();
         $events = $configuration['options']['events'];
 
-        if (isset($events[$event->getName()])) {
-            foreach ($events[$event->getName()] as $configuration) {
+        if (isset($events[$name])) {
+            foreach ($events[$name] as $configuration) {
                 $resolver = new OptionsResolver();
                 $this->configureEventConfiguration($resolver);
                 $configuration = $resolver->resolve($configuration);
@@ -218,27 +218,27 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      *
      * @param FormEvent $event
      */
-    public function addPathEvents(FormEvent $event)
+    public function addPathEvents(FormEvent $event, $name)
     {
         $form = $event->getForm();
         $retrievedData = array();
 
         // Prevent triggering path event actions if the form is not valid during post submit event.
-        if (FormEvents::POST_SUBMIT === $event->getName() && !$form->isValid()) {
+        if (FormEvents::POST_SUBMIT === $name && !$form->isValid()) {
             return;
         }
 
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
             // Trigger only path event actions on the clicked path during POST_SUBMIT event.
-            if ($event->getName() == FormEvents::POST_SUBMIT && $this->navigator->getChosenPath() !== $path) {
+            if ($name == FormEvents::POST_SUBMIT && $this->navigator->getChosenPath() !== $path) {
                 continue;
             }
 
             $configuration = $path->getConfiguration();
             $events = $configuration['options']['events'];
 
-            if (isset($events[$event->getName()])) {
-                foreach ($events[$event->getName()] as $configuration) {
+            if (isset($events[$name])) {
+                foreach ($events[$name] as $configuration) {
                     $resolver = new OptionsResolver();
                     $this->configurePathEventConfiguration($resolver);
                     $configuration = $resolver->resolve($configuration);
@@ -374,9 +374,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * Configure event configuration.
      *
-     * @param Options $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function configureEventConfiguration(Options $resolver)
+    protected function configureEventConfiguration(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array('action'))
@@ -386,7 +386,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             ))
             ->setNormalizer(
                 'name',
-                function (Options $options, $value) {
+                function (OptionsResolver $options, $value) {
                     if (null === $value) {
                         return $options['action'];
                     }
@@ -402,9 +402,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * Configure path event configuration.
      *
-     * @param Options $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function configurePathEventConfiguration(Options $resolver)
+    protected function configurePathEventConfiguration(OptionsResolver $resolver)
     {
         $this->configureEventConfiguration($resolver);
 

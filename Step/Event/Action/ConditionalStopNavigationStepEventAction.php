@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 
@@ -31,7 +31,7 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(Options $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(
@@ -42,7 +42,7 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
             ->setAllowedTypes('final_destination', array('null', 'string'))
             ->setNormalizer(
                 'rules',
-                function (Options $options, $value) {
+                function (OptionsResolver $options, $value) {
                     if (is_array($value)) {
                         return $value;
                     }

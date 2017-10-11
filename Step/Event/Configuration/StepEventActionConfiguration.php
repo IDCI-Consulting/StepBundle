@@ -32,7 +32,7 @@ class StepEventActionConfiguration implements StepEventActionConfigurationInterf
     /**
      * @var array
      */
-    protected $extraFormOptions;
+    protected $extraFormOptionsResolver;
 
     /**
      * Constructor.

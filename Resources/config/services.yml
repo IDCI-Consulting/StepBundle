@@ -174,7 +174,7 @@ services:
     # SerializationMapper
 
     IDCI\Bundle\StepBundle\Serialization\SerializationMapper:
-        arguments: ['IDCI\Bundle\StepBundle\Serialization\SerializerProvider']
+        arguments: ['%idci_step.serialization.mapping%']
     IDCI\Bundle\StepBundle\Serialization\SerializationMapperInterface: '@IDCI\Bundle\StepBundle\Serialization\SerializationMapper'
 
 
@@ -195,9 +195,6 @@ services:
         tags:
             - { name: idci_step.configuration.worker, alias: form_builder }
     IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorkerInterface: '@IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker'
-
-    IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry: ~
-    IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface: '@IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry'
 
 
     # Logger
@@ -227,30 +224,25 @@ services:
     # Navigator
     IDCI\Bundle\StepBundle\Navigation\NavigatorType:
         tags:
-            - { name: form.type, alias: idci_step_navigator }
-    IDCI\Bundle\StepBundle\Navigation\NavigatorTypeInterface: '@IDCI\Bundle\StepBundle\Navigation\NavigatorType'
+            - { name: form.type }
 
     # Step
     IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType:
         tags:
             - { name: form.type, alias: idci_step_step_form_form }
-    IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormTypeInterface: '@IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType'
 
     IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType:
         tags:
             - { name: form.type, alias: idci_step_step_form_html }
-    IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormTypeInterface: '@IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType'
 
     # Action
     IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType:
         tags:
             - { name: form.type, alias: idci_step_action_form_js_confirm }
-    IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormTypeInterface: '@IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType'
 
     IDCI\Bundle\StepBundle\Form\Type\LinkFormType:
         tags:
             - { name: form.type, alias: idci_step_action_form_link }
-    IDCI\Bundle\StepBundle\Form\Type\LinkFormTypeInterface: '@IDCI\Bundle\StepBundle\Form\Type\LinkFormType'
 
 
     # Twig
@@ -265,4 +257,3 @@ services:
     IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider:
         tags:
             - { name: idci_asset_loader.asset_provider, alias: map_diagram }
-    IDCI\Bundle\StepBundle\AssetProvider\MapAssetProviderInterface: '@IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider'

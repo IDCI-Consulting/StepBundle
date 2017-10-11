@@ -11,8 +11,9 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorType;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
@@ -234,7 +235,7 @@ class Navigator implements NavigatorInterface
     protected function getFormBuilder()
     {
         return $this->formFactory->createBuilder(
-            'idci_step_navigator',
+            NavigatorType::class,
             null,
             array('navigator' => $this)
         );

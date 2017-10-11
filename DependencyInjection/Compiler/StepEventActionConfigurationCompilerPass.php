@@ -48,6 +48,7 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
                 );
             }
 
+
             $configuration['name'] = $configurationName;
             $alias = $configurationName.'_configuration';
 

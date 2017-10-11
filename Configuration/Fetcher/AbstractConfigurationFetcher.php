@@ -8,7 +8,6 @@
 
 namespace IDCI\Bundle\StepBundle\Configuration\Fetcher;
 
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInterface
@@ -27,9 +26,9 @@ abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInter
     /**
      * Set default parameters.
      *
-     * @param Options $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultParameters(Options $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
     }
 

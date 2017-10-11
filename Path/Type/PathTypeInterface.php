@@ -9,7 +9,7 @@
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 interface PathTypeInterface
@@ -17,9 +17,9 @@ interface PathTypeInterface
     /**
      * Sets the default options for this type.
      *
-     * @param Options $resolver the options resolver
+     * @param OptionsResolver $resolver the options resolver
      */
-    public function setDefaultOptions(Options $resolver);
+    public function configureOptions(OptionsResolver $resolver);
 
     /**
      * Build a path.
