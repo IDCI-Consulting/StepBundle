@@ -9,6 +9,8 @@ namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
+use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationInterface;
+use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -16,7 +18,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.path_types key
- * It creates a service for each configuration, and inject it in the configuration registry
+ * It creates a service for each configuration, and inject it in the configuration registry.
  */
 class PathTypeConfigurationCompilerPass implements CompilerPassInterface
 {
@@ -25,16 +27,16 @@ class PathTypeConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.path_type_configuration.registry')) {
+        if (!$container->has(PathTypeConfigurationRegistryInterface::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.path_type_configuration.registry');
+        $registryDefinition = $container->findDefinition(PathTypeConfigurationRegistryInterface::class);
         $pathTypesConfiguration = $container->getParameter('idci_step.path_types');
         $extraFormOptions = array();
 
         foreach ($pathTypesConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator('idci_step.path_type_configuration');
+            $serviceDefinition = new DefinitionDecorator(PathTypeConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {
@@ -47,7 +49,7 @@ class PathTypeConfigurationCompilerPass implements CompilerPassInterface
             }
 
             $configuration['name'] = $configurationName;
-            $alias = $configurationName . '_configuration';
+            $alias = $configurationName.'_configuration';
 
             $serviceDefinition->setAbstract(false);
             $serviceDefinition->setPublic(!$configuration['abstract']);
@@ -81,9 +83,10 @@ class PathTypeConfigurationCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * Get definition name
+     * Get definition name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getDefinitionName($name)

@@ -12,8 +12,8 @@ interface MapBuilderFactoryInterface
     /**
      * Returns a map builder.
      *
-     * @param array $data    The initial data.
-     * @param array $options The options.
+     * @param array $data    the initial data
+     * @param array $options the options
      *
      * @return MapBuilderInterface The map builder
      */
@@ -22,9 +22,9 @@ interface MapBuilderFactoryInterface
     /**
      * Returns a map builder.
      *
-     * @param string    $name    The name of the map.
-     * @param array     $data    The initial data.
-     * @param array     $options The options.
+     * @param string $name    the name of the map
+     * @param array  $data    the initial data
+     * @param array  $options the options
      *
      * @return MapBuilderInterface The map builder
      */

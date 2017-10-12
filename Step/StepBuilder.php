@@ -19,7 +19,7 @@ class StepBuilder implements StepBuilderInterface
     private $registry;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param StepTypeRegistryInterface $registry
      */
@@ -36,7 +36,7 @@ class StepBuilder implements StepBuilderInterface
         $type = $this->registry->getType($typeAlias);
 
         $resolver = new OptionsResolver();
-        $type->setDefaultOptions($resolver);
+        $type->configureOptions($resolver);
         $resolvedOptions = $resolver->resolve($options);
 
         return $type->buildStep(

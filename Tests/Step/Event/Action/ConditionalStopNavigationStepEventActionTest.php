@@ -17,7 +17,7 @@ class ConditionalStopNavigationStepEventActionTest extends \PHPUnit_Framework_Te
             ->will($this->returnValue($this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface")))
         ;
 
-        $registry = new ConditionalRuleRegistry;
+        $registry = new ConditionalRuleRegistry();
 
         $this->eventAction = new ConditionalStopNavigationStepEventAction($registry);
     }
@@ -25,29 +25,29 @@ class ConditionalStopNavigationStepEventActionTest extends \PHPUnit_Framework_Te
     public function testExecute()
     {
         $this->assertTrue($this->eventAction->execute($this->event, array(
-            'rules' => true
+            'rules' => true,
         )));
 
         $this->assertFalse($this->eventAction->execute($this->event, array(
-            'rules' => false
+            'rules' => false,
         )));
 
         try {
             $this->eventAction->execute($this->event, array(
-                'rules' => array(1234 => array())
+                'rules' => array(1234 => array()),
             ));
 
-            $this->fail("Expected exception UnexpectedTypeException not thrown");
+            $this->fail('Expected exception UnexpectedTypeException not thrown');
         } catch (UnexpectedTypeException $e) {
             $this->assertTrue(true);
         }
 
         try {
             $this->eventAction->execute($this->event, array(
-                'rules' => array('dummy' => array())
+                'rules' => array('dummy' => array()),
             ));
 
-            $this->fail("Expected exception InvalidArgumentException not thrown");
+            $this->fail('Expected exception InvalidArgumentException not thrown');
         } catch (\InvalidArgumentException $e) {
             $this->assertTrue(true);
         }

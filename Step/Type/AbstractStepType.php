@@ -7,8 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\Step;
@@ -19,49 +17,48 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(
-                'title'                 => null,
-                'display_title'         => true,
-                'nav_title'             => null,
-                'description'           => null,
-                'nav_description'       => null,
-                'is_first'              => false,
-                'pre_step_content'      => null,
-                'data'                  => null,
-                'prevent_previous'      => false,
-                'prevent_next'          => false,
-                'previous_options'      => array(
-                    'label' => '< Previous'
+                'title' => null,
+                'display_title' => true,
+                'nav_title' => null,
+                'description' => null,
+                'nav_description' => null,
+                'is_first' => false,
+                'pre_step_content' => null,
+                'data' => null,
+                'prevent_previous' => false,
+                'prevent_next' => false,
+                'previous_options' => array(
+                    'label' => '< Previous',
                 ),
-                'js'                    => null,
-                'css'                   => null,
-                'attr'                  => array(),
-                'events'                => array(),
+                'js' => null,
+                'css' => null,
+                'attr' => array(),
+                'events' => array(),
                 'serialization_mapping' => null,
             ))
-            ->setAllowedTypes(array(
-                'title'                 => array('null', 'string'),
-                'display_title'         => array('bool'),
-                'nav_title'             => array('null', 'string'),
-                'description'           => array('null', 'string'),
-                'nav_description'       => array('null', 'string'),
-                'is_first'              => array('bool', 'string'),
-                'data'                  => array('null', 'array'),
-                'previous_options'      => array('array'),
-                'js'                    => array('null', 'string'),
-                'css'                   => array('null', 'string'),
-                'attr'                  => array('array'),
-                'events'                => array('array'),
-                'serialization_mapping' => array('null', 'array'),
-            ))
-            ->setNormalizers(array(
-                'is_first' => function (Options $options, $value) {
-                    return (bool)$value;
+            ->setAllowedTypes('title', array('null', 'string'))
+            ->setAllowedTypes('display_title', array('bool'))
+            ->setAllowedTypes('nav_title', array('null', 'string'))
+            ->setAllowedTypes('description', array('null', 'string'))
+            ->setAllowedTypes('nav_description', array('null', 'string'))
+            ->setAllowedTypes('is_first', array('bool', 'string'))
+            ->setAllowedTypes('data', array('null', 'array'))
+            ->setAllowedTypes('previous_options', array('array'))
+            ->setAllowedTypes('js', array('null', 'string'))
+            ->setAllowedTypes('css', array('null', 'string'))
+            ->setAllowedTypes('attr', array('array'))
+            ->setAllowedTypes('events', array('array'))
+            ->setAllowedTypes('serialization_mapping', array('null', 'array'))
+            ->setNormalizer(
+                'is_first',
+                function (OptionsResolver $options, $value) {
+                    return (bool) $value;
                 }
-            ))
+            )
         ;
     }
 
@@ -72,9 +69,9 @@ abstract class AbstractStepType implements StepTypeInterface
     {
         // TODO: Use a StepConfig as argument instead of an array.
         return new Step(array(
-            'name'    => $name,
-            'type'    => $this,
-            'options' => $options
+            'name' => $name,
+            'type' => $this,
+            'options' => $options,
         ));
     }
 

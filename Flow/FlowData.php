@@ -34,20 +34,20 @@ class FlowData implements FlowDataInterface
     protected $retrievedData;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param array $data            The steps data.
-     * @param array $remindedData    The reminded steps data.
-     * @param array $retrievedData   The retrieved steps data
+     * @param array $data          the steps data
+     * @param array $remindedData  the reminded steps data
+     * @param array $retrievedData The retrieved steps data
      */
     public function __construct(
         array $data = array(),
         array $remindedData = array(),
         array $retrievedData = array()
     ) {
-        $this->data            = $data;
-        $this->remindedData    = $remindedData;
-        $this->retrievedData   = $retrievedData;
+        $this->data = $data;
+        $this->remindedData = $remindedData;
+        $this->retrievedData = $retrievedData;
     }
 
     /**
@@ -61,7 +61,7 @@ class FlowData implements FlowDataInterface
     /**
      * Set data.
      *
-     * @param array $data The data.
+     * @param array $data the data
      *
      * @return FlowDataInterface
      */
@@ -206,9 +206,9 @@ class FlowData implements FlowDataInterface
         $all = array();
         foreach ($steps as $step) {
             $all[$step] = array(
-                'data'            => isset($this->data[$step]) ? $this->data[$step] : null,
-                'remindedData'    => isset($this->remindedData[$step]) ? $this->remindedData[$step] : null,
-                'retrievedData'   => isset($this->retrievedData[$step]) ? $this->retrievedData[$step] : null,
+                'data' => isset($this->data[$step]) ? $this->data[$step] : null,
+                'remindedData' => isset($this->remindedData[$step]) ? $this->remindedData[$step] : null,
+                'retrievedData' => isset($this->retrievedData[$step]) ? $this->retrievedData[$step] : null,
             );
         }
 

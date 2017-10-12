@@ -20,8 +20,8 @@ class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
             'next_step',
             $this->pathType->resolveDestination(
                 array(
-                    'source'      => 'step1',
-                    'destination' => 'next_step'
+                    'source' => 'step1',
+                    'destination' => 'next_step',
                 ),
                 $navigator
             )
@@ -30,22 +30,21 @@ class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testbuildPath()
     {
-        $step1   = new Step(array('name' => 'step1'));
-        $step2   = new Step(array('name' => 'step2'));
-        $step3   = new Step(array('name' => 'step3'));
+        $step1 = new Step(array('name' => 'step1'));
+        $step2 = new Step(array('name' => 'step2'));
+        $step3 = new Step(array('name' => 'step3'));
         $stepEnd = new Step(array('name' => 'stepEnd'));
-
 
         $path = $this->pathType->buildPath(
             array(
-                'step1'   => $step1,
-                'step2'   => $step2,
-                'step3'   => $step3,
+                'step1' => $step1,
+                'step2' => $step2,
+                'step3' => $step3,
                 'stepEnd' => $stepEnd,
             ),
             array(
-                'source'      => 'step2',
-                'destination' => 'step3'
+                'source' => 'step2',
+                'destination' => 'step3',
             )
         );
 

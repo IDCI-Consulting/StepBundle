@@ -1,322 +1,249 @@
-parameters:
-    idci_step.step.builder.class: IDCI\Bundle\StepBundle\Step\StepBuilder
-    idci_step.step_event_action.registry.class: IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistry
-    idci_step.step_event_action_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistry
-    idci_step.step_event_action_configuration.class: IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfiguration
-    idci_step.step_type.registry.class: IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry
-    idci_step.step_type_configuration.registry.class: IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry
-    idci_step.step_type_configuration.class: IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfiguration
-    idci_step.step.type.html.class: IDCI\Bundle\StepBundle\Step\Type\HtmlStepType
-    idci_step.step.type.form.class: IDCI\Bundle\StepBundle\Step\Type\FormStepType
-
-    idci_step.path.builder.class: IDCI\Bundle\StepBundle\Path\PathBuilder
-    idci_step.path_event_action.registry.class: IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistry
-    idci_step.path_event_action_configuration.registry.class: IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry
-    idci_step.path_event_action_configuration.class: IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration
-    idci_step.path_type.registry.class: IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistry
-    idci_step.path_type_configuration.registry.class: IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistry
-    idci_step.path_type_configuration.class: IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfiguration
-    idci_step.path_type.single.class: IDCI\Bundle\StepBundle\Path\Type\SinglePathType
-    idci_step.path_type.conditional_destination.class: IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType
-    idci_step.path_type.random_destination.class: IDCI\Bundle\StepBundle\Path\Type\RandomDestinationPathType
-    idci_step.path_type.end.class: IDCI\Bundle\StepBundle\Path\Type\EndPathType
-    idci_step.path_type.link.class: IDCI\Bundle\StepBundle\Path\Type\LinkPathType
-
-    idci_step.conditional_rule.registry.class: IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry
-
-    idci_step.map.builder.factory.class: IDCI\Bundle\StepBundle\Map\MapBuilderFactory
-    idci_step.navigator.factory.class: IDCI\Bundle\StepBundle\Navigation\NavigatorFactory
-
-    idci_step.flow_recorder.class: IDCI\Bundle\StepBundle\Flow\FlowRecorder
-
-    idci_step.configuration.builder.class: IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder
-    idci_step.configuration.worker_registry.class: IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry
-    idci_step.configuration.worker.form_builder.class: IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker
-    idci_step.configuration.fetcher_registry.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistry
-    idci_step.configuration.fetcher.configuration.class: IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcher
-
-    idci_step.navigation.logger.class: IDCI\Bundle\StepBundle\Navigation\NavigationLogger
-    idci_step.data_collector.class: IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector
-
-    idci_step.serialization.serializer_provider.class: IDCI\Bundle\StepBundle\Serialization\SerializerProvider
-
-    idci_step.asset_provider.map.class: IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider
-
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    # Controller
+    IDCI\Bundle\StepBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
 
     # Registry
 
-    idci_step.path_event_action_configuration.registry:
-        class: %idci_step.path_event_action_configuration.registry.class%
+    IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry: ~
+    IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistryInterface: '@IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry'
 
-    idci_step.path_event_action.registry:
-        class: %idci_step.path_event_action.registry.class%
+    IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistry: ~
+    IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface: '@IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistry'
 
-    idci_step.path_type_configuration.registry:
-        class: %idci_step.path_type_configuration.registry.class%
+    IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistry: ~
+    IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistryInterface: '@IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistry'
 
-    idci_step.path_type.registry:
-        class: %idci_step.path_type.registry.class%
+    IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistry: ~
+    IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistryInterface: '@IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistry'
 
-    idci_step.step_event_action_configuration.registry:
-        class: %idci_step.step_event_action_configuration.registry.class%
+    IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistry: ~
+    IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistryInterface: '@IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistry'
 
-    idci_step.step_event_action.registry:
-        class: %idci_step.step_event_action.registry.class%
+    IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistry: ~
+    IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface: '@IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistry'
 
-    idci_step.step_type_configuration.registry:
-        class: %idci_step.step_type_configuration.registry.class%
+    IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry: ~
+    IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistryInterface: '@IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistry'
 
-    idci_step.step_type.registry:
-        class: %idci_step.step_type.registry.class%
+    IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry: ~
+    IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistryInterface: '@IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry'
 
-    idci_step.conditional_rule.registry:
-        class: %idci_step.conditional_rule.registry.class%
+    IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry: ~
+    IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface: '@IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry'
 
 
     # Configurations
 
-    idci_step.path_event_action_configuration:
-        class: %idci_step.path_event_action_configuration.class%
+    IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration:
         arguments: [null]
         abstract: true
+    IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationInterface: '@IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration'
 
-    idci_step.path_type_configuration:
-        class: %idci_step.path_type_configuration.class%
+    IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfiguration:
         arguments: [null]
         abstract: true
+    IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationInterface: '@IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfiguration'
 
-    idci_step.step_event_action_configuration:
-        class: %idci_step.step_event_action_configuration.class%
+    IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfiguration:
         arguments: [null]
         abstract: true
+    IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationInterface: '@IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfiguration'
 
-    idci_step.step_type_configuration:
-        class: %idci_step.step_type_configuration.class%
+    IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfiguration:
         arguments: [null]
         abstract: true
+    IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationInterface: '@IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfiguration'
+
+    IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry: ~
+    IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface: '@IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry'
 
 
     # Builder
 
-    idci_step.path.builder:
-        class: %idci_step.path.builder.class%
-        arguments: [@idci_step.path_type.registry]
+    IDCI\Bundle\StepBundle\Path\PathBuilder: ~
+    IDCI\Bundle\StepBundle\Path\PathBuilderInterface: '@IDCI\Bundle\StepBundle\Path\PathBuilder'
 
-    idci_step.step.builder:
-        class: %idci_step.step.builder.class%
-        arguments: [@idci_step.step_type.registry]
+    IDCI\Bundle\StepBundle\Step\StepBuilder: ~
+    IDCI\Bundle\StepBundle\Step\StepBuilderInterface: '@IDCI\Bundle\StepBundle\Step\StepBuilder'
 
 
     # FlowRecorder
 
-    idci_step.flow_recorder:
-        class: %idci_step.flow_recorder.class%
-        arguments: [@jms_serializer]
-
+    IDCI\Bundle\StepBundle\Flow\FlowRecorder: ~
+    IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface: '@IDCI\Bundle\StepBundle\Flow\FlowRecorder'
 
     # Factory
 
-    idci_step.map.builder.factory:
-        class: %idci_step.map.builder.factory.class%
-        arguments:
-            - @idci_step.flow_recorder
-            - @idci_step.step.builder
-            - @idci_step.path.builder
-            - @idci_step.merger
-            - @security.context
-            - @session
+    IDCI\Bundle\StepBundle\Map\MapBuilderFactory: ~
+    IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface: '@IDCI\Bundle\StepBundle\Map\MapBuilderFactory'
 
-    idci_step.navigator.factory:
-        class: %idci_step.navigator.factory.class%
-        arguments:
-            - @form.factory
-            - @idci_step.flow_recorder
-            - @idci_step.configuration.builder
-            - @idci_step.configuration.fetcher_registry
-            - @idci_step.navigation.logger
-            - @jms_serializer
+    IDCI\Bundle\StepBundle\Navigation\NavigatorFactory: ~
+    IDCI\Bundle\StepBundle\Navigation\NavigatorFactoryInterface: '@IDCI\Bundle\StepBundle\Navigation\NavigatorFactory'
 
 
     # Step
 
-    idci_step.step.type.html:
-        class: %idci_step.step.type.html.class%
+    IDCI\Bundle\StepBundle\Step\Type\HtmlStepType:
         tags:
             - { name: idci_step.step_type, alias: html }
+    IDCI\Bundle\StepBundle\Step\Type\HtmlStepTypeInterface: '@IDCI\Bundle\StepBundle\Step\Type\HtmlStepType'
 
-    idci_step.step.type.form:
-        class: %idci_step.step.type.form.class%
-        arguments: [@idci_step.serialization_mapper]
+    IDCI\Bundle\StepBundle\Step\Type\FormStepType:
         tags:
             - { name: idci_step.step_type, alias: form }
+    IDCI\Bundle\StepBundle\Step\Type\FormStepTypeInterface: '@IDCI\Bundle\StepBundle\Step\Type\FormStepType'
 
 
     # StepEvent
 
-    idci_step.step_event_action.add_link:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction
+    IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: add_link }
+    IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction'
 
-    idci_step.step_event_action.change_data:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventAction
+    IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: change_data }
+    IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventAction'
 
-    idci_step.step_event_action.conditional_stop_navigation:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction
-        arguments:
-            - @idci_step.conditional_rule.registry
+    IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: conditional_stop_navigation }
+    IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction'
 
-    idci_step.step_event_action.transform_data:
-        class: IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventAction
+    IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: transform_data }
+    IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventAction'
 
 
     # Path
 
-    idci_step.path_type.conditional_destination:
-        class: %idci_step.path_type.conditional_destination.class%
-        arguments:
-            - @idci_step.merger
-            - @security.context
-            - @session
-            - @idci_step.conditional_rule.registry
+    IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType:
         tags:
             - { name: idci_step.path_type, alias: conditional_destination }
+    IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathTypeInterface: '@IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType'
 
-    idci_step.path_type.end:
-        class: %idci_step.path_type.end.class%
+    IDCI\Bundle\StepBundle\Path\Type\EndPathType:
         tags:
             - { name: idci_step.path_type, alias: end }
+    IDCI\Bundle\StepBundle\Path\Type\EndPathTypeInterface: '@IDCI\Bundle\StepBundle\Path\Type\EndPathType'
 
-    idci_step.path_type.single:
-        class: %idci_step.path_type.single.class%
+    IDCI\Bundle\StepBundle\Path\Type\SinglePathType:
         tags:
             - { name: idci_step.path_type, alias: single }
+    IDCI\Bundle\StepBundle\Path\Type\SinglePathTypeInterface: '@IDCI\Bundle\StepBundle\Path\Type\SinglePathType'
 
 
     # PathEvent
 
-    idci_step.path_event_action.add_url_query_parameter:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction
+    IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction:
         tags:
             - { name: idci_step.path_event_action, alias: add_url_query_parameter }
+    IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventActionInterface: '@IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction'
 
-    idci_step.path_event_action.change_data:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction
+    IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction:
         tags:
             - { name: idci_step.path_event_action, alias: change_data }
+    IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventActionInterface: '@IDCI\Bundle\StepBundle\Path\Event\Action\ChangeDataPathEventAction'
 
-    idci_step.path_event_action.change_final_destination:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventAction
+    IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventAction:
         tags:
             - { name: idci_step.path_event_action, alias: change_final_destination }
+    IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventActionInterface: '@IDCI\Bundle\StepBundle\Path\Event\Action\ChangeFinalDestinationPathEventAction'
 
-    idci_step.path_event_action.js_confirm:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction
+    IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction:
         tags:
             - { name: idci_step.path_event_action, alias: js_confirm }
+    IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventActionInterface: '@IDCI\Bundle\StepBundle\Path\Event\Action\JsConfirmPathEventAction'
 
-    idci_step.path_event_action.purge_flow_data:
-        class: IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction
+    IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction:
         tags:
             - { name: idci_step.path_event_action, alias: purge_flow_data }
+    IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventActionInterface: '@IDCI\Bundle\StepBundle\Path\Event\Action\PurgeFlowDataPathEventAction'
 
 
     # SerializationMapper
 
-    idci_step.serialization_mapper:
-        class: IDCI\Bundle\StepBundle\Serialization\SerializationMapper
-        arguments: [%idci_step.serialization.mapping%]
+    IDCI\Bundle\StepBundle\Serialization\SerializationMapper:
+        arguments: ['%idci_step.serialization.mapping%']
+    IDCI\Bundle\StepBundle\Serialization\SerializationMapperInterface: '@IDCI\Bundle\StepBundle\Serialization\SerializationMapper'
 
 
     # Configuration
 
-    idci_step.configuration.builder:
-        class: %idci_step.configuration.builder.class%
-        arguments:
-            - @idci_step.map.builder.factory
-            - @idci_step.configuration.worker_registry
+    IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder: ~
+    IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilderInterface: '@IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder'
 
-    idci_step.configuration.fetcher.configuration:
-        class: %idci_step.configuration.fetcher.configuration.class%
+    IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcher:
         abstract: true
         arguments: [null]
+    IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface: '@IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcher'
 
-    idci_step.configuration.fetcher_registry:
-        class: %idci_step.configuration.fetcher_registry.class%
+    IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistry: ~
+    IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface: '@IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistry'
 
-    idci_step.configuration.worker.form_builder:
-        class: %idci_step.configuration.worker.form_builder.class%
-        arguments: [@form.factory]
+    IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker:
         tags:
             - { name: idci_step.configuration.worker, alias: form_builder }
 
-    idci_step.configuration.worker_registry:
-        class: %idci_step.configuration.worker_registry.class%
+    IDCI\Bundle\ExtraFormBundle\Configuration\StepWorker\ExtraFormBuilderWorker:
+        tags:
+            - { name: idci_step.configuration.worker, alias: extra_form_builder }
 
 
     # Logger
 
-    idci_step.navigation.logger:
-        class:     %idci_step.navigation.logger.class%
-        arguments: [@service_container]
+    IDCI\Bundle\StepBundle\Navigation\NavigationLogger:
         public:    false
+    IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface: '@IDCI\Bundle\StepBundle\Navigation\NavigationLogger'
 
 
     # DataCollector
 
-    idci_step.data_collector:
-        class:     %idci_step.data_collector.class%
-        arguments: [@idci_step.navigation.logger]
+    IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector:
         public:    false
         tags:
             - { name: data_collector, template: 'IDCIStepBundle:Collector:navigation', id: idci_step.navigation }
+    IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollectorInterface: '@IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector'
 
 
     ## FormType
 
-    form.type.idci_step.editor:
-        class: IDCI\Bundle\StepBundle\Form\Type\StepEditorType
+    IDCI\Bundle\StepBundle\Form\Type\StepEditorType:
         tags:
             - { name: form.type, alias: step_editor }
             - { name: idci_asset_loader.asset_provider, alias: step_editor }
+    IDCI\Bundle\StepBundle\Form\Type\StepEditorTypeInterface: '@IDCI\Bundle\StepBundle\Form\Type\StepEditorType'
 
     # Navigator
-    form.type.idci_step.navigator:
-        class:     IDCI\Bundle\StepBundle\Navigation\NavigatorType
-        arguments:
-            - @idci_step.step_event_action.registry
-            - @idci_step.path_event_action.registry
-            - @idci_step.merger
-            - @security.context
-            - @session
+    IDCI\Bundle\StepBundle\Navigation\NavigatorType:
         tags:
-            - { name: form.type, alias: idci_step_navigator }
+            - { name: form.type }
+
     # Step
-    form.type.idci_step.step_form.form:
-        class: IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType
+    IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType:
         tags:
             - { name: form.type, alias: idci_step_step_form_form }
 
-    form.type.idci_step.step_form.html:
-        class: IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType
+    IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType:
         tags:
             - { name: form.type, alias: idci_step_step_form_html }
 
     # Action
-    form.type.idci_step.action_form.js_confirm:
-        class: IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType
+    IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType:
         tags:
             - { name: form.type, alias: idci_step_action_form_js_confirm }
 
-    form.type.idci_step.action_form.link:
-        class: IDCI\Bundle\StepBundle\Form\Type\LinkFormType
+    IDCI\Bundle\StepBundle\Form\Type\LinkFormType:
         tags:
             - { name: form.type, alias: idci_step_action_form_link }
 
@@ -326,15 +253,10 @@ services:
     idci_step.twig_array_loader:
         class:        "Twig_Loader_Array"
     idci_step.merger:
-        class:        "%twig.class%"
-        arguments:    [@idci_step.twig_array_loader]
-    idci_step.twig.step_extension:
-        class: IDCI\Bundle\StepBundle\Twig\StepTwigExtension
-        tags:
-            - { name: twig.extension }
+        class:        Twig\Environment
+    IDCI\Bundle\StepBundle\Twig\StepTwigExtension: ~
 
     # Asset Provider
-    idci_step.asset_provider.map:
-        class: %idci_step.asset_provider.map.class%
+    IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider:
         tags:
             - { name: idci_asset_loader.asset_provider, alias: map_diagram }

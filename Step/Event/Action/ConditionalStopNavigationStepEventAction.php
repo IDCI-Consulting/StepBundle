@@ -7,8 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 
@@ -20,9 +19,9 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     private $conditionalRuleRegistry;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry The conditional rule registry.
+     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry the conditional rule registry
      */
     public function __construct(ConditionalRuleRegistryInterface $conditionalRuleRegistry)
     {
@@ -32,26 +31,25 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults(array(
-                'rules'             => false,
+                'rules' => false,
                 'final_destination' => null,
             ))
-            ->setAllowedTypes(array(
-                'rules'             => array('bool', 'array'),
-                'final_destination' => array('null', 'string'),
-            ))
-            ->setNormalizers(array(
-                'rules' => function (Options $options, $value) {
+            ->setAllowedTypes('rules', array('bool', 'array'))
+            ->setAllowedTypes('final_destination', array('null', 'string'))
+            ->setNormalizer(
+                'rules',
+                function (OptionsResolver $options, $value) {
                     if (is_array($value)) {
                         return $value;
                     }
 
                     return is_bool($value) ? $value : (bool) $value;
                 }
-            ))
+            )
         ;
     }
 
@@ -81,9 +79,9 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     /**
      * Match the given conditional rules.
      *
-     * @param mixed $rules The rules to check.
+     * @param mixed $rules the rules to check
      *
-     * @return boolean Return true if the rules match, false otherwise.
+     * @return bool return true if the rules match, false otherwise
      */
     private function matchConditionalRules($rules)
     {

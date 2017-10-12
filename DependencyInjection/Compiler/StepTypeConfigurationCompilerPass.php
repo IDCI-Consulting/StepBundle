@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
+use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationInterface;
+use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistryInterface;
 use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,7 +18,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.step_types key
- * It creates a service for each configuration, and inject it in the configuration registry
+ * It creates a service for each configuration, and inject it in the configuration registry.
  */
 class StepTypeConfigurationCompilerPass implements CompilerPassInterface
 {
@@ -25,16 +27,16 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.step_type_configuration.registry')) {
+        if (!$container->has(StepTypeConfigurationRegistryInterface::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.step_type_configuration.registry');
+        $registryDefinition = $container->findDefinition(StepTypeConfigurationRegistryInterface::class);
         $stepTypesConfiguration = $container->getParameter('idci_step.step_types');
         $extraFormOptions = array();
 
         foreach ($stepTypesConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator('idci_step.step_type_configuration');
+            $serviceDefinition = new DefinitionDecorator(StepTypeConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {
@@ -47,7 +49,7 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
             }
 
             $configuration['name'] = $configurationName;
-            $alias = $configurationName . '_configuration';
+            $alias = $configurationName.'_configuration';
 
             $serviceDefinition->setAbstract(false);
             $serviceDefinition->setPublic(!$configuration['abstract']);
@@ -81,9 +83,10 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * Get definition name
+     * Get definition name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getDefinitionName($name)

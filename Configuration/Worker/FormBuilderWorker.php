@@ -21,7 +21,7 @@ class FormBuilderWorker implements ConfigurationWorkerInterface
     /**
      * Constructor.
      *
-     * @param FormFactoryInterface $formFactory The form factory.
+     * @param FormFactoryInterface $formFactory the form factory
      */
     public function __construct(FormFactoryInterface $formFactory)
     {

@@ -12,11 +12,11 @@ interface PathBuilderInterface
     /**
      * Returns built path.
      *
-     * @param string $typeAlias The type alias.
-     * @param array  $options   The options.
-     * @param array  $steps     The map steps.
+     * @param string $typeAlias the type alias
+     * @param array  $options   the options
+     * @param array  $steps     the map steps
      *
-     * @return PathInterface The step.
+     * @return PathInterface the step
      */
     public function build($typeAlias, array $options = array(), array $steps = array());
 }

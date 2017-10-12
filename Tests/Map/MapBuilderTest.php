@@ -2,7 +2,7 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Map;
 
-use IDCI\Bundle\StepBundle\Map\MapBuilder;
+use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
 use PHPUnit\Framework\TestCase;
 
 class MapBuilderTest extends TestCase
@@ -27,7 +27,7 @@ class MapBuilderTest extends TestCase
 
         // Default map 0
         $mapBuilder0 = $this->container
-            ->get('idci_step.map.builder.factory')
+            ->get(MapBuilderFactoryInterface::class)
             ->createNamedBuilder('Test default MAP 0')
         ;
 
@@ -37,12 +37,11 @@ class MapBuilderTest extends TestCase
         $this->assertEquals('Test default MAP 0', $map0->getName());
         $this->assertFalse($map0->isDisplayStepInUrlEnabled());
         $this->assertFalse($map0->isResetFlowDataOnInitEnabled());
-
         // Default map 1
         $mapBuilder1 = $this->container
-            ->get('idci_step.map.builder.factory')
+            ->get(MapBuilderFactoryInterface::class)
             ->createNamedBuilder('Test default MAP 1', array(), array(
-                'display_step_in_url'     => true,
+                'display_step_in_url' => true,
                 'reset_flow_data_on_init' => true,
             ))
         ;

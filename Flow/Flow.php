@@ -29,7 +29,7 @@ class Flow implements FlowInterface
     private $data;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param StepInterface     $currentStep
      * @param mixed             $history
@@ -41,7 +41,7 @@ class Flow implements FlowInterface
         FlowDataInterface $data = null
     ) {
         $this->history = $this->buildFlowHistory($history);
-        $this->data    = null === $data ? new FlowData() : $data;
+        $this->data = null === $data ? new FlowData() : $data;
 
         if (null !== $currentStep) {
             $this->setCurrentStep($currentStep);
@@ -49,7 +49,7 @@ class Flow implements FlowInterface
     }
 
     /**
-     * Build the FlowHistory object
+     * Build the FlowHistory object.
      *
      * @param mixed $history
      *

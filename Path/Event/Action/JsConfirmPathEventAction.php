@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 
 class JsConfirmPathEventAction extends AbstractPathEventAction
@@ -21,7 +21,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
 
         $form
             ->add('_js_confirm', 'idci_step_action_form_js_confirm', array_merge(
-                array('message'    => $parameters['message']),
+                array('message' => $parameters['message']),
                 array('path_index' => $event->getPathIndex())
             ))
         ;
@@ -30,7 +30,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver->setOptional(array('message'));
     }

@@ -25,31 +25,31 @@ class StepEventActionConfiguration implements StepEventActionConfigurationInterf
     protected $description;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $abstract;
 
     /**
      * @var array
      */
-    protected $extraFormOptions;
+    protected $extraFormOptionsResolver;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $configuration
      */
     public function __construct(array $configuration)
     {
-        $this->name                 = $configuration['name'];
-        $this->parent               = $configuration['parent'];
-        $this->description          = $configuration['description'];
-        $this->abstract             = $configuration['abstract'];
-        $this->extraFormOptions     = $configuration['extra_form_options'];
+        $this->name = $configuration['name'];
+        $this->parent = $configuration['parent'];
+        $this->description = $configuration['description'];
+        $this->abstract = $configuration['abstract'];
+        $this->extraFormOptions = $configuration['extra_form_options'];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -57,7 +57,7 @@ class StepEventActionConfiguration implements StepEventActionConfigurationInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParent()
     {
@@ -65,7 +65,7 @@ class StepEventActionConfiguration implements StepEventActionConfigurationInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -73,7 +73,7 @@ class StepEventActionConfiguration implements StepEventActionConfigurationInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isAbstract()
     {
@@ -81,7 +81,7 @@ class StepEventActionConfiguration implements StepEventActionConfigurationInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getExtraFormOptions()
     {

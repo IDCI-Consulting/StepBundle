@@ -7,7 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 
 class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
@@ -28,13 +28,11 @@ class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultParameters(OptionsResolverInterface $resolver)
+    protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(array('final_destination'))
-            ->setAllowedTypes(array(
-                'final_destination' => array('string')
-            ))
+            ->setAllowedTypes('final_destination', array('string'))
         ;
     }
 }

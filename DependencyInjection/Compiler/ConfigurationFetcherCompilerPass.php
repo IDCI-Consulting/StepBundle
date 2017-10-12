@@ -7,6 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
+use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface;
+use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -19,15 +21,15 @@ class ConfigurationFetcherCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.configuration.fetcher_registry')) {
+        if (!$container->has(ConfigurationFetcherRegistryInterface::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.configuration.fetcher_registry');
+        $registryDefinition = $container->findDefinition(ConfigurationFetcherRegistryInterface::class);
 
         $configurations = $container->getParameter('idci_step.maps');
         foreach ($configurations as $name => $configuration) {
-            $fetcherDefinition = new DefinitionDecorator('idci_step.configuration.fetcher.configuration');
+            $fetcherDefinition = new DefinitionDecorator(ConfigurationFetcherInterface::class);
             $fetcherServiceId = sprintf('idci_step.configuration.fetcher.%s', $name);
 
             $fetcherDefinition->replaceArgument(0, $configuration);

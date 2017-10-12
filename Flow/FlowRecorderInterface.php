@@ -16,8 +16,8 @@ interface FlowRecorderInterface
      * Returns the flow related with a map and a http request.
      * If the flow doesn't exist, create it.
      *
-     * @param MapInterface $map     The map.
-     * @param Request      $request The HTTP request.
+     * @param MapInterface $map     the map
+     * @param Request      $request the HTTP request
      *
      * @return FlowInterface|null
      */
@@ -26,58 +26,58 @@ interface FlowRecorderInterface
     /**
      * Set the flow related with a map and a http request.
      *
-     * @param MapInterface  $map     The map.
-     * @param Request       $request The HTTP request.
-     * @param FlowInterface $flow    The flow.
+     * @param MapInterface  $map     the map
+     * @param Request       $request the HTTP request
+     * @param FlowInterface $flow    the flow
      */
     public function setFlow(MapInterface $map, Request $request, FlowInterface $flow);
 
     /**
      * Returns whether or not a Flow already exist in relation with a map and a http request.
      *
-     * @param MapInterface $map     The map.
-     * @param Request      $request The HTTP request.
+     * @param MapInterface $map     the map
+     * @param Request      $request the HTTP request
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFlow(MapInterface $map, Request $request);
 
     /**
      * Remove a flow in relalation with a map and a http request.
      *
-     * @param MapInterface $map     The map.
-     * @param Request      $request The HTTP request.
+     * @param MapInterface $map     the map
+     * @param Request      $request the HTTP request
      */
     public function removeFlow(MapInterface $map, Request $request);
 
     /**
      * Clear all flows.
      *
-     * @param Request $request The HTTP request.
+     * @param Request $request the HTTP request
      */
     public function clear(Request $request);
 
     /**
      * Serialize the given flow.
      *
-     * @param FlowInterface $flow The flow.
+     * @param FlowInterface $flow the flow
      */
     public function serialize(FlowInterface $flow);
 
     /**
      * Unserialize a serialized flow.
      *
-     * @param string $serializedFlow The serialized flow.
+     * @param string $serializedFlow the serialized flow
      *
      * @return FlowInterface
      */
     public function unserialize($serializedFlow);
 
     /**
-     * Transform flow data if a step data type mapping is defined
+     * Transform flow data if a step data type mapping is defined.
      *
-     * @param MapInterface  $map  The map.
-     * @param FlowInterface $flow The flow.
+     * @param MapInterface  $map  the map
+     * @param FlowInterface $flow the flow
      */
     public function reconstructFlowData(MapInterface $map, FlowInterface $flow);
 }

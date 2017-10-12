@@ -41,7 +41,7 @@ idci_step:
                         description: The personal data step
                         previous_options:
                             label: Back to first step
-                        @builder:
+                        '@builder':
                             worker: form_builder
                             parameters:
                                 fields:
@@ -56,7 +56,7 @@ idci_step:
                     options:
                         title: Purchase information
                         description: The purchase data step
-                        @builder:
+                        '@builder':
                             worker: form_builder
                             parameters:
                                 fields:
@@ -71,7 +71,7 @@ idci_step:
                     options:
                         title: Fork1 information
                         description: The fork1 data step
-                        @builder:
+                        '@builder':
                             worker: form_builder
                             parameters:
                                 fields:
@@ -83,7 +83,7 @@ idci_step:
                     options:
                         title: Fork2 information
                         description: The fork2 data step
-                        @builder:
+                        '@builder':
                             worker: form_builder
                             parameters:
                                 fields:

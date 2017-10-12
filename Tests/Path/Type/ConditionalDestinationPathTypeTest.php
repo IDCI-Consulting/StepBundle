@@ -9,24 +9,24 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $securityContext = $this
-            ->getMockBuilder("Symfony\Component\Security\Core\SecurityContextInterface")
+        $tokenStorage = $this
+            ->getMockBuilder("Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface")
             ->disableOriginalConstructor()
             ->setMethods(array('getToken', 'setToken', 'isGranted'))
             ->getMock()
         ;
-        $securityContext
+        $tokenStorage
             ->expects($this->any())
             ->method('getToken')
             ->will($this->returnValue(null))
         ;
 
-        $twigStringLoader = new \Twig_Loader_String;
-        $twigEnvironment  = new \Twig_Environment($twigStringLoader, array());
+        $twigStringLoader = new \Twig_Loader_String();
+        $twigEnvironment = new \Twig_Environment($twigStringLoader, array());
 
         $this->pathType = new ConditionalDestinationPathType(
             $twigEnvironment,
-            $securityContext,
+            $tokenStorage,
             $this->createMock("Symfony\Component\HttpFoundation\Session\SessionInterface"),
             $this->createMock("IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface")
         );
@@ -41,10 +41,10 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array(
                 'data' => array(
                     'step1' => array(
-                        'firstname' => "john",
-                        'lastname'  => "doe",
-                    )
-                )
+                        'firstname' => 'john',
+                        'lastname' => 'doe',
+                    ),
+                ),
             )))
         ;
 
@@ -59,12 +59,12 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             'destination_1',
             $this->pathType->resolveDestination(
                 array(
-                    'source'              => 'step1',
+                    'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations'        => array(
+                    'destinations' => array(
                         'destination_1' => true,
                         'destination_2' => true,
-                    )
+                    ),
                 ),
                 $navigator
             )
@@ -74,12 +74,12 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             'destination_2',
             $this->pathType->resolveDestination(
                 array(
-                    'source'              => 'step1',
+                    'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations'        => array(
+                    'destinations' => array(
                         'destination_1' => false,
                         'destination_2' => true,
-                    )
+                    ),
                 ),
                 $navigator
             )
@@ -89,12 +89,12 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             'default',
             $this->pathType->resolveDestination(
                 array(
-                    'source'              => 'step1',
+                    'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations'        => array(
+                    'destinations' => array(
                         'destination_1' => false,
                         'destination_2' => false,
-                    )
+                    ),
                 ),
                 $navigator
             )
@@ -104,12 +104,12 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             'destination_2',
             $this->pathType->resolveDestination(
                 array(
-                    'source'              => 'step1',
+                    'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations'        => array(
+                    'destinations' => array(
                         'destination_1' => '{{ flow_data.data.step1.firstname == "dummy" }}',
                         'destination_2' => '{{ flow_data.data.step1.firstname == "john" }}',
-                    )
+                    ),
                 ),
                 $navigator
             )
@@ -118,26 +118,25 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testbuildPath()
     {
-        $step1   = new Step(array('name' => 'step1'));
-        $step2   = new Step(array('name' => 'step2'));
-        $step3   = new Step(array('name' => 'step3'));
+        $step1 = new Step(array('name' => 'step1'));
+        $step2 = new Step(array('name' => 'step2'));
+        $step3 = new Step(array('name' => 'step3'));
         $stepEnd = new Step(array('name' => 'stepEnd'));
-
 
         $path = $this->pathType->buildPath(
             array(
-                'step1'   => $step1,
-                'step2'   => $step2,
-                'step3'   => $step3,
+                'step1' => $step1,
+                'step2' => $step2,
+                'step3' => $step3,
                 'stepEnd' => $stepEnd,
             ),
             array(
-                'source'              => 'step1',
+                'source' => 'step1',
                 'default_destination' => 'stepEnd',
-                'destinations'        => array(
+                'destinations' => array(
                     'step2' => false,
                     'step3' => false,
-                )
+                ),
             )
         );
 
@@ -145,9 +144,9 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $path->getDestinations(),
             array(
-                'step2'   => $step2,
-                'step3'   => $step3,
-                'stepEnd' => $stepEnd
+                'step2' => $step2,
+                'step3' => $step3,
+                'stepEnd' => $stepEnd,
             )
         );
 

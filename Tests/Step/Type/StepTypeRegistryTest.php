@@ -8,8 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Tests\Step\Type;
 
 use IDCI\Bundle\StepBundle\Step\Type\AbstractStepType;
-use IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistry;
-
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Form\Form;
 
@@ -21,7 +20,7 @@ class StepTypeRegistryTest extends WebTestCase
     private $registry;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setUp()
     {
@@ -30,11 +29,11 @@ class StepTypeRegistryTest extends WebTestCase
         $kernel->boot();
         $container = $kernel->getContainer();
 
-        $this->registry = $container->get('idci_step.step_type.registry');
+        $this->registry = $container->get(StepTypeRegistryInterface::class);
     }
 
     /**
-     * Test the getType method
+     * Test the getType method.
      */
     public function testGetType()
     {

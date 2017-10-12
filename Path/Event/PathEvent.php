@@ -33,17 +33,17 @@ class PathEvent implements PathEventInterface
     private $pathEventData;
 
     /**
-     * @var integer
+     * @var int
      */
     private $pathIndex;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param NavigatorInterface $navigator     The navigator.
-     * @param FormEvent          $formEvent     The form event.
-     * @param mixed              $pathEventData The step event data.
-     * @param integer            $pathIndex     The path index.
+     * @param NavigatorInterface $navigator     the navigator
+     * @param FormEvent          $formEvent     the form event
+     * @param mixed              $pathEventData the step event data
+     * @param int                $pathIndex     the path index
      */
     public function __construct(
         NavigatorInterface $navigator,
@@ -51,10 +51,10 @@ class PathEvent implements PathEventInterface
         $pathEventData,
         $pathIndex
     ) {
-        $this->navigator     = $navigator;
-        $this->formEvent     = $formEvent;
+        $this->navigator = $navigator;
+        $this->formEvent = $formEvent;
         $this->pathEventData = $pathEventData;
-        $this->pathIndex     = $pathIndex;
+        $this->pathIndex = $pathIndex;
     }
 
     /**

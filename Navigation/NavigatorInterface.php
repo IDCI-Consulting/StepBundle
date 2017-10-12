@@ -26,7 +26,7 @@ interface NavigatorInterface
     /**
      * Go back to the previous step.
      *
-     * @param string|null $stepName The identifier name of the step.
+     * @param string|null $stepName the identifier name of the step
      *
      * @throw LogicException if the navigation doesn't has a previous step.
      */
@@ -93,7 +93,7 @@ interface NavigatorInterface
     /**
      * Returns the previous step.
      *
-     * @param string|null $stepName The identifier name of the step.
+     * @param string|null $stepName the identifier name of the step
      *
      * @return StepInterface|null
      */
@@ -102,8 +102,8 @@ interface NavigatorInterface
     /**
      * Add URL query parameter.
      *
-     * @param string $key   The URL query parameter key.
-     * @param mixed  $value The URL query parameter value.
+     * @param string $key   the URL query parameter key
+     * @param mixed  $value the URL query parameter value
      *
      * @return NavigatorInterface
      */
@@ -117,16 +117,16 @@ interface NavigatorInterface
     public function getUrlQueryParameters();
 
     /**
-     * Returns true if contains url query parameters
+     * Returns true if contains url query parameters.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasUrlQueryParameters();
 
     /**
      * Set the final destination.
      *
-     * @param string $url The final destination url.
+     * @param string $url the final destination url
      *
      * @return NavigatorInterface
      */
@@ -135,7 +135,7 @@ interface NavigatorInterface
     /**
      * Returns true if the navigator has a final destination.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFinalDestination();
 
@@ -149,15 +149,15 @@ interface NavigatorInterface
     /**
      * Set current step data.
      *
-     * @param array       $data    The step data.
-     * @param string|null $type    The data type (null, 'reminded' or 'retrieved').
+     * @param array       $data the step data
+     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      */
     public function setCurrentStepData(array $data, $type = null);
 
     /**
      * Returns the current step data.
      *
-     * @param string|null $type The data type (null, 'reminded' or 'retrieved').
+     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      *
      * @return array|null
      */
@@ -180,26 +180,26 @@ interface NavigatorInterface
     /**
      * Returns true if the navigator has navigated.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasNavigated();
 
     /**
      * Returns true if the navigator has returned.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasReturned();
 
     /**
      * Returns true if the navigator has finished the navigation.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFinished();
 
     /**
-     * Serialize the navigation flow
+     * Serialize the navigation flow.
      *
      * @return string
      */

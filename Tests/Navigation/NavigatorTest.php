@@ -3,9 +3,6 @@
 namespace IDCI\Bundle\StepBundle\Tests\Navigation;
 
 use IDCI\Bundle\StepBundle\Navigation\Navigator;
-use IDCI\Bundle\StepBundle\Flow\Flow;
-use IDCI\Bundle\StepBundle\Flow\FlowHistory;
-use IDCI\Bundle\StepBundle\Flow\FlowData;
 use IDCI\Bundle\StepBundle\Map\Map;
 use IDCI\Bundle\StepBundle\Step\Step;
 
@@ -14,14 +11,14 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $map = new Map(array(
-            'name'      => 'Test Map',
+            'name' => 'Test Map',
             'footprint' => 'DUMMYF00TPR1NT',
-            'options'   => array(
-                'first_step_name'     => 'stepA',
-                'final_destination'   => null,
+            'options' => array(
+                'first_step_name' => 'stepA',
+                'final_destination' => null,
                 'display_step_in_url' => false,
             ),
-            'data'      => array(
+            'data' => array(
                 'stepA' => array(
                     'field1' => 'MapStepAField1Value',
                     'field2' => 'MapStepAField2Value',
@@ -32,7 +29,7 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
                     'field2' => 'MapStepBField2Value',
                 ),
                 'stepC' => array(
-                    'field2' => array('d', 'e', 'f')
+                    'field2' => array('d', 'e', 'f'),
                 ),
             ),
         ));
@@ -41,32 +38,32 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
 
         $map
             ->addStep('stepA', new Step(array(
-                'name'    => 'stepA',
-                'type'    => $stepType,
+                'name' => 'stepA',
+                'type' => $stepType,
                 'options' => array(
                     'data' => array(
                         'field1' => 'StepAField1Value',
                         'field2' => 'StepAField2Value',
-                    )
-                )
+                    ),
+                ),
             )))
             ->addStep('stepB', new Step(array(
-                'name'    => 'stepB',
-                'type'    => $stepType,
+                'name' => 'stepB',
+                'type' => $stepType,
             )))
             ->addStep('stepC', new Step(array(
-                'name'    => 'stepC',
-                'type'    => $stepType,
+                'name' => 'stepC',
+                'type' => $stepType,
                 'options' => array(
                     'data' => array(
                         'field1' => 'StepCField1Value',
-                        'field2' => array('a', 'b', 'c')
-                    )
-                )
+                        'field2' => array('a', 'b', 'c'),
+                    ),
+                ),
             )))
             ->addStep('stepD', new Step(array(
-                'name'    => 'stepD',
-                'type'    => $stepType,
+                'name' => 'stepD',
+                'type' => $stepType,
             )))
         ;
 
@@ -95,10 +92,10 @@ class NavigatorTest extends \PHPUnit_Framework_TestCase
 
         $this->data = array(
             'stepA' => array(
-                'field1' => 'FlowStepAField1Value'
+                'field1' => 'FlowStepAField1Value',
             ),
             'stepC' => array(
-                'field2' => array('g', 'h', 'i')
+                'field2' => array('g', 'h', 'i'),
             ),
         );
 

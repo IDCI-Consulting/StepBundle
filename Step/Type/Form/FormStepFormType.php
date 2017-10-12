@@ -8,7 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormStepFormType extends AbstractStepFormType
 {
@@ -18,9 +18,10 @@ class FormStepFormType extends AbstractStepFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['builder']->all() as $fieldName => $fieldBuilder) {
+            $fieldFormTypeClass = get_class($fieldBuilder->getType()->getInnerType());
             $builder->add(
                 $fieldName,
-                $fieldBuilder->getType()->getInnerType(),
+                $fieldFormTypeClass,
                 $fieldBuilder->getOptions()
             );
         }
@@ -29,22 +30,20 @@ class FormStepFormType extends AbstractStepFormType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver
             ->setRequired(array('builder'))
-            ->setAllowedTypes(array(
-                'builder' => array('Symfony\Component\Form\FormBuilderInterface'),
-            ))
+            ->setAllowedTypes('builder', array('Symfony\Component\Form\FormBuilderInterface'))
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'idci_step_step_form_form';
     }

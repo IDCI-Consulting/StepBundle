@@ -11,9 +11,9 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorType;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
@@ -99,29 +99,29 @@ class Navigator implements NavigatorInterface
     protected $finalDestination;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $hasNavigated;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $hasReturned;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $hasFinished;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param FormFactoryInterface      $formFactory  The form factory.
-     * @param FlowRecorderInterface     $flowRecorder The flow recorder using to store the flow.
-     * @param MapInterface              $map          The map to navigate.
-     * @param Request                   $request      The HTTP request.
-     * @param NavigationLoggerInterface $logger       The logger.
-     * @param array                     $data         The default navigation data.
+     * @param FormFactoryInterface      $formFactory  the form factory
+     * @param FlowRecorderInterface     $flowRecorder the flow recorder using to store the flow
+     * @param MapInterface              $map          the map to navigate
+     * @param Request                   $request      the HTTP request
+     * @param NavigationLoggerInterface $logger       the logger
+     * @param array                     $data         the default navigation data
      */
     public function __construct(
         FormFactoryInterface      $formFactory,
@@ -131,26 +131,26 @@ class Navigator implements NavigatorInterface
         NavigationLoggerInterface $logger = null,
         array                     $data = array()
     ) {
-        $this->form               = null;
-        $this->formView           = null;
-        $this->formFactory        = $formFactory;
-        $this->flowRecorder       = $flowRecorder;
-        $this->map                = $map;
-        $this->request            = $request;
-        $this->logger             = $logger;
-        $this->data               = $data;
-        $this->flow               = null;
-        $this->currentStep        = null;
-        $this->chosenPath         = null;
+        $this->form = null;
+        $this->formView = null;
+        $this->formFactory = $formFactory;
+        $this->flowRecorder = $flowRecorder;
+        $this->map = $map;
+        $this->request = $request;
+        $this->logger = $logger;
+        $this->data = $data;
+        $this->flow = null;
+        $this->currentStep = null;
+        $this->chosenPath = null;
         $this->urlQueryParameters = array();
-        $this->finalDestination   = null;
-        $this->hasNavigated       = false;
-        $this->hasReturned        = false;
-        $this->hasFinished        = false;
+        $this->finalDestination = null;
+        $this->hasNavigated = false;
+        $this->hasReturned = false;
+        $this->hasFinished = false;
     }
 
     /**
-     * Init the flow
+     * Init the flow.
      */
     protected function initFlow()
     {
@@ -206,7 +206,7 @@ class Navigator implements NavigatorInterface
     }
 
     /**
-     * Prepare the current step
+     * Prepare the current step.
      */
     protected function prepareCurrentStep()
     {
@@ -235,7 +235,7 @@ class Navigator implements NavigatorInterface
     protected function getFormBuilder()
     {
         return $this->formFactory->createBuilder(
-            'idci_step_navigator',
+            NavigatorType::class,
             null,
             array('navigator' => $this)
         );
@@ -244,7 +244,7 @@ class Navigator implements NavigatorInterface
     /**
      * Returns the navigation form.
      *
-     * @return FormInterface The form.
+     * @return FormInterface the form
      */
     protected function getForm()
     {
@@ -258,7 +258,7 @@ class Navigator implements NavigatorInterface
     /**
      * Setup the navigation url.
      *
-     * @param StepInterface $step The step.
+     * @param StepInterface $step the step
      */
     protected function setupNavigationUrl(StepInterface $step)
     {

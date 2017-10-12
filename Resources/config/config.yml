@@ -27,9 +27,8 @@ idci_step:
                     type: DateTime
 
 twig:
-    form:
-        resources:
-            - 'IDCIStepBundle:Form:fields.html.twig'
+    form_themes:
+        - 'IDCIStepBundle:Form:fields.html.twig'
 
 idci_asset_loader:
     providers:

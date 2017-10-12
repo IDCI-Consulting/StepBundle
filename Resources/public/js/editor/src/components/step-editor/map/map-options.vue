@@ -33,7 +33,7 @@ export default {
 
     },
     mapOptions: function () {
-      return this.$store.getters.getMapOptions;
+      return this.$store.getters.getMapOptionsResolver;
     }
   },
 

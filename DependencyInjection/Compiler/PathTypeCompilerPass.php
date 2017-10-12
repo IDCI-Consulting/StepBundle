@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
+use IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,11 +19,11 @@ class PathTypeCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_step.path_type.registry')) {
+        if (!$container->has(PathTypeRegistryInterface::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_step.path_type.registry');
+        $registryDefinition = $container->findDefinition(PathTypeRegistryInterface::class);
         foreach ($container->findTaggedServiceIds('idci_step.path_type') as $id => $tags) {
             foreach ($tags as $attributes) {
                 $alias = isset($attributes['alias'])

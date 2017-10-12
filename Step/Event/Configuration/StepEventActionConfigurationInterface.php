@@ -10,35 +10,35 @@ namespace IDCI\Bundle\StepBundle\Step\Event\Configuration;
 interface StepEventActionConfigurationInterface
 {
     /**
-     * Returns the name
+     * Returns the name.
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Returns the parent
+     * Returns the parent.
      *
      * @return StepEventActionConfigurationInterface
      */
     public function getParent();
 
     /**
-     * Returns the description
+     * Returns the description.
      *
      * @return string
      */
     public function getDescription();
 
     /**
-     * Is abstract
+     * Is abstract.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAbstract();
 
     /**
-     * Returns extra form options
+     * Returns extra form options.
      *
      * @return array
      */
