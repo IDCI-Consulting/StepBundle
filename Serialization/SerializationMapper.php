@@ -17,7 +17,7 @@ class SerializationMapper
     protected $mapping;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct($mapping)
     {
@@ -25,10 +25,10 @@ class SerializationMapper
     }
 
     /**
-     * Returns the mapped value if exists
+     * Returns the mapped value if exists.
      *
-     * @param $namespace The namespace.
-     * @param $key       The key.
+     * @param $namespace the namespace
+     * @param $key       the key
      *
      * @return array|null
      *

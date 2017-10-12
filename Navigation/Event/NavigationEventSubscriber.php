@@ -55,14 +55,14 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     private $session;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param NavigatorInterface               $navigator               The navigator.
-     * @param StepEventActionRegistryInterface $stepEventActionRegistry The step event registry.
-     * @param PathEventActionRegistryInterface $pathEventActionRegistry The path event registry.
-     * @param \Twig_Environment                $merger                  The merger.
-     * @param SecurityContextInterface         $securityContext         The security context.
-     * @param SessionInterface                 $session                 The session.
+     * @param NavigatorInterface               $navigator               the navigator
+     * @param StepEventActionRegistryInterface $stepEventActionRegistry the step event registry
+     * @param PathEventActionRegistryInterface $pathEventActionRegistry the path event registry
+     * @param \Twig_Environment                $merger                  the merger
+     * @param SecurityContextInterface         $securityContext         the security context
+     * @param SessionInterface                 $session                 the session
      */
     public function __construct(
         NavigatorInterface $navigator,
@@ -72,12 +72,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         SecurityContextInterface         $securityContext,
         SessionInterface                 $session
     ) {
-        $this->navigator               = $navigator;
+        $this->navigator = $navigator;
         $this->stepEventActionRegistry = $stepEventActionRegistry;
         $this->pathEventActionRegistry = $pathEventActionRegistry;
-        $this->merger                  = $merger;
-        $this->securityContext         = $securityContext;
-        $this->session                 = $session;
+        $this->merger = $merger;
+        $this->securityContext = $securityContext;
+        $this->session = $session;
     }
 
     /**
@@ -86,7 +86,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SET_DATA  => array(
+            FormEvents::PRE_SET_DATA => array(
                 array('preSetData', 999),
                 array('addNavigationButtons', 100),
                 array('addStepEvents', 2),
@@ -96,18 +96,18 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 array('addStepEvents', 2),
                 array('addPathEvents', 1),
             ),
-            FormEvents::PRE_SUBMIT    => array(
+            FormEvents::PRE_SUBMIT => array(
                 array('checkReturn', 100),
                 array('preSubmit', -1),
                 array('addStepEvents', -2),
                 array('addPathEvents', -3),
             ),
-            FormEvents::SUBMIT        => array(
+            FormEvents::SUBMIT => array(
                 array('checkReturn', 100),
                 array('addStepEvents', -1),
                 array('addPathEvents', -2),
             ),
-            FormEvents::POST_SUBMIT   => array(
+            FormEvents::POST_SUBMIT => array(
                 array('checkReturn', 100),
                 array('postSubmit', -1),
                 array('addStepEvents', -2),
@@ -123,9 +123,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function addNavigationButtons(FormEvent $event)
     {
-        $form              = $event->getForm();
-        $map               = $this->navigator->getMap();
-        $currentStep       = $this->navigator->getCurrentStep();
+        $form = $event->getForm();
+        $map = $this->navigator->getMap();
+        $currentStep = $this->navigator->getCurrentStep();
         $stepConfiguration = $currentStep->getConfiguration();
 
         // Add path links as submit input.
@@ -153,7 +153,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 array_merge_recursive(
                     $stepConfiguration['options']['previous_options'],
                     array(
-                        'attr'              => array('formnovalidate' => 'true'),
+                        'attr' => array('formnovalidate' => 'true'),
                         'validation_groups' => false,
                     )
                 )
@@ -221,7 +221,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public function addPathEvents(FormEvent $event)
     {
-        $form          = $event->getForm();
+        $form = $event->getForm();
         $retrievedData = array();
 
         // Prevent triggering path event actions if the form is not valid during post submit event.
@@ -348,7 +348,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      *
      * @param FormEvent $event
      *
-     * @return boolean
+     * @return bool
      */
     public function postSubmit(FormEvent $event)
     {
@@ -382,7 +382,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $resolver
             ->setRequired(array('action'))
             ->setDefaults(array(
-                'name'       => null,
+                'name' => null,
                 'parameters' => array(),
             ))
             ->setNormalizers(array(
@@ -392,11 +392,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     }
 
                     return $value;
-                }
+                },
             ))
             ->setAllowedTypes(array(
                 'action' => array('string'),
-                'name'   => array('null', 'string'),
+                'name' => array('null', 'string'),
             ))
         ;
     }
@@ -423,9 +423,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * Merge parameters with the SecurityContext (user)
      * the navigation flow data (flow_data)
-     * and the session (session)
+     * and the session (session).
      *
-     * @param array $parameters The parameters.
+     * @param array $parameters the parameters
      *
      * @return array
      */
@@ -438,9 +438,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         foreach ($parameters as $k => $v) {
             $parameters[$k] = $this->mergeValue($v, array(
-                'user'      => $user,
+                'user' => $user,
                 'flow_data' => $this->navigator->getFlow()->getData(),
-                'session'   => $this->session->all(),
+                'session' => $this->session->all(),
             ));
         }
 
@@ -450,10 +450,10 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * Merge a value.
      *
-     * @param mixed $value The value.
-     * @param array $vars  The merging vars.
+     * @param mixed $value the value
+     * @param array $vars  the merging vars
      *
-     * @return mixed The merged value.
+     * @return mixed the merged value
      */
     private function mergeValue($value, array $vars = array())
     {
@@ -463,7 +463,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 $value[$k] = $this->mergeValue($v, $vars);
             }
 
-        // Handle object case.
+            // Handle object case.
         } elseif (is_object($value)) {
             $class = new \ReflectionClass($value);
             $properties = $class->getProperties();
@@ -480,7 +480,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 );
             }
 
-        // Handle string case.
+            // Handle string case.
         } elseif (is_string($value)) {
             $template = $this->merger->createTemplate($value);
             $value = $template->render($vars);

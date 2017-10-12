@@ -26,7 +26,7 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
             ))
             ->setNormalizers(array(
                 'logical_expression' => function (Options $options, $value) {
-                    return (bool)$value;
+                    return (bool) $value;
                 },
             ))
         ;
@@ -49,8 +49,8 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
     /**
      * Do execute action.
      *
-     * @param StepEventInterface $event      The step event.
-     * @param array              $parameters The resolved parameters.
+     * @param StepEventInterface $event      the step event
+     * @param array              $parameters the resolved parameters
      *
      * @return mixed
      */

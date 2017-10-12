@@ -20,9 +20,9 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     private $conditionalRuleRegistry;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry The conditional rule registry.
+     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry the conditional rule registry
      */
     public function __construct(ConditionalRuleRegistryInterface $conditionalRuleRegistry)
     {
@@ -36,11 +36,11 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     {
         $resolver
             ->setDefaults(array(
-                'rules'             => false,
+                'rules' => false,
                 'final_destination' => null,
             ))
             ->setAllowedTypes(array(
-                'rules'             => array('bool', 'array'),
+                'rules' => array('bool', 'array'),
                 'final_destination' => array('null', 'string'),
             ))
             ->setNormalizers(array(
@@ -50,7 +50,7 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
                     }
 
                     return is_bool($value) ? $value : (bool) $value;
-                }
+                },
             ))
         ;
     }
@@ -81,9 +81,9 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     /**
      * Match the given conditional rules.
      *
-     * @param mixed $rules The rules to check.
+     * @param mixed $rules the rules to check
      *
-     * @return boolean Return true if the rules match, false otherwise.
+     * @return bool return true if the rules match, false otherwise
      */
     private function matchConditionalRules($rules)
     {

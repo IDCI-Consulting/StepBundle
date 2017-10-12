@@ -9,13 +9,13 @@ class StepTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->testConfiguration = array(
-            'name'    => 'Step test',
-            'type'    => 'html',
+            'name' => 'Step test',
+            'type' => 'html',
             'options' => array(
-                'data'             => array(),
-                'is_first'         => false,
+                'data' => array(),
+                'is_first' => false,
                 'pre_step_content' => '<p>HTML content</p>',
-            )
+            ),
         );
 
         $this->step = new Step($this->testConfiguration);

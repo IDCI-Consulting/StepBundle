@@ -23,9 +23,9 @@ class FlowRecorder implements FlowRecorderInterface
     protected $serializer;
 
     /**
-     * Build the map id
+     * Build the map id.
      *
-     * @param MapInterface $map The map.
+     * @param MapInterface $map the map
      *
      * @return string
      */
@@ -39,9 +39,9 @@ class FlowRecorder implements FlowRecorderInterface
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param SerializerInterface $serializer The serializer.
+     * @param SerializerInterface $serializer the serializer
      */
     public function __construct(SerializerInterface $serializer)
     {
@@ -154,12 +154,12 @@ class FlowRecorder implements FlowRecorderInterface
     }
 
     /**
-     * Transform data
+     * Transform data.
      *
-     * @param mixed $data    The data to transform.
-     * @param array $mapping The mapping, containing the expected data type and optionnaly the serialization groups.
+     * @param mixed $data    the data to transform
+     * @param array $mapping the mapping, containing the expected data type and optionnaly the serialization groups
      *
-     * @return object|array  The transformed data.
+     * @return object|array the transformed data
      */
     protected function transformData($data, array $mapping)
     {

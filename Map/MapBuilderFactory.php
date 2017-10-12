@@ -46,14 +46,14 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $session;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
-     * @param StepBuilderInterface     $stepBuilder     The step builder.
-     * @param PathBuilderInterface     $pathBuilder     The path builder.
-     * @param \Twig_Environment        $merger          The twig merger.
-     * @param SecurityContextInterface $securityContext The security context.
-     * @param SessionInterface         $session         The session.
+     * @param FlowRecorderInterface    $flowRecorder    the flow recorder
+     * @param StepBuilderInterface     $stepBuilder     the step builder
+     * @param PathBuilderInterface     $pathBuilder     the path builder
+     * @param \Twig_Environment        $merger          the twig merger
+     * @param SecurityContextInterface $securityContext the security context
+     * @param SessionInterface         $session         the session
      */
     public function __construct(
         FlowRecorderInterface    $flowRecorder,
@@ -63,12 +63,12 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         SecurityContextInterface $securityContext,
         SessionInterface         $session
     ) {
-        $this->flowRecorder    = $flowRecorder;
-        $this->stepBuilder     = $stepBuilder;
-        $this->pathBuilder     = $pathBuilder;
-        $this->merger          = $merger;
+        $this->flowRecorder = $flowRecorder;
+        $this->stepBuilder = $stepBuilder;
+        $this->pathBuilder = $pathBuilder;
+        $this->merger = $merger;
         $this->securityContext = $securityContext;
-        $this->session         = $session;
+        $this->session = $session;
     }
 
     /**

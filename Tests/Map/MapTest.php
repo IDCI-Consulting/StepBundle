@@ -10,12 +10,12 @@ class MapTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->map = new Map(array(
-            'name'      => 'Test map',
-            'data'      => array(),
+            'name' => 'Test map',
+            'data' => array(),
             'footprint' => 'MyDummyFootPrint',
-            'options'   => array(
-                'first_step_name'   => 'step1',
-            )
+            'options' => array(
+                'first_step_name' => 'step1',
+            ),
         ));
     }
 
@@ -59,7 +59,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->map->getStep('stepX');
-            $this->fail("Expected exception StepNotFoundException not thrown");
+            $this->fail('Expected exception StepNotFoundException not thrown');
         } catch (StepNotFoundException $e) {
             $this->assertTrue(true);
         }
@@ -96,7 +96,7 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(
                 'step1' => array($path1),
-                'step2' => array($path2, $pathE)
+                'step2' => array($path2, $pathE),
             ),
             $this->map->getPaths()
         );
@@ -120,12 +120,12 @@ class MapTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             array(
-                'name'      => 'Test map',
-                'data'      => array(),
+                'name' => 'Test map',
+                'data' => array(),
                 'footprint' => 'MyDummyFootPrint',
-                'options'   => array(
-                    'first_step_name'   => 'step1',
-                )
+                'options' => array(
+                    'first_step_name' => 'step1',
+                ),
             ),
             $this->map->getConfiguration()
         );

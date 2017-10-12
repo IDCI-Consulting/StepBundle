@@ -16,106 +16,106 @@ interface MapInterface
     /**
      * Returns the name of the map.
      *
-     * @return string The name.
+     * @return string the name
      */
     public function getName();
 
     /**
      * Returns the map footprint.
      *
-     * @return string The map footprint.
+     * @return string the map footprint
      */
     public function getFootprint();
 
     /**
      * Returns the map data.
      *
-     * @return array The map data.
+     * @return array the map data
      */
     public function getData();
 
     /**
      * Returns the configuration.
      *
-     * @return array The configuration.
+     * @return array the configuration
      */
     public function getConfiguration();
 
     /**
      * Add a new step.
      *
-     * @param string        $name The identifier name of the step.
-     * @param StepInterface $step The step.
+     * @param string        $name the identifier name of the step
+     * @param StepInterface $step the step
      *
-     * @return MapInterface This.
+     * @return MapInterface this
      */
     public function addStep($name, StepInterface $step);
 
     /**
      * Add a new path.
      *
-     * @param string        $source The identifier name of the source step.
-     * @param PathInterface $path   The path.
+     * @param string        $source the identifier name of the source step
+     * @param PathInterface $path   the path
      *
-     * @return MapInterface This.
+     * @return MapInterface this
      */
     public function addPath($source, PathInterface $path);
 
     /**
      * Check if a step is registered.
      *
-     * @param string $name The identifier name of the step.
+     * @param string $name the identifier name of the step
      *
-     * @return boolean True if the step is registered, false otherwise.
+     * @return bool true if the step is registered, false otherwise
      */
     public function hasStep($name);
 
     /**
      * Returns a step by its name if exists.
      *
-     * @param string $name The identifier name of the step.
+     * @param string $name the identifier name of the step
      *
-     * @return StepInterface|null The step.
+     * @return StepInterface|null the step
      */
     public function getStep($name);
 
     /**
      * Returns the steps.
      *
-     * @return array The steps.
+     * @return array the steps
      */
     public function getSteps();
 
     /**
      * Count the steps.
      *
-     * @return integer The step count
+     * @return int The step count
      */
     public function countSteps();
 
     /**
      * Returns the first step.
      *
-     * @return StepInterface The step.
+     * @return StepInterface the step
      */
     public function getFirstStep();
 
     /**
      * Returns the paths.
      *
-     * @param string $source The identifier name of the source step.
+     * @param string $source the identifier name of the source step
      *
-     * @return array The paths.
+     * @return array the paths
      */
     public function getPaths($source = null);
 
     /**
      * Returns a path.
      *
-     * @param string  $source The identifier name of the source step.
-     * @param integer $index  The path index for the step.
+     * @param string $source the identifier name of the source step
+     * @param int    $index  the path index for the step
      *
-     * @return PathInterface The path.
+     * @return PathInterface the path
      */
     public function getPath($source, $index);
 
@@ -136,14 +136,14 @@ interface MapInterface
     /**
      * Returns the display step in url status information (enabled/disabled).
      *
-     * @return boolean True if enabled false otherwise.
+     * @return bool true if enabled false otherwise
      */
     public function isDisplayStepInUrlEnabled();
 
     /**
      * Returns the reset flow data on init status information (enabled/disabled).
      *
-     * @return boolean True if enabled false otherwise.
+     * @return bool true if enabled false otherwise
      */
     public function isResetFlowDataOnInitEnabled();
 }

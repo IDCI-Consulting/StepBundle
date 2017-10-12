@@ -20,8 +20,8 @@ class FlowDataTest extends \PHPUnit_Framework_TestCase
         $data = array(
             'step1' => array(
                 'firstname' => 'John',
-                'lastname'  => 'DOE',
-            )
+                'lastname' => 'DOE',
+            ),
         );
 
         $this->flowData->setData($data);
@@ -37,12 +37,12 @@ class FlowDataTest extends \PHPUnit_Framework_TestCase
     {
         $step1Data = array(
             'firstname' => 'John',
-            'lastname'  => 'DOE',
+            'lastname' => 'DOE',
         );
 
         $step2Data = array(
             'phonenumber' => '0123456789',
-            'age'         => '42',
+            'age' => '42',
         );
 
         $this->flowData

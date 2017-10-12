@@ -22,7 +22,7 @@ class HtmlStepType extends AbstractStepType
         $resolver
             ->setDefaults(array(
                 'content' => null,
-                'attr'    => array('class' => 'html_text'),
+                'attr' => array('class' => 'html_text'),
             ))
             ->setAllowedTypes(array('content' => array('null', 'string')))
         ;
@@ -34,7 +34,7 @@ class HtmlStepType extends AbstractStepType
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', 'idci_step_step_form_html', array(
-            'content'       => $options['content'],
+            'content' => $options['content'],
             'display_title' => $options['display_title'],
         ));
     }

@@ -76,15 +76,15 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Creates a new map builder.
      *
-     * @param string                   $name            The map name.
-     * @param array                    $data            The map data.
-     * @param array                    $options         The map options.
-     * @param FlowRecorderInterface    $flowRecorder    The flow recorder.
-     * @param StepBuilderInterface     $stepBuilder     The step builder.
-     * @param PathBuilderInterface     $pathBuilder     The path builder.
-     * @param \Twig_Environment        $merger          The twig merger.
-     * @param SecurityContextInterface $securityContext The security context.
-     * @param SessionInterface         $session         The session.
+     * @param string                   $name            the map name
+     * @param array                    $data            the map data
+     * @param array                    $options         the map options
+     * @param FlowRecorderInterface    $flowRecorder    the flow recorder
+     * @param StepBuilderInterface     $stepBuilder     the step builder
+     * @param PathBuilderInterface     $pathBuilder     the path builder
+     * @param \Twig_Environment        $merger          the twig merger
+     * @param SecurityContextInterface $securityContext the security context
+     * @param SessionInterface         $session         the session
      */
     public function __construct(
         $name = null,
@@ -97,39 +97,39 @@ class MapBuilder implements MapBuilderInterface
         SecurityContextInterface $securityContext,
         SessionInterface         $session
     ) {
-        $this->name            = $name;
-        $this->data            = $data;
-        $this->options         = self::resolveOptions($options);
-        $this->flowRecorder    = $flowRecorder;
-        $this->stepBuilder     = $stepBuilder;
-        $this->pathBuilder     = $pathBuilder;
-        $this->merger          = $merger;
+        $this->name = $name;
+        $this->data = $data;
+        $this->options = self::resolveOptions($options);
+        $this->flowRecorder = $flowRecorder;
+        $this->stepBuilder = $stepBuilder;
+        $this->pathBuilder = $pathBuilder;
+        $this->merger = $merger;
         $this->securityContext = $securityContext;
-        $this->session         = $session;
-        $this->steps           = array();
-        $this->paths           = array();
+        $this->session = $session;
+        $this->steps = array();
+        $this->paths = array();
     }
 
     /**
-     * Resolve options
+     * Resolve options.
      *
-     * @param array $options The options to resolve.
+     * @param array $options the options to resolve
      *
-     * @return array The resolved options.
+     * @return array the resolved options
      */
     public static function resolveOptions(array $options = array())
     {
         $resolver = new OptionsResolver();
         $resolver
             ->setDefaults(array(
-                'form_action'             => null,
-                'first_step_name'         => null,
-                'final_destination'       => null,
-                'display_step_in_url'     => false,
+                'form_action' => null,
+                'first_step_name' => null,
+                'final_destination' => null,
+                'display_step_in_url' => false,
                 'reset_flow_data_on_init' => false,
             ))
             ->setAllowedTypes(array(
-                'display_step_in_url'     => array('bool'),
+                'display_step_in_url' => array('bool'),
                 'reset_flow_data_on_init' => array('bool'),
             ))
         ;
@@ -183,8 +183,8 @@ class MapBuilder implements MapBuilderInterface
     public function addStep($name, $type, array $options = array())
     {
         $this->steps[$name] = array(
-            'type'      => $type,
-            'options'   => $options
+            'type' => $type,
+            'options' => $options,
         );
 
         return $this;
@@ -196,8 +196,8 @@ class MapBuilder implements MapBuilderInterface
     public function addPath($type, array $options = array())
     {
         $this->paths[] = array(
-            'type'      => $type,
-            'options'   => $options
+            'type' => $type,
+            'options' => $options,
         );
 
         return $this;
@@ -214,18 +214,18 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Build the map.
      *
-     * @param Request $request The HTTP request.
+     * @param Request $request the HTTP request
      *
-     * @return MapInterface the built map.
+     * @return MapInterface the built map
      */
     private function build(Request $request)
     {
         // TODO: Use a MapConfig as argument instead of an array.
         $map = new Map(array(
-            'name'      => $this->name,
+            'name' => $this->name,
             'footprint' => $this->generateFootprint(),
-            'data'      => $this->merge($this->data),
-            'options'   => $this->options
+            'data' => $this->merge($this->data),
+            'options' => $this->options,
         ));
 
         // Build steps before paths !
@@ -238,8 +238,8 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Build steps into the map.
      *
-     * @param MapInterface $map     The building map.
-     * @param Request      $request The HTTP request.
+     * @param MapInterface $map     the building map
+     * @param Request      $request the HTTP request
      */
     private function buildSteps(MapInterface $map, Request $request)
     {
@@ -272,8 +272,8 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Build paths into the map.
      *
-     * @param MapInterface $map     The building map.
-     * @param Request      $request The HTTP request.
+     * @param MapInterface $map     the building map
+     * @param Request      $request the HTTP request
      */
     private function buildPaths(MapInterface $map, Request $request)
     {
@@ -307,15 +307,15 @@ class MapBuilder implements MapBuilderInterface
      * Merge options with the SecurityContext (user)
      * and the session (session).
      *
-     * @param array $options The options.
-     * @param array $vars    The merging vars.
+     * @param array $options the options
+     * @param array $vars    the merging vars
      *
      * @return array
      */
     private function merge(array $options = array(), array $vars = array())
     {
         $vars['session'] = $this->session->all();
-        $vars['user']    = null !== $this->securityContext->getToken() ?
+        $vars['user'] = null !== $this->securityContext->getToken() ?
             $this->securityContext->getToken()->getUser() :
             null
         ;
@@ -326,11 +326,11 @@ class MapBuilder implements MapBuilderInterface
     /**
      * Merge a value.
      *
-     * @param mixed $value The value.
-     * @param array $vars  The merging vars.
-     * @param array $try   Whether or not to just try merging.
+     * @param mixed $value the value
+     * @param array $vars  the merging vars
+     * @param array $try   whether or not to just try merging
      *
-     * @return mixed The merged value.
+     * @return mixed the merged value
      */
     private function mergeValue($value, array $vars = array(), $try = true)
     {
@@ -341,12 +341,12 @@ class MapBuilder implements MapBuilderInterface
                 if (substr($k, -4) == '|raw') {
                     $value[substr($k, 0, -4)] = $v;
                     unset($value[$k]);
-                // Do not merge events parameters.
+                    // Do not merge events parameters.
                 } elseif ($k !== 'events') {
                     $value[$k] = $this->mergeValue($v, $vars, $try);
                 }
             }
-        // Handle object case.
+            // Handle object case.
         } elseif (is_object($value)) {
             $class = new \ReflectionClass($value);
             $properties = $class->getProperties();
@@ -362,7 +362,7 @@ class MapBuilder implements MapBuilderInterface
                     )
                 );
             }
-        // Handle string case.
+            // Handle string case.
         } elseif (is_string($value)) {
             try {
                 $template = $this->merger->createTemplate($value);

@@ -22,7 +22,7 @@ class SinglePathType extends AbstractPathType
         $resolver
             ->setRequired(array('source', 'destination'))
             ->setAllowedTypes(array(
-                'source'      => 'string',
+                'source' => 'string',
                 'destination' => 'string',
             ))
         ;

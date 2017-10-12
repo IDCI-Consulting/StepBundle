@@ -21,16 +21,16 @@ abstract class AbstractPathType implements PathTypeInterface
     {
         $resolver
             ->setDefaults(array(
-                'type'         => 'submit',
+                'type' => 'submit',
                 'next_options' => array(
-                    'label' => 'Next >'
+                    'label' => 'Next >',
                 ),
-                'events'       => array(),
+                'events' => array(),
             ))
             ->setAllowedTypes(array(
-                'type'         => array('string'),
+                'type' => array('string'),
                 'next_options' => array('array'),
-                'events'       => array('array'),
+                'events' => array('array'),
             ))
         ;
     }
@@ -42,8 +42,8 @@ abstract class AbstractPathType implements PathTypeInterface
     {
         // TODO: Use a PathConfig as argument instead of an array.
         return new Path(array(
-            'type'    => $this,
-            'options' => $options
+            'type' => $this,
+            'options' => $options,
         ));
     }
 
@@ -58,10 +58,10 @@ abstract class AbstractPathType implements PathTypeInterface
     /**
      * Do resolve the destination step name.
      *
-     * @param array              $options   The path options.
-     * @param NavigatorInterface $navigator The navigator.
+     * @param array              $options   the path options
+     * @param NavigatorInterface $navigator the navigator
      *
-     * @return string|null The resolved destination step name.
+     * @return string|null the resolved destination step name
      */
     abstract public function doResolveDestination(array $options, NavigatorInterface $navigator);
 }

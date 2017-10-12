@@ -36,7 +36,7 @@ class Path implements PathInterface
     /**
      * Constructor.
      *
-     * @param array $configuration  The configuration.
+     * @param array $configuration the configuration
      */
     public function __construct(array $configuration = array())
     {

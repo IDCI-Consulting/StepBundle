@@ -62,7 +62,7 @@ interface StepEventInterface
     /**
      * Returns whether further step events should be triggered.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPropagationStopped();
 }

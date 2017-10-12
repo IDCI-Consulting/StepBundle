@@ -9,23 +9,23 @@ namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
-use IDCI\Bundle\StepBundle\Path\Event\Action\AbstractPathEventAction;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
 
 class PurgeFlowDataPathEventAction extends AbstractPathEventAction
 {
-    static public $flowDataTypeMapping = array(
-        'data'           => null,
-        'reminded_data'  => FlowData::TYPE_REMINDED,
+    public static $flowDataTypeMapping = array(
+        'data' => null,
+        'reminded_data' => FlowData::TYPE_REMINDED,
         'retrieved_data' => FlowData::TYPE_RETRIEVED,
     );
 
     /**
-     * Returns whether the flow data type is valid or not
+     * Returns whether the flow data type is valid or not.
      *
-     * @param string $type.
-     * @return boolean
+     * @param string $type
+     *
+     * @return bool
      */
     protected function isValidFlowDataType($type)
     {
@@ -35,7 +35,8 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     /**
      * Returns the flow data type.
      *
-     * @param string $type.
+     * @param string $type
+     *
      * @return string
      */
     protected function getFlowDataType($type)
@@ -130,7 +131,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
                     }
 
                     return $value;
-                }
+                },
             ))
         ;
     }

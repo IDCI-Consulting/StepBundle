@@ -34,11 +34,11 @@ abstract class AbstractConditionalRule implements ConditionalRuleInterface
     }
 
     /**
-     * Do match
+     * Do match.
      *
-     * @param array $options The options to match.
+     * @param array $options the options to match
      *
-     * @return boolean Return true if the conditional rule match.
+     * @return bool return true if the conditional rule match
      */
     abstract protected function doMatch(array $options = array());
 }

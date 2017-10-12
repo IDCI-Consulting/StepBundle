@@ -5,16 +5,15 @@ namespace IDCI\Bundle\StepBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\Controller\Annotations as Annotations;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Api StepEventActionConfiguration Controller
+ * Api StepEventActionConfiguration Controller.
  */
 class ApiStepEventActionConfigurationController extends FOSRestController
 {
     /**
-     * [GET] /step-event-actions-configurations
+     * [GET] /step-event-actions-configurations.
      *
      * Retrieve step event actions configurations
      *

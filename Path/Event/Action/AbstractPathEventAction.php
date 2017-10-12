@@ -26,8 +26,8 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
             ))
             ->setNormalizers(array(
                 'logical_expression' => function (Options $options, $value) {
-                    return (bool)$value;
-                }
+                    return (bool) $value;
+                },
             ))
         ;
 
@@ -49,8 +49,8 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     /**
      * Do execute action.
      *
-     * @param PathEventInterface $event      The path event.
-     * @param array              $parameters The resolved parameters.
+     * @param PathEventInterface $event      the path event
+     * @param array              $parameters the resolved parameters
      *
      * @return mixed
      */

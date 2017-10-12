@@ -14,8 +14,8 @@ interface MapConfigurationBuilderInterface
     /**
      * Build the configuration.
      *
-     * @param Request $request    The HTTP request.
-     * @param array   $parameters The parameters used to build the configuration.
+     * @param Request $request    the HTTP request
+     * @param array   $parameters the parameters used to build the configuration
      *
      * @return array
      */

@@ -23,7 +23,7 @@ class EndPathType extends AbstractPathType
             ->setRequired(array('source'))
             ->setDefaults(array('label' => 'end'))
             ->setAllowedTypes(array(
-                'source' => 'string'
+                'source' => 'string',
             ))
         ;
     }

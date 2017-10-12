@@ -5,16 +5,15 @@ namespace IDCI\Bundle\StepBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\Controller\Annotations as Annotations;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Api PathTypeConfiguration Controller
+ * Api PathTypeConfiguration Controller.
  */
 class ApiPathTypeConfigurationController extends FOSRestController
 {
     /**
-     * [GET] /path-types-configurations
+     * [GET] /path-types-configurations.
      *
      * Retrieve path types configurations
      *
