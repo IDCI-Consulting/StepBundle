@@ -17,17 +17,17 @@ interface StepTypeInterface
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The options resolver.
+     * @param OptionsResolverInterface $resolver the options resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver);
 
     /**
      * Build a step.
      *
-     * @param string $name    The step name.
-     * @param array  $options The options.
+     * @param string $name    the step name
+     * @param array  $options the options
      *
-     * @return StepInterface The built step.
+     * @return StepInterface the built step
      */
     public function buildStep($name, array $options = array());
 
@@ -35,27 +35,27 @@ interface StepTypeInterface
      * Prepare the navigation before building the navigation step form.
      * Allow to change the step configuration options.
      *
-     * @param NavigatorInterface $navigator The navigator.
-     * @param array              $options   The configuration options.
+     * @param NavigatorInterface $navigator the navigator
+     * @param array              $options   the configuration options
      *
-     * @return array The transformed configuration options.
+     * @return array the transformed configuration options
      */
     public function prepareNavigation(NavigatorInterface $navigator, array $options);
 
     /**
      * Build the navigation step form.
      *
-     * @param FormBuilderInterface $builder The builder.
-     * @param array                $options The options.
+     * @param FormBuilderInterface $builder the builder
+     * @param array                $options the options
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options);
 
     /**
      * Returns the step data type mapping.
      *
-     * @param array $options The options.
+     * @param array $options the options
      *
-     * @return array The data type mapping.
+     * @return array the data type mapping
      */
     public function getDataTypeMapping($options);
 }

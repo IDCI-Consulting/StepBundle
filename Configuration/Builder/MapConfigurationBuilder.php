@@ -20,7 +20,6 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      */
     protected $mapBuilderFactory;
 
-
     /**
      * The configuration worker registry.
      *
@@ -31,8 +30,8 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     /**
      * Constructor.
      *
-     * @param MapBuilderFactoryInterface           $mapBuilderFactory The map builder factory.
-     * @param ConfigurationWorkerRegistryInterface $workerRegistry    The configuration worker registry.
+     * @param MapBuilderFactoryInterface           $mapBuilderFactory the map builder factory
+     * @param ConfigurationWorkerRegistryInterface $workerRegistry    the configuration worker registry
      */
     public function __construct(
         MapBuilderFactoryInterface $mapBuilderFactory,
@@ -81,10 +80,10 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     /**
      * Build options.
      *
-     * @param array       $options      The options.
-     * @param string|null $optionField  The option sub field to build if given.
+     * @param array       $options     the options
+     * @param string|null $optionField the option sub field to build if given
      *
-     * @return array The built options.
+     * @return array the built options
      */
     protected function buildOptions(array $options, $optionField = 'options')
     {
@@ -99,7 +98,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
 
                 unset($options[$key]);
                 $options[substr($key, 1)] = $worker->work($option['parameters']);
-            // Case of an embedded array.
+                // Case of an embedded array.
             } elseif (is_array($option)) {
                 $options[$key] = $this->buildOptions($option, null);
             }

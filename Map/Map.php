@@ -38,7 +38,7 @@ class Map implements MapInterface
     /**
      * Constructor.
      *
-     * @param array $configuration The configuration.
+     * @param array $configuration the configuration
      */
     public function __construct(array $configuration = array())
     {
@@ -48,7 +48,7 @@ class Map implements MapInterface
     /**
      * Set the first step name.
      *
-     * @param string $name The first step name.
+     * @param string $name the first step name
      *
      * @return MapInterface
      */

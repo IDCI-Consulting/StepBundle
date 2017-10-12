@@ -19,8 +19,8 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      */
     protected function doExecute(StepEventInterface $event, array $parameters = array())
     {
-        $formData      = $event->getData();
-        $step          = $event->getNavigator()->getCurrentStep();
+        $formData = $event->getData();
+        $step = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();
 
         if (empty($formData) ||
@@ -57,15 +57,16 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         $resolver
             ->setDefaults(array('fields' => array()))
             ->setAllowedTypes(array(
-                'fields' => array('array')
+                'fields' => array('array'),
             ))
         ;
     }
 
     /**
-     * Upper transformer
+     * Upper transformer.
      *
      * @param string $value The value to transform
+     *
      * @return mixed
      */
     public static function transformUpper($value)
@@ -78,9 +79,10 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     }
 
     /**
-     * Lower transformer
+     * Lower transformer.
      *
      * @param string $value The value to transform
+     *
      * @return mixed
      */
     public static function transformLower($value)

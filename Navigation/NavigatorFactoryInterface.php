@@ -16,13 +16,13 @@ use IDCI\Bundle\ExtraFormBundle\Configuration\Fetcher\ConfigurationFetcherInterf
 interface NavigatorFactoryInterface
 {
     /**
-     * Create a Navigator
+     * Create a Navigator.
      *
-     * @param Request The HTTP request.
-     * @param MapInterface|ConfigurationFetcherInterface|array|string The map configuration.
-     * @param array The fetcher parameters.
-     * @param array The navigation data.
-     * @param boolean Whether or not to do the navigation during creation.
+     * @param Request the HTTP request
+     * @param MapInterface|ConfigurationFetcherInterface|array|string the map configuration
+     * @param array the fetcher parameters
+     * @param array the navigation data
+     * @param bool whether or not to do the navigation during creation
      *
      * @return NavigatorInterface
      */

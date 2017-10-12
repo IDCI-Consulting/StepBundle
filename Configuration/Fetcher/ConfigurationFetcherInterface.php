@@ -12,9 +12,9 @@ interface ConfigurationFetcherInterface
     /**
      * Fetch a configuration.
      *
-     * @param array $parameters The parameters used to fetch the configuration.
+     * @param array $parameters the parameters used to fetch the configuration
      *
-     * @return array The configuration.
+     * @return array the configuration
      */
     public function fetch(array $parameters = array());
 }

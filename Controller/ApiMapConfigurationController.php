@@ -5,17 +5,16 @@ namespace IDCI\Bundle\StepBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\Controller\Annotations as Annotations;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Api MapConfiguration Controller
+ * Api MapConfiguration Controller.
  */
 class ApiMapConfigurationController extends FOSRestController
 {
     /**
-     * [GET] /map-configuration
+     * [GET] /map-configuration.
      *
      * Retrieve the map configuration
      *

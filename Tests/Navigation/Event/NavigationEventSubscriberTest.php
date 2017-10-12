@@ -27,11 +27,11 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array(
                 'data' => array(
                     'step1' => array(
-                        'firstname' => "john",
-                        'lastname'  => "doe",
-                        'message'   => "multi\nline\nmessage.",
-                    )
-                )
+                        'firstname' => 'john',
+                        'lastname' => 'doe',
+                        'message' => "multi\nline\nmessage.",
+                    ),
+                ),
             )))
         ;
         $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
@@ -41,8 +41,8 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($flow))
         ;
 
-        $twigStringLoader = new \Twig_Loader_String;
-        $twigEnvironment  = new \Twig_Environment($twigStringLoader, array());
+        $twigStringLoader = new \Twig_Loader_String();
+        $twigEnvironment = new \Twig_Environment($twigStringLoader, array());
 
         $this->navigationEventSubscriber = new NavigationEventSubscriber(
             $navigator,
@@ -58,11 +58,11 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $parameters = array(
             'string' => 'value1',
-            'int'    => 1000,
-            'bool'   => false,
-            'array'  => array(
-                'string' => 'value2'
-            )
+            'int' => 1000,
+            'bool' => false,
+            'array' => array(
+                'string' => 'value2',
+            ),
         );
 
         $this->assertEquals(
@@ -72,15 +72,15 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $parameters = array(
             'firstname' => '{{ flow_data.data.step1.firstname }}',
-            'lastname'  => '{{ flow_data.data.step1.lastname }}',
-            'message'   => '{{ flow_data.data.step1.message }}',
+            'lastname' => '{{ flow_data.data.step1.lastname }}',
+            'message' => '{{ flow_data.data.step1.message }}',
         );
 
         $this->assertEquals(
             array(
-                'firstname' => "john",
-                'lastname'  => "doe",
-                'message' => "multi\nline\nmessage."
+                'firstname' => 'john',
+                'lastname' => 'doe',
+                'message' => "multi\nline\nmessage.",
             ),
             $this->navigationEventSubscriber->merge($parameters)
         );
@@ -88,20 +88,20 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
         $parameters = array(
             'user' => array(
                 'firstname' => '{{ flow_data.data.step1.firstname }}',
-                'data'      => array(
-                    'message' => '{{ flow_data.data.step1.message }}'
-                )
-            )
+                'data' => array(
+                    'message' => '{{ flow_data.data.step1.message }}',
+                ),
+            ),
         );
 
         $this->assertEquals(
             array(
                 'user' => array(
-                    'firstname' => "john",
+                    'firstname' => 'john',
                     'data' => array(
-                        'message' => "multi\nline\nmessage."
-                    )
-                )
+                        'message' => "multi\nline\nmessage.",
+                    ),
+                ),
             ),
             $this->navigationEventSubscriber->merge($parameters)
         );

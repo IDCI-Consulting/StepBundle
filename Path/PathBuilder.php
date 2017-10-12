@@ -19,7 +19,7 @@ class PathBuilder implements PathBuilderInterface
     private $registry;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param PathTypeRegistryInterface $registry
      */

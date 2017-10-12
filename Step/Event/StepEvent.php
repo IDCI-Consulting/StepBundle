@@ -33,19 +33,19 @@ class StepEvent implements StepEventInterface
     private $stepEventData;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param NavigatorInterface $navigator     The navigator.
-     * @param FormEvent          $formEvent     The form event.
-     * @param mixed              $stepEventData the step event data.
+     * @param NavigatorInterface $navigator     the navigator
+     * @param FormEvent          $formEvent     the form event
+     * @param mixed              $stepEventData the step event data
      */
     public function __construct(
         NavigatorInterface $navigator,
         FormEvent $formEvent,
         $stepEventData
     ) {
-        $this->navigator     = $navigator;
-        $this->formEvent     = $formEvent;
+        $this->navigator = $navigator;
+        $this->formEvent = $formEvent;
         $this->stepEventData = $stepEventData;
     }
 

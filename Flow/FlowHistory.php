@@ -27,14 +27,14 @@ class FlowHistory implements FlowHistoryInterface
     protected $fullTakenPaths = array();
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param array $takenPaths     The taken paths.
-     * @param array $fullTakenPaths The full taken paths.
+     * @param array $takenPaths     the taken paths
+     * @param array $fullTakenPaths the full taken paths
      */
     public function __construct($takenPaths = array(), $fullTakenPaths = array())
     {
-        $this->takenPaths     = $takenPaths;
+        $this->takenPaths = $takenPaths;
         $this->fullTakenPaths = $fullTakenPaths;
     }
 
@@ -45,15 +45,15 @@ class FlowHistory implements FlowHistoryInterface
     {
         if (empty($this->fullTakenPaths)) {
             $path = array(
-                'source'      => null,
-                'index'       => null,
+                'source' => null,
+                'index' => null,
                 'destination' => $step->getName(),
             );
-            $this->takenPaths[]     = $path;
+            $this->takenPaths[] = $path;
             $this->fullTakenPaths[] = $path;
         } else {
-            $this->takenPaths[count($this->takenPaths) -1]['destination'] = $step->getName();
-            $this->fullTakenPaths[count($this->fullTakenPaths) -1]['destination'] = $step->getName();
+            $this->takenPaths[count($this->takenPaths) - 1]['destination'] = $step->getName();
+            $this->fullTakenPaths[count($this->fullTakenPaths) - 1]['destination'] = $step->getName();
         }
 
         return $this;
@@ -65,10 +65,10 @@ class FlowHistory implements FlowHistoryInterface
     public function addTakenPath(StepInterface $step, $pathId = 0)
     {
         $path = array(
-            'source'  => $step->getName(),
-            'index'   => $pathId,
+            'source' => $step->getName(),
+            'index' => $pathId,
         );
-        $this->takenPaths[]     = $path;
+        $this->takenPaths[] = $path;
         $this->fullTakenPaths[] = $path;
     }
 
@@ -78,8 +78,8 @@ class FlowHistory implements FlowHistoryInterface
     public function retraceTakenPath($sourceStepName, StepInterface $destinationStep)
     {
         $this->fullTakenPaths[] = array(
-            'source'      => $sourceStepName,
-            'index'       => '_back',
+            'source' => $sourceStepName,
+            'index' => '_back',
         );
 
         $removedPaths = array();
@@ -128,7 +128,7 @@ class FlowHistory implements FlowHistoryInterface
      */
     public function hasDoneStep(StepInterface $step, $full = false)
     {
-        $takenPaths = (bool)$full ? $this->fullTakenPaths : $this->takenPaths;
+        $takenPaths = (bool) $full ? $this->fullTakenPaths : $this->takenPaths;
         foreach ($takenPaths as $takenPath) {
             if (isset($takenPath['source']) && $takenPath['source'] == $step->getName()) {
                 return true;
@@ -144,7 +144,7 @@ class FlowHistory implements FlowHistoryInterface
     public function getAll()
     {
         return array(
-            'takenPaths'     => $this->takenPaths,
+            'takenPaths' => $this->takenPaths,
             'fullTakenPaths' => $this->fullTakenPaths,
         );
     }

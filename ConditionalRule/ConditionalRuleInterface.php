@@ -10,11 +10,11 @@ namespace IDCI\Bundle\StepBundle\ConditionalRule;
 interface ConditionalRuleInterface
 {
     /**
-     * Match
+     * Match.
      *
-     * @param array $options The options to match.
+     * @param array $options the options to match
      *
-     * @return boolean Return true if the conditional rule match.
+     * @return bool return true if the conditional rule match
      */
     public function match(array $options = array());
 }

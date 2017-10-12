@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fetch(array $parameters = array())
     {
@@ -36,7 +36,7 @@ abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInter
     /**
      * Fetch the configuration.
      *
-     * @param  array $parameters
+     * @param array $parameters
      *
      * @return array
      *

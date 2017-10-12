@@ -33,7 +33,7 @@ class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
         $resolver
             ->setRequired(array('final_destination'))
             ->setAllowedTypes(array(
-                'final_destination' => array('string')
+                'final_destination' => array('string'),
             ))
         ;
     }

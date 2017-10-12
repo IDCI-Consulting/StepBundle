@@ -9,7 +9,6 @@
 namespace IDCI\Bundle\StepBundle\Navigation;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class NavigationLogger implements NavigationLoggerInterface
 {
@@ -29,21 +28,21 @@ class NavigationLogger implements NavigationLoggerInterface
     protected $data;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $start;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->logger    = null;
+        $this->logger = null;
         $this->stopwatch = null;
-        $this->data      = null;
-        $this->start     = null;
+        $this->data = null;
+        $this->start = null;
 
         if ($container->has('logger')) {
             $this->logger = $container->get('logger');
@@ -61,7 +60,7 @@ class NavigationLogger implements NavigationLoggerInterface
     {
         $this->start = microtime(true);
         $this->data = array(
-            'navigator'   => null,
+            'navigator' => null,
             'executionMS' => 0,
         );
 
@@ -80,7 +79,7 @@ class NavigationLogger implements NavigationLoggerInterface
         }
 
         $this->data = array(
-            'navigator'   => $navigator,
+            'navigator' => $navigator,
             'executionMS' => (microtime(true) - $this->start) * 1000,
         );
 
@@ -122,8 +121,8 @@ class NavigationLogger implements NavigationLoggerInterface
         }
 
         return array(
-            'map'  => $this->data['navigator']->getMap(),
-            'flow' => $this->data['navigator']->getFlow()
+            'map' => $this->data['navigator']->getMap(),
+            'flow' => $this->data['navigator']->getFlow(),
         );
     }
 }

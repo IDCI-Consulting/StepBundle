@@ -15,8 +15,8 @@ interface ConditionalRuleRegistryInterface
     /**
      * Sets a conditional rule identify by a alias.
      *
-     * @param string                   $alias The rule alias.
-     * @param ConditionalRuleInterface $rule  The rule.
+     * @param string                   $alias the rule alias
+     * @param ConditionalRuleInterface $rule  the rule
      *
      * @return ConditionalRuleRegistryInterface
      */
@@ -25,21 +25,21 @@ interface ConditionalRuleRegistryInterface
     /**
      * Returns a conditional rule by alias.
      *
-     * @param string $alias The alias of the rule.
+     * @param string $alias the alias of the rule
      *
      * @return ConditionalRuleInterface The rule
      *
-     * @throws Exception\UnexpectedTypeException  if the passed alias is not a string.
-     * @throws \Exception\InvalidArgumentException if the rule can not be retrieved.
+     * @throws Exception\UnexpectedTypeException   if the passed alias is not a string
+     * @throws \Exception\InvalidArgumentException if the rule can not be retrieved
      */
     public function getRule($alias);
 
     /**
      * Returns whether the given conditional rule is supported.
      *
-     * @param string $alias The alias of the rule.
+     * @param string $alias the alias of the rule
      *
-     * @return bool Whether the rule is supported.
+     * @return bool whether the rule is supported
      */
     public function hasRule($alias);
 }

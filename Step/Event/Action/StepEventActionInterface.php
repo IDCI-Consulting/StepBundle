@@ -14,8 +14,8 @@ interface StepEventActionInterface
     /**
      * Execute action.
      *
-     * @param StepEventInterface $event      The step event.
-     * @param array              $parameters The parameters.
+     * @param StepEventInterface $event      the step event
+     * @param array              $parameters the parameters
      *
      * @return mixed
      */

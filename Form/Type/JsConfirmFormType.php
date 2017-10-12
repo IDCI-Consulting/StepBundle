@@ -50,10 +50,10 @@ class JsConfirmFormType extends AbstractType
     {
         $resolver
             ->setRequired(array('path_index'))
-            ->setDefaults(array('message' => "Are you sure ?"))
+            ->setDefaults(array('message' => 'Are you sure ?'))
             ->setAllowedTypes(array(
                 'path_index' => array('integer'),
-                'message'    => array('string')
+                'message' => array('string'),
             ))
         ;
     }

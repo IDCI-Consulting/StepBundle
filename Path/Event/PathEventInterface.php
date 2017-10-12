@@ -58,7 +58,7 @@ interface PathEventInterface
     /**
      * Returns the current step path index selected.
      *
-     * @return integer
+     * @return int
      */
     public function getPathIndex();
 
@@ -70,7 +70,7 @@ interface PathEventInterface
     /**
      * Returns whether further path events should be triggered.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPropagationStopped();
 }

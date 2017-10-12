@@ -5,16 +5,15 @@ namespace IDCI\Bundle\StepBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\Controller\Annotations as Annotations;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Api StepTypeConfiguration Controller
+ * Api StepTypeConfiguration Controller.
  */
 class ApiStepTypeConfigurationController extends FOSRestController
 {
     /**
-     * [GET] /step-types-configurations
+     * [GET] /step-types-configurations.
      *
      * Retrieve step types configurations
      *
