@@ -17,7 +17,7 @@
         "twig/twig": "~1.0",
         "twig/extensions": "~1.0",
         "jms/serializer-bundle": ">=1.0",
-        "idci/extra-form-bundle": "dev-symfony-3-3-dependency-fix"
+        "idci/extra-form-bundle": "~3.0"
     },
     "suggest": {
         "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
