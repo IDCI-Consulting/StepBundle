@@ -194,7 +194,10 @@ services:
     IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker:
         tags:
             - { name: idci_step.configuration.worker, alias: form_builder }
-    IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorkerInterface: '@IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker'
+
+    IDCI\Bundle\ExtraFormBundle\Configuration\StepWorker\ExtraFormBuilderWorker:
+        tags:
+            - { name: idci_step.configuration.worker, alias: extra_form_builder }
 
 
     # Logger
