@@ -11,23 +11,25 @@
           <label>name</label>
           <input class="form-control" v-model="stepEventActionName" type="text"/>
         </div>
-        <a v-if="hasConfiguration()" role="button" data-toggle="collapse" :href="'#' + id">
-          Parameters<span class="toggle"></span>
-        </a>
-        <div v-else>
-          This path event action was not configured <i class="fa-icon fa fa-exclamation-triangle" aria-hidden="true"></i>
-        </div>
-        <div :id="id" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" :aria-controls="id">
-          <component
-            :is="option.component_name"
-            v-for="(option, key) in stepEventActionType.extra_form_options"
-            :option="option"
-            :name="key"
-            :key="key"
-            :value="getParameterValue(key)"
-            @changed="updateOption"
-          />
-        </div>
+        <v-collapse-wrapper>
+          <a v-if="hasConfiguration()" role="button" data-toggle="collapse" :href="'#' + id" v-collapse-toggle>
+            Parameters<span class="toggle"></span>
+          </a>
+          <div v-else>
+            This path event action was not configured <i class="fa-icon fa fa-exclamation-triangle" aria-hidden="true"></i>
+          </div>
+          <div :id="id" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" :aria-controls="id" v-collapse-content>
+            <component
+              :is="option.component_name"
+              v-for="(option, key) in stepEventActionType.extra_form_options"
+              :option="option"
+              :name="key"
+              :key="key"
+              :value="getParameterValue(key)"
+              @changed="updateOption"
+            />
+          </div>
+        </v-collapse-wrapper>
       </div>
     </div>
   </div>

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Multiselect from 'vue-multiselect';
+import Tabs from 'vue-tabs-component';
+import Collapse from 'vue2-collapse'
 import VueResource from 'vue-resource';
 import stepEditorRawComponent from './components/step-editor-raw.vue';
 import stepEditorComponent from './components/step-editor/step-editor.vue';
@@ -34,6 +36,8 @@ function triggerVueStepEditor (element, configuration, formProperties) {
 
   Vue.use(Vuex);
   Vue.use(VueResource);
+  Vue.use(Tabs);
+  Vue.use(Collapse);
   Vue.use(Multiselect);
 
   /**

@@ -6,13 +6,15 @@
       <new-step-type></new-step-type>
       <new-path-type></new-path-type>
     </div>
-    <div class="extra-step-configuration col-md-4">
-      <step-types-configuration></step-types-configuration>
-      <path-types-configuration></path-types-configuration>
-      <map-configuration></map-configuration>
-    </div>
-    <div class="extra-step-map col-md-8">
-      <diagram :map="map"></diagram>
+    <div>
+        <div class="extra-step-configuration">
+            <step-types-configuration></step-types-configuration>
+            <path-types-configuration></path-types-configuration>
+            <map-configuration></map-configuration>
+        </div>
+        <div class="extra-step-map">
+            <diagram :map="map" style="overflow: scroll;"></diagram>
+        </div>
     </div>
   </div>
 
@@ -69,13 +71,6 @@ export default {
     font-size: 20px;
 }
 
-.extra-step-editor .extra-step-configuration,
-.extra-step-editor .extra-step-map  {
-    max-height: 80vh;
-    min-height: 60vh;
-    overflow: auto;
-}
-
 .extra-step-editor .extra-step-configuration h3.heading-configuration {
     border-bottom: 2px solid #514D61;
     color: #514D61;
@@ -107,7 +102,7 @@ export default {
 .extra-step-editor .conditional-destination.form-group > select,
 .extra-step-editor .conditional-destination.form-group > div {
     width: 65%;
-    margin-left: 35%;
+    margin-left: 32%;
 }
 
 .extra-step-editor .conditional-destination.form-group > div {
@@ -132,7 +127,19 @@ export default {
 }
 
 .extra-step-editor .nav-pills {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
     margin: 0 0 10px 0;
+}
+
+.extra-step-editor .nav-pills li a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px;
+    text-decoration: none;
 }
 
 .extra-step-editor .new-path-event-action {
@@ -178,4 +185,50 @@ export default {
     width: 100%;
 }
 
+.row.advanced-mode > div:last-child {
+    display: flex;
+}
+
+.editor .form-group {
+    display: inline-block;
+    margin-top: 15px;
+    height: 100%;
+    width: 100%;
+}
+
+.editor .form-group > label {
+    margin-right: 15px;
+    margin-top: 0;
+}
+
+.modal-fullscreen .modal-footer {
+    position: relative;
+}
+
+@media screen and (min-width: 900px) {
+    .extra-step-editor .extra-step-configuration,
+    .extra-step-editor .extra-step-map {
+        max-height: 80vh;
+        min-height: 60vh;
+        overflow: auto;
+    }
+
+    .extra-step-editor .extra-step-configuration {
+        max-width: 50%;
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .extra-step-editor .extra-step-configuration,
+    .extra-step-editor .extra-step-map {
+        max-height: 50vh;
+        min-height: 20vh;
+        overflow: auto;
+    }
+
+    .row.advanced-mode > div:last-child {
+        flex-direction: column-reverse;
+    }
+}
 </style>
