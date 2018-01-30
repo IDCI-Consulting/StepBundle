@@ -3,23 +3,15 @@
   <div>
     <div v-for="(path, index) in paths" v-if="path.active" :key="index">
       <h3 class="heading-configuration">Path configuration</h3>
-      <ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active">
-          <a role="tab" data-toggle="tab" :href="anchor('#', index, 'options')">Options</a>
-        </li>
-        <li role="presentation">
-          <a role="tab" data-toggle="tab" :href="anchor('#', index, 'events')">Path events actions</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane in active" :id="anchor('', index, 'options')">
-          <path-type-options :path="path" :index="index"></path-type-options>
-        </div>
-        <div role="tabpanel" class="tab-pane" :id="anchor('', index, 'events')">
-          <new-path-event-action class="new-path-event-action" :index="index"></new-path-event-action>
-          <path-event-actions :index="index"></path-event-actions>
-        </div>
-      </div>
+      <tabs>
+        <tab name="Options">
+            <path-type-options :path="path" :index="index"></path-type-options>
+        </tab>
+        <tab name="Path events actions">
+            <new-path-event-action class="new-path-event-action" :index="index"></new-path-event-action>
+            <path-event-actions :index="index"></path-event-actions>
+        </tab>
+      </tabs>
     </div>
   </div>
 

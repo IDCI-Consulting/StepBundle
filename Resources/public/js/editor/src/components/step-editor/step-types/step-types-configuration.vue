@@ -3,30 +3,22 @@
   <div>
     <div v-for="(step, stepName) in steps" v-if="step.active" :key="stepName">
       <h3 class="heading-configuration">Step configuration</h3>
-      <ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active">
-          <a role="tab" data-toggle="tab" :href="anchor('#', stepName, 'options')">Options</a>
-        </li>
-        <li role="presentation">
-          <a role="tab" data-toggle="tab" :href="anchor('#', stepName, 'events')">Step events actions</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane in active" :id="anchor('', stepName, 'options')">
-        <step-type-options
-          v-if="step.active"
-          :key="stepName"
-          :step="step"
-          :name="stepName"
-          v-for="(step, stepName) in steps"
-        >
-        </step-type-options>
-        </div>
-        <div role="tabpanel" class="tab-pane" :id="anchor('', stepName, 'events')">
-          <new-step-event-action class="new-step-event-action" :name="stepName"></new-step-event-action>
-          <step-event-actions :name="stepName"></step-event-actions>
-        </div>
-      </div>
+      <tabs>
+        <tab name="Options">
+            <step-type-options
+                 v-if="step.active"
+                 :key="stepName"
+                 :step="step"
+                 :name="stepName"
+                 v-for="(step, stepName) in steps"
+                 >
+            </step-type-options>
+        </tab>
+        <tab name="Step events actions">
+        <new-step-event-action class="new-step-event-action" :name="stepName"></new-step-event-action>
+        <step-event-actions :name="stepName"></step-event-actions>
+        </tab>
+      </tabs>
     </div>
   </div>
 
