@@ -78,8 +78,26 @@ var MapUtils = {
     }
 
     map.options.autoescape_false = autoescapeFalseValue;
-  }
+  },
 
+  /**
+   * Check if the map has unpositioned cells.
+   *
+   * @param map
+   *
+   * @returns boolean
+   */
+  hasUnpositionedCells: function (map) {
+    if (map.paths.length !== map.graphPositions.paths.length) {
+      return true
+    }
+
+    if (Object.keys(map.steps).length !== Object.keys(map.graphPositions.steps).length) {
+      return true;
+    }
+
+    return false;
+  }
 };
 
 export default MapUtils;

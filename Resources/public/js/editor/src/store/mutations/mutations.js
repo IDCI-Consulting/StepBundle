@@ -1,4 +1,5 @@
-import Vue from 'vue';
+import Vue      from 'vue';
+import MapUtils from 'StepBundle/utils/MapUtils.js';
 
 var stepEditorMutations = {
 
@@ -91,7 +92,7 @@ var stepEditorMutations = {
     }
 
     // Add graphPositions if not set
-    if ('undefined' === typeof map.graphPositions) {
+    if ('undefined' === typeof map.graphPositions || MapUtils.hasUnpositionedCells(map)) {
       map.graphPositions = stepEditorMutations.setInitialGraphPositions(map);
     }
 
