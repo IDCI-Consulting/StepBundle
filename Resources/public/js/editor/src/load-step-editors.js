@@ -30,13 +30,15 @@ export default function loadStepEditors () {
       configuration.componentId = editorComponentId;
       var rawModal = createRawModal();
       var rawModalButton =
-        '<button class="trigger-extra-step-raw-mode-modal-' + index + '">' +
-          'Raw mode' +
+        '<button class="btn raw-mode trigger-extra-step-raw-mode-modal-' + index + '">' +
+          '<i></i>' +
+          '<span>Raw mode</span>' +
         '</button>';
       var advancedModal = createAdvancedModal();
       var advancedModalButton =
-        '<button class="trigger-extra-step-advanced-visual-mode-modal-' + index + '">' +
-          'Visual mode' +
+        '<button class="btn visual-mode trigger-extra-step-advanced-visual-mode-modal-' + index + '">' +
+          '<i></i>' +
+          '<span>Visual mode</span>' +
         '</button>';
 
       /**
