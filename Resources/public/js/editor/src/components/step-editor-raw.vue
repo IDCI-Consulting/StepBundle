@@ -3,11 +3,13 @@
   <div class="extra-step-editor raw-mode">
     <textarea v-model="raw" :id="id"></textarea>
     <div class="json-errors">{{ error.message }}</div>
-    <button style="margin-right: 20px" @click.prevent="generateMap">
-      Generate the diagram of the map from the json
+    <button class="btn generate" @click.prevent="generateMap">
+      <i></i>
+      <span>Generate the diagram of the map from the json</span>
     </button>
-    <button @click.prevent="saveRaw">
-      Save the content of the textarea (even if the json is not valid)
+    <button class="btn save" @click.prevent="saveRaw">
+      <i></i>
+      <span>Save the content of the textarea (even if the json is not valid)</span>
     </button>
   </div>
 
