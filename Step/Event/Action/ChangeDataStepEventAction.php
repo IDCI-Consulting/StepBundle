@@ -7,9 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvents;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
+use IDCI\Bundle\StepBundle\Step\Type\FormStepType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeDataStepEventAction extends AbstractStepEventAction
 {
@@ -21,24 +21,21 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
         $step = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();
         $data = $parameters['fields'];
+        $form = $event->getForm();
 
-        if ($event->getName() === FormEvents::PRE_SET_DATA) {
-            if ($configuration['type'] instanceof \IDCI\Bundle\StepBundle\Step\Type\FormStepType) {
-                $data = array_replace_recursive(
-                    $event->getData(),
-                    array('_data' => $data)
-                );
-            }
-            $event->setData($data);
-        } elseif ($event->getName() === FormEvents::POST_SET_DATA) {
-            $form = $event->getForm();
-            if ($configuration['type'] instanceof \IDCI\Bundle\StepBundle\Step\Type\FormStepType) {
-                $form = $form->get('_data');
-            }
+        if ($configuration['type'] instanceof FormStepType) {
+            $data = array_replace_recursive(
+                $event->getData(),
+                array('_data' => $data)
+            );
 
-            foreach ($data as $field => $newValue) {
-                $form->get($field)->setData($newValue);
-            }
+            $form = $form->get('_data');
+        }
+
+        $event->setData($data);
+
+        foreach ($data as $field => $newValue) {
+            $form->get($field)->setData($newValue);
         }
 
         return true;
@@ -51,18 +48,16 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     {
         $resolver
             ->setDefaults(array('fields' => array()))
-            ->setNormalizers(array(
-                'fields' => function (OptionsResolver $options, $value) {
-                    foreach ($value as $k => $v) {
-                        if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
-                            $value[$matches['key']] = json_decode($v, true);
-                            unset($value[$k]);
-                        }
+            ->setNormalizer('fields', function (OptionsResolver $options, $value) {
+                foreach ($value as $k => $v) {
+                    if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
+                        $value[$matches['key']] = json_decode($v, true);
+                        unset($value[$k]);
                     }
+                }
 
-                    return $value;
-                },
-            ))
+                return $value;
+            })
             ->setAllowedTypes('fields', array('array'))
         ;
     }
