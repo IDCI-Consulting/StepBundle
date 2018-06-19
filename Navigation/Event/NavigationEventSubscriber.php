@@ -136,7 +136,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 $form->add(
                     sprintf('_path_%d', $i),
                     $pathConfiguration['options']['type'],
-                    $pathConfiguration['options']['next_options']
+                    array_merge_recursive(
+                        $pathConfiguration['options']['next_options'],
+                        array(
+                            'attr' => array('class' => 'idci_navigation_next'),
+                        )
+                    )
                 );
             }
         }
@@ -152,7 +157,10 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 array_merge_recursive(
                     $stepConfiguration['options']['previous_options'],
                     array(
-                        'attr' => array('formnovalidate' => 'true'),
+                        'attr' => array(
+                            'formnovalidate' => 'true',
+                            'class' => 'idci_navigation_previous',
+                        ),
                         'validation_groups' => false,
                     )
                 )
