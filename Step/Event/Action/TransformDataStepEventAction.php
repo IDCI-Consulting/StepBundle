@@ -30,14 +30,21 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         }
 
         foreach ($parameters['fields'] as $field => $method) {
+            $destination = $field;
+            // Decode complexe configuration
+            if (is_array($method)) {
+                $destination = isset($method['destination']) ? $method['destination'] : $field;
+                $method = isset($method['method']) ? $method['method'] : null;
+            }
+
             $transformer = sprintf('transform%s', Inflector::classify($method));
             if ($configuration['type'] instanceof FormStepType) {
-                $formData['_data'][$field] = forward_static_call_array(
+                $formData['_data'][$destination] = forward_static_call_array(
                     array($this, $transformer),
                     array($formData['_data'][$field])
                 );
             } else {
-                $formData[$field] = forward_static_call_array(
+                $formData[$destination] = forward_static_call_array(
                     array($this, $transformer),
                     array($formData[$field])
                 );
