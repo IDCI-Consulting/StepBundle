@@ -30,16 +30,24 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         }
 
         foreach ($parameters['fields'] as $field => $method) {
+            $destination = $field;
+            // Decode complexe configuration
+            if (is_array($method)) {
+                $options = isset($method['options']) ? $method['options'] : array();
+                $destination = isset($method['destination']) ? $method['destination'] : $field;
+                $method = isset($method['method']) ? $method['method'] : null;
+            }
+
             $transformer = sprintf('transform%s', Inflector::classify($method));
             if ($configuration['type'] instanceof FormStepType) {
-                $formData['_data'][$field] = forward_static_call_array(
+                $formData['_data'][$destination] = forward_static_call_array(
                     array($this, $transformer),
-                    array($formData['_data'][$field])
+                    array($formData['_data'][$field], $options)
                 );
             } else {
-                $formData[$field] = forward_static_call_array(
+                $formData[$destination] = forward_static_call_array(
                     array($this, $transformer),
-                    array($formData[$field])
+                    array($formData[$field], $options)
                 );
             }
         }
@@ -65,11 +73,12 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     /**
      * Upper transformer.
      *
-     * @param string $value The value to transform
+     * @param string $value   The value to transform
+     * @param array  $options Options used to transform the given value
      *
      * @return mixed
      */
-    public static function transformUpper($value)
+    public static function transformUpper($value, array $options = array())
     {
         if (!is_string($value)) {
             return $value;
@@ -81,16 +90,39 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     /**
      * Lower transformer.
      *
-     * @param string $value The value to transform
+     * @param string $value   The value to transform
+     * @param array  $options Options used to transform the given value
      *
      * @return mixed
      */
-    public static function transformLower($value)
+    public static function transformLower($value, array $options = array())
     {
         if (!is_string($value)) {
             return $value;
         }
 
         return mb_strtolower($value);
+    }
+
+    /**
+     * Replace transformer.
+     *
+     * @param string $value   The value to transform
+     * @param array  $options Options used to transform the given value
+     *
+     * @return mixed
+     */
+    public static function transformReplace($value, array $options = array())
+    {
+        if (!is_string($value)) {
+            return $value;
+        }
+
+        $pairs = array();
+        if (isset($options['pairs']) && is_array($options['pairs'])) {
+            $pairs = $options['pairs'];
+        }
+
+        return strtr($value, $pairs);
     }
 }
