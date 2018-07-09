@@ -31,6 +31,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
 
         foreach ($parameters['fields'] as $field => $method) {
             $destination = $field;
+            $options = array();
             // Decode complexe configuration
             if (is_array($method)) {
                 $options = isset($method['options']) ? $method['options'] : array();
