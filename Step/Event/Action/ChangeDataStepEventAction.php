@@ -28,8 +28,6 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
                 $event->getData(),
                 array('_data' => $data)
             );
-
-            $form = $form->get('_data');
         }
 
         $event->setData($data);
