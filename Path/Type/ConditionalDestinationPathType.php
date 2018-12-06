@@ -63,12 +63,15 @@ class ConditionalDestinationPathType extends AbstractPathType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setRequired(array('source', 'destinations'))
+            ->setRequired(array('source'))
             ->setDefaults(array(
                 'default_destination' => null,
+                'destinations' => array(),
+                'stop_navigation' => false,
             ))
             ->setAllowedTypes('source', array('string'))
             ->setAllowedTypes('destinations', array('array'))
+            ->setAllowedTypes('stop_navigation', array('string', 'bool'))
         ;
     }
 
@@ -99,6 +102,22 @@ class ConditionalDestinationPathType extends AbstractPathType
         $user = null;
         if (null !== $this->tokenStorage->getToken()) {
             $user = $this->tokenStorage->getToken()->getUser();
+        }
+
+        $stopNavigationRules = $options['stop_navigation'];
+        if (true === $stopNavigationRules) {
+            return null;
+        } else {
+            $template = $this->merger->createTemplate($stopNavigationRules);
+            $rules = $template->render(array(
+                'user' => $user,
+                'session' => $this->session->all(),
+                'flow_data' => $navigator->getFlow()->getData(),
+            ));
+
+            if ($this->matchConditionalRules($rules)) {
+                return null;
+            }
         }
 
         foreach ($options['destinations'] as $name => $rules) {
