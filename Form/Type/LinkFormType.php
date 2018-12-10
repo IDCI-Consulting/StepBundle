@@ -36,15 +36,13 @@ class LinkFormType extends AbstractType
                 'href' => 'javascript:void(0);',
                 'target' => '_self',
             ))
-            ->setNormalizers(array(
-                'label' => function (Options $options, $value) {
-                    if (in_array($value, array(null, 'end'))) {
-                        return $options['href'];
-                    }
+            ->setNormalizer('label', function (Options $options, $value) {
+                if (in_array($value, array(null, 'end'))) {
+                    return $options['href'];
+                }
 
-                    return $value;
-                },
-            ))
+                return $value;
+            })
         ;
     }
 

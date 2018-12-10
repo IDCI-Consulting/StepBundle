@@ -56,24 +56,15 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setAllowedTypes('attr', array('array'))
             ->setAllowedTypes('events', array('array'))
             ->setAllowedTypes('serialization_mapping', array('null', 'array'))
-            ->setNormalizer(
-                'is_first',
-                function (OptionsResolver $options, $value) {
-                    return (bool) $value;
-                }
-            )
-            ->setNormalizer(
-                'prevent_previous',
-                function (OptionsResolver $options, $value) {
-                    return (bool) $value;
-                }
-            )
-            ->setNormalizer(
-                'prevent_next',
-                function (OptionsResolver $options, $value) {
-                    return (bool) $value;
-                }
-            )
+            ->setNormalizer('is_first', function (Options $options, $value) {
+                return (bool) $value;
+            })
+            ->setNormalizer('prevent_previous', function (Options $options, $value) {
+                return (bool) $value;
+            })
+            ->setNormalizer('prevent_next', function (Options $options, $value) {
+                return (bool) $value;
+            })
         ;
     }
 

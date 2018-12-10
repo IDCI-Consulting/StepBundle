@@ -24,11 +24,9 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
             ->setDefaults(array(
                 'logical_expression' => true,
             ))
-            ->setNormalizers(array(
-                'logical_expression' => function (Options $options, $value) {
-                    return (bool) $value;
-                },
-            ))
+            ->setNormalizer('logical_expression', function (Options $options, $value) {
+                return (bool) $value;
+            })
         ;
 
         $this->setDefaultParameters($resolver);

@@ -108,31 +108,29 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
             ->setAllowedTypes(array(
                 'steps' => array('array'),
             ))
-            ->setNormalizers(array(
-                'steps' => function (Options $options, $value) {
-                    foreach ($value as $stepName => $dataTypes) {
-                        if (!is_array($dataTypes)) {
-                            throw new \UnexpectedValueException(sprintf(
-                                'The data type of the step "%s" is not an array',
-                                $stepName
-                            ));
-                        } else {
-                            foreach ($dataTypes as $type => $keys) {
-                                $this->getFlowDataType($type);
-                                if (!is_array($keys)) {
-                                    throw new \UnexpectedValueException(sprintf(
-                                        'The purge defined field "%s:%s" must be an array',
-                                        $stepName,
-                                        $type
-                                    ));
-                                }
+            ->setNormalizer('steps', function (Options $options, $value) {
+                foreach ($value as $stepName => $dataTypes) {
+                    if (!is_array($dataTypes)) {
+                        throw new \UnexpectedValueException(sprintf(
+                            'The data type of the step "%s" is not an array',
+                            $stepName
+                        ));
+                    } else {
+                        foreach ($dataTypes as $type => $keys) {
+                            $this->getFlowDataType($type);
+                            if (!is_array($keys)) {
+                                throw new \UnexpectedValueException(sprintf(
+                                    'The purge defined field "%s:%s" must be an array',
+                                    $stepName,
+                                    $type
+                                ));
                             }
                         }
                     }
+                }
 
-                    return $value;
-                },
-            ))
+                return $value;
+            })
         ;
     }
 }

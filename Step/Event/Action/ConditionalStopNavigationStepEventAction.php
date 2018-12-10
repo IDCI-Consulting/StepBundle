@@ -43,15 +43,13 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
                 'rules' => array('bool', 'array'),
                 'final_destination' => array('null', 'string'),
             ))
-            ->setNormalizers(array(
-                'rules' => function (Options $options, $value) {
-                    if (is_array($value)) {
-                        return $value;
-                    }
+            ->setNormalizer('rules', function (Options $options, $value) {
+                if (is_array($value)) {
+                    return $value;
+                }
 
-                    return is_bool($value) ? $value : (bool) $value;
-                },
-            ))
+                return is_bool($value) ? $value : (bool) $value;
+            })
         ;
     }
 

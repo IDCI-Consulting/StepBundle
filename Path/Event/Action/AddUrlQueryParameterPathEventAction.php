@@ -34,11 +34,9 @@ class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
         $resolver
             ->setRequired(array('key'))
             ->setDefaults(array('value' => '1'))
-            ->setNormalizers(array(
-                'value' => function (Options $options, $value) {
-                    return (string) $value;
-                },
-            ))
+            ->setNormalizer('value', function (Options $options, $value) {
+                return (string) $value;
+            })
             ->setAllowedTypes(array(
                 'key' => array('string'),
                 'value' => array('string', 'boolean', 'integer'),

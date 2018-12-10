@@ -385,15 +385,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 'name' => null,
                 'parameters' => array(),
             ))
-            ->setNormalizers(array(
-                'name' => function (Options $options, $value) {
-                    if (null === $value) {
-                        return $options['action'];
-                    }
+            ->setNormalizer('name', function (Options $options, $value) {
+                if (null === $value) {
+                    return $options['action'];
+                }
 
-                    return $value;
-                },
-            ))
+                return $value;
+            })
             ->setAllowedTypes(array(
                 'action' => array('string'),
                 'name' => array('null', 'string'),
