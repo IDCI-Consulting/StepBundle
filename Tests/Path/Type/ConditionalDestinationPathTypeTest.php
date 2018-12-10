@@ -114,6 +114,38 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
                 $navigator
             )
         );
+
+        $this->assertEquals(
+            null,
+            $this->pathType->resolveDestination(
+                array(
+                    'source' => 'step1',
+                    'default_destination' => 'default',
+                    'stop_navigation' => true,
+                    'destinations' => array(
+                        'destination_1' => true,
+                        'destination_2' => true,
+                    ),
+                ),
+                $navigator
+            )
+        );
+
+        $this->assertEquals(
+            null,
+            $this->pathType->resolveDestination(
+                array(
+                    'source' => 'step1',
+                    'default_destination' => 'default',
+                    'stop_navigation' => '{{ flow_data.data.step1.firstname == "john" }}',
+                    'destinations' => array(
+                        'destination_1' => true,
+                        'destination_2' => true,
+                    ),
+                ),
+                $navigator
+            )
+        );
     }
 
     public function testbuildPath()
