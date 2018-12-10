@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 
 class StepEditorType extends AbstractType implements AssetProviderInterface
 {
@@ -80,7 +81,7 @@ class StepEditorType extends AbstractType implements AssetProviderInterface
             ->setAllowedTypes('configured_types_tags', array('array'))
             ->setAllowedTypes('allow_configured_types_edition', array('boolean'))
             ->setAllowedTypes('show_configured_types', array('boolean'))
-            ->setNormalizer('allow_configured_types_edition', function (OptionsResolver $options, $value) {
+            ->setNormalizer('allow_configured_types_edition', function (Options $options, $value) {
                 if ($value && !$options['show_configured_types']) {
                     throw new \Exception(
                         'The option `allow_configured_types_edition` for the extra_form_editor form type'.

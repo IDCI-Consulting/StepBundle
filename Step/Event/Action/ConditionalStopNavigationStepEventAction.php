@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 
@@ -40,16 +41,13 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
             ))
             ->setAllowedTypes('rules', array('bool', 'array'))
             ->setAllowedTypes('final_destination', array('null', 'string'))
-            ->setNormalizer(
-                'rules',
-                function (OptionsResolver $options, $value) {
-                    if (is_array($value)) {
-                        return $value;
-                    }
-
-                    return is_bool($value) ? $value : (bool) $value;
+            ->setNormalizer('rules', function (Options $options, $value) {
+                if (is_array($value)) {
+                    return $value;
                 }
-            )
+
+                return is_bool($value) ? $value : (bool) $value;
+            })
         ;
     }
 

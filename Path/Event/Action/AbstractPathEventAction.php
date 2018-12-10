@@ -22,12 +22,9 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
             ->setDefaults(array(
                 'logical_expression' => true,
             ))
-            ->setNormalizer(
-                'logical_expression',
-                function (OptionsResolver $options, $value) {
-                    return (bool) $value;
-                }
-            )
+            ->setNormalizer('logical_expression', function (Options $options, $value) {
+                return (bool) $value;
+            })
         ;
 
         $this->setDefaultParameters($resolver);

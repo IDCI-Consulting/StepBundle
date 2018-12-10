@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\Step\Type\FormStepType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 
 class ChangeDataStepEventAction extends AbstractStepEventAction
 {
@@ -46,7 +47,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     {
         $resolver
             ->setDefaults(array('fields' => array()))
-            ->setNormalizer('fields', function (OptionsResolver $options, $value) {
+            ->setNormalizer('fields', function (Options $options, $value) {
                 foreach ($value as $k => $v) {
                     if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
                         $value[$matches['key']] = json_decode($v, true);

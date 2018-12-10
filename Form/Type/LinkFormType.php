@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 
 class LinkFormType extends AbstractType
 {
@@ -35,16 +36,13 @@ class LinkFormType extends AbstractType
                 'href' => 'javascript:void(0);',
                 'target' => '_self',
             ))
-            ->setNormalizer(
-                'label',
-                function (OptionsResolver $options, $value) {
-                    if (in_array($value, array(null, 'end'))) {
-                        return $options['href'];
-                    }
-
-                    return $value;
+            ->setNormalizer('label', function (Options $options, $value) {
+                if (in_array($value, array(null, 'end'))) {
+                    return $options['href'];
                 }
-            )
+
+                return $value;
+            })
         ;
     }
 

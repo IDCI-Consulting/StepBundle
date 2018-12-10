@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
@@ -392,16 +393,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 'name' => null,
                 'parameters' => array(),
             ))
-            ->setNormalizer(
-                'name',
-                function (OptionsResolver $options, $value) {
-                    if (null === $value) {
-                        return $options['action'];
-                    }
-
-                    return $value;
+            ->setNormalizer('name', function (Options $options, $value) {
+                if (null === $value) {
+                    return $options['action'];
                 }
-            )
+
+                return $value;
+            })
             ->setAllowedTypes('action', array('string'))
             ->setAllowedTypes('name', array('null', 'string'))
         ;

@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 
 abstract class AbstractStepEventAction implements StepEventActionInterface
@@ -22,12 +23,9 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
             ->setDefaults(array(
                 'logical_expression' => true,
             ))
-            ->setNormalizer(
-                'logical_expression',
-                function (OptionsResolver $options, $value) {
-                    return (bool) $value;
-                }
-            )
+            ->setNormalizer('logical_expression', function (Options $options, $value) {
+                return (bool) $value;
+            })
         ;
 
         $this->setDefaultParameters($resolver);
