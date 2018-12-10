@@ -47,6 +47,8 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setAllowedTypes('nav_description', array('null', 'string'))
             ->setAllowedTypes('is_first', array('bool', 'string'))
             ->setAllowedTypes('data', array('null', 'array'))
+            ->setAllowedTypes('prevent_previous', array('bool', 'string'))
+            ->setAllowedTypes('prevent_next', array('bool', 'string'))
             ->setAllowedTypes('previous_options', array('array'))
             ->setAllowedTypes('js', array('null', 'string'))
             ->setAllowedTypes('css', array('null', 'string'))
@@ -55,6 +57,18 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setAllowedTypes('serialization_mapping', array('null', 'array'))
             ->setNormalizer(
                 'is_first',
+                function (OptionsResolver $options, $value) {
+                    return (bool) $value;
+                }
+            )
+            ->setNormalizer(
+                'prevent_previous',
+                function (OptionsResolver $options, $value) {
+                    return (bool) $value;
+                }
+            )
+            ->setNormalizer(
+                'prevent_next',
                 function (OptionsResolver $options, $value) {
                     return (bool) $value;
                 }
