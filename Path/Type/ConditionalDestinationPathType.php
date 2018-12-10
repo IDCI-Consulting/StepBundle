@@ -107,7 +107,9 @@ class ConditionalDestinationPathType extends AbstractPathType
         $stopNavigationRules = $options['stop_navigation'];
         if (true === $stopNavigationRules) {
             return null;
-        } else {
+        }
+
+        if (is_string($stopNavigationRules)) {
             $template = $this->merger->createTemplate($stopNavigationRules);
             $rules = $template->render(array(
                 'user' => $user,
