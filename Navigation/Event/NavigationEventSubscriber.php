@@ -87,9 +87,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         return array(
             FormEvents::PRE_SET_DATA => array(
                 array('preSetData', 999),
-                array('addNavigationButtons', 100),
                 array('addStepEvents', 2),
                 array('addPathEvents', 1),
+                array('addNavigationButtons', 0),
             ),
             FormEvents::POST_SET_DATA => array(
                 array('addStepEvents', 2),
