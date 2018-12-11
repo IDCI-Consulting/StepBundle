@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 
