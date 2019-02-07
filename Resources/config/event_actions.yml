@@ -68,6 +68,14 @@ idci_step:
                 rules:             {extra_form_type: "text", options: {required: false}}
                 final_destination: {extra_form_type: "text", options: {required: false}}
 
+        retrieve_request_data:
+            parent:      abstract
+            description: ""
+            extra_form_options:
+                property: {extra_form_type: "choice", options: {required: false, choices: {attributes: attributes, request: request, query: query, server: server, files: files, cookies: cookies, headers: headers}}}
+                key: {extra_form_type: "text", options: {required: true}}
+                default: {extra_form_type: "text", options: {required: false}}
+
         transform_data:
             parent:      abstract
             description: ""

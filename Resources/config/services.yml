@@ -119,6 +119,11 @@ services:
             - { name: idci_step.step_event_action, alias: conditional_stop_navigation }
     IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction'
 
+    IDCI\Bundle\StepBundle\Step\Event\Action\RetrieveRequestDataStepEventAction:
+        tags:
+            - { name: idci_step.step_event_action, alias: retrieve_request_data }
+    IDCI\Bundle\StepBundle\Step\Event\Action\RetrieveRequestDataStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\RetrieveRequestDataStepEventAction'
+
     IDCI\Bundle\StepBundle\Step\Event\Action\TransformDataStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: transform_data }
