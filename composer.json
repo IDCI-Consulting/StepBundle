@@ -4,20 +4,6 @@
     "description": "Symfony2 bundle that provides a step system in order to represent an highly customisable workflow",
     "keywords": ["step","workflow","flow","form","path"],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://e20e937377f0306440d5d3a506f36e2671282c09@github.com/IDCI-Consulting/StepBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://e20e937377f0306440d5d3a506f36e2671282c09@github.com/IDCI-Consulting/ExtraFormBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://e20e937377f0306440d5d3a506f36e2671282c09@github.com/IDCI-Consulting/AssetLoaderBundle"
-        }
-    ],
     "authors": [
         {
             "name": "Gabriel Bondaz",

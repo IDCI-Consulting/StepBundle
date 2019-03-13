@@ -9,6 +9,7 @@ services:
       dockerfile: Dockerfile-5.6
     volumes:
       - ./:/var/www/html
+      - composer-cache:/root/.composer
 
   node:
     image: idci-step-bundle/node:8.4.0-stretch
@@ -16,3 +17,6 @@ services:
       context: .docker/build/node
     volumes:
       - ./:/usr/src/app
+
+volumes:
+  composer-cache: ~
