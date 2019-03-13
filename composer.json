@@ -4,6 +4,20 @@
     "description": "Symfony2 bundle that provides a step system in order to represent an highly customisable workflow",
     "keywords": ["step","workflow","flow","form","path"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://e20e937377f0306440d5d3a506f36e2671282c09@github.com/IDCI-Consulting/StepBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://e20e937377f0306440d5d3a506f36e2671282c09@github.com/IDCI-Consulting/ExtraFormBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://e20e937377f0306440d5d3a506f36e2671282c09@github.com/IDCI-Consulting/AssetLoaderBundle"
+        }
+    ],
     "authors": [
         {
             "name": "Gabriel Bondaz",
@@ -13,11 +27,19 @@
     ],
     "require": {
         "php": ">=5.6",
-        "symfony/symfony": "~3.3|^4.0",
-        "twig/twig": "~1.0|^2.0",
-        "twig/extensions": "~1.0",
+        "idci/extra-form-bundle": "dev-feat/symfony4",
         "jms/serializer-bundle": ">=1.0",
-        "idci/extra-form-bundle": "dev-feat/symfony4"
+        "symfony/config": "^3.3|^4.0",
+        "symfony/dependency-injection": "^3.3|^4.0",
+        "symfony/event-dispatcher": "^3.3|^4.0",
+        "symfony/form": "^3.3|^4.0",
+        "symfony/http-foundation": "^3.3|^4.0",
+        "symfony/http-kernel": "^3.3|^4.0",
+        "symfony/options-resolver": "^3.3|^4.0",
+        "symfony/security": "^3.3|^4.0",
+        "symfony/yaml": "^3.3|^4.0",
+        "twig/extensions": "~1.0",
+        "twig/twig": "~1.0|^2.0"
     },
     "suggest": {
         "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
@@ -29,7 +51,10 @@
         "sort-packages": true
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.7"
+        "phpunit/phpunit": "~5.7",
+        "symfony/framework-bundle": "^3.4|^4.0",
+        "symfony/security-bundle": "^3.4|^4.0",
+        "symfony/twig-bundle": "^3.4|^4.0"
     },
     "autoload": {
         "psr-0": { "IDCI\\Bundle\\StepBundle": "" }
