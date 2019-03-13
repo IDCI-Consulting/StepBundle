@@ -45,8 +45,8 @@ class StepEditorType extends AbstractType implements AssetProviderInterface
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $this->assetCollection->add(new Asset('IDCIStepBundle:Form:step_editor_assets.html.twig', array(), 0));
-        $this->assetCollection->add(new Asset('IDCIStepBundle:Form:step_editor_configuration.html.twig', array(
+        $this->assetCollection->add(new Asset('@IDCIStep/Form/step_editor_assets.html.twig', array(), 0));
+        $this->assetCollection->add(new Asset('@IDCIStep/Form/step_editor_configuration.html.twig', array(
             'options' => $options,
             'form' => $view,
         ), 1));

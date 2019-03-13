@@ -217,7 +217,7 @@ services:
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector:
         public:    false
         tags:
-            - { name: data_collector, template: 'IDCIStepBundle:Collector:navigation', id: idci_step.navigation }
+            - { name: data_collector, template: '@IDCIStep/Collector/navigation', id: idci_step.navigation }
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollectorInterface: '@IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector'
 
 

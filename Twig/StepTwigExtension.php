@@ -121,7 +121,7 @@ class StepTwigExtension extends \Twig_Extension
     public function step(\Twig_Environment $twig, NavigatorInterface $navigator, $theme = null)
     {
         return $twig->render(
-            'IDCIStepBundle:Step:default.html.twig',
+            '@IDCIStep/Step/default.html.twig',
             array(
                 'navigator' => $navigator,
                 'theme' => $theme,
@@ -141,7 +141,7 @@ class StepTwigExtension extends \Twig_Extension
     public function drawMap(\Twig_Environment $twig, $jsonMap, $id)
     {
         return $twig->render(
-            'IDCIStepBundle:Map:map_diagram.html.twig',
+            '@IDCIStep/Map/map_diagram.html.twig',
             array(
                 'jsonMap' => $jsonMap,
                 'id' => $id,
