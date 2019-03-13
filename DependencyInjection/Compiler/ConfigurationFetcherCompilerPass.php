@@ -12,7 +12,7 @@ use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInt
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 class ConfigurationFetcherCompilerPass implements CompilerPassInterface
 {
@@ -29,7 +29,7 @@ class ConfigurationFetcherCompilerPass implements CompilerPassInterface
 
         $configurations = $container->getParameter('idci_step.maps');
         foreach ($configurations as $name => $configuration) {
-            $fetcherDefinition = new DefinitionDecorator(ConfigurationFetcherInterface::class);
+            $fetcherDefinition = new ChildDefinition(ConfigurationFetcherInterface::class);
             $fetcherServiceId = sprintf('idci_step.configuration.fetcher.%s', $name);
 
             $fetcherDefinition->replaceArgument(0, $configuration);

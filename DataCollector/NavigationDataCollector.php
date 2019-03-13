@@ -43,6 +43,14 @@ class NavigationDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
+    public function reset()
+    {
+        $this->data = [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'idci_step.navigation';
