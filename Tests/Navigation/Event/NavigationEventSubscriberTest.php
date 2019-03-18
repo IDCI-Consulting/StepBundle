@@ -41,7 +41,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($flow))
         ;
 
-        $twigStringLoader = new \Twig_Loader_String();
+        $twigStringLoader = new \Twig_Loader_Array();
         $twigEnvironment = new \Twig_Environment($twigStringLoader, array());
 
         $this->navigationEventSubscriber = new NavigationEventSubscriber(
