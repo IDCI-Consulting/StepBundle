@@ -14,7 +14,7 @@ use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.path_event_actions key
@@ -36,7 +36,7 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
         $extraFormOptions = array();
 
         foreach ($pathEventActionsConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(PathEventActionConfigurationInterface::class);
+            $serviceDefinition = new ChildDefinition(PathEventActionConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

@@ -14,7 +14,7 @@ use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistry
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.path_types key
@@ -36,7 +36,7 @@ class PathTypeConfigurationCompilerPass implements CompilerPassInterface
         $extraFormOptions = array();
 
         foreach ($pathTypesConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(PathTypeConfigurationInterface::class);
+            $serviceDefinition = new ChildDefinition(PathTypeConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

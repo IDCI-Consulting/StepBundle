@@ -17,7 +17,7 @@ module.exports = {
       'vue': 'vue/dist/vue.esm.js',
       'ExtraFormBundle': path.resolve(
         __dirname,
-        'vendor/idci/extra-form-bundle/IDCI/Bundle/ExtraFormBundle/Resources/public/js/editor/src/'
+        'vendor/idci/extra-form-bundle/Resources/public/js/editor/src/'
       ),
       'StepBundle': path.resolve(
         __dirname,

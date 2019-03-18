@@ -14,7 +14,7 @@ use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.step_types key
@@ -36,7 +36,7 @@ class StepTypeConfigurationCompilerPass implements CompilerPassInterface
         $extraFormOptions = array();
 
         foreach ($stepTypesConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(StepTypeConfigurationInterface::class);
+            $serviceDefinition = new ChildDefinition(StepTypeConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

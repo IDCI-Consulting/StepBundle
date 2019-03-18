@@ -27,7 +27,7 @@ class ApiMapConfigurationController extends FOSRestController
     public function getMapConfigurationAction($_format)
     {
         $view = View::create()->setFormat($_format);
-        $configuration = Yaml::parse(sprintf('%s/../Resources/config/map_options.yml', __DIR__));
+        $configuration = Yaml::parseFile(sprintf('%s/../Resources/config/map_options.yml', __DIR__));
         $view->setData($configuration);
 
         return $this->handleView($view);

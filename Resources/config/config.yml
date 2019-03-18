@@ -28,7 +28,7 @@ idci_step:
 
 twig:
     form_themes:
-        - 'IDCIStepBundle:Form:fields.html.twig'
+        - '@IDCIStep/Form/fields.html.twig'
 
 idci_asset_loader:
     providers:

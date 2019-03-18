@@ -39,6 +39,6 @@ class MapAssetProvider implements AssetProviderInterface
      */
     public function registerAssets()
     {
-        $this->collection->add(new Asset('IDCIStepBundle:Map:map_diagram_assets.html.twig'));
+        $this->collection->add(new Asset('@IDCIStep/Map/map_diagram_assets.html.twig'));
     }
 }

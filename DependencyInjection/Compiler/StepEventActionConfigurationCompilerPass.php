@@ -14,7 +14,7 @@ use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfiguration
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.step_event_actions key
@@ -36,7 +36,7 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
         $extraFormOptions = array();
 
         foreach ($stepEventActionsConfiguration as $configurationName => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(StepEventActionConfigurationInterface::class);
+            $serviceDefinition = new ChildDefinition(StepEventActionConfigurationInterface::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {

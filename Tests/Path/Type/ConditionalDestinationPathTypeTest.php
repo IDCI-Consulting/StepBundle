@@ -21,7 +21,7 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
-        $twigStringLoader = new \Twig_Loader_String();
+        $twigStringLoader = new \Twig_Loader_Array();
         $twigEnvironment = new \Twig_Environment($twigStringLoader, array());
 
         $this->pathType = new ConditionalDestinationPathType(
