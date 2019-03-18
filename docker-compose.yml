@@ -1,12 +1,11 @@
-version: '2'
+version: '3.3'
 
 services:
 
   php:
-    image: idci-step-bundle/php:5.6-fpm
+    image: idci-step-bundle/php:7.2-fpm
     build:
       context: .docker/build/php
-      dockerfile: Dockerfile-5.6
     volumes:
       - ./:/var/www/html
       - composer-cache:/root/.composer
