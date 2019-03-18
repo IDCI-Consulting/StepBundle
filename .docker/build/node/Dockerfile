@@ -1,4 +1,4 @@
-FROM node:8.4.0-stretch
+FROM node:current
 
 RUN apt-get update
 RUN apt-get install -y curl xvfb chromium chromium-l10n firefox-esr ruby ruby-dev
