@@ -76,7 +76,7 @@ Bind the event action to a path
                 'source' => 'stepA',
                 'destination' => 'stepB'
                 'events' => array(
-                    'form.post_bind' => array(
+                    'form.post_submit' => array(
                         array(
                             'action' => 'example',
                             'name' => 'example_return_value',
@@ -97,9 +97,9 @@ The bind events names are the same as the symfony form events names
 
 * pre_set_data
 * post_set_data
-* pre_bind
-* bind
-* post_bind
+* pre_submit
+* submit
+* post_submit
 
 More informations in Symfony doc [Symfony form events](https://symfony.com/doc/current/form/events.html#registering-event-listeners-or-event-subscribers)
 
@@ -183,7 +183,7 @@ Bind the event action to a step
                     ))
                 ,
                 'events' => array(
-                    'form.post_bind' => array(
+                    'form.post_submit' => array(
                         array(
                             'action' => 'example',
                             'name' => 'example_return_value',

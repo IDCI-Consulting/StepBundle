@@ -83,9 +83,9 @@ export default {
     return [
       { name: 'form.pre_set_data' },
       { name: 'form.post_set_data' },
-      { name: 'form.pre_bind' },
-      { name: 'form.bind' },
-      { name: 'form.post_bind' }
+      { name: 'form.pre_submit' },
+      { name: 'form.submit' },
+      { name: 'form.post_submit' }
     ];
   },
 

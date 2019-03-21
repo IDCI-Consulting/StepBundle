@@ -169,7 +169,7 @@ idci_step:
                         next_options:
                             label: 'end'
                         events:
-                            form.post_bind:
+                            form.post_submit:
                                 -
                                     action: 'path_event_action_name'
                                     name: 'retrieved_data_value_name'
