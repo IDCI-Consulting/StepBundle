@@ -240,7 +240,7 @@ services:
             - { name: form.type, alias: idci_step_step_form_form }
 
     IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType:
-        arguments: ["@Symfony\Component\Translation\TranslatorInterface"]
+        arguments: ['@Symfony\Component\Translation\TranslatorInterface']
         tags:
             - { name: form.type, alias: idci_step_step_form_html }
 
