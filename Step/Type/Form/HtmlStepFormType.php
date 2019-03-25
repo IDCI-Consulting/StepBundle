@@ -10,9 +10,20 @@ namespace IDCI\Bundle\StepBundle\Step\Type\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class HtmlStepFormType extends AbstractStepFormType
 {
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -26,7 +37,7 @@ class HtmlStepFormType extends AbstractStepFormType
         }
 
         if ($options['display_title']) {
-            $content = sprintf('<h1>%s</h1>%s', $options['label'], $content);
+            $content = sprintf('<h1>%s</h1>%s', $this->translator->trans($options['label']), $content);
         }
 
         $view->vars = array_merge($view->vars, array(
