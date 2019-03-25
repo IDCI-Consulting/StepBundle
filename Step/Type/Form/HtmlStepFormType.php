@@ -25,6 +25,10 @@ class HtmlStepFormType extends AbstractStepFormType
             $content = $form->getData('content');
         }
 
+        if ($options['display_title']) {
+            $content = sprintf('<h1>%s</h1>%s', $options['label'], $content);
+        }
+
         $view->vars = array_merge($view->vars, array(
             'content' => $content,
         ));

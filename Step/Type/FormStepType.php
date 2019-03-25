@@ -49,8 +49,8 @@ class FormStepType extends AbstractStepType
     {
         $builder->add('_data', FormStepFormType::class, array(
             'label' => $options['title'],
-            'builder' => $options['builder'],
             'display_title' => $options['display_title'],
+            'builder' => $options['builder'],
         ));
     }
 
