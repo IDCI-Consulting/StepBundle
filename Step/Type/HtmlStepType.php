@@ -35,8 +35,9 @@ class HtmlStepType extends AbstractStepType
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', HtmlStepFormType::class, array(
-            'content' => $options['content'],
+            'label' => $options['title'],
             'display_title' => $options['display_title'],
+            'content' => $options['content'],
         ));
     }
 }
