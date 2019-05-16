@@ -1,7 +1,7 @@
 StepBundle
 ==========
 
-Symfony2 bundle that provides a step system in order to represent an highly customisable workflow
+Symfony 4 bundle that provides a step system in order to represent an highly customisable workflow
 
 Installation
 ------------
@@ -10,7 +10,7 @@ Add dependencies in your `composer.json` file:
 ```json
 "require": {
     ...
-    "idci/step-bundle": "dev-master"
+    "idci/step-bundle": "^4.0"
 },
 ```
 
@@ -19,29 +19,24 @@ Install these new dependencies in your application using composer:
 $ php composer.phar update
 ```
 
-Register needed bundles in your application kernel:
+Register needed bundles in your enabled bundles file:
 ```php
-// app/AppKernel.php
+// config/bundles.php
 <?php
-
-public function registerBundles()
-{
-    $bundles = array(
+    return [
         // ...
-        new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
-        new JMS\SerializerBundle\JMSSerializerBundle(),
-        new IDCI\Bundle\AssetLoaderBundle\IDCIAssetLoaderBundle(),
-        new IDCI\Bundle\ExtraFormBundle\IDCIExtraFormBundle(),
-        new IDCI\Bundle\StepBundle\IDCIStepBundle(),
-    );
-}
+        Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
+        JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
+        IDCI\Bundle\AssetLoaderBundle\IDCIAssetLoaderBundle::class => ['all' => true],
+        IDCI\Bundle\ExtraFormBundle\IDCIExtraFormBundle::class => ['all' => true],
+        IDCI\Bundle\StepBundle\IDCIStepBundle::class => ['all' => true],
+    ];
 ```
 
 Add the following resources to your config.yml
 ```yml
-// app/config.yml
+// config/packages/idci_step.yaml
 imports:
-    ...
     - { resource: '@IDCIExtraFormBundle/Resources/config/config.yml' }
     - { resource: '@IDCIStepBundle/Resources/config/config.yml' }
 ```
@@ -55,21 +50,17 @@ If you need the api or the editor:
 
 ```php
 <?php
-// app/AppKernel.php
-
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new FOS\RestBundle\FOSRestBundle(),
-    );
-}
+// config/bundles.php
+return [
+    // ...
+    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
+];
 ```
 
 Enable the serializer:
 
 ```yml
-# app/config/config.yml
+# config/packages/fos_rest.yaml
 
 fos_rest:
     param_fetcher_listener: true # if you want to add configured types
@@ -79,7 +70,7 @@ fos_rest:
 
 Import the routes:
 ```yml
-# app/config/routing.yml
+# config/routes/idci_step.yaml
 idci_extraform_api:
     resource: "@IDCIExtraFormBundle/Controller/ApiController.php"
     type:     annotation

@@ -44,7 +44,7 @@ class ExamplePathEventAction extends AbstractPathEventAction
 ```
 
 ```yaml
-# app\config\service.yml
+# config/services.yaml
     services:
         ...
         examplebundle.path_event.action.example:
@@ -54,7 +54,7 @@ class ExamplePathEventAction extends AbstractPathEventAction
 ```
 
 ```yaml
-# app\config\config.yml
+# config/packages/idci_step.yaml
 idci_step:
     path_event_actions:
         example:
@@ -146,7 +146,7 @@ class ExampleStepEventAction extends AbstractStepEventAction
 ```
 
 ```yaml
-# app\config\service.yml
+# config\services.yaml
     services:
         ...
         examplebundle.step_event.example:
@@ -156,7 +156,7 @@ class ExampleStepEventAction extends AbstractStepEventAction
 ```
 
 ```yaml
-# app\config\config.yml
+# config/packages/idci_step.yaml
 idci_step:
     step_event_actions:
         example:
