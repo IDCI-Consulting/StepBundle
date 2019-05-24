@@ -8,17 +8,15 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorType;
-use IDCI\Bundle\StepBundle\Path\PathInterface;
-use IDCI\Bundle\StepBundle\Step\StepInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class Navigator implements NavigatorInterface
 {
@@ -301,7 +299,7 @@ class Navigator implements NavigatorInterface
         if ($this->request->isMethod('POST')) {
             $form->handleRequest($this->request);
 
-            if (!$this->hasReturned() && $form->isValid()) {
+            if (!$this->hasReturned() && $form->isSubmitted() && $form->isValid()) {
                 $path = $this->getChosenPath();
                 if (null === $path) {
                     throw new \LogicException(sprintf(
