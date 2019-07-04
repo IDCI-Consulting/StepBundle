@@ -11,9 +11,9 @@
     {{- block('idci_step_step_form_row') -}}
 {%- endblock idci_step_step_form_html_row -%}
 {%- block idci_step_step_form_html_widget -%}
-    {% spaceless %}
+    {% apply spaceless %}
         {{ content | raw }}
-    {% endspaceless %}
+    {% endapply %}
 {%- endblock idci_step_step_form_html_widget -%}
 
 {%- block idci_step_step_form_form_row -%}

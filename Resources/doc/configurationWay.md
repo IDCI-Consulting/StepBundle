@@ -55,19 +55,17 @@ idci_step:
 // src/AppBundle/Controller/DefaultController.php
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     /**
-     * @Route("/subscription/", name="test")
+     * @Route("/subscription/", name="test", methods={"GET", "POST"})
      *
      *
-     * @Method({"GET", "POST"})
      * @Template()
      */
     public function subscriptionAction(Request $request)
@@ -104,4 +102,3 @@ class DefaultController extends Controller
     }
 }
 ```
-

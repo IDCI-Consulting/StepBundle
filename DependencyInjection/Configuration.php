@@ -24,13 +24,12 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('idci_step');
+        $treeBuilder = new TreeBuilder('idci_step');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('maps')
                     ->defaultValue(array())
@@ -94,9 +93,8 @@ class Configuration implements ConfigurationInterface
      */
     protected function addStepTypesNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('step_types');
-
+        $builder = new TreeBuilder('step_types');
+        $node = $builder->getRootNode();
         $node
             ->defaultValue(array())
             ->useAttributeAsKey('name')
@@ -132,9 +130,8 @@ class Configuration implements ConfigurationInterface
             return false;
         };
 
-        $builder = new TreeBuilder();
-        $node = $builder->root('path_types');
-
+        $builder = new TreeBuilder('path_types');
+        $node = $builder->getRootNode();
         $node
             ->defaultValue(array())
             ->useAttributeAsKey('name')
@@ -164,9 +161,8 @@ class Configuration implements ConfigurationInterface
      */
     protected function addPathEventActionsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('path_event_actions');
-
+        $builder = new TreeBuilder('path_event_actions');
+        $node = $builder->getRootNode();
         $node
             ->defaultValue(array())
             ->useAttributeAsKey('name')
@@ -192,9 +188,8 @@ class Configuration implements ConfigurationInterface
      */
     protected function addStepEventActionsNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('step_event_actions');
-
+        $builder = new TreeBuilder('step_event_actions');
+        $node = $builder->getRootNode();
         $node
             ->defaultValue(array())
             ->useAttributeAsKey('name')
