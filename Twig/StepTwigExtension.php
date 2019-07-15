@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Twig;
 
+use IDCI\Bundle\StepBundle\Breadcrumb\Breadcrumb;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 
 class StepTwigExtension extends \Twig_Extension
@@ -26,6 +27,14 @@ class StepTwigExtension extends \Twig_Extension
                 'step_javascripts',
                 array($this, 'stepJavascripts'),
                 array('is_safe' => array('html', 'js'))
+            ),
+            new \Twig_SimpleFunction(
+                'step_breadcrumb',
+                array($this, 'stepBreadcrumb'),
+                array(
+                    'is_safe' => array('html', 'js'),
+                    'needs_environment' => true,
+                )
             ),
             new \Twig_SimpleFunction(
                 'pre_step_content',
@@ -95,6 +104,23 @@ class StepTwigExtension extends \Twig_Extension
                 $configuration['options']['js']
             );
         }
+    }
+
+    /**
+     * Returns step breadcrumb.
+     *
+     * @param Breadcrumb $breadcrumb
+     *
+     * @return string
+     */
+    public function stepBreadcrumb(\Twig_Environment $twig, Breadcrumb $breadcrumb)
+    {
+        return $twig->render(
+            '@IDCIStep/Step/breadcrumb.html.twig',
+            array(
+                'breadcrumb' => $breadcrumb,
+            )
+        );
     }
 
     /**

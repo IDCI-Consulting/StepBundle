@@ -34,6 +34,14 @@
     </script>
 {%- endblock -%}
 
+{%- block idci_step_action_form_go_next_widget -%}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById("{{ form.vars.to_click_next_button_id }}").click();
+        });
+    </script>
+{%- endblock -%}
+
 {%- block button_widget -%}
     {%- if label is empty -%}
         {% set label = name|humanize %}

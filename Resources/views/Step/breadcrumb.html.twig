@@ -1,0 +1,11 @@
+<ul class="idci_step_breadcrumb">
+    {% for itemName in breadcrumb.itemNames %}
+        <li{% if breadcrumb.currentItem == itemName %} class="active"{% endif %}>
+            {% if breadcrumb.accessibleItem(itemName) %}
+                <a href="?{{ constant('IDCI\\Bundle\\StepBundle\\Breadcrumb\\Breadcrumb::BACK_QUERY_PARAMETER_ITEM_NAME') }}={{ itemName }}">{{ itemName }}</a>
+            {% else %}
+                {{ itemName }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

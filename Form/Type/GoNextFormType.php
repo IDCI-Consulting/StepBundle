@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class JsConfirmFormType extends AbstractType
+class GoNextFormType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -28,12 +28,10 @@ class JsConfirmFormType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['observed_id'] = sprintf(
+        $view->vars['to_click_next_button_id'] = sprintf(
             'idci_step_navigator__path_%s',
             $options['path_index']
         );
-
-        $view->vars['message'] = $options['message'];
     }
 
     /**
@@ -51,9 +49,7 @@ class JsConfirmFormType extends AbstractType
     {
         $resolver
             ->setRequired(array('path_index'))
-            ->setDefaults(array('message' => 'Are you sure ?'))
             ->setAllowedTypes('path_index', array('integer'))
-            ->setAllowedTypes('message', array('string'))
         ;
     }
 
@@ -62,7 +58,7 @@ class JsConfirmFormType extends AbstractType
      */
     public function getName()
     {
-        return 'idci_step_action_form_js_confirm';
+        return 'idci_step_action_form_go_next';
     }
 
     /**

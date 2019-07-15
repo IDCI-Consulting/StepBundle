@@ -7,20 +7,20 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation\Event;
 
+use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEvent;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
-use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
-use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
-use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
-use IDCI\Bundle\StepBundle\Path\Event\PathEvent;
-use IDCI\Bundle\StepBundle\Flow\FlowData;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class NavigationEventSubscriber implements EventSubscriberInterface
 {
@@ -239,7 +239,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         foreach ($this->navigator->getCurrentPaths() as $i => $path) {
             // Trigger only path event actions on the clicked path during POST_SUBMIT event.
-            if ($name == FormEvents::POST_SUBMIT && $this->navigator->getChosenPath() !== $path) {
+            if (FormEvents::POST_SUBMIT == $name && $this->navigator->getChosenPath() !== $path) {
                 continue;
             }
 
