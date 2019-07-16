@@ -10,8 +10,8 @@ namespace IDCI\Bundle\StepBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LinkFormType extends AbstractType
 {
@@ -52,5 +52,13 @@ class LinkFormType extends AbstractType
     public function getName()
     {
         return 'idci_step_action_form_link';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
     }
 }

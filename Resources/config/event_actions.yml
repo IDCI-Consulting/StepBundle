@@ -68,6 +68,13 @@ idci_step:
                 rules:             {extra_form_type: "text", options: {required: false}}
                 final_destination: {extra_form_type: "text", options: {required: false}}
 
+        go_next:
+            parent:     abstract
+            description: ""
+            extra_form_options:
+                condition:         {extra_form_type: "text", options: {required: false}}
+                path_index:        {extra_form_type: "integer", options: {required: false}}
+
         retrieve_request_data:
             parent:      abstract
             description: ""

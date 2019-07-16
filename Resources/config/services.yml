@@ -119,6 +119,11 @@ services:
             - { name: idci_step.step_event_action, alias: conditional_stop_navigation }
     IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction'
 
+    IDCI\Bundle\StepBundle\Step\Event\Action\GoNextStepEventAction:
+        tags:
+            - { name: idci_step.step_event_action, alias: go_next }
+    IDCI\Bundle\StepBundle\Step\Event\Action\GoNextStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\GoNextStepEventAction'
+
     IDCI\Bundle\StepBundle\Step\Event\Action\RetrieveRequestDataStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: retrieve_request_data }
@@ -245,6 +250,10 @@ services:
             - { name: form.type, alias: idci_step_step_form_html }
 
     # Action
+    IDCI\Bundle\StepBundle\Form\Type\GoNextFormType:
+        tags:
+            - { name: form.type, alias: idci_step_action_form_go_next }
+
     IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType:
         tags:
             - { name: form.type, alias: idci_step_action_form_js_confirm }

@@ -7,8 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use IDCI\Bundle\StepBundle\Form\Type\JsConfirmFormType;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class JsConfirmPathEventAction extends AbstractPathEventAction
 {
@@ -20,7 +21,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
         $form = $event->getForm();
 
         $form
-            ->add('_js_confirm', 'idci_step_action_form_js_confirm', array_merge(
+            ->add('_js_confirm', JsConfirmFormType::class, array_merge(
                 array('message' => $parameters['message']),
                 array('path_index' => $event->getPathIndex())
             ))

@@ -7,8 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use IDCI\Bundle\StepBundle\Form\Type\LinkFormType;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddLinkStepEventAction extends AbstractStepEventAction
 {
@@ -21,7 +22,7 @@ class AddLinkStepEventAction extends AbstractStepEventAction
 
         $form->add(
             uniqid('_link_'),
-            'idci_step_action_form_link',
+            LinkFormType::class,
             $parameters['link_options']
         );
     }
