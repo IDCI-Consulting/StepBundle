@@ -10,6 +10,7 @@
 namespace IDCI\Bundle\StepBundle\Navigation;
 
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
@@ -59,6 +60,13 @@ interface NavigatorInterface
      * @return FlowInterface
      */
     public function getFlow();
+
+    /**
+     * Get the flow recorder.
+     *
+     * @return FlowRecorderInterface
+     */
+    public function getFlowRecorder();
 
     /**
      * Returns the current step.
