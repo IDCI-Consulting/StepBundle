@@ -385,6 +385,14 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
+    public function getFlowRecorder()
+    {
+        return $this->flowRecorder;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCurrentStep()
     {
         return $this->currentStep;
