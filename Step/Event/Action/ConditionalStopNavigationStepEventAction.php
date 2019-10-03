@@ -7,10 +7,11 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
-use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
 {
@@ -20,13 +21,21 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     private $conditionalRuleRegistry;
 
     /**
+     * @var UrlGeneratorInterface
+     */
+    private $router;
+
+    /**
      * Constructor.
      *
      * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry the conditional rule registry
      */
-    public function __construct(ConditionalRuleRegistryInterface $conditionalRuleRegistry)
-    {
+    public function __construct(
+        ConditionalRuleRegistryInterface $conditionalRuleRegistry,
+        UrlGeneratorInterface $router
+    ) {
         $this->conditionalRuleRegistry = $conditionalRuleRegistry;
+        $this->router = $router;
     }
 
     /**
@@ -38,9 +47,11 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
             ->setDefaults(array(
                 'rules' => false,
                 'final_destination' => null,
+                'query_parameters' => [],
             ))
-            ->setAllowedTypes('rules', array('bool', 'array'))
+            ->setAllowedTypes('rules', array('bool', 'array', 'string'))
             ->setAllowedTypes('final_destination', array('null', 'string'))
+            ->setAllowedTypes('query_parameters', array('array'))
             ->setNormalizer('rules', function (Options $options, $value) {
                 if (is_array($value)) {
                     return $value;
@@ -65,7 +76,9 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
         if (null !== $parameters['final_destination']) {
             $event
                 ->getNavigator()
-                ->setFinalDestination($parameters['final_destination'])
+                ->setFinalDestination(
+                    $this->router->generate($parameters['final_destination'], $parameters['query_parameters'])
+                )
             ;
         }
 

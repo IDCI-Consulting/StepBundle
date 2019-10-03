@@ -67,6 +67,7 @@ idci_step:
             extra_form_options:
                 rules:             {extra_form_type: "text", options: {required: false}}
                 final_destination: {extra_form_type: "text", options: {required: false}}
+                query_parameters:  {extra_form_type: "textarea", options: {required: false}}
 
         go_next:
             parent:     abstract
