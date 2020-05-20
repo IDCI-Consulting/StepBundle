@@ -3,15 +3,15 @@
 namespace IDCI\Bundle\StepBundle\Controller;
 
 use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistryInterface;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Api StepTypeConfiguration Controller.
  */
-class ApiStepTypeConfigurationController extends FOSRestController
+class ApiStepTypeConfigurationController extends AbstractFOSRestController
 {
     /**
      * [GET] /step-types-configurations.
