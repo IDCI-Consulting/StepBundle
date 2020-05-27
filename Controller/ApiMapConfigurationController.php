@@ -3,7 +3,7 @@
 namespace IDCI\Bundle\StepBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Api MapConfiguration Controller.
  */
-class ApiMapConfigurationController extends FOSRestController
+class ApiMapConfigurationController extends AbstractFOSRestController
 {
     /**
      * [GET] /map-configuration.
