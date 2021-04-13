@@ -108,7 +108,7 @@ class NavigationLogger implements NavigationLoggerInterface
      */
     public function hasNavigator()
     {
-        return null !== $this->data['navigator'];
+        return isset($this->data['navigator']) && null !== $this->data['navigator'];
     }
 
     /**
