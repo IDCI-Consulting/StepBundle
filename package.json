@@ -5,7 +5,7 @@
   "main": "Gulpfile.js",
   "dependencies": {
     "bower": "^1.4.1",
-    "codemirror": "^5.27.4",
+    "codemirror": "^5.58.2",
     "vue": "^2.3.4",
     "vue-multiselect": "^2.0.0-beta.15",
     "vue-resource": "^1.3.4",
