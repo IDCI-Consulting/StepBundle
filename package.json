@@ -32,7 +32,7 @@
     "gulp.spritesmith": "^3.6.1",
     "imagemin-pngquant": "^4.2.0",
     "jasmine-core": "^2.6.1",
-    "jointjs": "^1.1.0",
+    "jointjs": "^3.4.2",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.1.0",
     "karma-firefox-launcher": "^1.0.1",
