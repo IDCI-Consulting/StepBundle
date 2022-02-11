@@ -33,7 +33,7 @@
     "imagemin-pngquant": "^4.2.0",
     "jasmine-core": "^2.6.1",
     "jointjs": "^1.1.0",
-    "karma": "^1.6.0",
+    "karma": "^6.3.14",
     "karma-chrome-launcher": "^2.1.0",
     "karma-firefox-launcher": "^1.0.1",
     "karma-jasmine": "^1.1.0",
