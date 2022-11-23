@@ -10,35 +10,6 @@ js_sources ?= Resources/public/js/editor
 command:
 	docker-compose run --rm $(target_container) $(cmd)
 
-# NodeJs commands
-
-.PHONY: yarn
-yarn:
-	docker-compose run --rm node yarn $(cmd) $(options)
-
-.PHONY: npm-install
-npm-install:
-	docker-compose run --rm node npm install $(options)
-
-.PHONY: karma
-karma:
-	docker-compose run --rm node ./node_modules/karma/bin/karma start $(options)
-
-.PHONY: gulp
-gulp:
-	docker-compose run --rm node gulp $(task)
-
-.PHONY: eslint
-eslint:
-	docker-compose run --rm node eslint $(js_sources)
-
-.PHONY: webpack-build-dev
-webpack-build-dev:
-	docker-compose run --rm node npm run build
-
-.PHONY: webpack-build-prod
-webpack-build-prod:
-	docker-compose run --rm node npm run build-prod
 
 # PHP commands
 

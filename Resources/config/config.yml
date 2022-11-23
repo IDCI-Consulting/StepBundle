@@ -29,9 +29,3 @@ idci_step:
 twig:
     form_themes:
         - '@IDCIStep/Form/fields.html.twig'
-
-idci_asset_loader:
-    providers:
-        load_only:
-           - step_editor
-           - map_diagram
