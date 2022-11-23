@@ -5,17 +5,10 @@ services:
   php:
     image: idci-step-bundle/php:7.2-fpm
     build:
-      context: .docker/build/php
+      context: ./php
     volumes:
       - ./:/var/www/html
       - composer-cache:/root/.composer
-
-  node:
-    image: idci-step-bundle/node:8.4.0-stretch
-    build:
-      context: .docker/build/node
-    volumes:
-      - ./:/usr/src/app
 
 volumes:
   composer-cache: ~
