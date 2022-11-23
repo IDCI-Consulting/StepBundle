@@ -8,8 +8,8 @@
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class PathEventActionCompilerPass implements CompilerPassInterface
@@ -35,8 +35,7 @@ class PathEventActionCompilerPass implements CompilerPassInterface
 
                 if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
-                        'The path event action \'%s\' does not have a configuration.
-                        You must configure the path event action under the idci_step.path_event_actions key',
+                        'The path event action \'%s\' does not have a configuration. You must configure the path event action under the idci_step.path_event_actions key',
                         $alias
                     ));
                 }

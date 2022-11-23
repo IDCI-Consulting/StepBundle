@@ -8,8 +8,8 @@
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class StepEventActionCompilerPass implements CompilerPassInterface
@@ -35,8 +35,7 @@ class StepEventActionCompilerPass implements CompilerPassInterface
 
                 if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
-                        'The step event action \'%s\' does not have a configuration.
-                        You must configure the step event action under the idci_step.step_event_actions key',
+                        'The step event action \'%s\' does not have a configuration. You must configure the step event action under the idci_step.step_event_actions key',
                         $alias
                     ));
                 }

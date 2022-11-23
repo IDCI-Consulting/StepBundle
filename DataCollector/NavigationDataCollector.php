@@ -10,10 +10,10 @@ namespace IDCI\Bundle\StepBundle\DataCollector;
 
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 class NavigationDataCollector extends DataCollector
 {
@@ -35,7 +35,7 @@ class NavigationDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         $this->data['idci_step.navigation'] = $this->logger->getNavigation();
     }

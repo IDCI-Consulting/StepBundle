@@ -8,8 +8,8 @@
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class StepTypeCompilerPass implements CompilerPassInterface
@@ -35,8 +35,7 @@ class StepTypeCompilerPass implements CompilerPassInterface
 
                 if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
-                        'The step type \'%s\' does not have a configuration.
-                        You must configure the step type under the idci_step.step_types key',
+                        'The step type \'%s\' does not have a configuration. You must configure the step type under the idci_step.step_types key',
                         $alias
                     ));
                 }

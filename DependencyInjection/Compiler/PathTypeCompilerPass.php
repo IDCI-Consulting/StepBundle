@@ -8,8 +8,8 @@
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class PathTypeCompilerPass implements CompilerPassInterface
@@ -35,8 +35,7 @@ class PathTypeCompilerPass implements CompilerPassInterface
 
                 if (!$container->has($configurationService)) {
                     throw new \Exception(sprintf(
-                        'The path type \'%s\' does not have a configuration.
-                        You must configure the path type under the idci_step.path_types key',
+                        'The path type \'%s\' does not have a configuration. You must configure the path type under the idci_step.path_types key',
                         $alias
                     ));
                 }

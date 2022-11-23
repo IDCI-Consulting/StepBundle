@@ -11,7 +11,6 @@ services:
         tags: ['controller.service_arguments']
 
     # Registry
-
     IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry: ~
     IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistryInterface: '@IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry'
 
@@ -41,7 +40,6 @@ services:
 
 
     # Configurations
-
     IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfiguration:
         arguments: [null]
         abstract: true
@@ -67,7 +65,6 @@ services:
 
 
     # Builder
-
     IDCI\Bundle\StepBundle\Path\PathBuilder: ~
     IDCI\Bundle\StepBundle\Path\PathBuilderInterface: '@IDCI\Bundle\StepBundle\Path\PathBuilder'
 
@@ -76,12 +73,11 @@ services:
 
 
     # FlowRecorder
-
     IDCI\Bundle\StepBundle\Flow\FlowRecorder: ~
     IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface: '@IDCI\Bundle\StepBundle\Flow\FlowRecorder'
 
-    # Factory
 
+    # Factory
     IDCI\Bundle\StepBundle\Map\MapBuilderFactory: ~
     IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface: '@IDCI\Bundle\StepBundle\Map\MapBuilderFactory'
 
@@ -90,7 +86,6 @@ services:
 
 
     # Step
-
     IDCI\Bundle\StepBundle\Step\Type\HtmlStepType:
         tags:
             - { name: idci_step.step_type, alias: html }
@@ -103,7 +98,6 @@ services:
 
 
     # StepEvent
-
     IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: add_link }
@@ -136,7 +130,6 @@ services:
 
 
     # Path
-
     IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType:
         tags:
             - { name: idci_step.path_type, alias: conditional_destination }
@@ -154,7 +147,6 @@ services:
 
 
     # PathEvent
-
     IDCI\Bundle\StepBundle\Path\Event\Action\AddUrlQueryParameterPathEventAction:
         tags:
             - { name: idci_step.path_event_action, alias: add_url_query_parameter }
@@ -182,14 +174,12 @@ services:
 
 
     # SerializationMapper
-
     IDCI\Bundle\StepBundle\Serialization\SerializationMapper:
         arguments: ['%idci_step.serialization.mapping%']
     IDCI\Bundle\StepBundle\Serialization\SerializationMapperInterface: '@IDCI\Bundle\StepBundle\Serialization\SerializationMapper'
 
 
     # Configuration
-
     IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder: ~
     IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilderInterface: '@IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilder'
 
@@ -211,14 +201,12 @@ services:
 
 
     # Logger
-
     IDCI\Bundle\StepBundle\Navigation\NavigationLogger:
         public:    false
     IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface: '@IDCI\Bundle\StepBundle\Navigation\NavigationLogger'
 
 
     # DataCollector
-
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector:
         public:    false
         tags:
@@ -226,18 +214,19 @@ services:
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollectorInterface: '@IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector'
 
 
-    ## FormType
-
+    # FormType
     IDCI\Bundle\StepBundle\Form\Type\StepEditorType:
         tags:
             - { name: form.type, alias: step_editor }
             - { name: idci_asset_loader.asset_provider, alias: step_editor }
     IDCI\Bundle\StepBundle\Form\Type\StepEditorTypeInterface: '@IDCI\Bundle\StepBundle\Form\Type\StepEditorType'
 
+
     # Navigator
     IDCI\Bundle\StepBundle\Navigation\NavigatorType:
         tags:
             - { name: form.type }
+
 
     # Step
     IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType:
@@ -245,9 +234,9 @@ services:
             - { name: form.type, alias: idci_step_step_form_form }
 
     IDCI\Bundle\StepBundle\Step\Type\Form\HtmlStepFormType:
-        arguments: ['@Symfony\Component\Translation\TranslatorInterface']
         tags:
             - { name: form.type, alias: idci_step_step_form_html }
+
 
     # Action
     IDCI\Bundle\StepBundle\Form\Type\GoNextFormType:
@@ -264,8 +253,8 @@ services:
 
 
     # Twig
-
     IDCI\Bundle\StepBundle\Twig\StepTwigExtension: ~
+
 
     # Asset Provider
     IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider:
