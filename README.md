@@ -76,10 +76,6 @@ idci_extraform_api:
     type:     annotation
     prefix:   /api
 
-idci_extraform_editor:
-    resource: "@IDCIExtraFormBundle/Controller/EditorController.php"
-    type:     annotation
-
 idci_extrastep_api:
     resource: "@IDCIStepBundle/Controller/"
     type:     annotation

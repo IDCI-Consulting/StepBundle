@@ -3,6 +3,7 @@
 namespace IDCI\Bundle\StepBundle\Tests\Navigation\Event;
 
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
+use Twig\Environment;
 
 class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
 {
@@ -42,7 +43,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
         ;
 
         $twigStringLoader = new \Twig_Loader_Array();
-        $twigEnvironment = new \Twig_Environment($twigStringLoader, array());
+        $twigEnvironment = new Environment($twigStringLoader, array());
 
         $this->navigationEventSubscriber = new NavigationEventSubscriber(
             $navigator,

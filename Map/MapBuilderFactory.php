@@ -7,11 +7,12 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
-use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
+use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
 
 class MapBuilderFactory implements MapBuilderFactoryInterface
 {
@@ -31,7 +32,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $pathBuilder;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $merger;
 
@@ -51,7 +52,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
      * @param FlowRecorderInterface $flowRecorder the flow recorder
      * @param StepBuilderInterface  $stepBuilder  the step builder
      * @param PathBuilderInterface  $pathBuilder  the path builder
-     * @param \Twig_Environment     $merger       the twig merger
+     * @param Environment           $merger       the twig merger
      * @param TokenStorageInterface $tokenStorage the security context
      * @param SessionInterface      $session      the session
      */
@@ -59,7 +60,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         FlowRecorderInterface $flowRecorder,
         StepBuilderInterface  $stepBuilder,
         PathBuilderInterface  $pathBuilder,
-        \Twig_Environment     $merger,
+        Environment           $merger,
         TokenStorageInterface $tokenStorage,
         SessionInterface      $session
     ) {

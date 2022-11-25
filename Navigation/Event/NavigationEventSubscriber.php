@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
 
 class NavigationEventSubscriber implements EventSubscriberInterface
 {
@@ -40,7 +41,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     private $pathEventActionRegistry;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $merger;
 
@@ -60,7 +61,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      * @param NavigatorInterface               $navigator               the navigator
      * @param StepEventActionRegistryInterface $stepEventActionRegistry the step event registry
      * @param PathEventActionRegistryInterface $pathEventActionRegistry the path event registry
-     * @param \Twig_Environment                $merger                  the merger
+     * @param Environment                      $merger                  the merger
      * @param TokenStorageInterface            $tokenStorage            the security context
      * @param SessionInterface                 $session                 the session
      */
@@ -68,7 +69,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         NavigatorInterface $navigator,
         StepEventActionRegistryInterface $stepEventActionRegistry,
         PathEventActionRegistryInterface $pathEventActionRegistry,
-        \Twig_Environment                $merger,
+        Environment                      $merger,
         TokenStorageInterface            $tokenStorage,
         SessionInterface                 $session
     ) {
@@ -83,7 +84,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             FormEvents::PRE_SET_DATA => array(

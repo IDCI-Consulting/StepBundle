@@ -7,16 +7,17 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Twig\Environment;
 
 class ConditionalDestinationPathType extends AbstractPathType
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $merger;
 
@@ -38,13 +39,13 @@ class ConditionalDestinationPathType extends AbstractPathType
     /**
      * Constructor.
      *
-     * @param \Twig_Environment                $merger                  the twig merger
+     * @param Environment                      $merger                  the twig merger
      * @param TokenStorageInterface            $tokenStorage            the security context
      * @param SessionInterface                 $session                 the session
      * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry the conditional rule registry
      */
     public function __construct(
-        \Twig_Environment                $merger,
+        Environment                      $merger,
         TokenStorageInterface            $tokenStorage,
         SessionInterface                 $session,
         ConditionalRuleRegistryInterface $conditionalRuleRegistry

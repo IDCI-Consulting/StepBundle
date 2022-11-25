@@ -4,6 +4,7 @@ namespace IDCI\Bundle\StepBundle\Tests\Path\Type;
 
 use IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType;
 use IDCI\Bundle\StepBundle\Step\Step;
+use Twig\Environment;
 
 class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,7 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         ;
 
         $twigStringLoader = new \Twig_Loader_Array();
-        $twigEnvironment = new \Twig_Environment($twigStringLoader, array());
+        $twigEnvironment = new Environment($twigStringLoader, array());
 
         $this->pathType = new ConditionalDestinationPathType(
             $twigEnvironment,

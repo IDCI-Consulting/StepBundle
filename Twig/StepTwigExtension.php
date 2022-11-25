@@ -9,8 +9,11 @@ namespace IDCI\Bundle\StepBundle\Twig;
 
 use IDCI\Bundle\StepBundle\Breadcrumb\Breadcrumb;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class StepTwigExtension extends \Twig_Extension
+class StepTwigExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -18,17 +21,17 @@ class StepTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'step_stylesheets',
                 array($this, 'stepStylesheets'),
                 array('is_safe' => array('html'))
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'step_javascripts',
                 array($this, 'stepJavascripts'),
                 array('is_safe' => array('html', 'js'))
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'step_breadcrumb',
                 array($this, 'stepBreadcrumb'),
                 array(
@@ -36,12 +39,12 @@ class StepTwigExtension extends \Twig_Extension
                     'needs_environment' => true,
                 )
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'pre_step_content',
                 array($this, 'preStepContent'),
                 array('is_safe' => array('html', 'js'))
             ),
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'step',
                 array($this, 'step'),
                 array(
@@ -49,23 +52,7 @@ class StepTwigExtension extends \Twig_Extension
                     'needs_environment' => true,
                 )
             ),
-            new \Twig_SimpleFunction(
-                'draw_map',
-                array($this, 'drawMap'),
-                array(
-                    'is_safe' => array('html', 'js'),
-                    'needs_environment' => true,
-                )
-            ),
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'idci_step_twig_extension';
     }
 
     /**
@@ -113,7 +100,7 @@ class StepTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function stepBreadcrumb(\Twig_Environment $twig, Breadcrumb $breadcrumb)
+    public function stepBreadcrumb(Environment $twig, Breadcrumb $breadcrumb)
     {
         return $twig->render(
             '@IDCIStep/Step/breadcrumb.html.twig',
@@ -138,39 +125,19 @@ class StepTwigExtension extends \Twig_Extension
     /**
      * Returns step.
      *
-     * @param \Twig_Environment  $twig
+     * @param Environment        $twig
      * @param NavigatorInterface $navigator
      * @param string             $theme
      *
      * @return string
      */
-    public function step(\Twig_Environment $twig, NavigatorInterface $navigator, $theme = null)
+    public function step(Environment $twig, NavigatorInterface $navigator, $theme = null)
     {
         return $twig->render(
             '@IDCIStep/Step/default.html.twig',
             array(
                 'navigator' => $navigator,
                 'theme' => $theme,
-            )
-        );
-    }
-
-    /**
-     * Render the map drawing template.
-     *
-     * @param \Twig_Environment $twig
-     * @param string            $jsonMap
-     * @param string            $id
-     *
-     * @return string
-     */
-    public function drawMap(\Twig_Environment $twig, $jsonMap, $id)
-    {
-        return $twig->render(
-            '@IDCIStep/Map/map_diagram.html.twig',
-            array(
-                'jsonMap' => $jsonMap,
-                'id' => $id,
             )
         );
     }

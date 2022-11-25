@@ -7,17 +7,18 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
+use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
-use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
+use Twig\Environment;
 
 class NavigatorType extends AbstractType
 {
@@ -32,7 +33,7 @@ class NavigatorType extends AbstractType
     protected $pathEventActionRegistry;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $merger;
 
@@ -51,14 +52,14 @@ class NavigatorType extends AbstractType
      *
      * @param StepEventActionRegistryInterface $stepEventActionRegistry the step event action registry
      * @param PathEventActionRegistryInterface $pathEventActionRegistry the path event action registry
-     * @param Twig_Environment                 $merger                  the twig merger
+     * @param Environment                      $merger                  the twig merger
      * @param TokenStorageInterface            $tokenStorage            the security context
      * @param SessionInterface                 $session                 the session
      */
     public function __construct(
         StepEventActionRegistryInterface $stepEventActionRegistry,
         PathEventActionRegistryInterface $pathEventActionRegistry,
-        \Twig_Environment                $merger,
+        Environment                      $merger,
         TokenStorageInterface            $tokenStorage,
         SessionInterface                 $session
     ) {

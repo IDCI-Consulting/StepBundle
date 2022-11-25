@@ -28,7 +28,6 @@ Register needed bundles in your enabled bundles file:
         // ...
         Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
         JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
-        IDCI\Bundle\AssetLoaderBundle\IDCIAssetLoaderBundle::class => ['all' => true],
         IDCI\Bundle\ExtraFormBundle\IDCIExtraFormBundle::class => ['all' => true],
         IDCI\Bundle\StepBundle\IDCIStepBundle::class => ['all' => true],
     ];
