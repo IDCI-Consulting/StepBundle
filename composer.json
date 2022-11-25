@@ -25,7 +25,7 @@
         "symfony/security-bundle": "^4.4|^5.3|^6.0",
         "symfony/translation": "^4.4|^5.3|^6.0",
         "symfony/yaml": "^4.4|^5.3|^6.0",
-        "twig/twig": "^2.13|^3.0.4"
+        "twig/twig": "^2.13|^3.4.3"
     },
     "suggest": {
         "idci/extra-form-bundle": "Allow to use a powerful configuration for forms"
