@@ -3,6 +3,7 @@
 namespace IDCI\Bundle\StepBundle\Tests\Path;
 
 use IDCI\Bundle\StepBundle\Path\Path;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 class PathTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +29,7 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function testSource()
     {
-        $step = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step = $this->createMock(StepInterface::class);
         $step
             ->expects($this->once())
             ->method('getName')
@@ -41,14 +42,14 @@ class PathTest extends \PHPUnit_Framework_TestCase
 
     public function testDestination()
     {
-        $step1 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step1 = $this->createMock(StepInterface::class);
         $step1
             ->expects($this->once())
             ->method('getName')
             ->will($this->returnValue('step1'))
         ;
 
-        $step2 = $this->createMock("IDCI\Bundle\StepBundle\Step\StepInterface");
+        $step2 = $this->createMock(StepInterface::class);
         $step2
             ->expects($this->once())
             ->method('getName')

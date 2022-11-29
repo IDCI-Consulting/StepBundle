@@ -3,7 +3,10 @@
 namespace IDCI\Bundle\StepBundle\Tests\Map;
 
 use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class MapBuilderTest extends TestCase
 {
@@ -17,8 +20,8 @@ class MapBuilderTest extends TestCase
 
     public function testGetMap()
     {
-        $request = $this->createMock("Symfony\Component\HttpFoundation\Request");
-        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
+        $request = $this->createMock(Request::class);
+        $session = $this->createMock(Session::class);
 
         $request->expects($this->any())
             ->method('getSession')
@@ -33,7 +36,7 @@ class MapBuilderTest extends TestCase
 
         $map0 = $mapBuilder0->getMap($request);
 
-        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map0);
+        $this->assertInstanceOf(MapInterface::class, $map0);
         $this->assertEquals('Test default MAP 0', $map0->getName());
         $this->assertFalse($map0->isDisplayStepInUrlEnabled());
         $this->assertFalse($map0->isResetFlowDataOnInitEnabled());
@@ -48,7 +51,7 @@ class MapBuilderTest extends TestCase
 
         $map1 = $mapBuilder1->getMap($request);
 
-        $this->assertInstanceOf('IDCI\Bundle\StepBundle\Map\MapInterface', $map1);
+        $this->assertInstanceOf(MapInterface::class, $map1);
         $this->assertEquals('Test default MAP 1', $map1->getName());
         $this->assertTrue($map1->isDisplayStepInUrlEnabled());
         $this->assertTrue($map1->isResetFlowDataOnInitEnabled());

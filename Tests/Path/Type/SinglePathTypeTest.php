@@ -2,6 +2,8 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Path\Type;
 
+use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Type\SinglePathType;
 use IDCI\Bundle\StepBundle\Step\Step;
 
@@ -14,7 +16,7 @@ class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveDestination()
     {
-        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock(NavigatorInterface::class);
 
         $this->assertEquals(
             'next_step',
@@ -54,13 +56,13 @@ class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
             array('step3' => $step3)
         );
 
-        $flow = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
+        $flow = $this->createMock(FlowInterface::class);
         $flow
             ->expects($this->any())
             ->method('getData')
             ->will($this->returnValue(null))
         ;
-        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock(NavigatorInterface::class);
         $navigator
             ->expects($this->any())
             ->method('getFlow')

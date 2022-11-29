@@ -7,10 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use IDCI\Bundle\StepBundle\Serialization\SerializationMapper;
 use IDCI\Bundle\StepBundle\Step\Type\Form\FormStepFormType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormStepType extends AbstractStepType
 {
@@ -47,7 +47,7 @@ class FormStepType extends AbstractStepType
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('_data', FormStepFormType::class, array(
+        $builder->add('_content', FormStepFormType::class, array(
             'label' => $options['title'],
             'display_title' => $options['display_title'],
             'builder' => $options['builder'],

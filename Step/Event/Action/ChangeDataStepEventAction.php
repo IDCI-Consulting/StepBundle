@@ -9,8 +9,8 @@ namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\Step\Type\FormStepType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeDataStepEventAction extends AbstractStepEventAction
 {
@@ -27,7 +27,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
         if ($configuration['type'] instanceof FormStepType) {
             $data = array_replace_recursive(
                 $event->getData(),
-                array('_data' => $data)
+                array('_content' => $data)
             );
         }
 

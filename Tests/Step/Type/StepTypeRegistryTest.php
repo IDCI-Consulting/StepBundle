@@ -39,6 +39,6 @@ class StepTypeRegistryTest extends WebTestCase
     {
         $formStepType = $this->registry->getType('form');
 
-        $this->assertTrue($formStepType instanceof AbstractStepType);
+        $this->assertInstanceOf(AbstractStepType::class, $formStepType);
     }
 }

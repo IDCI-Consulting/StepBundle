@@ -2,7 +2,13 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Navigation\Event;
 
+use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
 
 class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
@@ -10,7 +16,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $tokenStorage = $this
-            ->getMockBuilder("Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface")
+            ->getMockBuilder(TokenStorageInterface::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getToken', 'setToken'))
             ->getMock()
@@ -21,7 +27,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
-        $flow = $this->createMock("IDCI\Bundle\StepBundle\Flow\FlowInterface");
+        $flow = $this->createMock(FlowInterface::class);
         $flow
             ->expects($this->any())
             ->method('getData')
@@ -35,7 +41,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
                 ),
             )))
         ;
-        $navigator = $this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface");
+        $navigator = $this->createMock(NavigatorInterface::class);
         $navigator
             ->expects($this->any())
             ->method('getFlow')
@@ -47,11 +53,11 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->navigationEventSubscriber = new NavigationEventSubscriber(
             $navigator,
-            $this->createMock("IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface"),
-            $this->createMock("IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface"),
+            $this->createMock(StepEventActionRegistryInterface::class),
+            $this->createMock(PathEventActionRegistryInterface::class),
             $twigEnvironment,
             $tokenStorage,
-            $this->createMock("Symfony\Component\HttpFoundation\Session\SessionInterface")
+            $this->createMock(SessionInterface::class)
         );
     }
 

@@ -7,10 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Util\Inflector;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
 use IDCI\Bundle\StepBundle\Step\Type\FormStepType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TransformDataStepEventAction extends AbstractStepEventAction
 {
@@ -24,7 +24,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         $configuration = $step->getConfiguration();
 
         if (empty($formData) ||
-            $configuration['type'] instanceof FormStepType && empty($formData['_data'])
+            $configuration['type'] instanceof FormStepType && empty($formData['_content'])
         ) {
             return;
         }
@@ -41,9 +41,9 @@ class TransformDataStepEventAction extends AbstractStepEventAction
 
             $transformer = sprintf('transform%s', Inflector::classify($method));
             if ($configuration['type'] instanceof FormStepType) {
-                $formData['_data'][$destination] = forward_static_call_array(
+                $formData['_content'][$destination] = forward_static_call_array(
                     array($this, $transformer),
-                    array($formData['_data'][$field], $options)
+                    array($formData['_content'][$field], $options)
                 );
             } else {
                 $formData[$destination] = forward_static_call_array(

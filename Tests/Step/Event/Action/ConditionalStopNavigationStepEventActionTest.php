@@ -2,24 +2,28 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Step;
 
-use IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry;
 use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction;
+use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ConditionalStopNavigationStepEventActionTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->event = $this->createMock("IDCI\Bundle\StepBundle\Step\Event\StepEventInterface");
+        $this->event = $this->createMock(StepEventInterface::class);
         $this->event
             ->expects($this->any())
             ->method('getNavigator')
-            ->will($this->returnValue($this->createMock("IDCI\Bundle\StepBundle\Navigation\NavigatorInterface")))
+            ->will($this->returnValue($this->createMock(NavigatorInterface::class)))
         ;
 
         $registry = new ConditionalRuleRegistry();
+        $router = $this->createMock(UrlGeneratorInterface::class);
 
-        $this->eventAction = new ConditionalStopNavigationStepEventAction($registry);
+        $this->eventAction = new ConditionalStopNavigationStepEventAction($registry, $router);
     }
 
     public function testExecute()

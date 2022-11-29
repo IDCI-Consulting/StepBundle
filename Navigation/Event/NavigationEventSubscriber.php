@@ -320,8 +320,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         $data = $this->navigator->getCurrentStepData();
-        if ($event->getForm()->has('_data')) {
-            $data = array('_data' => $data);
+        if ($event->getForm()->has('_content')) {
+            $data = array('_content' => $data);
         }
 
         $event->setData($data);
@@ -376,8 +376,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             }
         }
 
-        if ($form->has('_data') && $form->isValid()) {
-            $this->navigator->setCurrentStepData($form->get('_data')->getData());
+        if ($form->has('_content') && $form->isValid()) {
+            $this->navigator->setCurrentStepData($form->get('_content')->getData());
         }
     }
 
