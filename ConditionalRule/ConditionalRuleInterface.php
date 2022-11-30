@@ -16,5 +16,5 @@ interface ConditionalRuleInterface
      *
      * @return bool return true if the conditional rule match
      */
-    public function match(array $options = array());
+    public function match(array $options = []): bool;
 }

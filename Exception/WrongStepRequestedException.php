@@ -13,11 +13,7 @@ class WrongStepRequestedException extends \LogicException
 
     public function __construct($given, $expected)
     {
-        parent::__construct(sprintf(
-            'Cannot access step "%s" before step "%s"',
-            $given,
-            $expected
-        ));
+        parent::__construct(sprintf('Cannot access step "%s" before step "%s"', $given, $expected));
 
         $this->redirectionStep = $expected;
     }

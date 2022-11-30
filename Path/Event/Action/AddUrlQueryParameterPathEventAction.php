@@ -7,16 +7,16 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
 {
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(PathEventInterface $event, array $parameters = array())
+    protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         $event->getNavigator()->addUrlQueryParameter(
             $parameters['key'],
@@ -32,13 +32,13 @@ class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array('key'))
-            ->setDefaults(array('value' => '1'))
+            ->setRequired(['key'])
+            ->setDefaults(['value' => '1'])
             ->setNormalizer('value', function (Options $options, $value) {
                 return (string) $value;
             })
-            ->setAllowedTypes('key', array('string'))
-            ->setAllowedTypes('value', array('string', 'boolean', 'integer'))
+            ->setAllowedTypes('key', ['string'])
+            ->setAllowedTypes('value', ['string', 'boolean', 'integer'])
         ;
     }
 }

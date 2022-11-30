@@ -27,8 +27,6 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
 
     /**
      * Constructor.
-     *
-     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry the conditional rule registry
      */
     public function __construct(
         ConditionalRuleRegistryInterface $conditionalRuleRegistry,
@@ -44,14 +42,14 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'rules' => false,
                 'final_destination' => null,
                 'query_parameters' => [],
-            ))
-            ->setAllowedTypes('rules', array('bool', 'array', 'string'))
-            ->setAllowedTypes('final_destination', array('null', 'string'))
-            ->setAllowedTypes('query_parameters', array('array'))
+            ])
+            ->setAllowedTypes('rules', ['bool', 'array', 'string'])
+            ->setAllowedTypes('final_destination', ['null', 'string'])
+            ->setAllowedTypes('query_parameters', ['array'])
             ->setNormalizer('rules', function (Options $options, $value) {
                 if (is_array($value)) {
                     return $value;
@@ -65,10 +63,8 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        StepEventInterface $event,
-        array $parameters = array()
-    ) {
+    protected function doExecute(StepEventInterface $event, array $parameters = [])
+    {
         if (!$this->matchConditionalRules($parameters['rules'])) {
             return false;
         }
@@ -94,7 +90,7 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
      *
      * @return bool return true if the rules match, false otherwise
      */
-    private function matchConditionalRules($rules)
+    private function matchConditionalRules($rules): bool
     {
         if (is_bool($rules)) {
             return $rules;

@@ -9,6 +9,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -38,16 +39,11 @@ class ConditionalDestinationPathType extends AbstractPathType
 
     /**
      * Constructor.
-     *
-     * @param Environment                      $merger                  the twig merger
-     * @param TokenStorageInterface            $tokenStorage            the security context
-     * @param SessionInterface                 $session                 the session
-     * @param ConditionalRuleRegistryInterface $conditionalRuleRegistry the conditional rule registry
      */
     public function __construct(
-        Environment                      $merger,
-        TokenStorageInterface            $tokenStorage,
-        SessionInterface                 $session,
+        Environment $merger,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session,
         ConditionalRuleRegistryInterface $conditionalRuleRegistry
     ) {
         $this->merger = $merger;
@@ -64,22 +60,22 @@ class ConditionalDestinationPathType extends AbstractPathType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setRequired(array('source'))
-            ->setDefaults(array(
+            ->setRequired(['source'])
+            ->setDefaults([
                 'default_destination' => null,
-                'destinations' => array(),
+                'destinations' => [],
                 'stop_navigation' => false,
-            ))
-            ->setAllowedTypes('source', array('string'))
-            ->setAllowedTypes('destinations', array('array'))
-            ->setAllowedTypes('stop_navigation', array('string', 'bool'))
+            ])
+            ->setAllowedTypes('source', ['string'])
+            ->setAllowedTypes('destinations', ['array'])
+            ->setAllowedTypes('stop_navigation', ['string', 'bool'])
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildPath(array $steps, array $options = array())
+    public function buildPath(array $steps, array $options = []): PathInterface
     {
         $path = parent::buildPath($steps, $options);
         $path->setSource($steps[$options['source']]);
@@ -98,7 +94,7 @@ class ConditionalDestinationPathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function doResolveDestination(array $options, NavigatorInterface $navigator)
+    public function doResolveDestination(array $options, NavigatorInterface $navigator): ?string
     {
         $user = null;
         if (null !== $this->tokenStorage->getToken()) {
@@ -112,11 +108,11 @@ class ConditionalDestinationPathType extends AbstractPathType
 
         if (is_string($stopNavigationRules)) {
             $template = $this->merger->createTemplate($stopNavigationRules);
-            $rules = $template->render(array(
+            $rules = $template->render([
                 'user' => $user,
                 'session' => $this->session->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
-            ));
+            ]);
 
             if ($this->matchConditionalRules($rules)) {
                 return null;
@@ -130,11 +126,11 @@ class ConditionalDestinationPathType extends AbstractPathType
             }
 
             $template = $this->merger->createTemplate($mergedRules);
-            $mergedRules = $template->render(array(
+            $mergedRules = $template->render([
                 'user' => $user,
                 'session' => $this->session->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
-            ));
+            ]);
 
             if (is_array($rules)) {
                 $mergedRules = json_decode($mergedRules, true);
@@ -154,10 +150,8 @@ class ConditionalDestinationPathType extends AbstractPathType
      * Match the given conditional rules.
      *
      * @param mixed $rules the rules to check
-     *
-     * @return bool return true if the rules match, false otherwise
      */
-    private function matchConditionalRules($rules)
+    private function matchConditionalRules($rules): bool
     {
         if (!is_array($rules)) {
             return (bool) $rules;

@@ -7,45 +7,25 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type\Configuration;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 interface StepTypeConfigurationRegistryInterface
 {
     /**
      * Set a step type configuration identified by a alias.
-     *
-     * @param string                         $alias         the step type configuration alias
-     * @param StepTypeConfigurationInterface $configuration The step type configuration
-     *
-     * @return StepTypeConfigurationRegistryInterface
      */
-    public function setConfiguration($alias, StepTypeConfigurationInterface $configuration);
+    public function setConfiguration(string $alias, StepTypeConfigurationInterface $configuration): self;
 
     /**
      * Returns all step types configurations.
-     *
-     * @return array
      */
-    public function getConfigurations();
+    public function getConfigurations(): array;
 
     /**
      * Returns a step type configuration by its alias.
-     *
-     * @param string $alias the step type configuration alias
-     *
-     * @return StepTypeConfigurationInterface
-     *
-     * @throws UnexpectedTypeException   if the passed alias is not a string
-     * @throws \InvalidArgumentException if the step type configuration can not be retrieved
      */
-    public function getConfiguration($alias);
+    public function getConfiguration(string $alias): StepTypeConfigurationInterface;
 
     /**
      * Returns whether the given step type configuration is supported.
-     *
-     * @param string $alias the alias of the step type configuration
-     *
-     * @return bool whether the step type configuration is supported
      */
-    public function hasConfiguration($alias);
+    public function hasConfiguration(string $alias): bool;
 }

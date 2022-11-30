@@ -7,19 +7,17 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 class StepTypeRegistry implements StepTypeRegistryInterface
 {
     /**
      * @var StepTypeInterface[]
      */
-    private $types = array();
+    private $types = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setType($alias, StepTypeInterface $step)
+    public function setType(string $alias, StepTypeInterface $step): StepTypeRegistryInterface
     {
         $this->types[$alias] = $step;
 
@@ -29,18 +27,10 @@ class StepTypeRegistry implements StepTypeRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getType($alias)
+    public function getType(string $alias): StepTypeInterface
     {
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
         if (!isset($this->types[$alias])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not load type "%s". Available types are %s',
-                $alias,
-                implode(', ', array_keys($this->types))
-            ));
+            throw new \InvalidArgumentException(sprintf('Could not load type "%s". Available types are %s', $alias, implode(', ', array_keys($this->types))));
         }
 
         return $this->types[$alias];
@@ -49,7 +39,7 @@ class StepTypeRegistry implements StepTypeRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function hasType($alias)
+    public function hasType(string $alias): bool
     {
         if (!isset($this->types[$alias])) {
             return false;

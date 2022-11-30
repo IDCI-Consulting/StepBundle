@@ -8,8 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Path;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Path\Type\PathTypeRegistryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PathBuilder implements PathBuilderInterface
 {
@@ -20,8 +20,6 @@ class PathBuilder implements PathBuilderInterface
 
     /**
      * Constructor.
-     *
-     * @param PathTypeRegistryInterface $registry
      */
     public function __construct(PathTypeRegistryInterface $registry)
     {
@@ -31,7 +29,7 @@ class PathBuilder implements PathBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build($typeAlias, array $options = array(), array $steps = array())
+    public function build(string $typeAlias, array $options = [], array $steps = []): PathInterface
     {
         $type = $this->registry->getType($typeAlias);
 
@@ -39,9 +37,6 @@ class PathBuilder implements PathBuilderInterface
         $type->configureOptions($resolver);
         $resolvedOptions = $resolver->resolve($options);
 
-        return $type->buildPath(
-            $steps,
-            $resolvedOptions
-        );
+        return $type->buildPath($steps, $resolvedOptions);
     }
 }

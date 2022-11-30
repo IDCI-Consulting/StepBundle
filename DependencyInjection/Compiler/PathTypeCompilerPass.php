@@ -26,24 +26,15 @@ class PathTypeCompilerPass implements CompilerPassInterface
         $registryDefinition = $container->findDefinition(PathTypeRegistryInterface::class);
         foreach ($container->findTaggedServiceIds('idci_step.path_type') as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias = isset($attributes['alias'])
-                    ? $attributes['alias']
-                    : $id
-                ;
+                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
 
                 $configurationService = sprintf('idci_step.path_type_configuration.%s', $alias);
 
                 if (!$container->has($configurationService)) {
-                    throw new \Exception(sprintf(
-                        'The path type \'%s\' does not have a configuration. You must configure the path type under the idci_step.path_types key',
-                        $alias
-                    ));
+                    throw new \Exception(sprintf('The path type \'%s\' does not have a configuration. You must configure the path type under the idci_step.path_types key', $alias));
                 }
 
-                $registryDefinition->addMethodCall(
-                    'setType',
-                    array($alias, new Reference($id))
-                );
+                $registryDefinition->addMethodCall('setType', [$alias, new Reference($id)]);
             }
         }
     }

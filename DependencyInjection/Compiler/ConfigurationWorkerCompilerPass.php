@@ -9,8 +9,8 @@
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class ConfigurationWorkerCompilerPass implements CompilerPassInterface
@@ -27,15 +27,9 @@ class ConfigurationWorkerCompilerPass implements CompilerPassInterface
         $registryDefinition = $container->findDefinition(ConfigurationWorkerRegistryInterface::class);
         foreach ($container->findTaggedServiceIds('idci_step.configuration.worker') as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias = isset($attributes['alias'])
-                    ? $attributes['alias']
-                    : $id
-                ;
+                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
 
-                $registryDefinition->addMethodCall(
-                    'setWorker',
-                    array($alias, new Reference($id))
-                );
+                $registryDefinition->addMethodCall('setWorker', [$alias, new Reference($id)]);
             }
         }
     }

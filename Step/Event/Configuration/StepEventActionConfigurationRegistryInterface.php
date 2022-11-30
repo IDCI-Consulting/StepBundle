@@ -7,45 +7,25 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Configuration;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 interface StepEventActionConfigurationRegistryInterface
 {
     /**
      * Set a step event action configuration identified by a alias.
-     *
-     * @param string                                $alias         the step event action configuration alias
-     * @param StepEventActionConfigurationInterface $configuration The step event action configuration
-     *
-     * @return StepEventActionConfigurationRegistryInterface
      */
-    public function setConfiguration($alias, StepEventActionConfigurationInterface $configuration);
+    public function setConfiguration(string $alias, StepEventActionConfigurationInterface $configuration): self;
 
     /**
      * Returns all step event actions configurations.
-     *
-     * @return array
      */
-    public function getConfigurations();
+    public function getConfigurations(): array;
 
     /**
      * Returns a step event action configuration by its alias.
-     *
-     * @param string $alias the step event action configuration alias
-     *
-     * @return StepEventActionConfigurationInterface
-     *
-     * @throws UnexpectedTypeException   if the passed alias is not a string
-     * @throws \InvalidArgumentException if the step event action configuration can not be retrieved
      */
-    public function getConfiguration($alias);
+    public function getConfiguration(string $alias): StepEventActionConfigurationInterface;
 
     /**
      * Returns whether the given step event action configuration is supported.
-     *
-     * @param string $alias the alias of the step event action configuration
-     *
-     * @return bool whether the step event action configuration is supported
      */
-    public function hasConfiguration($alias);
+    public function hasConfiguration(string $alias): bool;
 }

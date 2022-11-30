@@ -76,27 +76,17 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Creates a new map builder.
-     *
-     * @param string                $name         the map name
-     * @param array                 $data         the map data
-     * @param array                 $options      the map options
-     * @param FlowRecorderInterface $flowRecorder the flow recorder
-     * @param StepBuilderInterface  $stepBuilder  the step builder
-     * @param PathBuilderInterface  $pathBuilder  the path builder
-     * @param Environment           $merger       the twig merger
-     * @param TokenStorageInterface $tokenStorage the security context
-     * @param SessionInterface      $session      the session
      */
     public function __construct(
         FlowRecorderInterface $flowRecorder,
-        StepBuilderInterface  $stepBuilder,
-        PathBuilderInterface  $pathBuilder,
-        Environment           $merger,
+        StepBuilderInterface $stepBuilder,
+        PathBuilderInterface $pathBuilder,
+        Environment $merger,
         TokenStorageInterface $tokenStorage,
-        SessionInterface      $session,
-        $name = null,
-        $data = array(),
-        $options = array()
+        SessionInterface $session,
+        string $name = null,
+        array $data = [],
+        array $options = []
     ) {
         $this->name = $name;
         $this->data = $data;
@@ -107,30 +97,26 @@ class MapBuilder implements MapBuilderInterface
         $this->merger = $merger;
         $this->tokenStorage = $tokenStorage;
         $this->session = $session;
-        $this->steps = array();
-        $this->paths = array();
+        $this->steps = [];
+        $this->paths = [];
     }
 
     /**
      * Resolve options.
-     *
-     * @param array $options the options to resolve
-     *
-     * @return array the resolved options
      */
-    public static function resolveOptions(array $options = array())
+    public static function resolveOptions(array $options = []): array
     {
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'form_action' => null,
                 'first_step_name' => null,
                 'final_destination' => null,
                 'display_step_in_url' => false,
                 'reset_flow_data_on_init' => false,
-            ))
-            ->setAllowedTypes('display_step_in_url', array('bool'))
-            ->setAllowedTypes('reset_flow_data_on_init', array('bool'))
+            ])
+            ->setAllowedTypes('display_step_in_url', ['bool'])
+            ->setAllowedTypes('reset_flow_data_on_init', ['bool'])
         ;
 
         return $resolver->resolve($options);
@@ -139,7 +125,7 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -147,7 +133,7 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -155,7 +141,7 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -163,7 +149,7 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function hasOption($name)
+    public function hasOption(string $name): bool
     {
         return array_key_exists($name, $this->options);
     }
@@ -171,7 +157,7 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getOption($name, $default = null)
+    public function getOption(string $name, $default = null)
     {
         return $this->hasOption($name) ? $this->options[$name] : $default;
     }
@@ -179,12 +165,12 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function addStep($name, $type, array $options = array())
+    public function addStep(string $name, string $type, array $options = []): MapBuilderInterface
     {
-        $this->steps[$name] = array(
+        $this->steps[$name] = [
             'type' => $type,
             'options' => $options,
-        );
+        ];
 
         return $this;
     }
@@ -192,12 +178,12 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function addPath($type, array $options = array())
+    public function addPath(string $type, array $options = []): MapBuilderInterface
     {
-        $this->paths[] = array(
+        $this->paths[] = [
             'type' => $type,
             'options' => $options,
-        );
+        ];
 
         return $this;
     }
@@ -205,27 +191,23 @@ class MapBuilder implements MapBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function getMap(Request $request)
+    public function getMap(Request $request): MapInterface
     {
         return $this->build($request);
     }
 
     /**
      * Build the map.
-     *
-     * @param Request $request the HTTP request
-     *
-     * @return MapInterface the built map
      */
-    private function build(Request $request)
+    private function build(Request $request): MapInterface
     {
         // TODO: Use a MapConfig as argument instead of an array.
-        $map = new Map(array(
+        $map = new Map([
             'name' => $this->name,
             'footprint' => $this->generateFootprint(),
             'data' => $this->merge($this->data),
             'options' => $this->options,
-        ));
+        ]);
 
         // Build steps before paths !
         $this->buildSteps($map, $request);
@@ -236,13 +218,10 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Build steps into the map.
-     *
-     * @param MapInterface $map     the building map
-     * @param Request      $request the HTTP request
      */
     private function buildSteps(MapInterface $map, Request $request)
     {
-        $vars = array();
+        $vars = [];
         $flow = $this->flowRecorder->getFlow($map, $request);
 
         if (null !== $flow) {
@@ -270,9 +249,6 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Build paths into the map.
-     *
-     * @param MapInterface $map     the building map
-     * @param Request      $request the HTTP request
      */
     private function buildPaths(MapInterface $map, Request $request)
     {
@@ -294,24 +270,16 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Generate a map unique footprint based on its name, steps and paths.
-     *
-     * @return string
      */
-    private function generateFootprint()
+    private function generateFootprint(): string
     {
         return md5($this->name.json_encode($this->steps).json_encode($this->paths));
     }
 
     /**
-     * Merge options with the SecurityContext (user)
-     * and the session (session).
-     *
-     * @param array $options the options
-     * @param array $vars    the merging vars
-     *
-     * @return array
+     * Merge options with the SecurityContext (user) and the session (session).
      */
-    private function merge(array $options = array(), array $vars = array())
+    private function merge(array $options = [], array $vars = []): array
     {
         $vars['session'] = $this->session->all();
         $vars['user'] = null !== $this->tokenStorage->getToken() ?
@@ -324,24 +292,18 @@ class MapBuilder implements MapBuilderInterface
 
     /**
      * Merge a value.
-     *
-     * @param mixed $value the value
-     * @param array $vars  the merging vars
-     * @param array $try   whether or not to just try merging
-     *
-     * @return mixed the merged value
      */
-    private function mergeValue($value, array $vars = array(), $try = true)
+    private function mergeValue($value, array $vars = [], bool $try = true)
     {
         // Handle array case.
         if (is_array($value)) {
             foreach ($value as $k => $v) {
                 // Do not merge if ending with '|raw'.
-                if (substr($k, -4) == '|raw') {
+                if ('|raw' == substr($k, -4)) {
                     $value[substr($k, 0, -4)] = $v;
                     unset($value[$k]);
-                    // Do not merge events parameters.
-                } elseif ($k !== 'events') {
+                // Do not merge events parameters.
+                } elseif ('events' !== $k) {
                     $value[$k] = $this->mergeValue($v, $vars, $try);
                 }
             }

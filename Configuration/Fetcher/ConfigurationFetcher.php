@@ -14,8 +14,6 @@ class ConfigurationFetcher extends AbstractConfigurationFetcher
 
     /**
      * Constructor.
-     *
-     * @param array $raw
      */
     public function __construct(array $raw)
     {
@@ -25,7 +23,7 @@ class ConfigurationFetcher extends AbstractConfigurationFetcher
     /**
      * {@inheritdoc}
      */
-    public function doFetch(array $parameters = array())
+    public function doFetch(array $parameters = []): array
     {
         return $this->raw;
     }

@@ -11,10 +11,10 @@ use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
 use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationInterface;
 use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * This compiler pass loop over the yaml configuration under the idci_step.step_event_actions key
@@ -33,7 +33,7 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
 
         $registryDefinition = $container->findDefinition(StepEventActionConfigurationRegistryInterface::class);
         $stepEventActionsConfiguration = $container->getParameter('idci_step.step_event_actions');
-        $extraFormOptions = array();
+        $extraFormOptions = [];
 
         foreach ($stepEventActionsConfiguration as $configurationName => $configuration) {
             $serviceDefinition = new ChildDefinition(StepEventActionConfigurationInterface::class);
@@ -47,7 +47,6 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
                     $this->getDefinitionName($configuration['parent'])
                 );
             }
-
 
             $configuration['name'] = $configurationName;
             $alias = $configurationName.'_configuration';
@@ -63,7 +62,7 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
 
             $registryDefinition->addMethodCall(
                 'setConfiguration',
-                array($alias, new Reference($this->getDefinitionName($configurationName)))
+                [$alias, new Reference($this->getDefinitionName($configurationName))]
             );
 
             $extraFormOptions[$configurationName] = $configuration['extra_form_options'];
@@ -73,11 +72,7 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
         foreach ($extraFormOptions as $name => $options) {
             foreach ($options as $optionName => $optionValue) {
                 if (!$container->hasDefinition(sprintf('idci_extra_form.type.%s', $optionValue['extra_form_type']))) {
-                    throw new WrongExtraFormTypeOptionException(
-                        $name,
-                        $optionName,
-                        sprintf('Undefined ExtraFormType "%s"', $optionValue['extra_form_type'])
-                    );
+                    throw new WrongExtraFormTypeOptionException($name, $optionName, sprintf('Undefined ExtraFormType "%s"', $optionValue['extra_form_type']));
                 }
             }
         }

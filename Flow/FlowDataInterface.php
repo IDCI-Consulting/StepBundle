@@ -11,10 +11,8 @@ interface FlowDataInterface
 {
     /**
      * Returns the data.
-     *
-     * @return array
      */
-    public function getData();
+    public function getData(): array;
 
     /**
      * Set data.
@@ -23,39 +21,27 @@ interface FlowDataInterface
      *
      * @return FlowDataInterface
      */
-    public function setData(array $data);
+    public function setData(array $data): self;
 
     /**
-     * Returns the reminded  data.
-     *
-     * @return array
+     * Returns the reminded data.
      */
-    public function getRemindedData();
+    public function getRemindedData(): array;
 
     /**
      * Set reminded data.
-     *
-     * @param array $remindedData the reminded data
-     *
-     * @return FlowDataInterface
      */
-    public function setRemindedData(array $remindedData);
+    public function setRemindedData(array $remindedData): self;
 
     /**
      * Returns the retrieved data.
-     *
-     * @return array
      */
-    public function getRetrievedData();
+    public function getRetrievedData(): array;
 
     /**
      * Set retrieved data.
-     *
-     * @param array $retrievedData the retrieved data
-     *
-     * @return FlowDataInterface
      */
-    public function setRetrievedData(array $retrievedData);
+    public function setRetrievedData(array $retrievedData): self;
 
     /**
      * Whether or not it exists a data for a step.
@@ -65,7 +51,7 @@ interface FlowDataInterface
      *
      * @return bool true if a data exists for the step, false otherwise
      */
-    public function hasStepData($name, $type = null);
+    public function hasStepData(string $name, string $type = null): bool;
 
     /**
      * Returns the data of a step.
@@ -77,7 +63,7 @@ interface FlowDataInterface
      *
      * @throws \InvalidArgumentException if there is no associated data for the step
      */
-    public function getStepData($name, $type = null);
+    public function getStepData(string $name, string $type = null): array;
 
     /**
      * Set the data of a step.
@@ -85,25 +71,19 @@ interface FlowDataInterface
      * @param string      $name the identifier name of the step
      * @param array       $data the associated data
      * @param string|null $type the data type (null, 'reminded' or 'retrieved')
-     *
-     * @return FlowDataInterface
      */
-    public function setStepData($name, array $data, $type = null);
+    public function setStepData(string $name, array $data, string $type = null): FlowDataInterface;
 
     /**
      * Unset the data for a step.
      *
      * @param string      $name the identifier name of the step
      * @param string|null $type the data type (null, 'reminded' or 'retrieved')
-     *
-     * @return FlowDataInterface
      */
-    public function unsetStepData($name, $type = null);
+    public function unsetStepData(string $name, string $type = null): FlowDataInterface;
 
     /**
      * Returns all data steps in an array.
-     *
-     * @return array the data
      */
-    public function getAll();
+    public function getAll(): array;
 }

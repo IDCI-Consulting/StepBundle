@@ -3,10 +3,12 @@
 namespace IDCI\Bundle\StepBundle\Tests\Path\Type;
 
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowDataInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType;
 use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
@@ -18,7 +20,7 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $tokenStorage = $this
             ->getMockBuilder(TokenStorageInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getToken', 'setToken', 'isGranted'))
+            ->setMethods(['getToken', 'setToken', 'isGranted'])
             ->getMock()
         ;
         $tokenStorage
@@ -28,7 +30,7 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         ;
 
         $twigStringLoader = new \Twig_Loader_Array();
-        $twigEnvironment = new Environment($twigStringLoader, array());
+        $twigEnvironment = new Environment($twigStringLoader, []);
 
         $this->pathType = new ConditionalDestinationPathType(
             $twigEnvironment,
@@ -40,18 +42,23 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveDestination()
     {
+        $flowData = $this->createMock(FlowDataInterface::class);
+        $flowData
+            ->expects($this->any())
+            ->method('getData')
+            ->will($this->returnValue([
+                'step1' => [
+                    'firstname' => 'john',
+                    'lastname' => 'doe',
+                ],
+            ]))
+        ;
+
         $flow = $this->createMock(FlowInterface::class);
         $flow
             ->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue(array(
-                'data' => array(
-                    'step1' => array(
-                        'firstname' => 'john',
-                        'lastname' => 'doe',
-                    ),
-                ),
-            )))
+            ->will($this->returnValue($flowData))
         ;
 
         $navigator = $this->createMock(NavigatorInterface::class);
@@ -64,14 +71,14 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'destination_1',
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations' => array(
+                    'destinations' => [
                         'destination_1' => true,
                         'destination_2' => true,
-                    ),
-                ),
+                    ],
+                ],
                 $navigator
             )
         );
@@ -79,14 +86,14 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'destination_2',
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations' => array(
+                    'destinations' => [
                         'destination_1' => false,
                         'destination_2' => true,
-                    ),
-                ),
+                    ],
+                ],
                 $navigator
             )
         );
@@ -94,14 +101,14 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'default',
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations' => array(
+                    'destinations' => [
                         'destination_1' => false,
                         'destination_2' => false,
-                    ),
-                ),
+                    ],
+                ],
                 $navigator
             )
         );
@@ -109,14 +116,14 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'destination_2',
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'default_destination' => 'default',
-                    'destinations' => array(
+                    'destinations' => [
                         'destination_1' => '{{ flow_data.data.step1.firstname == "dummy" }}',
                         'destination_2' => '{{ flow_data.data.step1.firstname == "john" }}',
-                    ),
-                ),
+                    ],
+                ],
                 $navigator
             )
         );
@@ -124,15 +131,15 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             null,
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'default_destination' => 'default',
                     'stop_navigation' => true,
-                    'destinations' => array(
+                    'destinations' => [
                         'destination_1' => true,
                         'destination_2' => true,
-                    ),
-                ),
+                    ],
+                ],
                 $navigator
             )
         );
@@ -140,15 +147,15 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             null,
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'default_destination' => 'default',
                     'stop_navigation' => '{{ flow_data.data.step1.firstname == "john" }}',
-                    'destinations' => array(
+                    'destinations' => [
                         'destination_1' => true,
                         'destination_2' => true,
-                    ),
-                ),
+                    ],
+                ],
                 $navigator
             )
         );
@@ -156,43 +163,49 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testbuildPath()
     {
-        $step1 = new Step(array('name' => 'step1'));
-        $step2 = new Step(array('name' => 'step2'));
-        $step3 = new Step(array('name' => 'step3'));
-        $stepEnd = new Step(array('name' => 'stepEnd'));
+        $step1 = new Step('step1', new HtmlStepType());
+        $step2 = new Step('step2', new HtmlStepType());
+        $step3 = new Step('step3', new HtmlStepType());
+        $stepEnd = new Step('stepEnd', new HtmlStepType());
 
         $path = $this->pathType->buildPath(
-            array(
+            [
                 'step1' => $step1,
                 'step2' => $step2,
                 'step3' => $step3,
                 'stepEnd' => $stepEnd,
-            ),
-            array(
+            ],
+            [
                 'source' => 'step1',
                 'default_destination' => 'stepEnd',
-                'destinations' => array(
+                'destinations' => [
                     'step2' => false,
                     'step3' => false,
-                ),
-            )
+                ],
+            ]
         );
 
         $this->assertEquals($path->getSource(), $step1);
         $this->assertEquals(
             $path->getDestinations(),
-            array(
+            [
                 'step2' => $step2,
                 'step3' => $step3,
                 'stepEnd' => $stepEnd,
-            )
+            ]
         );
 
+        $flowData = $this->createMock(FlowDataInterface::class);
+        $flowData
+            ->expects($this->any())
+            ->method('getData')
+            ->will($this->returnValue(null))
+        ;
         $flow = $this->createMock(FlowInterface::class);
         $flow
             ->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue(null))
+            ->will($this->returnValue($flowData))
         ;
         $navigator = $this->createMock(NavigatorInterface::class);
         $navigator

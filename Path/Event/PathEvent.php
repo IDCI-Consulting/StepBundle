@@ -7,8 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event;
 
-use Symfony\Component\Form\FormEvent;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormInterface;
 
 class PathEvent implements PathEventInterface
 {
@@ -49,7 +51,7 @@ class PathEvent implements PathEventInterface
         NavigatorInterface $navigator,
         FormEvent $formEvent,
         $pathEventData,
-        $pathIndex
+        int $pathIndex
     ) {
         $this->navigator = $navigator;
         $this->formEvent = $formEvent;
@@ -60,7 +62,7 @@ class PathEvent implements PathEventInterface
     /**
      * {@inheritdoc}
      */
-    public function isPropagationStopped()
+    public function isPropagationStopped(): bool
     {
         return $this->propagationStopped;
     }
@@ -76,7 +78,7 @@ class PathEvent implements PathEventInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->formEvent->getName();
     }
@@ -84,7 +86,7 @@ class PathEvent implements PathEventInterface
     /**
      * {@inheritdoc}
      */
-    public function getNavigator()
+    public function getNavigator(): NavigatorInterface
     {
         return $this->navigator;
     }
@@ -92,7 +94,7 @@ class PathEvent implements PathEventInterface
     /**
      * {@inheritdoc}
      */
-    public function getForm()
+    public function getForm(): FormInterface
     {
         return $this->formEvent->getForm();
     }
@@ -124,7 +126,7 @@ class PathEvent implements PathEventInterface
     /**
      * {@inheritdoc}
      */
-    public function getPathIndex()
+    public function getPathIndex(): int
     {
         return $this->pathIndex;
     }

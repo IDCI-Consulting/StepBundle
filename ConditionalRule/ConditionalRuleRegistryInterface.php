@@ -14,32 +14,16 @@ interface ConditionalRuleRegistryInterface
 {
     /**
      * Sets a conditional rule identify by a alias.
-     *
-     * @param string                   $alias the rule alias
-     * @param ConditionalRuleInterface $rule  the rule
-     *
-     * @return ConditionalRuleRegistryInterface
      */
-    public function setRule($alias, ConditionalRuleInterface $rule);
+    public function setRule(string $alias, ConditionalRuleInterface $rule): self;
 
     /**
      * Returns a conditional rule by alias.
-     *
-     * @param string $alias the alias of the rule
-     *
-     * @return ConditionalRuleInterface The rule
-     *
-     * @throws Exception\UnexpectedTypeException   if the passed alias is not a string
-     * @throws \Exception\InvalidArgumentException if the rule can not be retrieved
      */
-    public function getRule($alias);
+    public function getRule(string $alias): self;
 
     /**
      * Returns whether the given conditional rule is supported.
-     *
-     * @param string $alias the alias of the rule
-     *
-     * @return bool whether the rule is supported
      */
-    public function hasRule($alias);
+    public function hasRule(string $alias): bool;
 }

@@ -16,14 +16,14 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(PathEventInterface $event, array $parameters = array())
+    protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         $form = $event->getForm();
 
         $form
             ->add('_js_confirm', JsConfirmFormType::class, array_merge(
-                array('message' => $parameters['message']),
-                array('path_index' => $event->getPathIndex())
+                ['message' => $parameters['message']],
+                ['path_index' => $event->getPathIndex()]
             ))
         ;
     }
@@ -33,6 +33,6 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
      */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
-        $resolver->setOptional(array('message'));
+        $resolver->setOptional(['message']);
     }
 }

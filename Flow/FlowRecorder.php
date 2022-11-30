@@ -8,14 +8,14 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-use Symfony\Component\HttpFoundation\Request;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
-use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\DeserializationContext;
+use JMS\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class FlowRecorder implements FlowRecorderInterface
 {
-    const FLOW_NAMESPACE = 'idci_step.flow';
+    public const FLOW_NAMESPACE = 'idci_step.flow';
 
     /**
      * @var SerializerInterface
@@ -24,24 +24,14 @@ class FlowRecorder implements FlowRecorderInterface
 
     /**
      * Build the map id.
-     *
-     * @param MapInterface $map the map
-     *
-     * @return string
      */
-    public static function buildMapId(MapInterface $map)
+    public static function buildMapId(MapInterface $map): string
     {
-        return sprintf(
-            '%s/%s',
-            self::FLOW_NAMESPACE,
-            $map->getFootprint()
-        );
+        return sprintf('%s/%s', self::FLOW_NAMESPACE, $map->getFootprint());
     }
 
     /**
      * Constructor.
-     *
-     * @param SerializerInterface $serializer the serializer
      */
     public function __construct(SerializerInterface $serializer)
     {
@@ -51,7 +41,7 @@ class FlowRecorder implements FlowRecorderInterface
     /**
      * {@inheritdoc}
      */
-    public function getFlow(MapInterface $map, Request $request)
+    public function getFlow(MapInterface $map, Request $request): ?FlowInterface
     {
         if (!$this->hasFlow($map, $request)) {
             return null;
@@ -72,16 +62,13 @@ class FlowRecorder implements FlowRecorderInterface
      */
     public function setFlow(MapInterface $map, Request $request, FlowInterface $flow)
     {
-        $request->getSession()->set(
-            self::buildMapId($map),
-            $this->serialize($flow)
-        );
+        $request->getSession()->set(self::buildMapId($map), $this->serialize($flow));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function hasFlow(MapInterface $map, Request $request)
+    public function hasFlow(MapInterface $map, Request $request): bool
     {
         return $request->getSession()->has(self::buildMapId($map));
     }
@@ -105,7 +92,7 @@ class FlowRecorder implements FlowRecorderInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize(FlowInterface $flow)
+    public function serialize(FlowInterface $flow): string
     {
         return $this->serializer->serialize($flow, 'json');
     }
@@ -113,13 +100,9 @@ class FlowRecorder implements FlowRecorderInterface
     /**
      * {@inheritdoc}
      */
-    public function unserialize($serializedFlow)
+    public function unserialize($serializedFlow): FlowInterface
     {
-        return $this->serializer->deserialize(
-            $serializedFlow,
-            'IDCI\Bundle\StepBundle\Flow\Flow',
-            'json'
-        );
+        return $this->serializer->deserialize($serializedFlow, 'IDCI\Bundle\StepBundle\Flow\Flow', 'json');
     }
 
     /**
@@ -131,7 +114,7 @@ class FlowRecorder implements FlowRecorderInterface
             if ($flow->hasStepData($step)) {
                 $mapping = $step->getDataTypeMapping();
                 $data = $flow->getStepData($step);
-                $transformed = array();
+                $transformed = [];
 
                 foreach ($data as $field => $value) {
                     if (null === $value || (is_array($value) && empty($value))) {

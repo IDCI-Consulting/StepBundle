@@ -1,9 +1,8 @@
 <?php
 
-namespace IDCI\Bundle\StepBundle\Tests\Step;
+namespace IDCI\Bundle\StepBundle\Tests\Step\Event\Action;
 
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistry;
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Step\Event\Action\ConditionalStopNavigationStepEventAction;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
@@ -28,28 +27,18 @@ class ConditionalStopNavigationStepEventActionTest extends \PHPUnit_Framework_Te
 
     public function testExecute()
     {
-        $this->assertTrue($this->eventAction->execute($this->event, array(
+        $this->assertTrue($this->eventAction->execute($this->event, [
             'rules' => true,
-        )));
+        ]));
 
-        $this->assertFalse($this->eventAction->execute($this->event, array(
+        $this->assertFalse($this->eventAction->execute($this->event, [
             'rules' => false,
-        )));
+        ]));
 
         try {
-            $this->eventAction->execute($this->event, array(
-                'rules' => array(1234 => array()),
-            ));
-
-            $this->fail('Expected exception UnexpectedTypeException not thrown');
-        } catch (UnexpectedTypeException $e) {
-            $this->assertTrue(true);
-        }
-
-        try {
-            $this->eventAction->execute($this->event, array(
-                'rules' => array('dummy' => array()),
-            ));
+            $this->eventAction->execute($this->event, [
+                'rules' => ['dummy' => []],
+            ]);
 
             $this->fail('Expected exception InvalidArgumentException not thrown');
         } catch (\InvalidArgumentException $e) {

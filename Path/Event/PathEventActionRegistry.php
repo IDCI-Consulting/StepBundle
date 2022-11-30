@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Path\Event\Action\PathEventActionInterface;
 
 class PathEventActionRegistry implements PathEventActionRegistryInterface
@@ -15,12 +14,12 @@ class PathEventActionRegistry implements PathEventActionRegistryInterface
     /**
      * @var PathEventActionInterface[]
      */
-    private $actions = array();
+    private $actions = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setAction($alias, PathEventActionInterface $action)
+    public function setAction(string $alias, PathEventActionInterface $action): PathEventActionRegistryInterface
     {
         $this->actions[$alias] = $action;
 
@@ -30,18 +29,10 @@ class PathEventActionRegistry implements PathEventActionRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getAction($alias)
+    public function getAction(string $alias): PathEventActionInterface
     {
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
         if (!isset($this->actions[$alias])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not load path event action "%s". Available actions are %s',
-                $alias,
-                implode(', ', array_keys($this->actions))
-            ));
+            throw new \InvalidArgumentException(sprintf('Could not load path event action "%s". Available actions are %s', $alias, implode(', ', array_keys($this->actions))));
         }
 
         return $this->actions[$alias];
@@ -50,7 +41,7 @@ class PathEventActionRegistry implements PathEventActionRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function hasAction($alias)
+    public function hasAction(string $alias): bool
     {
         if (!isset($this->actions[$alias])) {
             return true;

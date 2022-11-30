@@ -7,45 +7,25 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Configuration;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 interface PathEventActionConfigurationRegistryInterface
 {
     /**
      * Set a path event action configuration identified by a alias.
-     *
-     * @param string                                $alias         the path event action configuration alias
-     * @param PathEventActionConfigurationInterface $configuration The path event action configuration
-     *
-     * @return PathEventActionConfigurationRegistryInterface
      */
-    public function setConfiguration($alias, PathEventActionConfigurationInterface $configuration);
+    public function setConfiguration(string $alias, PathEventActionConfigurationInterface $configuration): self;
 
     /**
      * Returns all path event actions configurations.
-     *
-     * @return array
      */
-    public function getConfigurations();
+    public function getConfigurations(): array;
 
     /**
      * Returns a path event action configuration by its alias.
-     *
-     * @param string $alias the path event action configuration alias
-     *
-     * @return PathEventActionConfigurationInterface
-     *
-     * @throws UnexpectedTypeException   if the passed alias is not a string
-     * @throws \InvalidArgumentException if the path event action configuration can not be retrieved
      */
-    public function getConfiguration($alias);
+    public function getConfiguration(string $alias): PathEventActionConfigurationInterface;
 
     /**
      * Returns whether the given path event action configuration is supported.
-     *
-     * @param string $alias the alias of the path event action configuration
-     *
-     * @return bool whether the path event action configuration is supported
      */
-    public function hasConfiguration($alias);
+    public function hasConfiguration(string $alias): bool;
 }

@@ -2,6 +2,7 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Navigation\Event;
 
+use IDCI\Bundle\StepBundle\Flow\FlowDataInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
@@ -18,7 +19,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
         $tokenStorage = $this
             ->getMockBuilder(TokenStorageInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getToken', 'setToken'))
+            ->setMethods(['getToken', 'setToken'])
             ->getMock()
         ;
         $tokenStorage
@@ -27,19 +28,24 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
+        $flowData = $this->createMock(FlowDataInterface::class);
+        $flowData
+            ->expects($this->any())
+            ->method('getData')
+            ->will($this->returnValue([
+                'step1' => [
+                    'firstname' => 'john',
+                    'lastname' => 'doe',
+                    'message' => "multi\nline\nmessage.",
+                ],
+            ]))
+        ;
+
         $flow = $this->createMock(FlowInterface::class);
         $flow
             ->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue(array(
-                'data' => array(
-                    'step1' => array(
-                        'firstname' => 'john',
-                        'lastname' => 'doe',
-                        'message' => "multi\nline\nmessage.",
-                    ),
-                ),
-            )))
+            ->will($this->returnValue($flowData))
         ;
         $navigator = $this->createMock(NavigatorInterface::class);
         $navigator
@@ -49,7 +55,7 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
         ;
 
         $twigStringLoader = new \Twig_Loader_Array();
-        $twigEnvironment = new Environment($twigStringLoader, array());
+        $twigEnvironment = new Environment($twigStringLoader, []);
 
         $this->navigationEventSubscriber = new NavigationEventSubscriber(
             $navigator,
@@ -63,53 +69,53 @@ class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testMerge()
     {
-        $parameters = array(
+        $parameters = [
             'string' => 'value1',
             'int' => 1000,
             'bool' => false,
-            'array' => array(
+            'array' => [
                 'string' => 'value2',
-            ),
-        );
+            ],
+        ];
 
         $this->assertEquals(
             $parameters,
             $this->navigationEventSubscriber->merge($parameters)
         );
 
-        $parameters = array(
+        $parameters = [
             'firstname' => '{{ flow_data.data.step1.firstname }}',
             'lastname' => '{{ flow_data.data.step1.lastname }}',
             'message' => '{{ flow_data.data.step1.message }}',
-        );
+        ];
 
         $this->assertEquals(
-            array(
+            [
                 'firstname' => 'john',
                 'lastname' => 'doe',
                 'message' => "multi\nline\nmessage.",
-            ),
+            ],
             $this->navigationEventSubscriber->merge($parameters)
         );
 
-        $parameters = array(
-            'user' => array(
+        $parameters = [
+            'user' => [
                 'firstname' => '{{ flow_data.data.step1.firstname }}',
-                'data' => array(
+                'data' => [
                     'message' => '{{ flow_data.data.step1.message }}',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $this->assertEquals(
-            array(
-                'user' => array(
+            [
+                'user' => [
                     'firstname' => 'john',
-                    'data' => array(
+                    'data' => [
                         'message' => "multi\nline\nmessage.",
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             $this->navigationEventSubscriber->merge($parameters)
         );
     }

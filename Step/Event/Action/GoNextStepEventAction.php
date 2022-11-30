@@ -20,12 +20,12 @@ class GoNextStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'condition' => true,
                 'path_index' => 1,
-            ))
-            ->setAllowedTypes('condition', array('bool', 'string'))
-            ->setAllowedTypes('path_index', array('int', 'string'))
+            ])
+            ->setAllowedTypes('condition', ['bool', 'string'])
+            ->setAllowedTypes('path_index', ['int', 'string'])
             ->setNormalizer('condition', function (Options $options, $value) {
                 return (bool) $value;
             })
@@ -38,10 +38,8 @@ class GoNextStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(
-        StepEventInterface $event,
-        array $parameters = array()
-    ) {
+    protected function doExecute(StepEventInterface $event, array $parameters = [])
+    {
         if (!$parameters['condition']) {
             return false;
         }

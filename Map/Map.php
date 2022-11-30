@@ -8,9 +8,9 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
-use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Exception\StepNotFoundException;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 class Map implements MapInterface
 {
@@ -26,33 +26,29 @@ class Map implements MapInterface
      *
      * @var array
      */
-    protected $steps = array();
+    protected $steps = [];
 
     /**
      * The paths.
      *
      * @var array
      */
-    protected $paths = array();
+    protected $paths = [];
 
     /**
      * Constructor.
      *
      * @param array $configuration the configuration
      */
-    public function __construct(array $configuration = array())
+    public function __construct(array $configuration = [])
     {
         $this->configuration = $configuration;
     }
 
     /**
      * Set the first step name.
-     *
-     * @param string $name the first step name
-     *
-     * @return MapInterface
      */
-    public function setFirstStepName($name)
+    public function setFirstStepName(string $name): MapInterface
     {
         $this->configuration['options']['first_step_name'] = $name;
 
@@ -61,10 +57,8 @@ class Map implements MapInterface
 
     /**
      * Returns the first step name.
-     *
-     * @return string
      */
-    public function getFirstStepName()
+    public function getFirstStepName(): string
     {
         return $this->configuration['options']['first_step_name'];
     }
@@ -72,7 +66,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->configuration['name'];
     }
@@ -80,7 +74,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getFootprint()
+    public function getFootprint(): string
     {
         return $this->configuration['footprint'];
     }
@@ -88,18 +82,18 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         return isset($this->configuration['data']) ?
             $this->configuration['data'] :
-            array()
+            []
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return $this->configuration;
     }
@@ -107,7 +101,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function addStep($name, StepInterface $step)
+    public function addStep(string $name, StepInterface $step): MapInterface
     {
         $this->steps[$name] = $step;
 
@@ -115,7 +109,7 @@ class Map implements MapInterface
             // Merge step data with map data
             $configurationData = $this->getData();
             $this->configuration['data'][$name] = array_replace_recursive(
-                isset($configurationData[$name]) ? $configurationData[$name] : array(),
+                isset($configurationData[$name]) ? $configurationData[$name] : [],
                 $step->getData()
             );
         }
@@ -126,10 +120,10 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function addPath($source, PathInterface $path)
+    public function addPath(string $source, PathInterface $path): MapInterface
     {
         if (!isset($this->paths[$source])) {
-            $this->paths[$source] = array();
+            $this->paths[$source] = [];
         }
 
         $this->paths[$source][] = $path;
@@ -140,7 +134,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function hasStep($name)
+    public function hasStep(string $name): bool
     {
         return isset($this->steps[$name]);
     }
@@ -148,7 +142,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getStep($name)
+    public function getStep(string $name): ?StepInterface
     {
         if (!$this->hasStep($name)) {
             throw new StepNotFoundException($name, $this->getName());
@@ -160,7 +154,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getSteps()
+    public function getSteps(): array
     {
         return $this->steps;
     }
@@ -168,7 +162,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function countSteps()
+    public function countSteps(): int
     {
         return count($this->steps);
     }
@@ -176,7 +170,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getFirstStep()
+    public function getFirstStep(): StepInterface
     {
         return $this->getStep($this->getFirstStepName());
     }
@@ -184,7 +178,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getPaths($source = null)
+    public function getPaths(string $source = null): array
     {
         if (null === $source) {
             return $this->paths;
@@ -192,14 +186,14 @@ class Map implements MapInterface
 
         return isset($this->paths[$source])
             ? $this->paths[$source]
-            : array()
+            : []
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPath($source, $index)
+    public function getPath(string $source, int $index): PathInterface
     {
         return $this->paths[$source][$index];
     }
@@ -207,7 +201,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getFinalDestination()
+    public function getFinalDestination(): ?string
     {
         return $this->configuration['options']['final_destination'];
     }
@@ -215,7 +209,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getFormAction()
+    public function getFormAction(): string
     {
         return $this->configuration['options']['form_action'];
     }
@@ -223,7 +217,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function isDisplayStepInUrlEnabled()
+    public function isDisplayStepInUrlEnabled(): bool
     {
         return $this->configuration['options']['display_step_in_url'];
     }
@@ -231,7 +225,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function isResetFlowDataOnInitEnabled()
+    public function isResetFlowDataOnInitEnabled(): bool
     {
         return $this->configuration['options']['reset_flow_data_on_init'];
     }
@@ -241,6 +235,6 @@ class Map implements MapInterface
      */
     public function __sleep()
     {
-        return array('configuration');
+        return ['configuration'];
     }
 }

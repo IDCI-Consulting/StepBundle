@@ -49,19 +49,13 @@ class NavigatorType extends AbstractType
 
     /**
      * Constructor.
-     *
-     * @param StepEventActionRegistryInterface $stepEventActionRegistry the step event action registry
-     * @param PathEventActionRegistryInterface $pathEventActionRegistry the path event action registry
-     * @param Environment                      $merger                  the twig merger
-     * @param TokenStorageInterface            $tokenStorage            the security context
-     * @param SessionInterface                 $session                 the session
      */
     public function __construct(
         StepEventActionRegistryInterface $stepEventActionRegistry,
         PathEventActionRegistryInterface $pathEventActionRegistry,
-        Environment                      $merger,
-        TokenStorageInterface            $tokenStorage,
-        SessionInterface                 $session
+        Environment $merger,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
     ) {
         $this->stepEventActionRegistry = $stepEventActionRegistry;
         $this->pathEventActionRegistry = $pathEventActionRegistry;
@@ -76,9 +70,9 @@ class NavigatorType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $stepOptions = $options['navigator']->getCurrentStep()->getOptions();
-        $view->vars = array_merge($view->vars, array(
+        $view->vars = array_merge($view->vars, [
             'attr' => $stepOptions['attr'],
-        ));
+        ]);
     }
 
     /**
@@ -87,21 +81,21 @@ class NavigatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('_map_name', HiddenType::class, array(
+            ->add('_map_name', HiddenType::class, [
                 'data' => $options['navigator']->getMap()->getName(),
-            ))
-            ->add('_map_footprint', HiddenType::class, array(
+            ])
+            ->add('_map_footprint', HiddenType::class, [
                 'data' => $options['navigator']->getMap()->getFootprint(),
-            ))
-            ->add('_current_step', HiddenType::class, array(
+            ])
+            ->add('_current_step', HiddenType::class, [
                 'data' => $options['navigator']->getCurrentStep()->getName(),
-            ))
+            ])
         ;
 
         if (null !== $options['navigator']->getPreviousStep()) {
-            $builder->add('_previous_step', HiddenType::class, array(
+            $builder->add('_previous_step', HiddenType::class, [
                 'data' => $options['navigator']->getPreviousStep()->getName(),
-            ));
+            ]);
         }
 
         if (null !== $options['navigator']->getMap()->getFormAction()) {
@@ -122,9 +116,6 @@ class NavigatorType extends AbstractType
 
     /**
      * Build step.
-     *
-     * @param FormBuilderInterface $builder the builder
-     * @param array                $options the options
      */
     protected function buildStep(FormBuilderInterface $builder, array $options)
     {
@@ -143,8 +134,8 @@ class NavigatorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array('navigator'))
-            ->setAllowedTypes('navigator', array('IDCI\Bundle\StepBundle\Navigation\NavigatorInterface'))
+            ->setRequired(['navigator'])
+            ->setAllowedTypes('navigator', ['IDCI\Bundle\StepBundle\Navigation\NavigatorInterface'])
         ;
     }
 

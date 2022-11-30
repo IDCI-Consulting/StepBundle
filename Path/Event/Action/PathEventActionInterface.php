@@ -19,5 +19,5 @@ interface PathEventActionInterface
      *
      * @return mixed
      */
-    public function execute(PathEventInterface $event, array $parameters = array());
+    public function execute(PathEventInterface $event, array $parameters = []);
 }

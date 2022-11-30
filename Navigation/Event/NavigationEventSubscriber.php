@@ -57,21 +57,14 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Constructor.
-     *
-     * @param NavigatorInterface               $navigator               the navigator
-     * @param StepEventActionRegistryInterface $stepEventActionRegistry the step event registry
-     * @param PathEventActionRegistryInterface $pathEventActionRegistry the path event registry
-     * @param Environment                      $merger                  the merger
-     * @param TokenStorageInterface            $tokenStorage            the security context
-     * @param SessionInterface                 $session                 the session
      */
     public function __construct(
         NavigatorInterface $navigator,
         StepEventActionRegistryInterface $stepEventActionRegistry,
         PathEventActionRegistryInterface $pathEventActionRegistry,
-        Environment                      $merger,
-        TokenStorageInterface            $tokenStorage,
-        SessionInterface                 $session
+        Environment $merger,
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session
     ) {
         $this->navigator = $navigator;
         $this->stepEventActionRegistry = $stepEventActionRegistry;
@@ -86,43 +79,41 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return array(
-            FormEvents::PRE_SET_DATA => array(
-                array('preSetData', 999),
-                array('addStepEvents', 2),
-                array('addPathEvents', 1),
-                array('addNavigationButtons', 0),
-            ),
-            FormEvents::POST_SET_DATA => array(
-                array('addStepEvents', 2),
-                array('addPathEvents', 1),
-            ),
-            FormEvents::PRE_SUBMIT => array(
-                array('checkReturn', 100),
-                array('preSubmit', -1),
-                array('addStepEvents', -2),
-                array('addPathEvents', -3),
-            ),
-            FormEvents::SUBMIT => array(
-                array('checkReturn', 100),
-                array('addStepEvents', -1),
-                array('addPathEvents', -2),
-            ),
-            FormEvents::POST_SUBMIT => array(
-                array('checkReturn', 100),
-                array('postSubmit', -1),
-                array('addStepEvents', -2),
-                array('addPathEvents', -3),
-            ),
-        );
+        return [
+            FormEvents::PRE_SET_DATA => [
+                ['preSetData', 999],
+                ['addStepEvents', 2],
+                ['addPathEvents', 1],
+                ['addNavigationButtons', 0],
+            ],
+            FormEvents::POST_SET_DATA => [
+                ['addStepEvents', 2],
+                ['addPathEvents', 1],
+            ],
+            FormEvents::PRE_SUBMIT => [
+                ['checkReturn', 100],
+                ['preSubmit', -1],
+                ['addStepEvents', -2],
+                ['addPathEvents', -3],
+            ],
+            FormEvents::SUBMIT => [
+                ['checkReturn', 100],
+                ['addStepEvents', -1],
+                ['addPathEvents', -2],
+            ],
+            FormEvents::POST_SUBMIT => [
+                ['checkReturn', 100],
+                ['postSubmit', -1],
+                ['addStepEvents', -2],
+                ['addPathEvents', -3],
+            ],
+        ];
     }
 
     /**
      * Add navigation buttons.
-     *
-     * @param FormEvent $event
      */
-    public function addNavigationButtons(FormEvent $event, $name)
+    public function addNavigationButtons(FormEvent $event, string $name)
     {
         $form = $event->getForm();
         $map = $this->navigator->getMap();
@@ -139,9 +130,9 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     sprintf('_path_%d', $i),
                     $pathConfiguration['options']['type'],
                     array_replace_recursive(
-                        array(
-                            'attr' => array('class' => 'idci_step_navigation_next'),
-                        ),
+                        [
+                            'attr' => ['class' => 'idci_step_navigation_next'],
+                        ],
                         $pathConfiguration['options']['next_options']
                     )
                 );
@@ -157,13 +148,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 '_back',
                 SubmitType::class,
                 array_replace_recursive(
-                    array(
-                        'attr' => array(
+                    [
+                        'attr' => [
                             'formnovalidate' => 'true',
                             'class' => 'idci_step_navigation_previous',
-                        ),
+                        ],
                         'validation_groups' => false,
-                    ),
+                    ],
                     $stepConfiguration['options']['previous_options']
                 )
             );
@@ -172,12 +163,10 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Add step events.
-     *
-     * @param FormEvent $event
      */
-    public function addStepEvents(FormEvent $event, $name)
+    public function addStepEvents(FormEvent $event, string $name)
     {
-        $retrievedData = array();
+        $retrievedData = [];
 
         $step = $this->navigator->getCurrentStep();
         $configuration = $step->getConfiguration();
@@ -225,13 +214,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Add path events.
-     *
-     * @param FormEvent $event
      */
-    public function addPathEvents(FormEvent $event, $name)
+    public function addPathEvents(FormEvent $event, string $name)
     {
         $form = $event->getForm();
-        $retrievedData = array();
+        $retrievedData = [];
 
         // Prevent triggering path event actions if the form is not valid during post submit event.
         if (FormEvents::POST_SUBMIT === $name && !$form->isValid()) {
@@ -302,8 +289,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Check return.
-     *
-     * @param FormEvent $event
      */
     public function checkReturn(FormEvent $event)
     {
@@ -314,14 +299,12 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Pre set data.
-     *
-     * @param FormEvent $event
      */
     public function preSetData(FormEvent $event)
     {
         $data = $this->navigator->getCurrentStepData();
         if ($event->getForm()->has('_content')) {
-            $data = array('_content' => $data);
+            $data = ['_content' => $data];
         }
 
         $event->setData($data);
@@ -329,8 +312,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Pre submit.
-     *
-     * @param FormEvent $event
      */
     public function preSubmit(FormEvent $event)
     {
@@ -345,17 +326,13 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         } else {
             $stepConfiguration = $this->navigator->getCurrentStep()->getConfiguration();
             if ($stepConfiguration['options']['prevent_next']) {
-                throw new \LogicException(sprintf(
-                    'A disable path has been clicked'
-                ));
+                throw new \LogicException(sprintf('A disable path has been clicked'));
             }
         }
     }
 
     /**
      * Post submit.
-     *
-     * @param FormEvent $event
      *
      * @return bool
      */
@@ -383,17 +360,15 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
     /**
      * Configure event configuration.
-     *
-     * @param OptionsResolver $resolver
      */
     protected function configureEventConfiguration(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array('action'))
-            ->setDefaults(array(
+            ->setRequired(['action'])
+            ->setDefaults([
                 'name' => null,
-                'parameters' => array(),
-            ))
+                'parameters' => [],
+            ])
             ->setNormalizer('name', function (Options $options, $value) {
                 if (null === $value) {
                     return $options['action'];
@@ -401,38 +376,30 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                 return $value;
             })
-            ->setAllowedTypes('action', array('string'))
-            ->setAllowedTypes('name', array('null', 'string'))
+            ->setAllowedTypes('action', ['string'])
+            ->setAllowedTypes('name', ['null', 'string'])
         ;
     }
 
     /**
      * Configure path event configuration.
-     *
-     * @param OptionsResolver $resolver
      */
     protected function configurePathEventConfiguration(OptionsResolver $resolver)
     {
         $this->configureEventConfiguration($resolver);
 
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'destinations' => null,
-            ))
-            ->setAllowedTypes('destinations', array('null', 'array'))
+            ])
+            ->setAllowedTypes('destinations', ['null', 'array'])
         ;
     }
 
     /**
-     * Merge parameters with the SecurityContext (user)
-     * the navigation flow data (flow_data)
-     * and the session (session).
-     *
-     * @param array $parameters the parameters
-     *
-     * @return array
+     * Merge parameters with the SecurityContext (user) the navigation flow data (flow_data) and the session (session).
      */
-    public function merge(array $parameters = array())
+    public function merge(array $parameters = []): array
     {
         $user = null;
         if (null !== $this->tokenStorage->getToken()) {
@@ -440,11 +407,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         }
 
         foreach ($parameters as $k => $v) {
-            $parameters[$k] = $this->mergeValue($v, array(
+            $parameters[$k] = $this->mergeValue($v, [
                 'user' => $user,
                 'flow_data' => $this->navigator->getFlow()->getData(),
                 'session' => $this->session->all(),
-            ));
+            ]);
         }
 
         return $parameters;
@@ -458,7 +425,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
      *
      * @return mixed the merged value
      */
-    private function mergeValue($value, array $vars = array())
+    private function mergeValue($value, array $vars = [])
     {
         // Handle array case.
         if (is_array($value)) {

@@ -11,22 +11,11 @@ interface MapBuilderFactoryInterface
 {
     /**
      * Returns a map builder.
-     *
-     * @param array $data    the initial data
-     * @param array $options the options
-     *
-     * @return MapBuilderInterface The map builder
      */
-    public function createBuilder(array $data = array(), array $options = array());
+    public function createBuilder(array $data = [], array $options = []): MapBuilderInterface;
 
     /**
      * Returns a map builder.
-     *
-     * @param string $name    the name of the map
-     * @param array  $data    the initial data
-     * @param array  $options the options
-     *
-     * @return MapBuilderInterface The map builder
      */
-    public function createNamedBuilder($name, array $data = array(), array $options = array());
+    public function createNamedBuilder(string $name, array $data = [], array $options = []): MapBuilderInterface;
 }

@@ -8,13 +8,13 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormFactoryInterface;
-use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Configuration\Builder\MapConfigurationBuilderInterface;
-use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface;
+use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface;
+use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class NavigatorFactory implements NavigatorFactoryInterface
 {
@@ -45,19 +45,13 @@ class NavigatorFactory implements NavigatorFactoryInterface
 
     /**
      * Constructor.
-     *
-     * @param FormFactoryInterface                  $formFactory                  the form factory
-     * @param FlowRecorderInterface                 $flowRecorder                 the flow recorder
-     * @param MapConfigurationBuilderInterface      $mapConfigurationBuilder      the map configuration builder
-     * @param ConfigurationFetcherRegistryInterface $configurationFetcherRegistry the configuration fetcher registry
-     * @param NavigationLoggerInterface             $logger                       the logger
      */
     public function __construct(
-        FormFactoryInterface                  $formFactory,
-        FlowRecorderInterface                 $flowRecorder,
-        MapConfigurationBuilderInterface      $mapConfigurationBuilder,
+        FormFactoryInterface $formFactory,
+        FlowRecorderInterface $flowRecorder,
+        MapConfigurationBuilderInterface $mapConfigurationBuilder,
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
-        NavigationLoggerInterface             $logger
+        NavigationLoggerInterface $logger
     ) {
         $this->formFactory = $formFactory;
         $this->flowRecorder = $flowRecorder;
@@ -72,10 +66,10 @@ class NavigatorFactory implements NavigatorFactoryInterface
     public function createNavigator(
         Request $request,
         $configuration,
-        array $parameters = array(),
-        array $data = array(),
-        $navigate = true
-    ) {
+        array $parameters = [],
+        array $data = [],
+        bool $navigate = true
+    ): NavigatorInterface {
         if (is_string($configuration)) {
             $configuration = $this->configurationFetcherRegistry->getFetcher($configuration);
         }
@@ -89,11 +83,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         }
 
         if (!$configuration instanceof MapInterface) {
-            throw new \InvalidArgumentException(
-                'The map must be an "array", a "reference to a fetcher", '.
-                'an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" '.
-                'or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"'
-            );
+            throw new \InvalidArgumentException('The map must be an "array", a "reference to a fetcher", '.'an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" '.'or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"');
         }
 
         $navigator = new Navigator(

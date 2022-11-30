@@ -7,17 +7,25 @@
 
 namespace IDCI\Bundle\StepBundle\Path;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 class Path implements PathInterface
 {
     /**
-     * The configuration.
+     * The type.
+     *
+     * @var PathTypeInterface
+     */
+    protected $type;
+
+    /**
+     * The options.
      *
      * @var array
      */
-    protected $configuration;
+    protected $options = [];
 
     /**
      * The source step.
@@ -31,32 +39,23 @@ class Path implements PathInterface
      *
      * @var array
      */
-    protected $destinations = array();
+    protected $destinations = [];
 
     /**
      * Constructor.
-     *
-     * @param array $configuration the configuration
      */
-    public function __construct(array $configuration = array())
+    public function __construct(PathTypeInterface $type, array $options = [])
     {
-        $this->configuration = $configuration;
+        $this->type = $type;
+        $this->options = $options;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function setOptions(array $options): PathInterface
     {
-        return $this->configuration;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOptions($options)
-    {
-        $this->configuration['options'] = $options;
+        $this->options = $options;
 
         return $this;
     }
@@ -64,15 +63,15 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getOptions(): array
     {
-        return $this->configuration['options'];
+        return $this->options;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setSource(StepInterface $step)
+    public function setSource(StepInterface $step): PathInterface
     {
         $this->source = $step;
 
@@ -82,7 +81,7 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function getSource()
+    public function getSource(): StepInterface
     {
         return $this->source;
     }
@@ -90,7 +89,7 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function addDestination(StepInterface $step)
+    public function addDestination(StepInterface $step): PathInterface
     {
         $this->destinations[$step->getName()] = $step;
 
@@ -100,7 +99,7 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function getDestinations()
+    public function getDestinations(): array
     {
         return $this->destinations;
     }
@@ -108,7 +107,7 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function hasDestination($name)
+    public function hasDestination(string $name): bool
     {
         return isset($this->destinations[$name]);
     }
@@ -116,7 +115,7 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function getDestination($name)
+    public function getDestination(string $name): ?StepInterface
     {
         return $this->hasDestination($name) ?
             $this->destinations[$name] :
@@ -127,21 +126,21 @@ class Path implements PathInterface
     /**
      * {@inheritdoc}
      */
-    public function resolveDestination(NavigatorInterface $navigator)
+    public function resolveDestination(NavigatorInterface $navigator): ?StepInterface
     {
         $destinationName = $this
             ->getType()
-            ->resolveDestination($this->configuration['options'], $navigator)
+            ->resolveDestination($this->getOptions(), $navigator)
         ;
 
-        return $this->getDestination($destinationName);
+        return null === $destinationName ? null : $this->getDestination($destinationName);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): PathTypeInterface
     {
-        return $this->configuration['type'];
+        return $this->type;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace IDCI\Bundle\StepBundle\Controller;
 
-use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistryInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
+use IDCI\Bundle\StepBundle\Step\Type\Configuration\StepTypeConfigurationRegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -19,15 +19,9 @@ class ApiStepTypeConfigurationController extends AbstractFOSRestController
      * Retrieve step types configurations
      *
      * @Get("/step-types-configurations.{_format}")
-     *
-     * @param string $_format
-     *
-     * @return Response
      */
-    public function getStepTypesConfigurationsAction(
-        $_format,
-        StepTypeConfigurationRegistryInterface $registry
-    ) {
+    public function getStepTypesConfigurationsAction(string $_format, StepTypeConfigurationRegistryInterface $registry): Response
+    {
         $view = View::create()->setFormat($_format);
         $configurations = $registry->getConfigurations();
 

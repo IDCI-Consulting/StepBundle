@@ -31,7 +31,7 @@ class FormBuilderWorker implements ConfigurationWorkerInterface
     /**
      * {@inheritdoc}
      */
-    public function work(array $parameters = array())
+    public function work(array $parameters = [])
     {
         $builder = $this->formFactory->createBuilder();
 
@@ -40,7 +40,7 @@ class FormBuilderWorker implements ConfigurationWorkerInterface
                 $builder->add(
                     $field['name'],
                     $field['type'],
-                    isset($field['options']) ? $field['options'] : array()
+                    isset($field['options']) ? $field['options'] : []
                 );
             }
         }

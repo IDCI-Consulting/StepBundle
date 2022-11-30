@@ -19,9 +19,9 @@ abstract class AbstractStepFormType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars = array_merge($view->vars, array(
+        $view->vars = array_merge($view->vars, [
             'display_title' => $options['display_title'],
-        ));
+        ]);
     }
 
     /**
@@ -30,10 +30,10 @@ abstract class AbstractStepFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'display_title' => true,
-            ))
-            ->setAllowedTypes('display_title', array('bool'))
+            ])
+            ->setAllowedTypes('display_title', ['bool'])
         ;
     }
 }

@@ -11,36 +11,26 @@ interface PathEventActionConfigurationInterface
 {
     /**
      * Returns the name.
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the parent.
-     *
-     * @return PathEventActionConfigurationInterface
      */
-    public function getParent();
+    public function getParent(): PathEventActionConfigurationInterface;
 
     /**
      * Returns the description.
-     *
-     * @return string
      */
-    public function getDescription();
+    public function getDescription(): string;
 
     /**
      * Is abstract.
-     *
-     * @return bool
      */
-    public function isAbstract();
+    public function isAbstract(): bool;
 
     /**
      * Returns extra form options.
-     *
-     * @return array
      */
-    public function getExtraFormOptions();
+    public function getExtraFormOptions(): array;
 }

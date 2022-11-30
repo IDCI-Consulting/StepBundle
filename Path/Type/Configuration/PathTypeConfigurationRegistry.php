@@ -7,8 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type\Configuration;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInterface
 {
     /**
@@ -19,7 +17,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     /**
      * {@inheritdoc}
      */
-    public function setConfiguration($alias, PathTypeConfigurationInterface $configuration)
+    public function setConfiguration(string $alias, PathTypeConfigurationInterface $configuration): PathTypeConfigurationRegistryInterface
     {
         $this->configurations[$alias] = $configuration;
 
@@ -29,7 +27,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     /**
      * {@inheritdoc}
      */
-    public function getConfigurations()
+    public function getConfigurations(): array
     {
         return $this->configurations;
     }
@@ -37,18 +35,10 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration($alias)
+    public function getConfiguration(string $alias): PathTypeConfigurationInterface
     {
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
         if (!isset($this->configurations[$alias])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not load path type configuration "%s". Available configurations are %s',
-                $alias,
-                implode(', ', array_keys($this->configurations))
-            ));
+            throw new \InvalidArgumentException(sprintf('Could not load path type configuration "%s". Available configurations are %s', $alias, implode(', ', array_keys($this->configurations))));
         }
 
         return $this->configurations[$alias];
@@ -57,7 +47,7 @@ class PathTypeConfigurationRegistry implements PathTypeConfigurationRegistryInte
     /**
      * {@inheritdoc}
      */
-    public function hasConfiguration($alias)
+    public function hasConfiguration(string $alias): bool
     {
         if (!isset($this->configurations[$alias])) {
             return true;

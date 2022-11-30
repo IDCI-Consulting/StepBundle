@@ -7,8 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\PathInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SinglePathType extends AbstractPathType
 {
@@ -20,7 +21,7 @@ class SinglePathType extends AbstractPathType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setRequired(array('source', 'destination'))
+            ->setRequired(['source', 'destination'])
             ->setAllowedTypes('source', 'string')
             ->setAllowedTypes('destination', 'string')
         ;
@@ -29,7 +30,7 @@ class SinglePathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function buildPath(array $steps, array $options = array())
+    public function buildPath(array $steps, array $options = []): PathInterface
     {
         $path = parent::buildPath($steps, $options);
 
@@ -42,7 +43,7 @@ class SinglePathType extends AbstractPathType
     /**
      * {@inheritdoc}
      */
-    public function doResolveDestination(array $options, NavigatorInterface $navigator)
+    public function doResolveDestination(array $options, NavigatorInterface $navigator): ?string
     {
         return $options['destination'];
     }

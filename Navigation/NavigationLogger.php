@@ -34,8 +34,6 @@ class NavigationLogger implements NavigationLoggerInterface
 
     /**
      * Constructor.
-     *
-     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -59,10 +57,10 @@ class NavigationLogger implements NavigationLoggerInterface
     public function startNavigation()
     {
         $this->start = microtime(true);
-        $this->data = array(
+        $this->data = [
             'navigator' => null,
             'executionMS' => 0,
-        );
+        ];
 
         if (null !== $this->stopwatch) {
             $this->stopwatch->start('idci_step.navigation');
@@ -78,10 +76,10 @@ class NavigationLogger implements NavigationLoggerInterface
             $this->stopwatch->stop('idci_step.navigation');
         }
 
-        $this->data = array(
+        $this->data = [
             'navigator' => $navigator,
             'executionMS' => (microtime(true) - $this->start) * 1000,
-        );
+        ];
 
         if (null !== $this->logger) {
             $this->logger->info(
@@ -90,7 +88,7 @@ class NavigationLogger implements NavigationLoggerInterface
                     $navigator->getMap()->getName(),
                     $navigator->getMap()->getFootprint()
                 ),
-                array()
+                []
             );
             $this->logger->debug(
                 sprintf(
@@ -98,7 +96,7 @@ class NavigationLogger implements NavigationLoggerInterface
                     $navigator->getMap()->getName(),
                     $navigator->getMap()->getFootprint()
                 ),
-                array()
+                []
             );
         }
     }
@@ -106,7 +104,7 @@ class NavigationLogger implements NavigationLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function hasNavigator()
+    public function hasNavigator(): bool
     {
         return isset($this->data['navigator']) && null !== $this->data['navigator'];
     }
@@ -114,15 +112,15 @@ class NavigationLogger implements NavigationLoggerInterface
     /**
      * {@inheritdoc}
      */
-    public function getNavigation()
+    public function getNavigation(): ?array
     {
         if (!$this->hasNavigator()) {
             return null;
         }
 
-        return array(
+        return [
             'map' => $this->data['navigator']->getMap(),
             'flow' => $this->data['navigator']->getFlow(),
-        );
+        ];
     }
 }

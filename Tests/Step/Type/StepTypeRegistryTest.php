@@ -10,7 +10,6 @@ namespace IDCI\Bundle\StepBundle\Tests\Step\Type;
 use IDCI\Bundle\StepBundle\Step\Type\AbstractStepType;
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Form\Form;
 
 class StepTypeRegistryTest extends WebTestCase
 {

@@ -13,11 +13,6 @@ interface MapConfigurationBuilderInterface
 {
     /**
      * Build the configuration.
-     *
-     * @param Request $request    the HTTP request
-     * @param array   $parameters the parameters used to build the configuration
-     *
-     * @return array
      */
-    public function build(Request $request, array $parameters = array());
+    public function build(Request $request, array $parameters = []): array;
 }

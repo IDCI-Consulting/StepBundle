@@ -6,6 +6,7 @@ use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Type\SinglePathType;
 use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
 
 class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,10 +22,10 @@ class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'next_step',
             $this->pathType->resolveDestination(
-                array(
+                [
                     'source' => 'step1',
                     'destination' => 'next_step',
-                ),
+                ],
                 $navigator
             )
         );
@@ -32,28 +33,28 @@ class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testbuildPath()
     {
-        $step1 = new Step(array('name' => 'step1'));
-        $step2 = new Step(array('name' => 'step2'));
-        $step3 = new Step(array('name' => 'step3'));
-        $stepEnd = new Step(array('name' => 'stepEnd'));
+        $step1 = new Step('step1', new HtmlStepType());
+        $step2 = new Step('step2', new HtmlStepType());
+        $step3 = new Step('step3', new HtmlStepType());
+        $stepEnd = new Step('stepEnd', new HtmlStepType());
 
         $path = $this->pathType->buildPath(
-            array(
+            [
                 'step1' => $step1,
                 'step2' => $step2,
                 'step3' => $step3,
                 'stepEnd' => $stepEnd,
-            ),
-            array(
+            ],
+            [
                 'source' => 'step2',
                 'destination' => 'step3',
-            )
+            ]
         );
 
         $this->assertEquals($path->getSource(), $step2);
         $this->assertEquals(
             $path->getDestinations(),
-            array('step3' => $step3)
+            ['step3' => $step3]
         );
 
         $flow = $this->createMock(FlowInterface::class);

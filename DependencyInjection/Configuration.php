@@ -32,22 +32,22 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('maps')
-                    ->defaultValue(array())
+                    ->defaultValue([])
                     ->useAttributeAsKey('id')
                     ->prototype('array')
                         ->children()
                             ->scalarNode('name')->isRequired()->end()
                             ->arrayNode('options')
-                                ->defaultValue(array())->prototype('variable')->end()
+                                ->defaultValue([])->prototype('variable')->end()
                             ->end()
                             ->arrayNode('data')
-                                ->defaultValue(array())->prototype('variable')->end()
+                                ->defaultValue([])->prototype('variable')->end()
                             ->end()
                             ->arrayNode('steps')
-                                ->defaultValue(array())->prototype('variable')->end()
+                                ->defaultValue([])->prototype('variable')->end()
                             ->end()
                             ->arrayNode('paths')
-                                ->defaultValue(array())->prototype('variable')->end()
+                                ->defaultValue([])->prototype('variable')->end()
                             ->end()
                         ->end()
                     ->end()
@@ -59,13 +59,13 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->arrayNode('form_types')
-                                    ->defaultValue(array())
+                                    ->defaultValue([])
                                     ->useAttributeAsKey('id')
                                         ->prototype('array')
                                         ->children()
                                             ->scalarNode('type')->isRequired()->end()
                                             ->arrayNode('groups')
-                                                ->defaultValue(array())
+                                                ->defaultValue([])
                                                 ->prototype('scalar')
                                                 ->end()
                                             ->end()
@@ -96,7 +96,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder('step_types');
         $node = $builder->getRootNode();
         $node
-            ->defaultValue(array())
+            ->defaultValue([])
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
@@ -104,7 +104,7 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('abstract')->defaultFalse()->end()
                     ->scalarNode('description')->defaultNull()->end()
                     ->arrayNode('extra_form_options')
-                        ->defaultValue(array())->prototype('variable')->end()
+                        ->defaultValue([])->prototype('variable')->end()
                     ->end()
                 ->end()
             ->end()
@@ -122,7 +122,7 @@ class Configuration implements ConfigurationInterface
     {
         $invalidPathTypeName = function ($types) {
             foreach ($types as $key => $type) {
-                if (!in_array($key, array('abstract', 'conditional_destination', 'single', 'end'))) {
+                if (!in_array($key, ['abstract', 'conditional_destination', 'single', 'end'])) {
                     return true;
                 }
             }
@@ -133,7 +133,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder('path_types');
         $node = $builder->getRootNode();
         $node
-            ->defaultValue(array())
+            ->defaultValue([])
             ->useAttributeAsKey('name')
             ->validate()
             ->ifTrue($invalidPathTypeName)
@@ -145,7 +145,7 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('abstract')->defaultFalse()->end()
                     ->scalarNode('description')->defaultNull()->end()
                     ->arrayNode('extra_form_options')
-                        ->defaultValue(array())->prototype('variable')->end()
+                        ->defaultValue([])->prototype('variable')->end()
                     ->end()
                 ->end()
             ->end()
@@ -164,7 +164,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder('path_event_actions');
         $node = $builder->getRootNode();
         $node
-            ->defaultValue(array())
+            ->defaultValue([])
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
@@ -172,7 +172,7 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('abstract')->defaultFalse()->end()
                     ->scalarNode('description')->defaultNull()->end()
                     ->arrayNode('extra_form_options')
-                        ->defaultValue(array())->prototype('variable')->end()
+                        ->defaultValue([])->prototype('variable')->end()
                     ->end()
                 ->end()
             ->end()
@@ -191,7 +191,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder('step_event_actions');
         $node = $builder->getRootNode();
         $node
-            ->defaultValue(array())
+            ->defaultValue([])
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
@@ -199,7 +199,7 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('abstract')->defaultFalse()->end()
                     ->scalarNode('description')->defaultNull()->end()
                     ->arrayNode('extra_form_options')
-                        ->defaultValue(array())->prototype('variable')->end()
+                        ->defaultValue([])->prototype('variable')->end()
                     ->end()
                 ->end()
             ->end()

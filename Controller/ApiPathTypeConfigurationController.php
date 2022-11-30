@@ -2,10 +2,10 @@
 
 namespace IDCI\Bundle\StepBundle\Controller;
 
-use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistryInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
+use IDCI\Bundle\StepBundle\Path\Type\Configuration\PathTypeConfigurationRegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -19,15 +19,9 @@ class ApiPathTypeConfigurationController extends AbstractFOSRestController
      * Retrieve path types configurations
      *
      * @Get("/path-types-configurations.{_format}")
-     *
-     * @param string $_format
-     *
-     * @return Response
      */
-    public function getPathTypesConfigurationsAction(
-        $_format,
-        PathTypeConfigurationRegistryInterface $registry
-    ) {
+    public function getPathTypesConfigurationsAction(string $_format, PathTypeConfigurationRegistryInterface $registry): Response
+    {
         $view = View::create()->setFormat($_format);
         $configurations = $registry->getConfigurations();
 

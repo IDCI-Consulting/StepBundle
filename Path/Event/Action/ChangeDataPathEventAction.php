@@ -7,16 +7,16 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeDataPathEventAction extends AbstractPathEventAction
 {
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(PathEventInterface $event, array $parameters = array())
+    protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         foreach ($parameters['fields'] as $field) {
             $this->change(
@@ -36,8 +36,8 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array('fields' => array()))
-            ->setAllowedTypes('fields', array('array'))
+            ->setDefaults(['fields' => []])
+            ->setAllowedTypes('fields', ['array'])
         ;
     }
 
@@ -49,7 +49,7 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
      * @param array         $types the flow data types to look at
      * @param mixed         $value the value
      */
-    protected function change(FlowInterface $flow, $path, $types, $value)
+    protected function change(FlowInterface $flow, array $path, array $types, $value)
     {
         foreach ($types as $type) {
             $dataGetter = sprintf('get%s', ucfirst($type));
@@ -70,12 +70,12 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
      *
      * @return array the changed data
      */
-    protected function doChange(array $data, array $path, $value)
+    protected function doChange(array $data, array $path, $value): array
     {
         $field = array_shift($path);
 
         if (!isset($data[$field]) && !empty($path)) {
-            $data[$field] = array();
+            $data[$field] = [];
         }
 
         if (!empty($path)) {

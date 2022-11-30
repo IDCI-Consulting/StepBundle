@@ -7,11 +7,12 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\Form\FormBuilderInterface;
-use IDCI\Bundle\StepBundle\Step\Step;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractStepType implements StepTypeInterface
 {
@@ -21,7 +22,7 @@ abstract class AbstractStepType implements StepTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'title' => null,
                 'display_title' => true,
                 'nav_title' => null,
@@ -32,30 +33,30 @@ abstract class AbstractStepType implements StepTypeInterface
                 'data' => null,
                 'prevent_previous' => false,
                 'prevent_next' => false,
-                'previous_options' => array(
+                'previous_options' => [
                     'label' => '< Previous',
-                ),
+                ],
                 'js' => null,
                 'css' => null,
-                'attr' => array(),
-                'events' => array(),
+                'attr' => [],
+                'events' => [],
                 'serialization_mapping' => null,
-            ))
-            ->setAllowedTypes('title', array('null', 'string'))
-            ->setAllowedTypes('display_title', array('bool'))
-            ->setAllowedTypes('nav_title', array('null', 'string'))
-            ->setAllowedTypes('description', array('null', 'string'))
-            ->setAllowedTypes('nav_description', array('null', 'string'))
-            ->setAllowedTypes('is_first', array('bool', 'string'))
-            ->setAllowedTypes('data', array('null', 'array'))
-            ->setAllowedTypes('prevent_previous', array('bool', 'string'))
-            ->setAllowedTypes('prevent_next', array('bool', 'string'))
-            ->setAllowedTypes('previous_options', array('array'))
-            ->setAllowedTypes('js', array('null', 'string'))
-            ->setAllowedTypes('css', array('null', 'string'))
-            ->setAllowedTypes('attr', array('array'))
-            ->setAllowedTypes('events', array('array'))
-            ->setAllowedTypes('serialization_mapping', array('null', 'array'))
+            ])
+            ->setAllowedTypes('title', ['null', 'string'])
+            ->setAllowedTypes('display_title', ['bool'])
+            ->setAllowedTypes('nav_title', ['null', 'string'])
+            ->setAllowedTypes('description', ['null', 'string'])
+            ->setAllowedTypes('nav_description', ['null', 'string'])
+            ->setAllowedTypes('is_first', ['bool', 'string'])
+            ->setAllowedTypes('data', ['null', 'array'])
+            ->setAllowedTypes('prevent_previous', ['bool', 'string'])
+            ->setAllowedTypes('prevent_next', ['bool', 'string'])
+            ->setAllowedTypes('previous_options', ['array'])
+            ->setAllowedTypes('js', ['null', 'string'])
+            ->setAllowedTypes('css', ['null', 'string'])
+            ->setAllowedTypes('attr', ['array'])
+            ->setAllowedTypes('events', ['array'])
+            ->setAllowedTypes('serialization_mapping', ['null', 'array'])
             ->setNormalizer('is_first', function (Options $options, $value) {
                 return (bool) $value;
             })
@@ -71,20 +72,15 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function buildStep($name, array $options = array())
+    public function buildStep(string $name, array $options = []): StepInterface
     {
-        // TODO: Use a StepConfig as argument instead of an array.
-        return new Step(array(
-            'name' => $name,
-            'type' => $this,
-            'options' => $options,
-        ));
+        return new Step($name, $this, $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function prepareNavigation(NavigatorInterface $navigator, array $options)
+    public function prepareNavigation(NavigatorInterface $navigator, array $options): array
     {
         return $options;
     }
@@ -97,10 +93,10 @@ abstract class AbstractStepType implements StepTypeInterface
     /**
      * {@inheritdoc}
      */
-    public function getDataTypeMapping($options)
+    public function getDataTypeMapping(array $options): array
     {
         if (null === $options['serialization_mapping']) {
-            return array();
+            return [];
         }
 
         return $options['serialization_mapping'];

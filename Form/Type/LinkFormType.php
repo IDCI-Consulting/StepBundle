@@ -20,10 +20,10 @@ class LinkFormType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars = array_merge($view->vars, array(
+        $view->vars = array_merge($view->vars, [
             'href' => $options['href'],
             'target' => $options['target'],
-        ));
+        ]);
     }
 
     /**
@@ -32,12 +32,12 @@ class LinkFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'href' => 'javascript:void(0);',
                 'target' => '_self',
-            ))
+            ])
             ->setNormalizer('label', function (Options $options, $value) {
-                if (in_array($value, array(null, 'end'))) {
+                if (in_array($value, [null, 'end'])) {
                     return $options['href'];
                 }
 

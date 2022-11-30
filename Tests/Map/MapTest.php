@@ -11,14 +11,14 @@ class MapTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->map = new Map(array(
+        $this->map = new Map([
             'name' => 'Test map',
-            'data' => array(),
+            'data' => [],
             'footprint' => 'MyDummyFootPrint',
-            'options' => array(
+            'options' => [
                 'first_step_name' => 'step1',
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function testFirstStepName()
@@ -96,15 +96,15 @@ class MapTest extends \PHPUnit_Framework_TestCase
         $this->map->addPath('step2', $pathE);
 
         $this->assertEquals(
-            array(
-                'step1' => array($path1),
-                'step2' => array($path2, $pathE),
-            ),
+            [
+                'step1' => [$path1],
+                'step2' => [$path2, $pathE],
+            ],
             $this->map->getPaths()
         );
 
         $this->assertEquals(
-            array($path2, $pathE),
+            [$path2, $pathE],
             $this->map->getPaths('step2')
         );
 
@@ -115,20 +115,20 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     public function testGetData()
     {
-        $this->assertEquals(array(), $this->map->getData());
+        $this->assertEquals([], $this->map->getData());
     }
 
     public function testGetConfiguration()
     {
         $this->assertEquals(
-            array(
+            [
                 'name' => 'Test map',
-                'data' => array(),
+                'data' => [],
                 'footprint' => 'MyDummyFootPrint',
-                'options' => array(
+                'options' => [
                     'first_step_name' => 'step1',
-                ),
-            ),
+                ],
+            ],
             $this->map->getConfiguration()
         );
     }

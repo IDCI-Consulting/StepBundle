@@ -11,12 +11,6 @@ interface StepBuilderInterface
 {
     /**
      * Returns built step.
-     *
-     * @param string $name      the name
-     * @param string $typeAlias the type alias
-     * @param array  $options   the options
-     *
-     * @return StepInterface the step
      */
-    public function build($name, $typeAlias, array $options = array());
+    public function build(string $name, string $typeAlias, array $options = []): StepInterface;
 }

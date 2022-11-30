@@ -14,24 +14,18 @@ interface StepEventInterface
 {
     /**
      * Gets the event's name.
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the navigator at the source of the event.
-     *
-     * @return NavigatorInterface
      */
-    public function getNavigator();
+    public function getNavigator(): NavigatorInterface;
 
     /**
      * Returns the form at the source of the event.
-     *
-     * @return FormInterface
      */
-    public function getForm();
+    public function getForm(): FormInterface;
 
     /**
      * Returns the data associated with this event.
@@ -61,8 +55,6 @@ interface StepEventInterface
 
     /**
      * Returns whether further step events should be triggered.
-     *
-     * @return bool
      */
-    public function isPropagationStopped();
+    public function isPropagationStopped(): bool;
 }

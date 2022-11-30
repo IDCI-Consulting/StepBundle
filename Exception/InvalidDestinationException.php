@@ -11,10 +11,6 @@ class InvalidDestinationException extends \LogicException
 {
     public function __construct($source, $destination)
     {
-        parent::__construct(sprintf(
-            'No destination "%s" found for source "%s"',
-            $destination,
-            $source
-        ));
+        parent::__construct(sprintf('No destination "%s" found for source "%s"', $destination, $source));
     }
 }

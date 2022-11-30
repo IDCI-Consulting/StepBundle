@@ -7,97 +7,59 @@
 
 namespace IDCI\Bundle\StepBundle\Path;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use IDCI\Bundle\StepBundle\Path\Type\PathTypeInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 interface PathInterface
 {
     /**
-     * Get the configuration.
-     *
-     * @return array the configuration
-     */
-    public function getConfiguration();
-
-    /**
      * Set the configuration options.
-     *
-     * @param array $options the configuration options
-     *
-     * @return pathInterface
      */
-    public function setOptions($options);
+    public function setOptions(array $options): self;
 
     /**
      * Get the configuration options.
-     *
-     * @return array the configuration options
      */
-    public function getOptions();
+    public function getOptions(): array;
 
     /**
      * Set the source step.
-     *
-     * @param StepInterface $step the source step
-     *
-     * @return PathInterface this
      */
-    public function setSource(StepInterface $step);
+    public function setSource(StepInterface $step): self;
 
     /**
      * Get the source step.
-     *
-     * @return StepInterface the source step
      */
-    public function getSource();
+    public function getSource(): StepInterface;
 
     /**
      * Add a destination step.
-     *
-     * @param StepInterface $step the step
-     *
-     * @return PathInterface this
      */
-    public function addDestination(StepInterface $step);
+    public function addDestination(StepInterface $step): self;
 
     /**
      * Get the destination steps.
-     *
-     * @return array the steps
      */
-    public function getDestinations();
+    public function getDestinations(): array;
 
     /**
      * Has the destination step.
-     *
-     * @param string $name a step name to test
-     *
-     * @return bool true if the step has been defined as one of the path destinations
      */
-    public function hasDestination($name);
+    public function hasDestination(string $name): bool;
 
     /**
      * Get the destination step.
-     *
-     * @param string $name the destination step name to retrieve
-     *
-     * @return StepInterface|null the destination step if exists
      */
-    public function getDestination($name);
+    public function getDestination(string $name): ?StepInterface;
 
     /**
      * Resolve the destination step.
-     *
-     * @param navigatorInterface $navigator
-     *
-     * @return StepInterface|null the resolved destination step if exists
      */
-    public function resolveDestination(NavigatorInterface $navigator);
+    public function resolveDestination(NavigatorInterface $navigator): ?StepInterface;
 
     /**
      * Returns the path types used to construct the path.
-     *
-     * @return PathTypeInterface the path's type
      */
-    public function getType();
+    public function getType(): PathTypeInterface;
 }

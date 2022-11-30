@@ -2,8 +2,8 @@
 
 namespace IDCI\Bundle\StepBundle\Controller;
 
-use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
@@ -19,12 +19,8 @@ class ApiMapConfigurationController extends AbstractFOSRestController
      * Retrieve the map configuration
      *
      * @Get("/map-configuration.{_format}")
-     *
-     * @param string $_format
-     *
-     * @return Response
      */
-    public function getMapConfigurationAction($_format)
+    public function getMapConfigurationAction(string $_format): Response
     {
         $view = View::create()->setFormat($_format);
         $configuration = Yaml::parseFile(sprintf('%s/../Resources/config/map_options.yml', __DIR__));

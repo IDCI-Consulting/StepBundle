@@ -15,7 +15,7 @@ abstract class AbstractConditionalRule implements ConditionalRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function match(array $options = array())
+    public function match(array $options = []): bool
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
@@ -25,8 +25,6 @@ abstract class AbstractConditionalRule implements ConditionalRuleInterface
 
     /**
      * Set default options.
-     *
-     * @param OptionsResolver $resolver
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
@@ -39,5 +37,5 @@ abstract class AbstractConditionalRule implements ConditionalRuleInterface
      *
      * @return bool return true if the conditional rule match
      */
-    abstract protected function doMatch(array $options = array());
+    abstract protected function doMatch(array $options = []): bool;
 }

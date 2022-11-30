@@ -7,19 +7,17 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 class PathTypeRegistry implements PathTypeRegistryInterface
 {
     /**
      * @var PathTypeInterface[]
      */
-    private $types = array();
+    private $types = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setType($alias, PathTypeInterface $path)
+    public function setType(string $alias, PathTypeInterface $path): PathTypeRegistryInterface
     {
         $this->types[$alias] = $path;
 
@@ -29,18 +27,10 @@ class PathTypeRegistry implements PathTypeRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getType($alias)
+    public function getType(string $alias): PathTypeInterface
     {
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
         if (!isset($this->types[$alias])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not load path type "%s". Available types are %s',
-                $alias,
-                implode(', ', array_keys($this->types))
-            ));
+            throw new \InvalidArgumentException(sprintf('Could not load path type "%s". Available types are %s', $alias, implode(', ', array_keys($this->types))));
         }
 
         return $this->types[$alias];
@@ -49,7 +39,7 @@ class PathTypeRegistry implements PathTypeRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function hasType($alias)
+    public function hasType(string $alias): bool
     {
         if (!isset($this->types[$alias])) {
             return false;

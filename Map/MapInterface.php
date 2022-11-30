@@ -8,58 +8,40 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 interface MapInterface
 {
     /**
      * Returns the name of the map.
-     *
-     * @return string the name
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the map footprint.
-     *
-     * @return string the map footprint
      */
-    public function getFootprint();
+    public function getFootprint(): string;
 
     /**
      * Returns the map data.
-     *
-     * @return array the map data
      */
-    public function getData();
+    public function getData(): array;
 
     /**
      * Returns the configuration.
-     *
-     * @return array the configuration
      */
-    public function getConfiguration();
+    public function getConfiguration(): array;
 
     /**
      * Add a new step.
-     *
-     * @param string        $name the identifier name of the step
-     * @param StepInterface $step the step
-     *
-     * @return MapInterface this
      */
-    public function addStep($name, StepInterface $step);
+    public function addStep(string $name, StepInterface $step): self;
 
     /**
      * Add a new path.
-     *
-     * @param string        $source the identifier name of the source step
-     * @param PathInterface $path   the path
-     *
-     * @return MapInterface this
      */
-    public function addPath($source, PathInterface $path);
+    public function addPath(string $source, PathInterface $path): self;
 
     /**
      * Check if a step is registered.
@@ -68,82 +50,61 @@ interface MapInterface
      *
      * @return bool true if the step is registered, false otherwise
      */
-    public function hasStep($name);
+    public function hasStep(string $name): bool;
 
     /**
      * Returns a step by its name if exists.
-     *
-     * @param string $name the identifier name of the step
-     *
-     * @return StepInterface|null the step
      */
-    public function getStep($name);
+    public function getStep(string $name): ?StepInterface;
 
     /**
      * Returns the steps.
-     *
-     * @return array the steps
      */
-    public function getSteps();
+    public function getSteps(): array;
 
     /**
      * Count the steps.
-     *
-     * @return int The step count
      */
-    public function countSteps();
+    public function countSteps(): int;
 
     /**
      * Returns the first step.
-     *
-     * @return StepInterface the step
      */
-    public function getFirstStep();
+    public function getFirstStep(): StepInterface;
 
     /**
      * Returns the paths.
      *
      * @param string $source the identifier name of the source step
-     *
-     * @return array the paths
      */
-    public function getPaths($source = null);
+    public function getPaths(string $source = null): array;
 
     /**
      * Returns a path.
-     *
-     * @param string $source the identifier name of the source step
-     * @param int    $index  the path index for the step
-     *
-     * @return PathInterface the path
      */
-    public function getPath($source, $index);
+    public function getPath(string $source, int $index): PathInterface;
 
     /**
      * Returns the final destination (as URL).
-     *
-     * @return string|null
      */
-    public function getFinalDestination();
+    public function getFinalDestination(): ?string;
 
     /**
      * Returns the form action.
-     *
-     * @return string|null
      */
-    public function getFormAction();
+    public function getFormAction(): ?string;
 
     /**
      * Returns the display step in url status information (enabled/disabled).
      *
      * @return bool true if enabled false otherwise
      */
-    public function isDisplayStepInUrlEnabled();
+    public function isDisplayStepInUrlEnabled(): bool;
 
     /**
      * Returns the reset flow data on init status information (enabled/disabled).
      *
      * @return bool true if enabled false otherwise
      */
-    public function isResetFlowDataOnInitEnabled();
+    public function isResetFlowDataOnInitEnabled(): bool;
 }

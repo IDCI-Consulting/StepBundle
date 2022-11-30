@@ -9,12 +9,15 @@ namespace IDCI\Bundle\StepBundle\Configuration\Worker;
 
 class ConfigurationWorkerRegistry implements ConfigurationWorkerRegistryInterface
 {
-    protected $workers = array();
+    /**
+     * @var ConfigurationWorkerInterface[]
+     */
+    protected $workers = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setWorker($alias, ConfigurationWorkerInterface $worker)
+    public function setWorker(string $alias, ConfigurationWorkerInterface $worker)
     {
         $this->workers[$alias] = $worker;
     }
@@ -22,7 +25,7 @@ class ConfigurationWorkerRegistry implements ConfigurationWorkerRegistryInterfac
     /**
      * {@inheritdoc}
      */
-    public function getWorker($alias)
+    public function getWorker(string $alias): ConfigurationWorkerInterface
     {
         if (!isset($this->workers[$alias])) {
             throw new \InvalidArgumentException(sprintf('Could not load worker "%s"', $alias));

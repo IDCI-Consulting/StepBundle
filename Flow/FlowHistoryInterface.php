@@ -14,12 +14,8 @@ interface FlowHistoryInterface
 {
     /**
      * Store the current step into the history.
-     *
-     * @param StepInterface $step the step
-     *
-     * @return FlowHistoryInterface
      */
-    public function setCurrentStep(StepInterface $step);
+    public function setCurrentStep(StepInterface $step): self;
 
     /**
      * Add a taken path.
@@ -27,7 +23,7 @@ interface FlowHistoryInterface
      * @param StepInterface $step   the step
      * @param int           $pathId the identifier of the path
      */
-    public function addTakenPath(StepInterface $step, $pathId = 0);
+    public function addTakenPath(StepInterface $step, int $pathId = 0);
 
     /**
      * Retrace to a step.
@@ -35,28 +31,24 @@ interface FlowHistoryInterface
      * @param string        $sourceStepName  the source step name
      * @param StepInterface $destinationStep the destination step
      */
-    public function retraceTakenPath($sourceStepName, StepInterface $destinationStep);
+    public function retraceTakenPath(string $sourceStepName, StepInterface $destinationStep);
 
     /**
      * Get the last taken path.
      *
      * @return array|null The last taken path under the form array('source' => ..., 'index' => ...).
      */
-    public function getLastTakenPath();
+    public function getLastTakenPath(): ?array;
 
     /**
      * Get the taken paths.
-     *
-     * @return array the taken paths
      */
-    public function getTakenPaths();
+    public function getTakenPaths(): array;
 
     /**
      * Get the full taken paths.
-     *
-     * @return array the full taken paths
      */
-    public function getFullTakenPaths();
+    public function getFullTakenPaths(): array;
 
     /**
      * Whether or not a step has been done.
@@ -66,12 +58,12 @@ interface FlowHistoryInterface
      *
      * @return bool true if the step has been done, false otherwise
      */
-    public function hasDoneStep(StepInterface $step, $full = false);
+    public function hasDoneStep(StepInterface $step, bool $full = false): bool;
 
     /**
      * Get all the history in an array.
      *
      * @return array the history
      */
-    public function getAll();
+    public function getAll(): array;
 }

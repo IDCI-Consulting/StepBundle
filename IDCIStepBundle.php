@@ -7,21 +7,21 @@
 
 namespace IDCI\Bundle\StepBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeConfigurationCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventActionCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventActionConfigurationCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeConfigurationCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationFetcherCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationWorkerCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\MergerEnvironmentCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionConfigurationCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationWorkerCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationFetcherCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\MergerEnvironmentCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeConfigurationCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventActionCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepEventActionConfigurationCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\StepTypeConfigurationCompilerPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class IDCIStepBundle extends Bundle
 {

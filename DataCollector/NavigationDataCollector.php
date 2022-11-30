@@ -24,8 +24,6 @@ class NavigationDataCollector extends DataCollector
 
     /**
      * Constructor.
-     *
-     * @param NavigationLoggerInterface $logger
      */
     public function __construct(NavigationLoggerInterface $logger)
     {
@@ -58,20 +56,16 @@ class NavigationDataCollector extends DataCollector
 
     /**
      * Has navigation.
-     *
-     * @return bool
      */
-    public function hasNavigation()
+    public function hasNavigation(): bool
     {
         return null !== $this->data['idci_step.navigation'];
     }
 
     /**
      * Get map.
-     *
-     * @return MapInterface|null
      */
-    public function getMap()
+    public function getMap(): ?MapInterface
     {
         if (!$this->hasNavigation()) {
             return null;
@@ -82,10 +76,8 @@ class NavigationDataCollector extends DataCollector
 
     /**
      * Get flow.
-     *
-     * @return FlowInterface|null
      */
-    public function getFlow()
+    public function getFlow(): ?FlowInterface
     {
         if (!$this->hasNavigation()) {
             return null;

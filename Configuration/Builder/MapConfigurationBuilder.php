@@ -7,9 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
-use Symfony\Component\HttpFoundation\Request;
-use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
 use IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface;
+use IDCI\Bundle\StepBundle\Map\MapBuilderFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class MapConfigurationBuilder implements MapConfigurationBuilderInterface
 {
@@ -29,14 +29,9 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
 
     /**
      * Constructor.
-     *
-     * @param MapBuilderFactoryInterface           $mapBuilderFactory the map builder factory
-     * @param ConfigurationWorkerRegistryInterface $workerRegistry    the configuration worker registry
      */
-    public function __construct(
-        MapBuilderFactoryInterface $mapBuilderFactory,
-        ConfigurationWorkerRegistryInterface $workerRegistry
-    ) {
+    public function __construct(MapBuilderFactoryInterface $mapBuilderFactory, ConfigurationWorkerRegistryInterface $workerRegistry)
+    {
         $this->mapBuilderFactory = $mapBuilderFactory;
         $this->workerRegistry = $workerRegistry;
     }
@@ -44,13 +39,13 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build(Request $request, array $parameters = array())
+    public function build(Request $request, array $parameters = []): array
     {
         $builder = $this
             ->mapBuilderFactory
             ->createNamedBuilder(
                 $parameters['name'],
-                isset($parameters['data']) ? $parameters['data'] : array(),
+                isset($parameters['data']) ? $parameters['data'] : [],
                 $this->buildOptions($parameters)
             )
         ;
@@ -85,10 +80,10 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
      *
      * @return array the built options
      */
-    protected function buildOptions(array $options, $optionField = 'options')
+    protected function buildOptions(array $options, $optionField = 'options'): array
     {
         if (null !== $optionField) {
-            $options = isset($options[$optionField]) ? $options[$optionField] : array();
+            $options = isset($options[$optionField]) ? $options[$optionField] : [];
         }
 
         foreach ($options as $key => $option) {
@@ -98,7 +93,7 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
 
                 unset($options[$key]);
                 $options[substr($key, 1)] = $worker->work($option['parameters']);
-                // Case of an embedded array.
+            // Case of an embedded array.
             } elseif (is_array($option)) {
                 $options[$key] = $this->buildOptions($option, null);
             }

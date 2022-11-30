@@ -11,10 +11,6 @@ class StepNotFoundException extends \LogicException
 {
     public function __construct($stepName, $mapName)
     {
-        parent::__construct(sprintf(
-            'No step "%s" found in the map "%s"',
-            $stepName,
-            $mapName
-        ));
+        parent::__construct(sprintf('No step "%s" found in the map "%s"', $stepName, $mapName));
     }
 }

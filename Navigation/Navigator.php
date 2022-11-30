@@ -10,12 +10,15 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 
 use IDCI\Bundle\StepBundle\Flow\Flow;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 
 class Navigator implements NavigatorInterface
@@ -113,21 +116,14 @@ class Navigator implements NavigatorInterface
 
     /**
      * Constructor.
-     *
-     * @param FormFactoryInterface      $formFactory  the form factory
-     * @param FlowRecorderInterface     $flowRecorder the flow recorder using to store the flow
-     * @param MapInterface              $map          the map to navigate
-     * @param Request                   $request      the HTTP request
-     * @param NavigationLoggerInterface $logger       the logger
-     * @param array                     $data         the default navigation data
      */
     public function __construct(
-        FormFactoryInterface      $formFactory,
-        FlowRecorderInterface     $flowRecorder,
-        MapInterface              $map,
-        Request                   $request,
+        FormFactoryInterface $formFactory,
+        FlowRecorderInterface $flowRecorder,
+        MapInterface $map,
+        Request $request,
         NavigationLoggerInterface $logger = null,
-        array                     $data = array()
+        array $data = []
     ) {
         $this->form = null;
         $this->formView = null;
@@ -140,7 +136,7 @@ class Navigator implements NavigatorInterface
         $this->flow = null;
         $this->currentStep = null;
         $this->chosenPath = null;
-        $this->urlQueryParameters = array();
+        $this->urlQueryParameters = [];
         $this->finalDestination = null;
         $this->hasNavigated = false;
         $this->hasReturned = false;
@@ -169,13 +165,13 @@ class Navigator implements NavigatorInterface
             foreach ($this->getMap()->getSteps() as $stepName => $step) {
                 $this->data['remindedData'][$stepName] = array_replace_recursive(
                     isset($mapData[$stepName]) ?
-                        $mapData[$stepName] : array(),
+                        $mapData[$stepName] : [],
                     isset($this->data['remindedData'][$stepName]) ?
-                        $this->data['remindedData'][$stepName] : array()
+                        $this->data['remindedData'][$stepName] : []
                 );
 
                 $this->data['retrievedData'][$stepName] = isset($this->data['retrievedData'][$stepName]) ?
-                    $this->data['retrievedData'][$stepName] : array()
+                    $this->data['retrievedData'][$stepName] : []
                 ;
 
                 if (!$this->getMap()->isResetFlowDataOnInitEnabled()) {
@@ -227,24 +223,20 @@ class Navigator implements NavigatorInterface
 
     /**
      * Returns the navigation form builder.
-     *
-     * @return Symfony\Component\Form\FormBuilderInterface
      */
-    protected function getFormBuilder()
+    protected function getFormBuilder(): FormBuilderInterface
     {
         return $this->formFactory->createBuilder(
             NavigatorType::class,
             null,
-            array('navigator' => $this)
+            ['navigator' => $this]
         );
     }
 
     /**
      * Returns the navigation form.
-     *
-     * @return FormInterface the form
      */
-    protected function getForm()
+    protected function getForm(): FormInterface
     {
         if (null === $this->form) {
             $this->form = $this->getFormBuilder()->getForm();
@@ -255,8 +247,6 @@ class Navigator implements NavigatorInterface
 
     /**
      * Setup the navigation url.
-     *
-     * @param StepInterface $step the step
      */
     protected function setupNavigationUrl(StepInterface $step)
     {
@@ -302,9 +292,7 @@ class Navigator implements NavigatorInterface
             if (!$this->hasReturned() && $form->isSubmitted() && $form->isValid()) {
                 $path = $this->getChosenPath();
                 if (null === $path) {
-                    throw new \LogicException(sprintf(
-                        'The taken path seems to disapear magically'
-                    ));
+                    throw new \LogicException(sprintf('The taken path seems to disapear magically'));
                 }
                 $destinationStep = $path->resolveDestination($this);
 
@@ -333,7 +321,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function goBack($stepName = null)
+    public function goBack(string $stepName = null)
     {
         $destinationStep = $this->getPreviousStep($stepName);
 
@@ -353,7 +341,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getRequest()
+    public function getRequest(): ?Request
     {
         return $this->request;
     }
@@ -361,7 +349,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getMap()
+    public function getMap(): MapInterface
     {
         return $this->map;
     }
@@ -369,7 +357,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -377,7 +365,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getFlow()
+    public function getFlow(): FlowInterface
     {
         return $this->flow;
     }
@@ -385,7 +373,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getFlowRecorder()
+    public function getFlowRecorder(): FlowRecorderInterface
     {
         return $this->flowRecorder;
     }
@@ -393,7 +381,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStep()
+    public function getCurrentStep(): StepInterface
     {
         return $this->currentStep;
     }
@@ -401,7 +389,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentPaths()
+    public function getCurrentPaths(): array
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
     }
@@ -409,7 +397,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function setChosenPath(PathInterface $path)
+    public function setChosenPath(PathInterface $path): NavigatorInterface
     {
         $this->chosenPath = $path;
 
@@ -419,7 +407,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getChosenPath()
+    public function getChosenPath(): ?PathInterface
     {
         return $this->chosenPath;
     }
@@ -427,7 +415,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreviousStep($stepName = null)
+    public function getPreviousStep(string $stepName = null): ?StepInterface
     {
         if (null === $stepName) {
             $stepName = $this->getFlow()->getPreviousStepName();
@@ -439,10 +427,7 @@ class Navigator implements NavigatorInterface
         $previousStep = $this->getMap()->getStep($stepName);
 
         if (null !== $previousStep && !$this->getFlow()->hasDoneStep($previousStep)) {
-            throw new \LogicException(sprintf(
-                'The step "%s" is not a previous step',
-                $stepName
-            ));
+            throw new \LogicException(sprintf('The step "%s" is not a previous step', $stepName));
         }
 
         return $previousStep;
@@ -451,7 +436,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function addUrlQueryParameter($key, $value = null)
+    public function addUrlQueryParameter(string $key, $value = null): NavigatorInterface
     {
         $this->urlQueryParameters[$key] = $value;
 
@@ -461,7 +446,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getUrlQueryParameters()
+    public function getUrlQueryParameters(): array
     {
         return $this->urlQueryParameters;
     }
@@ -469,7 +454,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function hasUrlQueryParameters()
+    public function hasUrlQueryParameters(): bool
     {
         return !empty($this->urlQueryParameters);
     }
@@ -477,7 +462,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function setFinalDestination($url)
+    public function setFinalDestination(string $url = null): NavigatorInterface
     {
         $this->finalDestination = $url;
 
@@ -487,7 +472,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function hasFinalDestination()
+    public function hasFinalDestination(): bool
     {
         return null !== $this->finalDestination;
     }
@@ -495,7 +480,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getFinalDestination()
+    public function getFinalDestination(): ?string
     {
         if (!$this->hasUrlQueryParameters()) {
             return $this->finalDestination;
@@ -514,7 +499,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStepData(array $data, $type = null)
+    public function setCurrentStepData(array $data, string $type = null)
     {
         $this->getFlow()->setStepData(
             $this->getCurrentStep(),
@@ -526,7 +511,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStepData($type = null)
+    public function getCurrentStepData(string $type = null): ?array
     {
         return $this->getFlow()->getStepData($this->getCurrentStep(), $type);
     }
@@ -534,7 +519,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getAvailablePaths()
+    public function getAvailablePaths(): array
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
     }
@@ -542,7 +527,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getTakenPaths()
+    public function getTakenPaths(): array
     {
         return $this->getFlow()->getTakenPaths();
     }
@@ -550,7 +535,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function hasNavigated()
+    public function hasNavigated(): bool
     {
         return $this->hasNavigated;
     }
@@ -558,7 +543,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function hasReturned()
+    public function hasReturned(): bool
     {
         return $this->hasReturned;
     }
@@ -566,7 +551,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function hasFinished()
+    public function hasFinished(): bool
     {
         return $this->hasFinished;
     }
@@ -574,7 +559,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function serialize(): string
     {
         return $this->flowRecorder->serialize($this->getFlow());
     }
@@ -613,7 +598,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function createStepView()
+    public function createStepView(): FormView
     {
         return $this->getForm()->createView();
     }
@@ -621,7 +606,7 @@ class Navigator implements NavigatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getFormView()
+    public function getFormView(): FormView
     {
         if (null === $this->formView) {
             $this->formView = $this->createStepView();

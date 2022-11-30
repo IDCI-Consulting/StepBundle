@@ -8,31 +8,25 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event;
 
-use Symfony\Component\Form\FormInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Symfony\Component\Form\FormInterface;
 
 interface PathEventInterface
 {
     /**
      * Gets the event's name.
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the navigator at the source of the event.
-     *
-     * @return NavigatorInterface
      */
-    public function getNavigator();
+    public function getNavigator(): NavigatorInterface;
 
     /**
      * Returns the form at the source of the event.
-     *
-     * @return FormInterface
      */
-    public function getForm();
+    public function getForm(): FormInterface;
 
     /**
      * Returns the data associated with this event.
@@ -57,10 +51,8 @@ interface PathEventInterface
 
     /**
      * Returns the current step path index selected.
-     *
-     * @return int
      */
-    public function getPathIndex();
+    public function getPathIndex(): int;
 
     /**
      * Stops the propagation of the event to further path events.
@@ -69,8 +61,6 @@ interface PathEventInterface
 
     /**
      * Returns whether further path events should be triggered.
-     *
-     * @return bool
      */
-    public function isPropagationStopped();
+    public function isPropagationStopped(): bool;
 }

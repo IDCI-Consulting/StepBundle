@@ -25,15 +25,11 @@ interface NavigationLoggerInterface
 
     /**
      * Has navigator.
-     *
-     * @return bool
      */
-    public function hasNavigator();
+    public function hasNavigator(): bool;
 
     /**
      * Get navigation.
-     *
-     * @return array|null
      */
-    public function getNavigation();
+    public function getNavigation(): ?array;
 }

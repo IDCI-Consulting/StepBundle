@@ -19,8 +19,5 @@ interface StepEventActionInterface
      *
      * @return mixed
      */
-    public function execute(
-        StepEventInterface $event,
-        array $parameters = array()
-    );
+    public function execute(StepEventInterface $event, array $parameters = []);
 }

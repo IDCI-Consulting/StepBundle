@@ -17,7 +17,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(StepEventInterface $event, array $parameters = array())
+    protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $step = $event->getNavigator()->getCurrentStep();
         $configuration = $step->getConfiguration();
@@ -27,7 +27,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
         if ($configuration['type'] instanceof FormStepType) {
             $data = array_replace_recursive(
                 $event->getData(),
-                array('_content' => $data)
+                ['_content' => $data]
             );
         }
 
@@ -46,7 +46,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array('fields' => array()))
+            ->setDefaults(['fields' => []])
             ->setNormalizer('fields', function (Options $options, $value) {
                 foreach ($value as $k => $v) {
                     if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
@@ -57,7 +57,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
 
                 return $value;
             })
-            ->setAllowedTypes('fields', array('array'))
+            ->setAllowedTypes('fields', ['array'])
         ;
     }
 }

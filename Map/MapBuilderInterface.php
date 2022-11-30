@@ -13,33 +13,23 @@ interface MapBuilderInterface
 {
     /**
      * Get the map name.
-     *
-     * @return string the map name
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Get the map data.
-     *
-     * @return array the map data
      */
-    public function getData();
+    public function getData(): array;
 
     /**
      * Get the map options.
-     *
-     * @return array the map options
      */
-    public function getOptions();
+    public function getOptions(): array;
 
     /**
      * Checks if the map contains the given options name.
-     *
-     * @param string $name the searching option name
-     *
-     * @return bool
      */
-    public function hasOption($name);
+    public function hasOption(string $name): bool;
 
     /**
      * Retrieve the given options name.
@@ -49,36 +39,21 @@ interface MapBuilderInterface
      *
      * @return mixed
      */
-    public function getOption($name, $default = null);
+    public function getOption(string $name, $default = null);
 
     /**
      * Adds a new step to this map. A step must have a unique name within
      * the map. Otherwise the existing step is overwritten.
-     *
-     * @param string $name
-     * @param string $type
-     * @param array  $options
-     *
-     * @return MapBuilderInterface the builder object
      */
-    public function addStep($name, $type, array $options = array());
+    public function addStep(string $name, string $type, array $options = []): self;
 
     /**
      * Adds a new path to this map.
-     *
-     * @param string $type
-     * @param array  $options
-     *
-     * @return MapBuilderInterface the builder object
      */
-    public function addPath($type, array $options = array());
+    public function addPath(string $type, array $options = []): self;
 
     /**
      * Get the building map.
-     *
-     * @param Request $request the HTTP request
-     *
-     * @return MapInterface the map
      */
-    public function getMap(Request $request);
+    public function getMap(Request $request): MapInterface;
 }

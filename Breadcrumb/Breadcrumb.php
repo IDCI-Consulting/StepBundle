@@ -8,19 +8,22 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Breadcrumb
 {
-    const BACK_QUERY_PARAMETER_ITEM_NAME = '_back_step';
+    public const BACK_QUERY_PARAMETER_ITEM_NAME = '_back_step';
 
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * @var NavigatorInterface
+     */
     private $navigator;
 
-    private $items = [];
+    private array $items = [];
 
     /**
      * Constructor.
-     *
-     * @param Request            $request
-     * @param NavigatorInterface $navigator
      */
     public function __construct(Request $request, NavigatorInterface $navigator)
     {
@@ -30,11 +33,6 @@ class Breadcrumb
 
     /**
      * Add an item in the breadcrumb.
-     *
-     * @param string $itemName  the name of the group of steps
-     * @param array  $stepNames the steps names
-     *
-     * @return Breadcrumb
      */
     public function addItem(string $itemName, array $stepNames): self
     {
@@ -45,8 +43,6 @@ class Breadcrumb
 
     /**
      * Return all the items names in the breadcrumb.
-     *
-     * @return array
      */
     public function getItemNames(): array
     {
@@ -55,10 +51,6 @@ class Breadcrumb
 
     /**
      * Return an item by the given item name.
-     *
-     * @param string $itemName the name of the group of steps
-     *
-     * @return null|array
      */
     public function getItem(string $itemName): ?array
     {
@@ -67,8 +59,6 @@ class Breadcrumb
 
     /**
      * Return all the items of the breadcrumb.
-     *
-     * @return array
      */
     public function getItems(): array
     {
@@ -77,8 +67,6 @@ class Breadcrumb
 
     /**
      * Return the current item name of the breadcrumb.
-     *
-     * @return string
      */
     public function getCurrentItem(): ?string
     {
@@ -95,8 +83,6 @@ class Breadcrumb
 
     /**
      * Return the go back step name by the parameter given in the request.
-     *
-     * @return string
      */
     public function getGoBackStepName(): string
     {
@@ -107,18 +93,11 @@ class Breadcrumb
             return $takenPathSource;
         }
 
-        throw new InvalidDestinationException(
-            $this->navigator->getCurrentStep()->getName(),
-            sprintf('BreadcrumbItem::%s', $itemName)
-        );
+        throw new InvalidDestinationException($this->navigator->getCurrentStep()->getName(), sprintf('BreadcrumbItem::%s', $itemName));
     }
 
     /**
      * Return if the item is accessible.
-     *
-     * @param string $itemName the item name
-     *
-     * @return bool
      */
     public function isAccessibleItem(string $itemName): bool
     {
@@ -127,10 +106,6 @@ class Breadcrumb
 
     /**
      * Return a step name if possible by the given item name.
-     *
-     * @param string $itemName the item name
-     *
-     * @return null|string
      */
     private function getTakenPathSource(string $itemName): ?string
     {
@@ -145,8 +120,6 @@ class Breadcrumb
 
     /**
      * Return if the request has requested to go back.
-     *
-     * @return bool
      */
     public function hasRequestedGoBack(): bool
     {

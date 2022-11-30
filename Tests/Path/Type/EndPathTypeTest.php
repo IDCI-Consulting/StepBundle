@@ -6,6 +6,7 @@ use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Type\EndPathType;
 use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
 
 class EndPathTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +22,7 @@ class EndPathTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             null,
             $this->pathType->resolveDestination(
-                array('source' => 'step1'),
+                ['source' => 'step1'],
                 $navigator
             )
         );
@@ -29,25 +30,25 @@ class EndPathTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testbuildPath()
     {
-        $step1 = new Step(array('name' => 'step1'));
-        $step2 = new Step(array('name' => 'step2'));
-        $step3 = new Step(array('name' => 'step3'));
-        $stepEnd = new Step(array('name' => 'stepEnd'));
+        $step1 = new Step('step1', new HtmlStepType());
+        $step2 = new Step('step2', new HtmlStepType());
+        $step3 = new Step('step3', new HtmlStepType());
+        $stepEnd = new Step('stepEnd', new HtmlStepType());
 
         $path = $this->pathType->buildPath(
-            array(
+            [
                 'step1' => $step1,
                 'step2' => $step2,
                 'step3' => $step3,
                 'stepEnd' => $stepEnd,
-            ),
-            array('source' => 'stepEnd')
+            ],
+            ['source' => 'stepEnd']
         );
 
-        $this->assertEquals($path->getSource(), $stepEnd);
+        $this->assertEquals($stepEnd, $path->getSource());
         $this->assertEquals(
-            $path->getDestinations(),
-            array()
+            [],
+            $path->getDestinations()
         );
 
         $flow = $this->createMock(FlowInterface::class);

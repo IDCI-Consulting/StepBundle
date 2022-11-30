@@ -9,8 +9,8 @@ namespace IDCI\Bundle\StepBundle\Flow;
 
 class FlowData implements FlowDataInterface
 {
-    const TYPE_REMINDED = 'reminded';
-    const TYPE_RETRIEVED = 'retrieved';
+    public const TYPE_REMINDED = 'reminded';
+    public const TYPE_RETRIEVED = 'retrieved';
 
     /**
      * The data indexed by steps.
@@ -41,9 +41,9 @@ class FlowData implements FlowDataInterface
      * @param array $retrievedData The retrieved steps data
      */
     public function __construct(
-        array $data = array(),
-        array $remindedData = array(),
-        array $retrievedData = array()
+        array $data = [],
+        array $remindedData = [],
+        array $retrievedData = []
     ) {
         $this->data = $data;
         $this->remindedData = $remindedData;
@@ -53,19 +53,15 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
     /**
-     * Set data.
-     *
-     * @param array $data the data
-     *
-     * @return FlowDataInterface
+     * {@inheritdoc}
      */
-    public function setData(array $data)
+    public function setData(array $data): FlowDataInterface
     {
         $this->data = $data;
 
@@ -75,7 +71,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getRemindedData()
+    public function getRemindedData(): array
     {
         return $this->remindedData;
     }
@@ -83,7 +79,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function setRemindedData(array $remindedData)
+    public function setRemindedData(array $remindedData): FlowDataInterface
     {
         $this->remindedData = $remindedData;
 
@@ -93,7 +89,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getRetrievedData()
+    public function getRetrievedData(): array
     {
         return $this->retrievedData;
     }
@@ -101,7 +97,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function setRetrievedData(array $retrievedData)
+    public function setRetrievedData(array $retrievedData): FlowDataInterface
     {
         $this->retrievedData = $retrievedData;
 
@@ -111,7 +107,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function hasStepData($name, $type = null)
+    public function hasStepData($name, $type = null): bool
     {
         if (null === $type) {
             return isset($this->data[$name]);
@@ -129,14 +125,10 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getStepData($name, $type = null)
+    public function getStepData(string $name, string $type = null): array
     {
         if (!$this->hasStepData($name, $type)) {
-            throw new \InvalidArgumentException(sprintf(
-                'No step "%s" found (%s).',
-                $name,
-                null === $type ? 'data' : $type
-            ));
+            throw new \InvalidArgumentException(sprintf('No step "%s" found (%s).', $name, null === $type ? 'data' : $type));
         }
 
         if (null === $type) {
@@ -155,7 +147,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function setStepData($name, array $data, $type = null)
+    public function setStepData(string $name, array $data, string $type = null): FlowDataInterface
     {
         if (null === $type) {
             $this->data[$name] = $data;
@@ -175,7 +167,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function unsetStepData($name, $type = null)
+    public function unsetStepData(string $name, string $type = null): FlowDataInterface
     {
         if (null === $type) {
             unset($this->data[$name]);
@@ -195,7 +187,7 @@ class FlowData implements FlowDataInterface
     /**
      * {@inheritdoc}
      */
-    public function getAll()
+    public function getAll(): array
     {
         $steps = array_merge(
             array_keys($this->data),
@@ -203,13 +195,13 @@ class FlowData implements FlowDataInterface
             array_keys($this->retrievedData)
         );
 
-        $all = array();
+        $all = [];
         foreach ($steps as $step) {
-            $all[$step] = array(
+            $all[$step] = [
                 'data' => isset($this->data[$step]) ? $this->data[$step] : null,
                 'remindedData' => isset($this->remindedData[$step]) ? $this->remindedData[$step] : null,
                 'retrievedData' => isset($this->retrievedData[$step]) ? $this->retrievedData[$step] : null,
-            );
+            ];
         }
 
         return $all;

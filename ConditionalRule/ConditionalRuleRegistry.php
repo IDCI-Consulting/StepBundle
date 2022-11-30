@@ -7,19 +7,17 @@
 
 namespace IDCI\Bundle\StepBundle\ConditionalRule;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
-
 class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
 {
     /**
      * @var ConditionalRuleInterface[]
      */
-    private $rules = array();
+    private $rules = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setRule($alias, ConditionalRuleInterface $rule)
+    public function setRule(string $alias, ConditionalRuleInterface $rule): ConditionalRuleRegistryInterface
     {
         $this->rules[$alias] = $rule;
 
@@ -29,12 +27,8 @@ class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getRule($alias)
+    public function getRule(string $alias): ConditionalRuleRegistryInterface
     {
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
         if (!isset($this->rules[$alias])) {
             throw new \InvalidArgumentException(sprintf('Could not load conditional rule "%s"', $alias));
         }
@@ -45,7 +39,7 @@ class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function hasRule($alias)
+    public function hasRule(string $alias): bool
     {
         if (!isset($this->rules[$alias])) {
             return false;

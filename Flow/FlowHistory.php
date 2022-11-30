@@ -17,22 +17,19 @@ class FlowHistory implements FlowHistoryInterface
      *
      * @var array
      */
-    protected $takenPaths = array();
+    protected $takenPaths = [];
 
     /**
      * The full taken paths.
      *
      * @var array
      */
-    protected $fullTakenPaths = array();
+    protected $fullTakenPaths = [];
 
     /**
      * Constructor.
-     *
-     * @param array $takenPaths     the taken paths
-     * @param array $fullTakenPaths the full taken paths
      */
-    public function __construct($takenPaths = array(), $fullTakenPaths = array())
+    public function __construct(array $takenPaths = null, array $fullTakenPaths = null)
     {
         $this->takenPaths = $takenPaths;
         $this->fullTakenPaths = $fullTakenPaths;
@@ -41,14 +38,14 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStep(StepInterface $step)
+    public function setCurrentStep(StepInterface $step): FlowHistoryInterface
     {
         if (empty($this->fullTakenPaths)) {
-            $path = array(
+            $path = [
                 'source' => null,
                 'index' => null,
                 'destination' => $step->getName(),
-            );
+            ];
             $this->takenPaths[] = $path;
             $this->fullTakenPaths[] = $path;
         } else {
@@ -62,12 +59,12 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function addTakenPath(StepInterface $step, $pathId = 0)
+    public function addTakenPath(StepInterface $step, int $pathId = 0)
     {
-        $path = array(
+        $path = [
             'source' => $step->getName(),
             'index' => $pathId,
-        );
+        ];
         $this->takenPaths[] = $path;
         $this->fullTakenPaths[] = $path;
     }
@@ -75,14 +72,14 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function retraceTakenPath($sourceStepName, StepInterface $destinationStep)
+    public function retraceTakenPath(string $sourceStepName, StepInterface $destinationStep)
     {
-        $this->fullTakenPaths[] = array(
+        $this->fullTakenPaths[] = [
             'source' => $sourceStepName,
             'index' => '_back',
-        );
+        ];
 
-        $removedPaths = array();
+        $removedPaths = [];
 
         $reversedIndex = count($this->takenPaths) - 1;
         foreach (array_reverse($this->takenPaths) as $i => $path) {
@@ -100,7 +97,7 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getLastTakenPath()
+    public function getLastTakenPath(): ?array
     {
         $i = count($this->takenPaths) - 1;
 
@@ -110,7 +107,7 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getTakenPaths()
+    public function getTakenPaths(): array
     {
         return $this->takenPaths;
     }
@@ -118,7 +115,7 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getFullTakenPaths()
+    public function getFullTakenPaths(): array
     {
         return $this->fullTakenPaths;
     }
@@ -126,7 +123,7 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function hasDoneStep(StepInterface $step, $full = false)
+    public function hasDoneStep(StepInterface $step, bool $full = false): bool
     {
         $takenPaths = (bool) $full ? $this->fullTakenPaths : $this->takenPaths;
         foreach ($takenPaths as $takenPath) {
@@ -141,11 +138,11 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getAll()
+    public function getAll(): array
     {
-        return array(
+        return [
             'takenPaths' => $this->takenPaths,
             'fullTakenPaths' => $this->fullTakenPaths,
-        );
+        ];
     }
 }

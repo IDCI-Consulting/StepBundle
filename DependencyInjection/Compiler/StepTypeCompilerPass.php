@@ -26,24 +26,15 @@ class StepTypeCompilerPass implements CompilerPassInterface
         $registryDefinition = $container->findDefinition(StepTypeRegistryInterface::class);
         foreach ($container->findTaggedServiceIds('idci_step.step_type') as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias = isset($attributes['alias'])
-                    ? $attributes['alias']
-                    : $id
-                ;
+                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
 
                 $configurationService = sprintf('idci_step.step_type_configuration.%s', $alias);
 
                 if (!$container->has($configurationService)) {
-                    throw new \Exception(sprintf(
-                        'The step type \'%s\' does not have a configuration. You must configure the step type under the idci_step.step_types key',
-                        $alias
-                    ));
+                    throw new \Exception(sprintf('The step type \'%s\' does not have a configuration. You must configure the step type under the idci_step.step_types key', $alias));
                 }
 
-                $registryDefinition->addMethodCall(
-                    'setType',
-                    array($alias, new Reference($id))
-                );
+                $registryDefinition->addMethodCall('setType', [$alias, new Reference($id)]);
             }
         }
     }

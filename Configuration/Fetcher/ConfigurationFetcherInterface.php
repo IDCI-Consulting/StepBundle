@@ -11,10 +11,6 @@ interface ConfigurationFetcherInterface
 {
     /**
      * Fetch a configuration.
-     *
-     * @param array $parameters the parameters used to fetch the configuration
-     *
-     * @return array the configuration
      */
-    public function fetch(array $parameters = array());
+    public function fetch(array $parameters = []): array;
 }

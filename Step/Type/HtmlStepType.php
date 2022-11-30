@@ -21,11 +21,11 @@ class HtmlStepType extends AbstractStepType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'content' => null,
-                'attr' => array('class' => 'html_text'),
-            ))
-            ->setAllowedTypes('content', array('null', 'string'))
+                'attr' => ['class' => 'html_text'],
+            ])
+            ->setAllowedTypes('content', ['null', 'string'])
         ;
     }
 
@@ -34,10 +34,10 @@ class HtmlStepType extends AbstractStepType
      */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('_content', HtmlStepFormType::class, array(
+        $builder->add('_content', HtmlStepFormType::class, [
             'label' => $options['title'],
             'display_title' => $options['display_title'],
             'content' => $options['content'],
-        ));
+        ]);
     }
 }

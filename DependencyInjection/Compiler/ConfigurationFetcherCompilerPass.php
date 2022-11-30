@@ -9,10 +9,10 @@ namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface;
 use IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherRegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class ConfigurationFetcherCompilerPass implements CompilerPassInterface
 {
@@ -37,21 +37,15 @@ class ConfigurationFetcherCompilerPass implements CompilerPassInterface
 
             $registryDefinition->addMethodCall(
                 'setFetcher',
-                array($name, new Reference($fetcherServiceId))
+                [$name, new Reference($fetcherServiceId)]
             );
         }
 
         foreach ($container->findTaggedServiceIds('idci_step.configuration.fetcher') as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias = isset($attributes['alias'])
-                    ? $attributes['alias']
-                    : $id
-                ;
+                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
 
-                $registryDefinition->addMethodCall(
-                    'setFetcher',
-                    array($alias, new Reference($id))
-                );
+                $registryDefinition->addMethodCall('setFetcher', [$alias, new Reference($id)]);
             }
         }
     }

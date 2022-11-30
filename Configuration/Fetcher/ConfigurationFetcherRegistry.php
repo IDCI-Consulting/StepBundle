@@ -9,12 +9,12 @@ namespace IDCI\Bundle\StepBundle\Configuration\Fetcher;
 
 class ConfigurationFetcherRegistry implements ConfigurationFetcherRegistryInterface
 {
-    protected $fetchers = array();
+    protected $fetchers = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setFetcher($alias, ConfigurationFetcherInterface $fetcher)
+    public function setFetcher(string $alias, ConfigurationFetcherInterface $fetcher)
     {
         $this->fetchers[$alias] = $fetcher;
     }
@@ -22,7 +22,7 @@ class ConfigurationFetcherRegistry implements ConfigurationFetcherRegistryInterf
     /**
      * {@inheritdoc}
      */
-    public function getFetcher($alias)
+    public function getFetcher(string $alias): ConfigurationFetcherInterface
     {
         if (!isset($this->fetchers[$alias])) {
             throw new \InvalidArgumentException(sprintf('Could not load fetcher "%s"', $alias));

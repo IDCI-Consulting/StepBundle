@@ -7,8 +7,9 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event;
 
-use Symfony\Component\Form\FormEvent;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
 
 class StepEvent implements StepEventInterface
 {
@@ -34,16 +35,9 @@ class StepEvent implements StepEventInterface
 
     /**
      * Constructor.
-     *
-     * @param NavigatorInterface $navigator     the navigator
-     * @param FormEvent          $formEvent     the form event
-     * @param mixed              $stepEventData the step event data
      */
-    public function __construct(
-        NavigatorInterface $navigator,
-        FormEvent $formEvent,
-        $stepEventData
-    ) {
+    public function __construct(NavigatorInterface $navigator, FormEvent $formEvent, $stepEventData)
+    {
         $this->navigator = $navigator;
         $this->formEvent = $formEvent;
         $this->stepEventData = $stepEventData;
@@ -52,31 +46,7 @@ class StepEvent implements StepEventInterface
     /**
      * {@inheritdoc}
      */
-    public function isPropagationStopped()
-    {
-        return $this->propagationStopped;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function stopPropagation()
-    {
-        $this->propagationStopped = true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNavigator()
-    {
-        return $this->navigator;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->formEvent->getName();
     }
@@ -84,7 +54,15 @@ class StepEvent implements StepEventInterface
     /**
      * {@inheritdoc}
      */
-    public function getForm()
+    public function getNavigator(): NavigatorInterface
+    {
+        return $this->navigator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getForm(): FormInterface
     {
         return $this->formEvent->getForm();
     }
@@ -111,5 +89,21 @@ class StepEvent implements StepEventInterface
     public function getStepEventData()
     {
         return $this->stepEventData;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function stopPropagation()
+    {
+        $this->propagationStopped = true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isPropagationStopped(): bool
+    {
+        return $this->propagationStopped;
     }
 }

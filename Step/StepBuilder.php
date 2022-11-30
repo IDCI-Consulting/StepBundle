@@ -8,8 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Step;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use IDCI\Bundle\StepBundle\Step\Type\StepTypeRegistryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StepBuilder implements StepBuilderInterface
 {
@@ -20,8 +20,6 @@ class StepBuilder implements StepBuilderInterface
 
     /**
      * Constructor.
-     *
-     * @param StepTypeRegistryInterface $registry
      */
     public function __construct(StepTypeRegistryInterface $registry)
     {
@@ -31,7 +29,7 @@ class StepBuilder implements StepBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function build($name, $typeAlias, array $options = array())
+    public function build(string $name, string $typeAlias, array $options = []): StepInterface
     {
         $type = $this->registry->getType($typeAlias);
 
@@ -39,9 +37,6 @@ class StepBuilder implements StepBuilderInterface
         $type->configureOptions($resolver);
         $resolvedOptions = $resolver->resolve($options);
 
-        return $type->buildStep(
-            $name,
-            $resolvedOptions
-        );
+        return $type->buildStep($name, $resolvedOptions);
     }
 }

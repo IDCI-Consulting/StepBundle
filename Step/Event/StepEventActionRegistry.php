@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event;
 
-use IDCI\Bundle\StepBundle\Exception\UnexpectedTypeException;
 use IDCI\Bundle\StepBundle\Step\Event\Action\StepEventActionInterface;
 
 class StepEventActionRegistry implements StepEventActionRegistryInterface
@@ -15,12 +14,12 @@ class StepEventActionRegistry implements StepEventActionRegistryInterface
     /**
      * @var StepEventActionInterface[]
      */
-    private $actions = array();
+    private $actions = [];
 
     /**
      * {@inheritdoc}
      */
-    public function setAction($alias, StepEventActionInterface $action)
+    public function setAction(string $alias, StepEventActionInterface $action): StepEventActionRegistryInterface
     {
         $this->actions[$alias] = $action;
 
@@ -30,18 +29,10 @@ class StepEventActionRegistry implements StepEventActionRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function getAction($alias)
+    public function getAction(string $alias): StepEventActionInterface
     {
-        if (!is_string($alias)) {
-            throw new UnexpectedTypeException($alias, 'string');
-        }
-
         if (!isset($this->actions[$alias])) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not load step event action "%s". Available actions are %s',
-                $alias,
-                implode(', ', array_keys($this->actions))
-            ));
+            throw new \InvalidArgumentException(sprintf('Could not load step event action "%s". Available actions are %s', $alias, implode(', ', array_keys($this->actions))));
         }
 
         return $this->actions[$alias];
@@ -50,7 +41,7 @@ class StepEventActionRegistry implements StepEventActionRegistryInterface
     /**
      * {@inheritdoc}
      */
-    public function hasAction($alias)
+    public function hasAction(string $alias): bool
     {
         if (!isset($this->actions[$alias])) {
             return true;

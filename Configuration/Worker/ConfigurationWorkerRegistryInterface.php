@@ -11,20 +11,11 @@ interface ConfigurationWorkerRegistryInterface
 {
     /**
      * Set a worker.
-     *
-     * @param string                       $alias  the alias identifier of the worker
-     * @param ConfigurationWorkerInterface $worker the worker
      */
-    public function setWorker($alias, ConfigurationWorkerInterface $worker);
+    public function setWorker(string $alias, ConfigurationWorkerInterface $worker);
 
     /**
      * Get a worker.
-     *
-     * @param string $alias the alias identifier of the worker
-     *
-     * @return ConfigurationWorkerInterface the worker
-     *
-     * @throws \InvalidArgumentException if the worker cannot be retrieved
      */
-    public function getWorker($alias);
+    public function getWorker(string $alias): ConfigurationWorkerInterface;
 }

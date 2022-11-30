@@ -14,6 +14,8 @@ use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
 use IDCI\Bundle\StepBundle\Step\StepInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 
 interface NavigatorInterface
 {
@@ -31,187 +33,130 @@ interface NavigatorInterface
      *
      * @throw LogicException if the navigation doesn't has a previous step.
      */
-    public function goBack($stepName = null);
+    public function goBack(string $stepName = null);
 
     /**
      * Get the request.
-     *
-     * @return \Symfony\Component\HttpFoundation\Request|null
      */
-    public function getRequest();
+    public function getRequest(): ?Request;
 
     /**
      * Get the map.
-     *
-     * @return MapInterface
      */
-    public function getMap();
+    public function getMap(): MapInterface;
 
     /**
      * Get the navigation data.
-     *
-     * @return array
      */
-    public function getData();
+    public function getData(): array;
 
     /**
      * Get the flow.
-     *
-     * @return FlowInterface
      */
-    public function getFlow();
+    public function getFlow(): FlowInterface;
 
     /**
      * Get the flow recorder.
-     *
-     * @return FlowRecorderInterface
      */
-    public function getFlowRecorder();
+    public function getFlowRecorder(): FlowRecorderInterface;
 
     /**
      * Returns the current step.
-     *
-     * @return StepInterface
      */
-    public function getCurrentStep();
+    public function getCurrentStep(): StepInterface;
 
     /**
      * Returns the current paths.
-     *
-     * @return array
      */
-    public function getCurrentPaths();
+    public function getCurrentPaths(): array;
 
     /**
      * Set the chosen path.
-     *
-     * @param PathInterface $path
-     *
-     * @return NavigatorInterface
      */
-    public function setChosenPath(PathInterface $path);
+    public function setChosenPath(PathInterface $path): self;
 
     /**
      * Returns the chosen path.
-     *
-     * @return PathInterface|null
      */
-    public function getChosenPath();
+    public function getChosenPath(): ?PathInterface;
 
     /**
      * Returns the previous step.
-     *
-     * @param string|null $stepName the identifier name of the step
-     *
-     * @return StepInterface|null
      */
-    public function getPreviousStep($stepName = null);
+    public function getPreviousStep(string $stepName = null): ?StepInterface;
 
     /**
      * Add URL query parameter.
      *
      * @param string $key   the URL query parameter key
      * @param mixed  $value the URL query parameter value
-     *
-     * @return NavigatorInterface
      */
-    public function addUrlQueryParameter($key, $value = null);
+    public function addUrlQueryParameter(string $key, $value = null): self;
 
     /**
      * Returns the URL query parameters.
-     *
-     * @return array
      */
-    public function getUrlQueryParameters();
+    public function getUrlQueryParameters(): array;
 
     /**
      * Returns true if contains url query parameters.
-     *
-     * @return bool
      */
-    public function hasUrlQueryParameters();
+    public function hasUrlQueryParameters(): bool;
 
     /**
      * Set the final destination.
-     *
-     * @param string $url the final destination url
-     *
-     * @return NavigatorInterface
      */
-    public function setFinalDestination($url);
+    public function setFinalDestination(string $url = null): self;
 
     /**
      * Returns true if the navigator has a final destination.
-     *
-     * @return bool
      */
-    public function hasFinalDestination();
+    public function hasFinalDestination(): bool;
 
     /**
      * Returns the final destination (as URL).
-     *
-     * @return string|null
      */
-    public function getFinalDestination();
+    public function getFinalDestination(): ?string;
 
     /**
      * Set current step data.
-     *
-     * @param array       $data the step data
-     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      */
-    public function setCurrentStepData(array $data, $type = null);
+    public function setCurrentStepData(array $data, string $type = null);
 
     /**
      * Returns the current step data.
-     *
-     * @param string|null $type the data type (null, 'reminded' or 'retrieved')
-     *
-     * @return array|null
      */
-    public function getCurrentStepData($type = null);
+    public function getCurrentStepData(string $type = null): ?array;
 
     /**
      * Returns the available paths.
-     *
-     * @return array
      */
-    public function getAvailablePaths();
+    public function getAvailablePaths(): array;
 
     /**
      * Returns the taken path.
-     *
-     * @return array
      */
-    public function getTakenPaths();
+    public function getTakenPaths(): array;
 
     /**
      * Returns true if the navigator has navigated.
-     *
-     * @return bool
      */
-    public function hasNavigated();
+    public function hasNavigated(): bool;
 
     /**
      * Returns true if the navigator has returned.
-     *
-     * @return bool
      */
-    public function hasReturned();
+    public function hasReturned(): bool;
 
     /**
      * Returns true if the navigator has finished the navigation.
-     *
-     * @return bool
      */
-    public function hasFinished();
+    public function hasFinished(): bool;
 
     /**
      * Serialize the navigation flow.
-     *
-     * @return string
      */
-    public function serialize();
+    public function serialize(): string;
 
     /**
      * Save the navigation.
@@ -230,15 +175,11 @@ interface NavigatorInterface
 
     /**
      * Create step view.
-     *
-     * @return Symfony\Component\Form\FormView
      */
-    public function createStepView();
+    public function createStepView(): FormView;
 
     /**
      * Returns the step form view.
-     *
-     * @return Symfony\Component\Form\FormView
      */
-    public function getFormView();
+    public function getFormView(): FormView;
 }

@@ -17,7 +17,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(StepEventInterface $event, array $parameters = array())
+    protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $formData = $event->getData();
         $step = $event->getNavigator()->getCurrentStep();
@@ -31,10 +31,10 @@ class TransformDataStepEventAction extends AbstractStepEventAction
 
         foreach ($parameters['fields'] as $field => $method) {
             $destination = $field;
-            $options = array();
+            $options = [];
             // Decode complexe configuration
             if (is_array($method)) {
-                $options = isset($method['options']) ? $method['options'] : array();
+                $options = isset($method['options']) ? $method['options'] : [];
                 $destination = isset($method['destination']) ? $method['destination'] : $field;
                 $method = isset($method['method']) ? $method['method'] : null;
             }
@@ -42,13 +42,13 @@ class TransformDataStepEventAction extends AbstractStepEventAction
             $transformer = sprintf('transform%s', Inflector::classify($method));
             if ($configuration['type'] instanceof FormStepType) {
                 $formData['_content'][$destination] = forward_static_call_array(
-                    array($this, $transformer),
-                    array($formData['_content'][$field], $options)
+                    [$this, $transformer],
+                    [$formData['_content'][$field], $options]
                 );
             } else {
                 $formData[$destination] = forward_static_call_array(
-                    array($this, $transformer),
-                    array($formData[$field], $options)
+                    [$this, $transformer],
+                    [$formData[$field], $options]
                 );
             }
         }
@@ -64,8 +64,8 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array('fields' => array()))
-            ->setAllowedTypes('fields', array('array'))
+            ->setDefaults(['fields' => []])
+            ->setAllowedTypes('fields', ['array'])
         ;
     }
 
@@ -77,7 +77,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      *
      * @return mixed
      */
-    public static function transformUpper($value, array $options = array())
+    public static function transformUpper($value, array $options = [])
     {
         if (!is_string($value)) {
             return $value;
@@ -94,7 +94,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      *
      * @return mixed
      */
-    public static function transformLower($value, array $options = array())
+    public static function transformLower($value, array $options = [])
     {
         if (!is_string($value)) {
             return $value;
@@ -111,13 +111,13 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      *
      * @return mixed
      */
-    public static function transformReplace($value, array $options = array())
+    public static function transformReplace($value, array $options = [])
     {
         if (!is_string($value)) {
             return $value;
         }
 
-        $pairs = array();
+        $pairs = [];
         if (isset($options['pairs']) && is_array($options['pairs'])) {
             $pairs = $options['pairs'];
         }

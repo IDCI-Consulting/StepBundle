@@ -11,36 +11,26 @@ interface PathTypeConfigurationInterface
 {
     /**
      * Returns the name.
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns the parent.
-     *
-     * @return PathTypeConfigurationInterface
      */
-    public function getParent();
+    public function getParent(): PathTypeConfigurationInterface;
 
     /**
      * Returns the description.
-     *
-     * @return string
      */
-    public function getDescription();
+    public function getDescription(): string;
 
     /**
      * Is abstract.
-     *
-     * @return bool
      */
-    public function isAbstract();
+    public function isAbstract(): bool;
 
     /**
      * Returns extra form options.
-     *
-     * @return array
      */
-    public function getExtraFormOptions();
+    public function getExtraFormOptions(): array;
 }

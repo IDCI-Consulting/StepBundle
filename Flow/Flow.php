@@ -8,8 +8,8 @@
 
 namespace IDCI\Bundle\StepBundle\Flow;
 
-use IDCI\Bundle\StepBundle\Step\StepInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
+use IDCI\Bundle\StepBundle\Step\StepInterface;
 
 class Flow implements FlowInterface
 {
@@ -35,11 +35,8 @@ class Flow implements FlowInterface
      * @param mixed             $history
      * @param FlowDataInterface $data
      */
-    public function __construct(
-        StepInterface $currentStep = null,
-        $history = null,
-        FlowDataInterface $data = null
-    ) {
+    public function __construct(StepInterface $currentStep = null, $history = null, FlowDataInterface $data = null)
+    {
         $this->history = $this->buildFlowHistory($history);
         $this->data = null === $data ? new FlowData() : $data;
 
@@ -52,10 +49,8 @@ class Flow implements FlowInterface
      * Build the FlowHistory object.
      *
      * @param mixed $history
-     *
-     * @return FlowHistory
      */
-    protected function buildFlowHistory($history)
+    protected function buildFlowHistory($history): FlowHistory
     {
         if ($history instanceof FlowHistory) {
             return $history;
@@ -67,7 +62,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setCurrentStep(StepInterface $step)
+    public function setCurrentStep(StepInterface $step): FlowInterface
     {
         $this->currentStepName = $step->getName();
         $this->history->setCurrentStep($step);
@@ -78,7 +73,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getCurrentStepName()
+    public function getCurrentStepName(): ?string
     {
         return $this->currentStepName;
     }
@@ -86,7 +81,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getPreviousStepName()
+    public function getPreviousStepName(): ?string
     {
         $lastTakenPath = $this->getHistory()->getLastTakenPath();
 
@@ -100,7 +95,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setHistory(FlowHistoryInterface $history)
+    public function setHistory(FlowHistoryInterface $history): FlowInterface
     {
         $this->history = $history;
 
@@ -110,7 +105,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getHistory()
+    public function getHistory(): FlowHistoryInterface
     {
         return $this->history;
     }
@@ -118,7 +113,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getTakenPaths()
+    public function getTakenPaths(): array
     {
         return $this->history->getTakenPaths();
     }
@@ -126,7 +121,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function hasDoneStep(StepInterface $step, $full = false)
+    public function hasDoneStep(StepInterface $step, $full = false): bool
     {
         return $this->history->hasDoneStep($step);
     }
@@ -134,7 +129,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function setData(FlowDataInterface $data)
+    public function setData(FlowDataInterface $data): FlowInterface
     {
         $this->data = $data;
 
@@ -144,7 +139,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): FlowDataInterface
     {
         return $this->data;
     }
@@ -152,7 +147,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function hasStepData(StepInterface $step, $type = null)
+    public function hasStepData(StepInterface $step, $type = null): bool
     {
         $stepName = $step->getName();
 
@@ -168,7 +163,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function getStepData(StepInterface $step, $type = null)
+    public function getStepData(StepInterface $step, $type = null): array
     {
         $stepName = $step->getName();
 
@@ -180,13 +175,13 @@ class Flow implements FlowInterface
             return $this->getStepData($step, FlowData::TYPE_REMINDED);
         }
 
-        return array();
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setStepData(StepInterface $step, array $data, $type = null)
+    public function setStepData(StepInterface $step, array $data, $type = null): FlowInterface
     {
         $this->data->setStepData(
             $step->getName(),
@@ -208,7 +203,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function retraceTo(StepInterface $step)
+    public function retraceTo(StepInterface $step): array
     {
         $retracedPaths = $this->history->retraceTakenPath(
             $this->getCurrentStepName(),
@@ -225,7 +220,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function takePath(PathInterface $path, $index)
+    public function takePath(PathInterface $path, int $index)
     {
         $this->history->addTakenPath($path->getSource(), $index);
     }

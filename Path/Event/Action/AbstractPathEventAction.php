@@ -7,22 +7,22 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
+use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 
 abstract class AbstractPathEventAction implements PathEventActionInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function execute(PathEventInterface $event, array $parameters = array())
+    public function execute(PathEventInterface $event, array $parameters = [])
     {
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'logical_expression' => true,
-            ))
+            ])
             ->setNormalizer('logical_expression', function (Options $options, $value) {
                 return (bool) $value;
             })
@@ -38,8 +38,6 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
 
     /**
      * Set default parameters.
-     *
-     * @param OptionsResolver $resolver
      */
     abstract protected function setDefaultParameters(OptionsResolver $resolver);
 
@@ -51,5 +49,5 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
      *
      * @return mixed
      */
-    abstract protected function doExecute(PathEventInterface $event, array $parameters = array());
+    abstract protected function doExecute(PathEventInterface $event, array $parameters = []);
 }

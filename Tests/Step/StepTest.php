@@ -2,33 +2,29 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Step;
 
-use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
 
 class StepTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->testConfiguration = array(
-            'name' => 'Step test',
-            'type' => 'html',
-            'options' => array(
-                'data' => array(),
-                'is_first' => false,
-                'pre_step_content' => '<p>HTML content</p>',
-            ),
-        );
+        $this->testOptions = [
+            'data' => [],
+            'is_first' => false,
+            'pre_step_content' => '<p>HTML content</p>',
+        ];
 
-        $this->step = new Step($this->testConfiguration);
+        $this->step = (new HtmlStepType())->buildStep('Step test', $this->testOptions);
     }
 
-    public function testConfiguration()
+    public function testOptions()
     {
-        $this->assertEquals($this->testConfiguration, $this->step->getConfiguration());
+        $this->assertEquals($this->testOptions, $this->step->getOptions());
     }
 
     public function testType()
     {
-        $this->assertEquals('html', $this->step->getType());
+        $this->assertInstanceOf(HtmlStepType::class, $this->step->getType());
     }
 
     public function testName()

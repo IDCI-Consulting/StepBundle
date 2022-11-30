@@ -20,49 +20,45 @@ class StepTwigExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction(
                 'step_stylesheets',
-                array($this, 'stepStylesheets'),
-                array('is_safe' => array('html'))
+                [$this, 'stepStylesheets'],
+                ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'step_javascripts',
-                array($this, 'stepJavascripts'),
-                array('is_safe' => array('html', 'js'))
+                [$this, 'stepJavascripts'],
+                ['is_safe' => ['html', 'js']]
             ),
             new TwigFunction(
                 'step_breadcrumb',
-                array($this, 'stepBreadcrumb'),
-                array(
-                    'is_safe' => array('html', 'js'),
+                [$this, 'stepBreadcrumb'],
+                [
+                    'is_safe' => ['html', 'js'],
                     'needs_environment' => true,
-                )
+                ]
             ),
             new TwigFunction(
                 'pre_step_content',
-                array($this, 'preStepContent'),
-                array('is_safe' => array('html', 'js'))
+                [$this, 'preStepContent'],
+                ['is_safe' => ['html', 'js']]
             ),
             new TwigFunction(
                 'step',
-                array($this, 'step'),
-                array(
-                    'is_safe' => array('html', 'js'),
+                [$this, 'step'],
+                [
+                    'is_safe' => ['html', 'js'],
                     'needs_environment' => true,
-                )
+                ]
             ),
-        );
+        ];
     }
 
     /**
      * Returns step stylesheets.
-     *
-     * @param NavigatorInterface $navigator
-     *
-     * @return string
      */
-    public function stepStylesheets(NavigatorInterface $navigator)
+    public function stepStylesheets(NavigatorInterface $navigator): string
     {
         $configuration = $navigator->getCurrentStep()->getConfiguration();
 
@@ -76,12 +72,8 @@ class StepTwigExtension extends AbstractExtension
 
     /**
      * Returns step javascripts.
-     *
-     * @param NavigatorInterface $navigator
-     *
-     * @return string
      */
-    public function stepJavascripts(NavigatorInterface $navigator)
+    public function stepJavascripts(NavigatorInterface $navigator): string
     {
         $configuration = $navigator->getCurrentStep()->getConfiguration();
 
@@ -95,50 +87,36 @@ class StepTwigExtension extends AbstractExtension
 
     /**
      * Returns step breadcrumb.
-     *
-     * @param Breadcrumb $breadcrumb
-     *
-     * @return string
      */
-    public function stepBreadcrumb(Environment $twig, Breadcrumb $breadcrumb)
+    public function stepBreadcrumb(Environment $twig, Breadcrumb $breadcrumb): string
     {
         return $twig->render(
             '@IDCIStep/Step/breadcrumb.html.twig',
-            array(
+            [
                 'breadcrumb' => $breadcrumb,
-            )
+            ]
         );
     }
 
     /**
      * Returns the pre step content.
-     *
-     * @param NavigatorInterface $navigator
-     *
-     * @return string
      */
-    public function preStepContent(NavigatorInterface $navigator)
+    public function preStepContent(NavigatorInterface $navigator): string
     {
         return $navigator->getCurrentStep()->getPreStepContent();
     }
 
     /**
      * Returns step.
-     *
-     * @param Environment        $twig
-     * @param NavigatorInterface $navigator
-     * @param string             $theme
-     *
-     * @return string
      */
-    public function step(Environment $twig, NavigatorInterface $navigator, $theme = null)
+    public function step(Environment $twig, NavigatorInterface $navigator, string $theme = null): string
     {
         return $twig->render(
             '@IDCIStep/Step/default.html.twig',
-            array(
+            [
                 'navigator' => $navigator,
                 'theme' => $theme,
-            )
+            ]
         );
     }
 }

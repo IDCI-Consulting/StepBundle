@@ -7,16 +7,15 @@
 
 namespace IDCI\Bundle\StepBundle\Step\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use IDCI\Bundle\StepBundle\Step\Event\Action\AbstractStepEventAction;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RetrieveRequestDataStepEventAction extends AbstractStepEventAction
 {
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(StepEventInterface $event, array $parameters = array())
+    protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $requestData = get_object_vars($event->getNavigator()->getRequest());
         $data = $requestData[$parameters['property']];
@@ -34,12 +33,12 @@ class RetrieveRequestDataStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array('key'))
-            ->setDefaults(array(
+            ->setRequired(['key'])
+            ->setDefaults([
                 'property' => 'query',
                 'default' => null,
-            ))
-            ->setAllowedValues('property', array('attributes', 'request', 'query', 'server', 'files', 'cookies', 'headers'))
+            ])
+            ->setAllowedValues('property', ['attributes', 'request', 'query', 'server', 'files', 'cookies', 'headers'])
             ->setAllowedTypes('property', 'string')
             ->setAllowedTypes('key', 'string')
         ;

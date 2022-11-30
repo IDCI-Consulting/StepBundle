@@ -23,6 +23,11 @@ class MapBuilderTest extends TestCase
         $request = $this->createMock(Request::class);
         $session = $this->createMock(Session::class);
 
+        $session->expects($this->any())
+            ->method('has')
+            ->will($this->returnValue(false))
+        ;
+
         $request->expects($this->any())
             ->method('getSession')
             ->will($this->returnValue($session))
@@ -43,10 +48,10 @@ class MapBuilderTest extends TestCase
         // Default map 1
         $mapBuilder1 = $this->container
             ->get(MapBuilderFactoryInterface::class)
-            ->createNamedBuilder('Test default MAP 1', array(), array(
+            ->createNamedBuilder('Test default MAP 1', [], [
                 'display_step_in_url' => true,
                 'reset_flow_data_on_init' => true,
-            ))
+            ])
         ;
 
         $map1 = $mapBuilder1->getMap($request);

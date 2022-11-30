@@ -15,7 +15,7 @@ abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInter
     /**
      * {@inheritdoc}
      */
-    public function fetch(array $parameters = array())
+    public function fetch(array $parameters = []): array
     {
         $resolver = new OptionsResolver();
         $this->setDefaultParameters($resolver);
@@ -25,8 +25,6 @@ abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInter
 
     /**
      * Set default parameters.
-     *
-     * @param OptionsResolver $resolver
      */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
@@ -34,12 +32,6 @@ abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInter
 
     /**
      * Fetch the configuration.
-     *
-     * @param array $parameters
-     *
-     * @return array
-     *
-     * @throw  FetchConfigurationException
      */
-    abstract protected function doFetch(array $parameters = array());
+    abstract protected function doFetch(array $parameters = []): array;
 }

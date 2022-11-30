@@ -40,9 +40,9 @@ class HtmlStepFormType extends AbstractStepFormType
             $content = sprintf('<h1>%s</h1>%s', $this->translator->trans($options['label']), $content);
         }
 
-        $view->vars = array_merge($view->vars, array(
+        $view->vars = array_merge($view->vars, [
             'content' => $content,
-        ));
+        ]);
     }
 
     /**
@@ -53,8 +53,8 @@ class HtmlStepFormType extends AbstractStepFormType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefaults(array('content' => null))
-            ->setAllowedTypes('content', array('null', 'string'))
+            ->setDefaults(['content' => null])
+            ->setAllowedTypes('content', ['null', 'string'])
         ;
     }
 

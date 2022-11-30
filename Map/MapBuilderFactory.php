@@ -48,21 +48,14 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
 
     /**
      * Constructor.
-     *
-     * @param FlowRecorderInterface $flowRecorder the flow recorder
-     * @param StepBuilderInterface  $stepBuilder  the step builder
-     * @param PathBuilderInterface  $pathBuilder  the path builder
-     * @param Environment           $merger       the twig merger
-     * @param TokenStorageInterface $tokenStorage the security context
-     * @param SessionInterface      $session      the session
      */
     public function __construct(
         FlowRecorderInterface $flowRecorder,
-        StepBuilderInterface  $stepBuilder,
-        PathBuilderInterface  $pathBuilder,
-        Environment           $merger,
+        StepBuilderInterface $stepBuilder,
+        PathBuilderInterface $pathBuilder,
+        Environment $merger,
         TokenStorageInterface $tokenStorage,
-        SessionInterface      $session
+        SessionInterface $session
     ) {
         $this->flowRecorder = $flowRecorder;
         $this->stepBuilder = $stepBuilder;
@@ -75,7 +68,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createBuilder(array $data = array(), array $options = array())
+    public function createBuilder(array $data = [], array $options = []): MapBuilderInterface
     {
         return $this->createNamedBuilder('map', $data, $options);
     }
@@ -83,7 +76,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createNamedBuilder($name = null, array $data = array(), array $options = array())
+    public function createNamedBuilder(string $name = null, array $data = [], array $options = []): MapBuilderInterface
     {
         return new MapBuilder(
             $this->flowRecorder,

@@ -36,8 +36,6 @@ class PathTypeConfiguration implements PathTypeConfigurationInterface
 
     /**
      * Constructor.
-     *
-     * @param array $configuration
      */
     public function __construct(array $configuration)
     {
@@ -51,7 +49,7 @@ class PathTypeConfiguration implements PathTypeConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -59,7 +57,7 @@ class PathTypeConfiguration implements PathTypeConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): PathTypeConfigurationInterface
     {
         return $this->parent;
     }
@@ -67,7 +65,7 @@ class PathTypeConfiguration implements PathTypeConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -75,7 +73,7 @@ class PathTypeConfiguration implements PathTypeConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return $this->abstract;
     }
@@ -83,7 +81,7 @@ class PathTypeConfiguration implements PathTypeConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getExtraFormOptions()
+    public function getExtraFormOptions(): array
     {
         if (null === $this->getParent()) {
             return $this->extraFormOptions;

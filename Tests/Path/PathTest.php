@@ -2,70 +2,47 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Path;
 
-use IDCI\Bundle\StepBundle\Path\Path;
-use IDCI\Bundle\StepBundle\Step\StepInterface;
+use IDCI\Bundle\StepBundle\Path\Type\SinglePathType;
+use IDCI\Bundle\StepBundle\Step\Step;
+use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
 
 class PathTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->testConfiguration = array(
-            'type' => 'single',
-            'options' => array(),
-        );
+        $step1 = new Step('step1', new HtmlStepType());
+        $step2 = new Step('step2', new HtmlStepType());
 
-        $this->path = new Path($this->testConfiguration);
+        $steps = [
+            'step1' => $step1,
+            'step2' => $step2,
+        ];
+
+        $this->testOptions = [
+            'source' => 'step1',
+            'destination' => 'step2',
+        ];
+
+        $this->path = (new SinglePathType())->buildPath($steps, $this->testOptions);
     }
 
-    public function testConfiguration()
+    public function testOptions()
     {
-        $this->assertEquals($this->testConfiguration, $this->path->getConfiguration());
+        $this->assertEquals($this->testOptions, $this->path->getOptions());
     }
 
     public function testType()
     {
-        $this->assertEquals('single', $this->path->getType());
+        $this->assertInstanceOf(SinglePathType::class, $this->path->getType());
     }
 
     public function testSource()
     {
-        $step = $this->createMock(StepInterface::class);
-        $step
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('step1'))
-        ;
-        $this->path->setSource($step);
-
         $this->assertEquals('step1', $this->path->getSource()->getName());
     }
 
     public function testDestination()
     {
-        $step1 = $this->createMock(StepInterface::class);
-        $step1
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('step1'))
-        ;
-
-        $step2 = $this->createMock(StepInterface::class);
-        $step2
-            ->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('step2'))
-        ;
-
-        $this->path
-            ->addDestination($step1)
-            ->addDestination($step2)
-        ;
-
-        $this->assertEquals(2, count($this->path->getDestinations()));
-    }
-
-    public function testOptions()
-    {
-        $this->assertEquals(array(), $this->path->getOptions());
+        $this->assertEquals(1, count($this->path->getDestinations()));
     }
 }

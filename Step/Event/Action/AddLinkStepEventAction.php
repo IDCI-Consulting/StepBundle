@@ -16,7 +16,7 @@ class AddLinkStepEventAction extends AbstractStepEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(StepEventInterface $event, array $parameters = array())
+    protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $form = $event->getForm();
 
@@ -33,9 +33,9 @@ class AddLinkStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(array(
-                'link_options' => array(),
-            ))
+            ->setDefaults([
+                'link_options' => [],
+            ])
         ;
     }
 }

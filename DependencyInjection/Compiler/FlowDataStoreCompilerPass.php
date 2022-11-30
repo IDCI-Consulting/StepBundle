@@ -7,8 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class FlowDataStoreCompilerPass implements CompilerPassInterface
@@ -25,15 +25,9 @@ class FlowDataStoreCompilerPass implements CompilerPassInterface
         $registryDefinition = $container->findDefinition('idci_step.flow.data_store_registry');
         foreach ($container->findTaggedServiceIds('idci_step.flow.data_store') as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias = isset($attributes['alias'])
-                    ? $attributes['alias']
-                    : $id
-                ;
+                $alias = isset($attributes['alias']) ? $attributes['alias'] : $id;
 
-                $registryDefinition->addMethodCall(
-                    'setStore',
-                    array($alias, new Reference($id))
-                );
+                $registryDefinition->addMethodCall('setStore', [$alias, new Reference($id)]);
             }
         }
     }

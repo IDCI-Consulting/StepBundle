@@ -9,9 +9,9 @@
 
 namespace IDCI\Bundle\StepBundle\Navigation;
 
-use Symfony\Component\HttpFoundation\Request;
-use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\ExtraFormBundle\Configuration\Fetcher\ConfigurationFetcherInterface;
+use IDCI\Bundle\StepBundle\Map\MapInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 interface NavigatorFactoryInterface
 {
@@ -23,14 +23,12 @@ interface NavigatorFactoryInterface
      * @param array the fetcher parameters
      * @param array the navigation data
      * @param bool whether or not to do the navigation during creation
-     *
-     * @return NavigatorInterface
      */
     public function createNavigator(
         Request $request,
         $configuration,
-        array $parameters = array(),
-        array $data = array(),
-        $navigate = true
-    );
+        array $parameters = [],
+        array $data = [],
+        bool $navigate = true
+    ): NavigatorInterface;
 }

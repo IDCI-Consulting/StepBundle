@@ -9,20 +9,20 @@ class FlowDataTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->flowData = new FlowData(
-            array(),
-            array(),
-            array()
+            [],
+            [],
+            []
         );
     }
 
     public function testData()
     {
-        $data = array(
-            'step1' => array(
+        $data = [
+            'step1' => [
                 'firstname' => 'John',
                 'lastname' => 'DOE',
-            ),
-        );
+            ],
+        ];
 
         $this->flowData->setData($data);
         $this->flowData->setRemindedData($data);
@@ -35,15 +35,15 @@ class FlowDataTest extends \PHPUnit_Framework_TestCase
 
     public function testStepData()
     {
-        $step1Data = array(
+        $step1Data = [
             'firstname' => 'John',
             'lastname' => 'DOE',
-        );
+        ];
 
-        $step2Data = array(
+        $step2Data = [
             'phonenumber' => '0123456789',
             'age' => '42',
-        );
+        ];
 
         $this->flowData
             ->setStepData('step1', $step1Data)

@@ -7,8 +7,8 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class MergerEnvironmentCompilerPass implements CompilerPassInterface
@@ -26,9 +26,9 @@ class MergerEnvironmentCompilerPass implements CompilerPassInterface
         // afterward. If not, the globals from the extensions will never
         // be registered.
         $calls = $definition->getMethodCalls();
-        $definition->setMethodCalls(array());
+        $definition->setMethodCalls([]);
         foreach ($container->findTaggedServiceIds('idci_step.merger.extension') as $id => $attributes) {
-            $definition->addMethodCall('addExtension', array(new Reference($id)));
+            $definition->addMethodCall('addExtension', [new Reference($id)]);
         }
         $definition->setMethodCalls(array_merge($definition->getMethodCalls(), $calls));
     }

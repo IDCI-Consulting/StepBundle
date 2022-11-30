@@ -2,10 +2,10 @@
 
 namespace IDCI\Bundle\StepBundle\Controller;
 
-use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistryInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
+use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -19,15 +19,9 @@ class ApiStepEventActionConfigurationController extends AbstractFOSRestControlle
      * Retrieve step event actions configurations
      *
      * @Get("/step-event-actions-configurations.{_format}")
-     *
-     * @param string $_format
-     *
-     * @return Response
      */
-    public function getStepEventActionConfigurationsAction(
-        $_format,
-        StepEventActionConfigurationRegistryInterface $registry
-    ) {
+    public function getStepEventActionConfigurationsAction(string $_format, StepEventActionConfigurationRegistryInterface $registry): Response
+    {
         $view = View::create()->setFormat($_format);
         $configurations = $registry->getConfigurations();
 

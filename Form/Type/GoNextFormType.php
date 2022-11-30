@@ -48,8 +48,8 @@ class GoNextFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array('path_index'))
-            ->setAllowedTypes('path_index', array('integer'))
+            ->setRequired(['path_index'])
+            ->setAllowedTypes('path_index', ['integer'])
         ;
     }
 

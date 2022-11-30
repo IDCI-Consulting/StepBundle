@@ -7,39 +7,41 @@
 
 namespace IDCI\Bundle\StepBundle\Step;
 
+use IDCI\Bundle\StepBundle\Step\Type\StepTypeInterface;
+
 class Step implements StepInterface
 {
     /**
-     * The configuration of the step.
-     *
+     * @var StepTypeInterface
+     */
+    protected $type;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @var array
      */
-    protected $configuration;
+    protected $options;
 
     /**
      * Constructor.
-     *
-     * @param array $configuration the configuration
      */
-    public function __construct(array $configuration = array())
+    public function __construct(string $name, StepTypeInterface $type, array $options = [])
     {
-        $this->configuration = $configuration;
+        $this->name = $name;
+        $this->type = $type;
+        $this->options = $options;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function setOptions($options): StepInterface
     {
-        return $this->configuration;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOptions($options)
-    {
-        $this->configuration['options'] = $options;
+        $this->options = $options;
 
         return $this;
     }
@@ -47,62 +49,56 @@ class Step implements StepInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getOptions(): array
     {
-        return $this->configuration['options'];
+        return $this->options;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
-        return $this->configuration['name'];
+        return $this->name;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isFirst()
+    public function isFirst(): bool
     {
-        return $this->configuration['options']['is_first'];
+        return $this->options['is_first'];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): StepTypeInterface
     {
-        return $this->configuration['type'];
+        return $this->type;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): ?array
     {
-        return isset($this->configuration['options']['data']) ?
-            $this->configuration['options']['data'] :
-            null
-        ;
+        return isset($this->options['data']) ? $this->options['data'] : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPreStepContent()
+    public function getPreStepContent(): ?string
     {
-        return isset($this->configuration['options']['pre_step_content']) ?
-            $this->configuration['options']['pre_step_content'] :
-            null
-        ;
+        return isset($this->options['pre_step_content']) ? $this->options['pre_step_content'] : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDataTypeMapping()
+    public function getDataTypeMapping(): array
     {
-        return $this->getType()->getDataTypeMapping($this->configuration['options']);
+        return $this->getType()->getDataTypeMapping($this->options);
     }
 }

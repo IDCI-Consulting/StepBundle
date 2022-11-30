@@ -7,46 +7,34 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Event\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
-use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
 use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Path\Event\PathEventInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PurgeFlowDataPathEventAction extends AbstractPathEventAction
 {
-    public static $flowDataTypeMapping = array(
+    public static $flowDataTypeMapping = [
         'data' => null,
         'reminded_data' => FlowData::TYPE_REMINDED,
         'retrieved_data' => FlowData::TYPE_RETRIEVED,
-    );
+    ];
 
     /**
      * Returns whether the flow data type is valid or not.
-     *
-     * @param string $type
-     *
-     * @return bool
      */
-    protected function isValidFlowDataType($type)
+    protected function isValidFlowDataType(string $type): bool
     {
         return in_array($type, array_keys(self::$flowDataTypeMapping));
     }
 
     /**
      * Returns the flow data type.
-     *
-     * @param string $type
-     *
-     * @return string
      */
-    protected function getFlowDataType($type)
+    protected function getFlowDataType(string $type): string
     {
         if (!$this->isValidFlowDataType($type)) {
-            throw new \UnexpectedValueException(sprintf(
-                'The flow data type "%s" doesn\'t exist (valid flow data types are: "%s")',
-                $type,
-                implode('", "', array_keys(self::$flowDataTypeMapping))
-            ));
+            throw new \UnexpectedValueException(sprintf('The flow data type "%s" doesn\'t exist (valid flow data types are: "%s")', $type, implode('", "', array_keys(self::$flowDataTypeMapping))));
         }
 
         return self::$flowDataTypeMapping[$type];
@@ -55,12 +43,12 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(PathEventInterface $event, array $parameters = array())
+    protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         foreach ($parameters['steps'] as $stepName => $dataTypes) {
             foreach ($dataTypes as $type => $keys) {
                 if (!is_array($keys)) {
-                    $keys = array($keys);
+                    $keys = [$keys];
                 }
 
                 try {
@@ -78,7 +66,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
                             }
                         }
                     } else {
-                        $stepData = array();
+                        $stepData = [];
                     }
 
                     $event
@@ -102,26 +90,19 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(array(
+            ->setRequired([
                 'steps',
-            ))
-            ->setAllowedTypes('steps', array('array'))
+            ])
+            ->setAllowedTypes('steps', ['array'])
             ->setNormalizer('steps', function (Options $options, $value) {
                 foreach ($value as $stepName => $dataTypes) {
                     if (!is_array($dataTypes)) {
-                        throw new \UnexpectedValueException(sprintf(
-                            'The data type of the step "%s" is not an array',
-                            $stepName
-                        ));
+                        throw new \UnexpectedValueException(sprintf('The data type of the step "%s" is not an array', $stepName));
                     } else {
                         foreach ($dataTypes as $type => $keys) {
                             $this->getFlowDataType($type);
                             if (!is_array($keys)) {
-                                throw new \UnexpectedValueException(sprintf(
-                                    'The purge defined field "%s:%s" must be an array',
-                                    $stepName,
-                                    $type
-                                ));
+                                throw new \UnexpectedValueException(sprintf('The purge defined field "%s:%s" must be an array', $stepName, $type));
                             }
                         }
                     }
