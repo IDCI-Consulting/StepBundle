@@ -95,10 +95,8 @@ interface FlowInterface
      * Retrace the flow to a step.
      *
      * @param StepInterface $step the target step
-     *
-     * @return array The retraced paths
      */
-    public function retraceTo(StepInterface $step): array;
+    public function retraceTo(StepInterface $step);
 
     /**
      * Take a path.

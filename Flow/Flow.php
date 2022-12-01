@@ -203,7 +203,7 @@ class Flow implements FlowInterface
     /**
      * {@inheritdoc}
      */
-    public function retraceTo(StepInterface $step): array
+    public function retraceTo(StepInterface $step)
     {
         $retracedPaths = $this->history->retraceTakenPath(
             $this->getCurrentStepName(),
