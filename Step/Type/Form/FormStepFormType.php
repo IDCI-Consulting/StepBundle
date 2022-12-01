@@ -19,11 +19,7 @@ class FormStepFormType extends AbstractStepFormType
     {
         foreach ($options['builder']->all() as $fieldName => $fieldBuilder) {
             $fieldFormTypeClass = get_class($fieldBuilder->getType()->getInnerType());
-            $builder->add(
-                $fieldName,
-                $fieldFormTypeClass,
-                $fieldBuilder->getOptions()
-            );
+            $builder->add($fieldName, $fieldFormTypeClass, $fieldBuilder->getOptions());
         }
     }
 
