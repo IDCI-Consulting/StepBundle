@@ -21,11 +21,8 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     {
         $formData = $event->getData();
         $step = $event->getNavigator()->getCurrentStep();
-        $configuration = $step->getConfiguration();
 
-        if (empty($formData) ||
-            $configuration['type'] instanceof FormStepType && empty($formData['_content'])
-        ) {
+        if (empty($formData) || $step->getType() instanceof FormStepType && empty($formData['_content'])) {
             return;
         }
 
@@ -40,7 +37,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
             }
 
             $transformer = sprintf('transform%s', Inflector::classify($method));
-            if ($configuration['type'] instanceof FormStepType) {
+            if ($step->getType() instanceof FormStepType) {
                 $formData['_content'][$destination] = forward_static_call_array(
                     [$this, $transformer],
                     [$formData['_content'][$field], $options]

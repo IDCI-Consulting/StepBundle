@@ -60,12 +60,12 @@ class StepTwigExtension extends AbstractExtension
      */
     public function stepStylesheets(NavigatorInterface $navigator): string
     {
-        $configuration = $navigator->getCurrentStep()->getConfiguration();
+        $options = $navigator->getCurrentStep()->getOptions();
 
-        if (null !== $configuration['options']['css']) {
+        if (null !== $options ['css']) {
             return sprintf(
                 '<style type="text/css">%s</style>',
-                $configuration['options']['css']
+                $options['css']
             );
         }
     }
@@ -75,12 +75,12 @@ class StepTwigExtension extends AbstractExtension
      */
     public function stepJavascripts(NavigatorInterface $navigator): string
     {
-        $configuration = $navigator->getCurrentStep()->getConfiguration();
+        $options = $navigator->getCurrentStep()->getOptions();
 
-        if (null !== $configuration['options']['js']) {
+        if (null !== $options['js']) {
             return sprintf(
                 '<script type="text/javascript">%s</script>',
-                $configuration['options']['js']
+                $options['js']
             );
         }
     }
@@ -101,7 +101,7 @@ class StepTwigExtension extends AbstractExtension
     /**
      * Returns the pre step content.
      */
-    public function preStepContent(NavigatorInterface $navigator): string
+    public function preStepContent(NavigatorInterface $navigator): ?string
     {
         return $navigator->getCurrentStep()->getPreStepContent();
     }

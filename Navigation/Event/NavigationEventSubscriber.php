@@ -118,22 +118,22 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $map = $this->navigator->getMap();
         $currentStep = $this->navigator->getCurrentStep();
-        $stepConfiguration = $currentStep->getConfiguration();
+        $stepOptions = $currentStep->getOptions();
 
         // Add path links as submit input.
         // Do not add path links on steps if this is specified, this allow dynamic changes.
-        if (!$stepConfiguration['options']['prevent_next']) {
+        if (!$stepOptions['prevent_next']) {
             foreach ($this->navigator->getAvailablePaths() as $i => $path) {
-                $pathConfiguration = $path->getConfiguration();
+                $pathOptions = $path->getOptions();
 
                 $form->add(
                     sprintf('_path_%d', $i),
-                    $pathConfiguration['options']['type'],
+                    $pathOptions['type'],
                     array_replace_recursive(
                         [
                             'attr' => ['class' => 'idci_step_navigation_next'],
                         ],
-                        $pathConfiguration['options']['next_options']
+                        $pathOptions['next_options']
                     )
                 );
             }
@@ -141,9 +141,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
         // Add back link as submit input.
         // Do not add back link on steps if this is specified, this allow dynamic changes.
-        if ($currentStep->getName() != $map->getFirstStepName() &&
-            !$stepConfiguration['options']['prevent_previous']
-        ) {
+        if ($currentStep->getName() != $map->getFirstStepName() && !$stepOptions['prevent_previous']) {
             $form->add(
                 '_back',
                 SubmitType::class,
@@ -155,7 +153,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                         ],
                         'validation_groups' => false,
                     ],
-                    $stepConfiguration['options']['previous_options']
+                    $stepOptions['previous_options']
                 )
             );
         }
@@ -169,8 +167,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $retrievedData = [];
 
         $step = $this->navigator->getCurrentStep();
-        $configuration = $step->getConfiguration();
-        $events = $configuration['options']['events'];
+        $options = $step->getOptions();
+        $events = $options['events'];
 
         if (isset($events[$name])) {
             foreach ($events[$name] as $configuration) {
@@ -231,8 +229,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 continue;
             }
 
-            $configuration = $path->getConfiguration();
-            $events = $configuration['options']['events'];
+            $options = $path->getOptions();
+            $events = $options['events'];
 
             if (isset($events[$name])) {
                 foreach ($events[$name] as $configuration) {
@@ -324,8 +322,8 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                 $this->navigator->goBack($data['_back']);
             }
         } else {
-            $stepConfiguration = $this->navigator->getCurrentStep()->getConfiguration();
-            if ($stepConfiguration['options']['prevent_next']) {
+            $stepOptions = $this->navigator->getCurrentStep()->getOptions();
+            if ($stepOptions['prevent_next']) {
                 throw new \LogicException(sprintf('A disable path has been clicked'));
             }
         }
@@ -432,8 +430,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             foreach ($value as $k => $v) {
                 $value[$k] = $this->mergeValue($v, $vars);
             }
-
-            // Handle object case.
+        // Handle object case.
         } elseif (is_object($value)) {
             $class = new \ReflectionClass($value);
             $properties = $class->getProperties();
@@ -449,8 +446,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     )
                 );
             }
-
-            // Handle string case.
+        // Handle string case.
         } elseif (is_string($value)) {
             $template = $this->merger->createTemplate($value);
             $value = $template->render($vars);

@@ -120,12 +120,9 @@ class NavigatorType extends AbstractType
     protected function buildStep(FormBuilderInterface $builder, array $options)
     {
         $currentStep = $options['navigator']->getCurrentStep();
-        $configuration = $currentStep->getConfiguration();
+        $options = $currentStep->getOptions();
 
-        $currentStep->getType()->buildNavigationStepForm(
-            $builder,
-            $configuration['options']
-        );
+        $currentStep->getType()->buildNavigationStepForm($builder, $options);
     }
 
     /**

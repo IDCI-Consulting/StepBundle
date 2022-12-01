@@ -226,11 +226,9 @@ class Navigator implements NavigatorInterface
      */
     protected function getFormBuilder(): FormBuilderInterface
     {
-        return $this->formFactory->createBuilder(
-            NavigatorType::class,
-            null,
-            ['navigator' => $this]
-        );
+        return $this->formFactory->createBuilder(NavigatorType::class, null, [
+            'navigator' => $this
+        ]);
     }
 
     /**

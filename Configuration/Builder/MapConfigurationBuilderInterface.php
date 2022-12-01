@@ -7,6 +7,7 @@
 
 namespace IDCI\Bundle\StepBundle\Configuration\Builder;
 
+use IDCI\Bundle\StepBundle\Map\MapInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface MapConfigurationBuilderInterface
@@ -14,5 +15,5 @@ interface MapConfigurationBuilderInterface
     /**
      * Build the configuration.
      */
-    public function build(Request $request, array $parameters = []): array;
+    public function build(Request $request, array $parameters = []): MapInterface;
 }

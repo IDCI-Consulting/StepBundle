@@ -32,7 +32,7 @@ class HtmlStepFormType extends AbstractStepFormType
         parent::buildView($view, $form, $options);
 
         $content = $options['content'];
-        if (null !== $form->getData('content')) {
+        if (is_string($form->getData('content')) && !empty($form->getData('content'))) {
             $content = $form->getData('content');
         }
 

@@ -58,7 +58,7 @@ class Map implements MapInterface
     /**
      * Returns the first step name.
      */
-    public function getFirstStepName(): string
+    public function getFirstStepName(): ?string
     {
         return $this->configuration['options']['first_step_name'];
     }
@@ -142,7 +142,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getStep(string $name): ?StepInterface
+    public function getStep(string $name): StepInterface
     {
         if (!$this->hasStep($name)) {
             throw new StepNotFoundException($name, $this->getName());
@@ -170,7 +170,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getFirstStep(): StepInterface
+    public function getFirstStep(): ?StepInterface
     {
         return $this->getStep($this->getFirstStepName());
     }
@@ -209,7 +209,7 @@ class Map implements MapInterface
     /**
      * {@inheritdoc}
      */
-    public function getFormAction(): string
+    public function getFormAction(): ?string
     {
         return $this->configuration['options']['form_action'];
     }

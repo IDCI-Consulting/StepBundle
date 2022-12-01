@@ -55,7 +55,7 @@ interface MapInterface
     /**
      * Returns a step by its name if exists.
      */
-    public function getStep(string $name): ?StepInterface;
+    public function getStep(string $name): StepInterface;
 
     /**
      * Returns the steps.
@@ -70,7 +70,7 @@ interface MapInterface
     /**
      * Returns the first step.
      */
-    public function getFirstStep(): StepInterface;
+    public function getFirstStep(): ?StepInterface;
 
     /**
      * Returns the paths.

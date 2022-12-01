@@ -20,11 +20,10 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $step = $event->getNavigator()->getCurrentStep();
-        $configuration = $step->getConfiguration();
         $data = $parameters['fields'];
         $form = $event->getForm();
 
-        if ($configuration['type'] instanceof FormStepType) {
+        if ($step->getType() instanceof FormStepType) {
             $data = array_replace_recursive(
                 $event->getData(),
                 ['_content' => $data]
