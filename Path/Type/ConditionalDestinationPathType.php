@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Path\Type;
 use IDCI\Bundle\StepBundle\ConditionalRule\ConditionalRuleRegistryInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
@@ -28,9 +28,9 @@ class ConditionalDestinationPathType extends AbstractPathType
     private $tokenStorage;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * @var ConditionalRuleRegistryInterface
@@ -43,12 +43,12 @@ class ConditionalDestinationPathType extends AbstractPathType
     public function __construct(
         Environment $merger,
         TokenStorageInterface $tokenStorage,
-        SessionInterface $session,
+        RequestStack $requestStack,
         ConditionalRuleRegistryInterface $conditionalRuleRegistry
     ) {
         $this->merger = $merger;
         $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->conditionalRuleRegistry = $conditionalRuleRegistry;
     }
 
@@ -110,7 +110,7 @@ class ConditionalDestinationPathType extends AbstractPathType
             $template = $this->merger->createTemplate($stopNavigationRules);
             $rules = $template->render([
                 'user' => $user,
-                'session' => $this->session->all(),
+                'session' => $this->requestStack->getSession()->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
             ]);
 
@@ -128,7 +128,7 @@ class ConditionalDestinationPathType extends AbstractPathType
             $template = $this->merger->createTemplate($mergedRules);
             $mergedRules = $template->render([
                 'user' => $user,
-                'session' => $this->session->all(),
+                'session' => $this->requestStack->getSession()->all(),
                 'flow_data' => $navigator->getFlow()->getData(),
             ]);
 

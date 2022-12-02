@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
@@ -43,9 +43,9 @@ class NavigatorType extends AbstractType
     private $tokenStorage;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * Constructor.
@@ -55,13 +55,13 @@ class NavigatorType extends AbstractType
         PathEventActionRegistryInterface $pathEventActionRegistry,
         Environment $merger,
         TokenStorageInterface $tokenStorage,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->stepEventActionRegistry = $stepEventActionRegistry;
         $this->pathEventActionRegistry = $pathEventActionRegistry;
         $this->merger = $merger;
         $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -110,7 +110,7 @@ class NavigatorType extends AbstractType
             $this->pathEventActionRegistry,
             $this->merger,
             $this->tokenStorage,
-            $this->session
+            $this->requestStack->getSession()
         ));
     }
 
@@ -120,9 +120,10 @@ class NavigatorType extends AbstractType
     protected function buildStep(FormBuilderInterface $builder, array $options)
     {
         $currentStep = $options['navigator']->getCurrentStep();
-        $options = $currentStep->getOptions();
+        $currentStepOptions = $currentStep->getOptions();
+        //$currentStepOptions['data'] = $options['navigator']->getCurrentStepData();
 
-        $currentStep->getType()->buildNavigationStepForm($builder, $options);
+        $currentStep->getType()->buildNavigationStepForm($builder, $currentStepOptions);
     }
 
     /**
@@ -139,7 +140,7 @@ class NavigatorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'idci_step_navigator';
     }

@@ -10,7 +10,7 @@ namespace IDCI\Bundle\StepBundle\Map;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
 
@@ -42,9 +42,9 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     private $tokenStorage;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * Constructor.
@@ -55,14 +55,14 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         PathBuilderInterface $pathBuilder,
         Environment $merger,
         TokenStorageInterface $tokenStorage,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->flowRecorder = $flowRecorder;
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
         $this->merger = $merger;
         $this->tokenStorage = $tokenStorage;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -84,7 +84,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
             $this->pathBuilder,
             $this->merger,
             $this->tokenStorage,
-            $this->session,
+            $this->requestStack->getSession(),
             $name,
             $data,
             $options

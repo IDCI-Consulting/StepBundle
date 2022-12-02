@@ -19,7 +19,12 @@ class FormStepFormType extends AbstractStepFormType
     {
         foreach ($options['builder']->all() as $fieldName => $fieldBuilder) {
             $fieldFormTypeClass = get_class($fieldBuilder->getType()->getInnerType());
-            $builder->add($fieldName, $fieldFormTypeClass, $fieldBuilder->getOptions());
+            $fieldOptions = $fieldBuilder->getOptions();
+            if (isset($options['data'][$fieldName])) {
+               // $fieldOptions['data'] = $options['data'][$fieldName];
+            }
+
+            $builder->add($fieldName, $fieldFormTypeClass, $fieldOptions);
         }
     }
 
@@ -39,7 +44,7 @@ class FormStepFormType extends AbstractStepFormType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'idci_step_step_form_form';
     }

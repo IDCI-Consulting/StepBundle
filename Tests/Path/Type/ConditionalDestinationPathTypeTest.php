@@ -9,6 +9,7 @@ use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Type\ConditionalDestinationPathType;
 use IDCI\Bundle\StepBundle\Step\Step;
 use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
@@ -29,13 +30,26 @@ class ConditionalDestinationPathTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(null))
         ;
 
+        $session = $this->createMock(SessionInterface::class);
+        $requestStack = $this
+            ->getMockBuilder(RequestStack::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getSession'])
+            ->getMock()
+        ;
+        $requestStack
+            ->expects($this->any())
+            ->method('getSession')
+            ->will($this->returnValue($session))
+        ;
+
         $twigStringLoader = new \Twig_Loader_Array();
         $twigEnvironment = new Environment($twigStringLoader, []);
 
         $this->pathType = new ConditionalDestinationPathType(
             $twigEnvironment,
             $tokenStorage,
-            $this->createMock(SessionInterface::class),
+            $requestStack,
             $this->createMock(ConditionalRuleRegistryInterface::class)
         );
     }

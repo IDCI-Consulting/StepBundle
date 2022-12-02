@@ -61,7 +61,7 @@ class HtmlStepFormType extends AbstractStepFormType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'idci_step_step_form_html';
     }

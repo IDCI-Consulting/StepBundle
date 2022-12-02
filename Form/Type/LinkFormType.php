@@ -49,7 +49,7 @@ class LinkFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'idci_step_action_form_link';
     }
@@ -57,7 +57,7 @@ class LinkFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return $this->getName();
     }

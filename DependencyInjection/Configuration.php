@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('idci_step');
 
@@ -87,11 +87,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * addStepTypesNode.
-     *
-     * @return ArrayNodeDefinition|NodeDefinition
+     * Add step types node.
      */
-    protected function addStepTypesNode()
+    protected function addStepTypesNode(): NodeDefinition
     {
         $builder = new TreeBuilder('step_types');
         $node = $builder->getRootNode();
@@ -114,11 +112,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * addPathTypesNode.
-     *
-     * @return ArrayNodeDefinition|NodeDefinition
+     * Add path types node.
      */
-    protected function addPathTypesNode()
+    protected function addPathTypesNode(): NodeDefinition
     {
         $invalidPathTypeName = function ($types) {
             foreach ($types as $key => $type) {
@@ -155,11 +151,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * addPathEventActionsNode.
-     *
-     * @return ArrayNodeDefinition|NodeDefinition
+     * Add path event actions node.
      */
-    protected function addPathEventActionsNode()
+    protected function addPathEventActionsNode(): NodeDefinition
     {
         $builder = new TreeBuilder('path_event_actions');
         $node = $builder->getRootNode();
@@ -182,11 +176,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * addStepEventActionsNode.
-     *
-     * @return ArrayNodeDefinition|NodeDefinition
+     * Add step event actions node.
      */
-    protected function addStepEventActionsNode()
+    protected function addStepEventActionsNode(): NodeDefinition
     {
         $builder = new TreeBuilder('step_event_actions');
         $node = $builder->getRootNode();

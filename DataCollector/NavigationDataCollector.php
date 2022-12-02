@@ -49,7 +49,7 @@ class NavigationDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'idci_step.navigation';
     }

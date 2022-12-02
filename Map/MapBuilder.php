@@ -231,11 +231,7 @@ class MapBuilder implements MapBuilderInterface
         foreach ($this->steps as $name => $parameters) {
             $stepOptions = $this->merge($parameters['options'], $vars);
 
-            $step = $this->stepBuilder->build(
-                $name,
-                $parameters['type'],
-                $stepOptions
-            );
+            $step = $this->stepBuilder->build($name, $parameters['type'], $stepOptions);
 
             if (null !== $step) {
                 $map->addStep($name, $step);

@@ -39,7 +39,7 @@ class JsConfirmFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): string
     {
         return HiddenType::class;
     }
@@ -60,7 +60,7 @@ class JsConfirmFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'idci_step_action_form_js_confirm';
     }
@@ -68,7 +68,7 @@ class JsConfirmFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return $this->getName();
     }

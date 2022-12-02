@@ -10,7 +10,6 @@ namespace IDCI\Bundle\StepBundle\Path\Event;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormInterface;
 
 class PathEvent implements PathEventInterface
 {
