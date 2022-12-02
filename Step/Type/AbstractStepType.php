@@ -41,6 +41,7 @@ abstract class AbstractStepType implements StepTypeInterface
                 'attr' => [],
                 'events' => [],
                 'serialization_mapping' => null,
+                'save_content' => false,
             ])
             ->setAllowedTypes('title', ['null', 'string'])
             ->setAllowedTypes('display_title', ['bool'])
@@ -57,6 +58,7 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setAllowedTypes('attr', ['array'])
             ->setAllowedTypes('events', ['array'])
             ->setAllowedTypes('serialization_mapping', ['null', 'array'])
+            ->setAllowedTypes('save_content',  ['bool', 'string'])
             ->setNormalizer('is_first', function (Options $options, $value) {
                 return (bool) $value;
             })

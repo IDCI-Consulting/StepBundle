@@ -351,7 +351,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             }
         }
 
-        if ($form->has('_content') && $form->isValid()) {
+        if ($this->navigator->getCurrentStep()->getOptions()['save_content'] &&  $form->has('_content') && $form->isValid()) {
             $this->navigator->setCurrentStepData($form->get('_content')->getData());
         }
     }
