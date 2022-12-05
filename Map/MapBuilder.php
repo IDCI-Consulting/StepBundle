@@ -11,11 +11,11 @@ namespace IDCI\Bundle\StepBundle\Map;
 use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
+use IDCI\Bundle\StepBundle\Twig\Environment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Twig\Environment;
 
 class MapBuilder implements MapBuilderInterface
 {

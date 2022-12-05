@@ -214,14 +214,6 @@ services:
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollectorInterface: '@IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector'
 
 
-    # FormType
-    IDCI\Bundle\StepBundle\Form\Type\StepEditorType:
-        tags:
-            - { name: form.type, alias: step_editor }
-            - { name: idci_asset_loader.asset_provider, alias: step_editor }
-    IDCI\Bundle\StepBundle\Form\Type\StepEditorTypeInterface: '@IDCI\Bundle\StepBundle\Form\Type\StepEditorType'
-
-
     # Navigator
     IDCI\Bundle\StepBundle\Navigation\NavigatorType:
         tags:
@@ -253,10 +245,7 @@ services:
 
 
     # Twig
+    IDCI\Bundle\StepBundle\Twig\Environment:
+        arguments: ['@twig.loader.chain']
+
     IDCI\Bundle\StepBundle\Twig\StepTwigExtension: ~
-
-
-    # Asset Provider
-    IDCI\Bundle\StepBundle\AssetProvider\MapAssetProvider:
-        tags:
-            - { name: idci_asset_loader.asset_provider, alias: map_diagram }

@@ -7,11 +7,11 @@ use IDCI\Bundle\StepBundle\Map\MapBuilder;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
+use IDCI\Bundle\StepBundle\Twig\Environment;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Twig\Environment;
 use Twig\Template;
 use Twig\TemplateWrapper;
 

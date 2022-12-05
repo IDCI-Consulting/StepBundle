@@ -13,6 +13,7 @@ use IDCI\Bundle\StepBundle\Path\Event\PathEvent;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Twig\Environment;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormEvent;
@@ -21,7 +22,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Twig\Environment;
 
 class NavigationEventSubscriber implements EventSubscriberInterface
 {

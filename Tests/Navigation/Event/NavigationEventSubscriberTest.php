@@ -8,9 +8,9 @@ use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Twig\Environment;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Twig\Environment;
 
 class NavigationEventSubscriberTest extends \PHPUnit_Framework_TestCase
 {

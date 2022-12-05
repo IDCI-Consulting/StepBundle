@@ -10,6 +10,7 @@ namespace IDCI\Bundle\StepBundle\Navigation;
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
+use IDCI\Bundle\StepBundle\Twig\Environment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +19,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Twig\Environment;
 
 class NavigatorType extends AbstractType
 {
