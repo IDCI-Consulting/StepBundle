@@ -20,7 +20,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $flowData = $event->getData();
-        $newData['_content'] = [];
+        $newData = [];
         foreach ($parameters['fields'] as $field => $value) {
             $newValue = $flowData['_content'][$field] ?? $value;
 
@@ -28,7 +28,11 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
                 $newValue = $value;
             }
 
-            $newData['_content'][$field] = $newValue;
+            $newData[$field] = $newValue;
+        }
+
+        if ($event->getNavigator()->getCurrentStep()->getType() instanceof FormStepType) {
+            $newData = ['_content' => $newData];
         }
 
         $event->setData($newData);
