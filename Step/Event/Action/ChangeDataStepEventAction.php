@@ -19,22 +19,19 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
      */
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
-        $step = $event->getNavigator()->getCurrentStep();
-        $data = $parameters['fields'];
-        $form = $event->getForm();
+        $flowData = $event->getData();
+        $newData['_content'] = [];
+        foreach ($parameters['fields'] as $field => $value) {
+            $newValue = $flowData['_content'][$field] ?? $value;
 
-        if ($step->getType() instanceof FormStepType) {
-            $data = array_replace_recursive(
-                $event->getData(),
-                ['_content' => $data]
-            );
+            if (true === $parameters['force']) {
+                $newValue = $value;
+            }
+
+            $newData['_content'][$field] = $newValue;
         }
 
-        $event->setData($data);
-
-        foreach ($data as $field => $newValue) {
-            $form->get($field)->setData($newValue);
-        }
+        $event->setData($newData);
 
         return true;
     }
@@ -45,8 +42,8 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(['fields' => []])
-            ->setNormalizer('fields', function (Options $options, $value) {
+            ->setDefault('force', false)->setAllowedTypes('force', ['bool'])
+            ->setDefault('fields', [])->setAllowedTypes('fields', ['array'])->setNormalizer('fields', function (Options $options, $value) {
                 foreach ($value as $k => $v) {
                     if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
                         $value[$matches['key']] = json_decode($v, true);
@@ -56,7 +53,6 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
 
                 return $value;
             })
-            ->setAllowedTypes('fields', ['array'])
         ;
     }
 }
