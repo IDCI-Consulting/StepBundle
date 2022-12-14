@@ -108,15 +108,12 @@ class MapBuilder implements MapBuilderInterface
     {
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults([
-                'form_action' => null,
-                'first_step_name' => null,
-                'final_destination' => null,
-                'display_step_in_url' => false,
-                'reset_flow_data_on_init' => false,
-            ])
-            ->setAllowedTypes('display_step_in_url', ['bool'])
-            ->setAllowedTypes('reset_flow_data_on_init', ['bool'])
+            ->setDefault('form_action', null)->setAllowedTypes('form_action', ['null', 'string'])
+            ->setDefault('first_step_name', null)->setAllowedTypes('first_step_name', ['null', 'string'])
+            ->setDefault('final_destination', null)->setAllowedTypes('final_destination', ['null', 'string'])
+            ->setDefault('footprint_salt', null)->setAllowedTypes('footprint_salt', ['null', 'string'])
+            ->setDefault('display_step_in_url', false)->setAllowedTypes('display_step_in_url', ['bool'])
+            ->setDefault('reset_flow_data_on_init', false)->setAllowedTypes('reset_flow_data_on_init', ['bool'])
         ;
 
         return $resolver->resolve($options);
@@ -265,11 +262,11 @@ class MapBuilder implements MapBuilderInterface
     }
 
     /**
-     * Generate a map unique footprint based on its name, steps and paths.
+     * Generate a map unique footprint based on its name, steps, paths and salt.
      */
     private function generateFootprint(): string
     {
-        return md5($this->name.json_encode($this->steps).json_encode($this->paths));
+        return md5($this->name.json_encode($this->steps).json_encode($this->paths).$this->getOption('footprint_salt'));
     }
 
     /**

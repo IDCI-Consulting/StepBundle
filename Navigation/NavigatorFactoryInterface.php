@@ -27,7 +27,7 @@ interface NavigatorFactoryInterface
     public function createNavigator(
         Request $request,
         $configuration,
-        array $parameters = [],
+        array $fetcherParameters = [],
         array $data = [],
         bool $navigate = true
     ): NavigatorInterface;

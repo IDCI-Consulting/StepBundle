@@ -66,7 +66,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
     public function createNavigator(
         Request $request,
         $configuration,
-        array $parameters = [],
+        array $fetcherParameters = [],
         array $data = [],
         bool $navigate = true
     ): NavigatorInterface {
@@ -75,7 +75,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         }
 
         if ($configuration instanceof ConfigurationFetcherInterface) {
-            $configuration = $configuration->fetch($parameters);
+            $configuration = $configuration->fetch($fetcherParameters);
         }
 
         if (is_array($configuration)) {
