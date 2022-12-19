@@ -43,6 +43,12 @@
                     {% endif %}
                 </span>
             </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Actions</b>
+                <span>
+                    <a href="?{{ constant('IDCI\\Bundle\\StepBundle\\Navigation\\Navigator::CLEAR_NAVIGATION_QUERY_PARAMETER_NAME') }}">Clear navigation</a>
+                </span>
+            </div>
         {% endif %}
     {% endset %}
     {% include "@WebProfiler/Profiler/toolbar_item.html.twig" with { "link": profiler_url } %}

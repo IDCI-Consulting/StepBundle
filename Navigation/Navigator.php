@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Navigator implements NavigatorInterface
 {
+    public const CLEAR_NAVIGATION_QUERY_PARAMETER_NAME = 'clear_navigation';
+
     /**
      * The current form.
      *
@@ -261,6 +263,10 @@ class Navigator implements NavigatorInterface
     {
         if ($this->logger) {
             $this->logger->startNavigation();
+        }
+
+        if ($this->request->query->has(self::CLEAR_NAVIGATION_QUERY_PARAMETER_NAME)) {
+            $this->clear();
         }
 
         $this->initFlow();
