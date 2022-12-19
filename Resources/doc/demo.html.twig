@@ -1,0 +1,28 @@
+{{ pre_step_content(navigator) }}
+{% set form = navigator.formView %}
+{{ form_start(form) }}
+    <div class="row pb-4">
+        <ol class="stepper my-5 p-0">
+            {% for i, step in navigator.map.steps %}
+                <li{% if step == navigator.currentStep %} class="active"{% endif %}>{{ step.options.title|capitalize }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+
+    <div class="row">
+        {{ form_help(form._content) }}
+        {{ form_errors(form._content) }}
+        {{ form_widget(form._content) }}
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-5 text-start">
+            {% if form._back is defined %}{{ form_widget(form._back) }}{% endif %}
+        </div>
+        <div class="col-7 text-end">
+            {% for i, path in navigator.getAvailablePaths() %}
+                {{ form_widget(attribute(form, '_path_' ~ i)) }}
+            {% endfor %}
+        </div>
+    </div>
+{{ form_end(form) }}
