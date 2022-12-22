@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Navigation\Event;
 
 use IDCI\Bundle\StepBundle\Flow\FlowData;
+use IDCI\Bundle\StepBundle\Form\Type\BackButtonType;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEvent;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
@@ -15,7 +16,6 @@ use IDCI\Bundle\StepBundle\Step\Event\StepEvent;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Twig\Environment;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -144,7 +144,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         if ($currentStep->getName() != $map->getFirstStepName() && !$stepOptions['prevent_previous']) {
             $form->add(
                 '_back',
-                SubmitType::class,
+                BackButtonType::class,
                 array_replace_recursive(
                     [
                         'attr' => [

@@ -215,7 +215,7 @@ services:
 
 
     # Navigator
-    IDCI\Bundle\StepBundle\Navigation\NavigatorType:
+    IDCI\Bundle\StepBundle\Form\Type\NavigatorType:
         tags:
             - { name: form.type }
 

@@ -7,10 +7,10 @@
 
 namespace IDCI\Bundle\StepBundle\Path\Type;
 
+use IDCI\Bundle\StepBundle\Form\Type\NextButtonType;
 use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Path;
 use IDCI\Bundle\StepBundle\Path\PathInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractPathType implements PathTypeInterface
@@ -22,7 +22,7 @@ abstract class AbstractPathType implements PathTypeInterface
     {
         $resolver
             ->setDefaults([
-                'type' => SubmitType::class,
+                'type' => NextButtonType::class,
                 'next_options' => [
                     'label' => 'Next >',
                 ],

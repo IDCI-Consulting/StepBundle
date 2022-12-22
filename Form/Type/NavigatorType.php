@@ -5,7 +5,7 @@
  * @license: MIT
  */
 
-namespace IDCI\Bundle\StepBundle\Navigation;
+namespace IDCI\Bundle\StepBundle\Form\Type;
 
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
@@ -87,7 +87,7 @@ class NavigatorType extends AbstractType
             ->add('_map_footprint', HiddenType::class, [
                 'data' => $options['navigator']->getMap()->getFootprint(),
             ])
-            ->add('_current_step', HiddenType::class, [
+            ->add('_current_step', CurrentStepHiddenType::class, [
                 'data' => $options['navigator']->getCurrentStep()->getName(),
             ])
         ;
@@ -140,8 +140,16 @@ class NavigatorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix(): string
+    public function getName(): string
     {
         return 'idci_step_navigator';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix(): string
+    {
+        return $this->getName();
     }
 }
