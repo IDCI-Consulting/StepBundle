@@ -4,12 +4,6 @@ services:
         autoconfigure: true
         public: true
 
-    # Controller
-    IDCI\Bundle\StepBundle\Controller\:
-        resource: '../../Controller'
-        public: true
-        tags: ['controller.service_arguments']
-
     # Registry
     IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry: ~
     IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistryInterface: '@IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistry'
@@ -194,11 +188,6 @@ services:
     IDCI\Bundle\StepBundle\Configuration\Worker\FormBuilderWorker:
         tags:
             - { name: idci_step.configuration.worker, alias: form_builder }
-
-    IDCI\Bundle\ExtraFormBundle\Configuration\StepWorker\ExtraFormBuilderWorker:
-        tags:
-            - { name: idci_step.configuration.worker, alias: extra_form_builder }
-
 
     # Logger
     IDCI\Bundle\StepBundle\Navigation\NavigationLogger:
