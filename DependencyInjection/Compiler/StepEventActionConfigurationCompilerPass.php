@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
-use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
 use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationInterface;
 use IDCI\Bundle\StepBundle\Step\Event\Configuration\StepEventActionConfigurationRegistryInterface;
@@ -64,17 +63,6 @@ class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
                 'setConfiguration',
                 [$alias, new Reference($this->getDefinitionName($configurationName))]
             );
-
-            $extraFormOptions[$configurationName] = $configuration['extra_form_options'];
-        }
-
-        // Check extra_form_options
-        foreach ($extraFormOptions as $name => $options) {
-            foreach ($options as $optionName => $optionValue) {
-                if (!$container->hasDefinition(sprintf('idci_extra_form.type.%s', $optionValue['extra_form_type']))) {
-                    throw new WrongExtraFormTypeOptionException($name, $optionName, sprintf('Undefined ExtraFormType "%s"', $optionValue['extra_form_type']));
-                }
-            }
         }
     }
 

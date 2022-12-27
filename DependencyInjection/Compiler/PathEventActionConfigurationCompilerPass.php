@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\DependencyInjection\Compiler;
 
-use IDCI\Bundle\ExtraFormBundle\Exception\WrongExtraFormTypeOptionException;
 use IDCI\Bundle\ExtraStepBundle\Exception\UndefinedServiceException;
 use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationInterface;
 use IDCI\Bundle\StepBundle\Path\Event\Configuration\PathEventActionConfigurationRegistryInterface;
@@ -33,7 +32,6 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
 
         $registryDefinition = $container->findDefinition(PathEventActionConfigurationRegistryInterface::class);
         $pathEventActionsConfiguration = $container->getParameter('idci_step.path_event_actions');
-        $extraFormOptions = [];
 
         foreach ($pathEventActionsConfiguration as $configurationName => $configuration) {
             $serviceDefinition = new ChildDefinition(PathEventActionConfigurationInterface::class);
@@ -64,17 +62,6 @@ class PathEventActionConfigurationCompilerPass implements CompilerPassInterface
                 'setConfiguration',
                 [$alias, new Reference($this->getDefinitionName($configurationName))]
             );
-
-            $extraFormOptions[$configurationName] = $configuration['extra_form_options'];
-        }
-
-        // Check extra_form_options
-        foreach ($extraFormOptions as $name => $options) {
-            foreach ($options as $optionName => $optionValue) {
-                if (!$container->hasDefinition(sprintf('idci_extra_form.type.%s', $optionValue['extra_form_type']))) {
-                    throw new WrongExtraFormTypeOptionException($name, $optionName, sprintf('Undefined ExtraFormType "%s"', $optionValue['extra_form_type']));
-                }
-            }
         }
     }
 
