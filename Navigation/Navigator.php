@@ -266,7 +266,10 @@ class Navigator implements NavigatorInterface
             $this->logger->startNavigation();
         }
 
-        if ($this->request->query->has(self::CLEAR_NAVIGATION_QUERY_PARAMETER_NAME)) {
+        if (
+            null !== $this->request->query &&
+            $this->request->query->has(self::CLEAR_NAVIGATION_QUERY_PARAMETER_NAME)
+        ) {
             $this->clear();
         }
 
