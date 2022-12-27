@@ -1,5 +1,4 @@
 imports:
-    - { resource: "@IDCIExtraFormBundle/Resources/config/config.yml" }
     - { resource: "@IDCIStepBundle/Resources/config/config.yml" }
 
 security:

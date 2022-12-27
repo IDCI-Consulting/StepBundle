@@ -13,7 +13,6 @@
     ],
     "require": {
         "php": "^7.2|^8.0",
-        "idci/extra-form-bundle": "dev-master",
         "jms/serializer-bundle": ">=1.0",
         "symfony/config": "^4.4|^5.3|^6.0",
         "symfony/dependency-injection": "^4.4|^5.3|^6.0",
