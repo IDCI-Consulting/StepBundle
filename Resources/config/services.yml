@@ -191,13 +191,15 @@ services:
 
     # Logger
     IDCI\Bundle\StepBundle\Navigation\NavigationLogger:
-        public:    false
+        public: false
+        arguments:
+            $container: '@service_container'
     IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface: '@IDCI\Bundle\StepBundle\Navigation\NavigationLogger'
 
 
     # DataCollector
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector:
-        public:    false
+        public: false
         tags:
             - { name: data_collector, template: '@IDCIStep/Collector/navigation', id: idci_step.navigation }
     IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollectorInterface: '@IDCI\Bundle\StepBundle\DataCollector\NavigationDataCollector'
