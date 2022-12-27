@@ -1,12 +1,9 @@
 Introduction
 ============
 
-StepBundle is a Symfony2 Bundle which allow you to simplify the creation of an
-interaction's workflow with a cybernaute.
-At first, you have to define a map and imagine every screen (web page) as a step,
-then you have to linked every steps using a path.
-We will use the navigator's metaphor during the whole documentation.
-
+StepBundle is a Symfony Bundle which allow you to simplify the creation of an interaction's workflow with a cybernaute.
+Every screen (web page) that you will need to display, will be defined as a step, and you could linked every steps using paths.
+At first, you have to define a map composed with steps and paths.
 
 ### What is a map ?
 
@@ -15,10 +12,13 @@ A map is a whole of process possibities composed of steps and paths.
 ### What is a step ?
 
 A step is a potential passage's way.
+Technicaly, It's based on Symfony form.
+
 
 ### What is a path ?
 
 A path define a ride which has a step to origin and zero or more steps to destination.
+Technicaly, It's a html button in a step to navigate to an other step.
 
 ### Legend
 
@@ -30,14 +30,10 @@ We will use diagram :
 
 ## Why use the StepBundle ?
 
-It allows to define some simple process (one step, one path) and complex (more steps
-and more conditionnals's paths) easily starting from a configuration which represents
-the map, using yml or json.
-Also, you can represente a map using directement the object's programmation but this
-is less maintainable and readable.
+It allows to define some simple process (one step, one path) and complex (more steps and more conditionnals's paths)
+easily starting from a configuration which represents the map, using yaml or json.
+Also, you can represente a map using directly the object's programmation but this is less maintainable and readable.
 
-You can use this Bundle to create a contact form, a inscription process, a survey,
-an enquiry...
-
+You can use this Bundle to create a contact form, a inscription process, a survey, an enquiry...
 
 To continue, here's a technical presentation.
