@@ -8,7 +8,7 @@ use IDCI\Bundle\StepBundle\Path\Type\SinglePathType;
 use IDCI\Bundle\StepBundle\Step\Step;
 use IDCI\Bundle\StepBundle\Step\Type\HtmlStepType;
 
-class SinglPathTypeTest extends \PHPUnit_Framework_TestCase
+class SinglePathTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
