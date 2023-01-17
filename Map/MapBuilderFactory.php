@@ -7,7 +7,6 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Twig\Environment;
@@ -16,11 +15,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class MapBuilderFactory implements MapBuilderFactoryInterface
 {
-    /**
-     * @var FlowRecorderInterface
-     */
-    private $flowRecorder;
-
     /**
      * @var StepBuilderInterface
      */
@@ -50,14 +44,12 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
      * Constructor.
      */
     public function __construct(
-        FlowRecorderInterface $flowRecorder,
         StepBuilderInterface $stepBuilder,
         PathBuilderInterface $pathBuilder,
         Environment $merger,
         TokenStorageInterface $tokenStorage,
         RequestStack $requestStack
     ) {
-        $this->flowRecorder = $flowRecorder;
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
         $this->merger = $merger;
@@ -79,7 +71,6 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
     public function createNamedBuilder(string $name = null, array $data = [], array $options = []): MapBuilderInterface
     {
         return new MapBuilder(
-            $this->flowRecorder,
             $this->stepBuilder,
             $this->pathBuilder,
             $this->merger,

@@ -8,7 +8,6 @@
 
 namespace IDCI\Bundle\StepBundle\Map;
 
-use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
 use IDCI\Bundle\StepBundle\Step\StepBuilderInterface;
 use IDCI\Bundle\StepBundle\Twig\Environment;
@@ -45,11 +44,6 @@ class MapBuilder implements MapBuilderInterface
     private $paths;
 
     /**
-     * @var FlowRecorderInterface
-     */
-    private $flowRecorder;
-
-    /**
      * @var StepBuilderInterface
      */
     private $stepBuilder;
@@ -78,7 +72,6 @@ class MapBuilder implements MapBuilderInterface
      * Creates a new map builder.
      */
     public function __construct(
-        FlowRecorderInterface $flowRecorder,
         StepBuilderInterface $stepBuilder,
         PathBuilderInterface $pathBuilder,
         Environment $merger,
@@ -91,7 +84,6 @@ class MapBuilder implements MapBuilderInterface
         $this->name = $name;
         $this->data = $data;
         $this->options = self::resolveOptions($options);
-        $this->flowRecorder = $flowRecorder;
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
         $this->merger = $merger;
@@ -218,17 +210,8 @@ class MapBuilder implements MapBuilderInterface
      */
     private function buildSteps(MapInterface $map, Request $request)
     {
-        $vars = [];
-        $flow = $this->flowRecorder->getFlow($map, $request);
-
-        if (null !== $flow) {
-            $vars['flow_data'] = $flow->getData();
-        }
-
         foreach ($this->steps as $name => $parameters) {
-            $stepOptions = $this->merge($parameters['options'], $vars);
-
-            $step = $this->stepBuilder->build($name, $parameters['type'], $stepOptions);
+            $step = $this->stepBuilder->build($name, $parameters['type'], $parameters['options']);
 
             if (null !== $step) {
                 $map->addStep($name, $step);
@@ -246,17 +229,10 @@ class MapBuilder implements MapBuilderInterface
     private function buildPaths(MapInterface $map, Request $request)
     {
         foreach ($this->paths as $parameters) {
-            $path = $this->pathBuilder->build(
-                $parameters['type'],
-                $parameters['options'],
-                $map->getSteps()
-            );
+            $path = $this->pathBuilder->build($parameters['type'], $parameters['options'], $map->getSteps());
 
             if (null !== $path) {
-                $map->addPath(
-                    $path->getSource()->getName(),
-                    $path
-                );
+                $map->addPath($path->getSource()->getName(), $path);
             }
         }
     }

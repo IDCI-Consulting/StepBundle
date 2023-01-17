@@ -2,7 +2,6 @@
 
 namespace IDCI\Bundle\StepBundle\Tests\Map;
 
-use IDCI\Bundle\StepBundle\Flow\FlowRecorderInterface;
 use IDCI\Bundle\StepBundle\Map\MapBuilder;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Path\PathBuilderInterface;
@@ -19,7 +18,6 @@ class MapBuilderTest extends TestCase
 {
     public function setUp()
     {
-        $this->flowRecorder = $this->createMock(FlowRecorderInterface::class);
         $this->stepBuilder = $this->createMock(StepBuilderInterface::class);
         $this->pathBuilder = $this->createMock(PathBuilderInterface::class);
         $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
@@ -43,7 +41,6 @@ class MapBuilderTest extends TestCase
     {
         // Map Builder options
         $mapBuilder0 = new MapBuilder(
-            $this->flowRecorder,
             $this->stepBuilder,
             $this->pathBuilder,
             $this->merger,
@@ -59,7 +56,6 @@ class MapBuilderTest extends TestCase
         $this->assertEquals(0, $map0->countSteps());
 
         $mapBuilder1 = new MapBuilder(
-            $this->flowRecorder,
             $this->stepBuilder,
             $this->pathBuilder,
             $this->merger,
