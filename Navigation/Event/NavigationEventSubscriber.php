@@ -189,18 +189,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                 $stepEvent = new StepEvent($this->navigator, $event, $stepEventData);
                 // TODO: Catch execution exceptions and handle them (clear navigator, log, stop propagation, ...)
-                $result = $action->execute(
-                    $stepEvent,
-                    $this->merge($configuration['parameters'])
-                );
+                $result = $action->execute($stepEvent, $this->merge($configuration['parameters']));
 
                 if (null !== $result) {
                     $retrievedData[$configuration['name']] = $result;
-
-                    $this->navigator->setCurrentStepData(
-                        $retrievedData,
-                        FlowData::TYPE_RETRIEVED
-                    );
+                    $this->navigator->setCurrentStepData($retrievedData, FlowData::TYPE_RETRIEVED);
                 }
 
                 if ($stepEvent->isPropagationStopped()) {
@@ -243,9 +236,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
                     if (isset($configuration['destinations'])) {
                         $destination = $path->resolveDestination($this->navigator);
 
-                        if (null === $destination ||
-                            !in_array($destination->getName(), $configuration['destinations'])
-                        ) {
+                        if (null === $destination || !in_array($destination->getName(), $configuration['destinations'])) {
                             continue;
                         }
                     }
@@ -263,18 +254,11 @@ class NavigationEventSubscriber implements EventSubscriberInterface
 
                     $pathEvent = new PathEvent($this->navigator, $event, $pathEventData, $i);
                     // TODO: Catch execution exceptions and handle them (clear navigator, log, stop propagation, ...)
-                    $result = $action->execute(
-                        $pathEvent,
-                        $this->merge($configuration['parameters'])
-                    );
+                    $result = $action->execute($pathEvent, $this->merge($configuration['parameters']));
 
                     if (null !== $result) {
                         $retrievedData[$configuration['name']] = $result;
-
-                        $this->navigator->setCurrentStepData(
-                            $retrievedData,
-                            FlowData::TYPE_RETRIEVED
-                        );
+                        $this->navigator->setCurrentStepData($retrievedData, FlowData::TYPE_RETRIEVED);
                     }
 
                     if ($pathEvent->isPropagationStopped()) {
