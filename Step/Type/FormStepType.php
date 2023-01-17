@@ -53,7 +53,6 @@ class FormStepType extends AbstractStepType
             'display_title' => $options['display_title'],
             'builder' => $options['builder'],
             'error_bubbling' => false,
-            //'data' => $options['data'],
         ]);
     }
 
