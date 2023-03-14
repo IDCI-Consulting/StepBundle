@@ -11,11 +11,11 @@ namespace IDCI\Bundle\StepBundle\DataCollector;
 use IDCI\Bundle\StepBundle\Flow\FlowInterface;
 use IDCI\Bundle\StepBundle\Map\MapInterface;
 use IDCI\Bundle\StepBundle\Navigation\NavigationLoggerInterface;
+use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-class NavigationDataCollector extends DataCollector
+class NavigationDataCollector extends AbstractDataCollector
 {
     /**
      * @var NavigationLoggerInterface
@@ -41,7 +41,7 @@ class NavigationDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }

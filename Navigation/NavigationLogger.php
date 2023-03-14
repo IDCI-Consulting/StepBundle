@@ -57,6 +57,7 @@ class NavigationLogger implements NavigationLoggerInterface
     public function startNavigation()
     {
         $this->start = microtime(true);
+
         $this->data = [
             'navigator' => null,
             'executionMS' => 0,
@@ -85,14 +86,6 @@ class NavigationLogger implements NavigationLoggerInterface
             $this->logger->info(
                 sprintf(
                     'Step navigation [%s - %s]',
-                    $navigator->getMap()->getName(),
-                    $navigator->getMap()->getFootprint()
-                ),
-                []
-            );
-            $this->logger->debug(
-                sprintf(
-                    'Step navigation [%s - %s] debug',
                     $navigator->getMap()->getName(),
                     $navigator->getMap()->getFootprint()
                 ),
