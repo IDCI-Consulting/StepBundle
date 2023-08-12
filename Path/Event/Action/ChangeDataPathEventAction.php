@@ -45,11 +45,11 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
      * Change the flow data.
      *
      * @param FlowInterface $flow  the flow data to change
-     * @param array         $path  the target path to change
+     * @param string        $path  the target path to change
      * @param array         $types the flow data types to look at
      * @param mixed         $value the value
      */
-    protected function change(FlowInterface $flow, array $path, array $types, $value)
+    protected function change(FlowInterface $flow, string $path, array $types, $value)
     {
         foreach ($types as $type) {
             $dataGetter = sprintf('get%s', ucfirst($type));
@@ -64,15 +64,19 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
     /**
      * Do the flow data change.
      *
-     * @param array $data  the flow data
+     * @param mixed $data  the flow data
      * @param array $path  the target path to change
      * @param mixed $value the value
      *
      * @return array the changed data
      */
-    protected function doChange(array $data, array $path, $value): array
+    protected function doChange($data, array $path, $value): array
     {
         $field = array_shift($path);
+
+        if (is_object($data)) {
+            $data = json_decode(json_encode($data), true);
+        }
 
         if (!isset($data[$field]) && !empty($path)) {
             $data[$field] = [];
