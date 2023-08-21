@@ -24,8 +24,29 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
         foreach ($parameters['fields'] as $field => $value) {
             $newValue = $flowData['_content'][$field] ?? $value;
 
-            if (true === $parameters['force']) {
-                $newValue = $value;
+            switch ($parameters['mode']) {
+                case 'default':
+                    if (true === $parameters['force']) {
+                        $newValue = $value;
+                    }
+
+                    break;
+
+                case 'replace':
+                    $newValue = $value;
+
+                    break;
+
+                case 'merge':
+                    if (is_array($newValue) && is_array($value)) {
+                        if (true === $parameters['force']) {
+                            $newValue = array_merge($newValue, $value);
+                        } else {
+                            $newValue = array_merge($value, $newValue);
+                        }
+                    }
+
+                    break;
             }
 
             $newData[$field] = $newValue;
@@ -47,6 +68,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
     {
         $resolver
             ->setDefault('force', false)->setAllowedTypes('force', ['bool'])
+            ->setDefault('mode', 'default')->setAllowedValues('mode', ['default', 'replace', 'merge'])
             ->setDefault('fields', [])->setAllowedTypes('fields', ['array'])->setNormalizer('fields', function (Options $options, $value) {
                 foreach ($value as $k => $v) {
                     if (preg_match('/(?P<key>\w+)\|\s*json$/', $k, $matches)) {
