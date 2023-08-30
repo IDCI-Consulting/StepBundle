@@ -40,17 +40,17 @@
         var observedItem = document.getElementById("{{ form.vars.observed_id }}");
         observedItem.addEventListener("click", function(event) {
             {% if form.vars.observed_fields is defined %}
+            if (
                 {% for observedFieldId, expectedValue in form.vars.observed_fields %}
-                    if (document.getElementById("{{ observedFieldId }}").value == '{{ expectedValue }}') {
-                        if (!confirm("{{ form.vars.message }}")) {
-                            event.preventDefault();
-                        }
-                    }
+                {% if not loop.first %}&& {% endif %}'{{ expectedValue }}' == document.getElementById("{{ observedFieldId }}").value
                 {% endfor %}
-            {% else %}
+            ) {
+            {% endif %}
                 if (!confirm("{{ form.vars.message }}")) {
                     event.preventDefault();
                 }
+            {% if form.vars.observed_fields is defined %}
+            }
             {% endif %}
         }, false);
     </script>
