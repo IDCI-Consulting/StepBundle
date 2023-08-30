@@ -21,16 +21,9 @@ abstract class AbstractPathType implements PathTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'type' => NextButtonType::class,
-                'next_options' => [
-                    'label' => 'Next >',
-                ],
-                'events' => [],
-            ])
-            ->setAllowedTypes('type', ['string'])
-            ->setAllowedTypes('next_options', ['array'])
-            ->setAllowedTypes('events', ['array'])
+            ->setDefault('type', NextButtonType::class)->setAllowedTypes('type', ['string'])
+            ->setDefault('next_options', ['label' => 'Next >'])->setAllowedTypes('next_options', ['array'])
+            ->setDefault('events', [])->setAllowedTypes('events', ['array'])
         ;
     }
 

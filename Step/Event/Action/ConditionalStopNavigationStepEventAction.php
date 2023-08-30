@@ -42,21 +42,15 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'rules' => false,
-                'final_destination' => null,
-                'query_parameters' => [],
-            ])
-            ->setAllowedTypes('rules', ['bool', 'array', 'string'])
-            ->setAllowedTypes('final_destination', ['null', 'string'])
-            ->setAllowedTypes('query_parameters', ['array'])
-            ->setNormalizer('rules', function (Options $options, $value) {
+            ->setDefault('rules', false)->setAllowedTypes('rules', ['bool', 'array', 'string'])->setNormalizer('rules', function (Options $options, $value) {
                 if (is_array($value)) {
                     return $value;
                 }
 
                 return is_bool($value) ? $value : (bool) $value;
             })
+            ->setDefault('final_destination', null)->setAllowedTypes('final_destination', ['null', 'string'])
+            ->setDefault('query_parameters', [])->setAllowedTypes('query_parameters', ['array'])
         ;
     }
 

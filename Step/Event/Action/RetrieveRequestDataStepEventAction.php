@@ -33,14 +33,9 @@ class RetrieveRequestDataStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['key'])
-            ->setDefaults([
-                'property' => 'query',
-                'default' => null,
-            ])
-            ->setAllowedValues('property', ['attributes', 'request', 'query', 'server', 'files', 'cookies', 'headers'])
-            ->setAllowedTypes('property', 'string')
-            ->setAllowedTypes('key', 'string')
+            ->setRequired('key')->setAllowedTypes('key', ['string'])
+            ->setDefault('property', 'query')->setAllowedValues('property', ['attributes', 'request', 'query', 'server', 'files', 'cookies', 'headers'])
+            ->setDefault('default', null)
         ;
     }
 }

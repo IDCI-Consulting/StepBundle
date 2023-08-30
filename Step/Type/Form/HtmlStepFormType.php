@@ -53,8 +53,7 @@ class HtmlStepFormType extends AbstractStepFormType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefaults(['content' => null])
-            ->setAllowedTypes('content', ['null', 'string'])
+            ->setDefault('content', null)->setAllowedTypes('content', ['null', 'string'])
         ;
     }
 

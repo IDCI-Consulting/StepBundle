@@ -346,20 +346,15 @@ class NavigationEventSubscriber implements EventSubscriberInterface
     protected function configureEventConfiguration(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['action'])
-            ->setDefaults([
-                'name' => null,
-                'parameters' => [],
-            ])
-            ->setNormalizer('name', function (Options $options, $value) {
+            ->setRequired('action')->setAllowedTypes('action', ['string'])
+            ->setDefault('name', null)->setAllowedTypes('name', ['null', 'string'])->setNormalizer('name', function (Options $options, $value) {
                 if (null === $value) {
                     return $options['action'];
                 }
 
                 return $value;
             })
-            ->setAllowedTypes('action', ['string'])
-            ->setAllowedTypes('name', ['null', 'string'])
+            ->setDefault('parameters', [])
         ;
     }
 
@@ -371,10 +366,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $this->configureEventConfiguration($resolver);
 
         $resolver
-            ->setDefaults([
-                'destinations' => null,
-            ])
-            ->setAllowedTypes('destinations', ['null', 'array'])
+            ->setDefault('destinations', null)->setAllowedTypes('destinations', ['null', 'array'])
         ;
     }
 

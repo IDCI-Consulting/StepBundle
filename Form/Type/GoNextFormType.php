@@ -28,10 +28,7 @@ class GoNextFormType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['to_click_next_button_id'] = sprintf(
-            'idci_step_navigator__path_%s',
-            $options['path_index']
-        );
+        $view->vars['to_click_next_button_id'] = sprintf('idci_step_navigator__path_%s', $options['path_index']);
     }
 
     /**
@@ -48,8 +45,7 @@ class GoNextFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['path_index'])
-            ->setAllowedTypes('path_index', ['integer'])
+            ->setRequired('path_index')->setAllowedTypes('path_index', ['integer'])
         ;
     }
 

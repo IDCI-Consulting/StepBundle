@@ -8,6 +8,7 @@
 namespace IDCI\Bundle\StepBundle\Form\Type;
 
 use IDCI\Bundle\StepBundle\Navigation\Event\NavigationEventSubscriber;
+use IDCI\Bundle\StepBundle\Navigation\NavigatorInterface;
 use IDCI\Bundle\StepBundle\Path\Event\PathEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Step\Event\StepEventActionRegistryInterface;
 use IDCI\Bundle\StepBundle\Twig\Environment;
@@ -132,8 +133,7 @@ class NavigatorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['navigator'])
-            ->setAllowedTypes('navigator', ['IDCI\Bundle\StepBundle\Navigation\NavigatorInterface'])
+            ->setRequired('navigator')->setAllowedTypes('navigator', [NavigatorInterface::class])
         ;
     }
 

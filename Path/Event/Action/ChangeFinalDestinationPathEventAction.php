@@ -17,10 +17,7 @@ class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
      */
     protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
-        $event
-            ->getNavigator()
-            ->setFinalDestination($parameters['final_destination'])
-        ;
+        $event->getNavigator()->setFinalDestination($parameters['final_destination']);
 
         return true;
     }
@@ -31,8 +28,7 @@ class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['final_destination'])
-            ->setAllowedTypes('final_destination', ['string'])
+            ->setRequired('final_destination')->setAllowedTypes('final_destination', ['string'])
         ;
     }
 }

@@ -60,15 +60,10 @@ class ConditionalDestinationPathType extends AbstractPathType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setRequired(['source'])
-            ->setDefaults([
-                'default_destination' => null,
-                'destinations' => [],
-                'stop_navigation' => false,
-            ])
-            ->setAllowedTypes('source', ['string'])
-            ->setAllowedTypes('destinations', ['array'])
-            ->setAllowedTypes('stop_navigation', ['string', 'bool'])
+            ->setRequired('source')->setAllowedTypes('source', ['string'])
+            ->setDefault('default_destination', null)
+            ->setDefault('destinations', [])->setAllowedTypes('destinations', ['array'])
+            ->setDefault('stop_navigation', false)->setAllowedTypes('stop_navigation', ['string', 'bool'])
         ;
     }
 

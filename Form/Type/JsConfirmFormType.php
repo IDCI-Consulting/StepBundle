@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class JsConfirmFormType extends AbstractType
@@ -28,12 +29,16 @@ class JsConfirmFormType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['observed_id'] = sprintf(
-            'idci_step_navigator__path_%s',
-            $options['path_index']
-        );
-
+        $view->vars['observed_id'] = sprintf('idci_step_navigator__path_%s', $options['path_index']);
         $view->vars['message'] = $options['message'];
+
+        if (!empty($options['observed_fields'])) {
+            $observedFields = [];
+            foreach ($options['observed_fields'] as $observedFieldPath => $expectedValue) {
+                $observedFields[self::guessObservedFieldId($observedFieldPath, $view->parent->children['_content'])] = $expectedValue;
+            }
+            $view->vars['observed_fields'] = $observedFields;
+        }
     }
 
     /**
@@ -50,10 +55,15 @@ class JsConfirmFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['path_index'])
-            ->setDefaults(['message' => 'Are you sure ?'])
-            ->setAllowedTypes('path_index', ['integer'])
-            ->setAllowedTypes('message', ['string'])
+            ->setRequired('path_index')->setAllowedTypes('path_index', ['integer'])
+            ->setDefault('message', null)->setAllowedTypes('message', ['null', 'string'])->setNormalizer('message', function (Options $options, $value) {
+                if (null === $value) {
+                    return 'Are you sure ?';
+                }
+
+                return $value;
+            })
+            ->setDefault('observed_fields', [])
         ;
     }
 
@@ -71,5 +81,18 @@ class JsConfirmFormType extends AbstractType
     public function getBlockPrefix(): string
     {
         return $this->getName();
+    }
+
+    public function guessObservedFieldId(string $fieldPath, FormView $view): string
+    {
+        foreach (explode('.', $fieldPath) as $fieldName) {
+            if (!isset($view->children[$fieldName])) {
+                throw new \RuntimeException('The given field path doesn\'t exist: %s', $fieldPath);
+            }
+
+            $view = $view->children[$fieldName];
+        }
+
+        return $view->vars['id'];
     }
 }

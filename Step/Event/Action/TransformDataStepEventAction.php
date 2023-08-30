@@ -61,8 +61,7 @@ class TransformDataStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults(['fields' => []])
-            ->setAllowedTypes('fields', ['array'])
+            ->setDefault('fields', [])->setAllowedTypes('fields', ['array'])
         ;
     }
 

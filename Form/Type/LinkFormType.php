@@ -32,10 +32,8 @@ class LinkFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'href' => 'javascript:void(0);',
-                'target' => '_self',
-            ])
+            ->setDefault('href', 'javascript:void(0);')
+            ->setDefault('target', '_self')
             ->setNormalizer('label', function (Options $options, $value) {
                 if (in_array($value, [null, 'end'])) {
                     return $options['href'];

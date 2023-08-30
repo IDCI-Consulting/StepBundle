@@ -33,9 +33,7 @@ class AddLinkStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'link_options' => [],
-            ])
+            ->setDefault('link_options', [])
         ;
     }
 }

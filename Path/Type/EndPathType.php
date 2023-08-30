@@ -21,9 +21,9 @@ class EndPathType extends AbstractPathType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setRequired(['source'])
-            ->setDefaults(['label' => 'end'])
-            ->setAllowedTypes('source', ['string'])
+            ->setRequired('source')->setAllowedTypes('source', ['string'])
+            ->setDefault('label', 'end')
+
         ;
     }
 

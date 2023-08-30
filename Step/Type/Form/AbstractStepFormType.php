@@ -30,10 +30,7 @@ abstract class AbstractStepFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'display_title' => true,
-            ])
-            ->setAllowedTypes('display_title', ['bool'])
+            ->setDefault('display_title', true)->setAllowedTypes('display_title', ['bool'])
         ;
     }
 }

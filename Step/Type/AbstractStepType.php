@@ -22,52 +22,29 @@ abstract class AbstractStepType implements StepTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'title' => null,
-                'display_title' => true,
-                'nav_title' => null,
-                'description' => null,
-                'nav_description' => null,
-                'is_first' => false,
-                'pre_step_content' => null,
-                'data' => null,
-                'prevent_previous' => false,
-                'prevent_next' => false,
-                'previous_options' => [
-                    'label' => '< Previous',
-                ],
-                'js' => null,
-                'css' => null,
-                'attr' => [],
-                'events' => [],
-                'serialization_mapping' => null,
-                'save_content' => false,
-            ])
-            ->setAllowedTypes('title', ['null', 'string'])
-            ->setAllowedTypes('display_title', ['bool'])
-            ->setAllowedTypes('nav_title', ['null', 'string'])
-            ->setAllowedTypes('description', ['null', 'string'])
-            ->setAllowedTypes('nav_description', ['null', 'string'])
-            ->setAllowedTypes('is_first', ['bool', 'string'])
-            ->setAllowedTypes('data', ['null', 'array'])
-            ->setAllowedTypes('prevent_previous', ['bool', 'string'])
-            ->setAllowedTypes('prevent_next', ['bool', 'string'])
-            ->setAllowedTypes('previous_options', ['array'])
-            ->setAllowedTypes('js', ['null', 'string'])
-            ->setAllowedTypes('css', ['null', 'string'])
-            ->setAllowedTypes('attr', ['array'])
-            ->setAllowedTypes('events', ['array'])
-            ->setAllowedTypes('serialization_mapping', ['null', 'array'])
-            ->setAllowedTypes('save_content',  ['bool', 'string'])
-            ->setNormalizer('is_first', function (Options $options, $value) {
+            ->setDefault('pre_step_content', null)
+            ->setDefault('title', null)->setAllowedTypes('title', ['null', 'string'])
+            ->setDefault('display_title', true)->setAllowedTypes('display_title', ['bool'])
+            ->setDefault('nav_title', null)->setAllowedTypes('nav_title', ['null', 'string'])
+            ->setDefault('description', null)->setAllowedTypes('description', ['null', 'string'])
+            ->setDefault('nav_description', null)->setAllowedTypes('nav_description', ['null', 'string'])
+            ->setDefault('is_first', false)->setAllowedTypes('is_first', ['bool', 'string'])->setNormalizer('is_first', function (Options $options, $value) {
                 return (bool) $value;
             })
-            ->setNormalizer('prevent_previous', function (Options $options, $value) {
+            ->setDefault('data', null)->setAllowedTypes('data', ['null', 'array'])
+            ->setDefault('prevent_previous', false)->setAllowedTypes('prevent_previous', ['bool', 'string'])->setNormalizer('prevent_previous', function (Options $options, $value) {
                 return (bool) $value;
             })
-            ->setNormalizer('prevent_next', function (Options $options, $value) {
+            ->setDefault('prevent_next', false)->setAllowedTypes('prevent_next', ['bool', 'string'])->setNormalizer('prevent_next', function (Options $options, $value) {
                 return (bool) $value;
             })
+            ->setDefault('previous_options', ['label' => '< Previous'])->setAllowedTypes('previous_options', ['array'])
+            ->setDefault('js', null)->setAllowedTypes('js', ['null', 'string'])
+            ->setDefault('css', null)->setAllowedTypes('css', ['null', 'string'])
+            ->setDefault('attr', [])->setAllowedTypes('attr', ['array'])
+            ->setDefault('events', [])->setAllowedTypes('events', ['array'])
+            ->setDefault('serialization_mapping', null)->setAllowedTypes('serialization_mapping', ['null', 'array'])
+            ->setDefault('save_content', false)->setAllowedTypes('save_content',  ['bool', 'string'])
         ;
     }
 

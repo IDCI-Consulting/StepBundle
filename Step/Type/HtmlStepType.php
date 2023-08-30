@@ -21,11 +21,8 @@ class HtmlStepType extends AbstractStepType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefaults([
-                'content' => null,
-                'attr' => ['class' => 'html_text'],
-            ])
-            ->setAllowedTypes('content', ['null', 'string'])
+            ->setDefault('attr', ['class' => 'html_text'])
+            ->setDefault('content', null)->setAllowedTypes('content', ['null', 'string'])
         ;
     }
 

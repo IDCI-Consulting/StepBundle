@@ -90,11 +90,7 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired([
-                'steps',
-            ])
-            ->setAllowedTypes('steps', ['array'])
-            ->setNormalizer('steps', function (Options $options, $value) {
+            ->setRequired('steps')->setAllowedTypes('steps', ['array'])->setNormalizer('steps', function (Options $options, $value) {
                 foreach ($value as $stepName => $dataTypes) {
                     if (!is_array($dataTypes)) {
                         throw new \UnexpectedValueException(sprintf('The data type of the step "%s" is not an array', $stepName));

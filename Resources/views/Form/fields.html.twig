@@ -39,9 +39,19 @@
     <script type="text/javascript">
         var observedItem = document.getElementById("{{ form.vars.observed_id }}");
         observedItem.addEventListener("click", function(event) {
-            if (!confirm("{{ form.vars.message }}")) {
-                event.preventDefault();
-            }
+            {% if form.vars.observed_fields is defined %}
+                {% for observedFieldId, expectedValue in form.vars.observed_fields %}
+                    if (document.getElementById("{{ observedFieldId }}").value == '{{ expectedValue }}') {
+                        if (!confirm("{{ form.vars.message }}")) {
+                            event.preventDefault();
+                        }
+                    }
+                {% endfor %}
+            {% else %}
+                if (!confirm("{{ form.vars.message }}")) {
+                    event.preventDefault();
+                }
+            {% endif %}
         }, false);
     </script>
 {%- endblock idci_step_action_form_js_confirm_widget -%}

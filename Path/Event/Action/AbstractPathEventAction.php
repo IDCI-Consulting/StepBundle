@@ -20,10 +20,7 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
     {
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefaults([
-                'logical_expression' => true,
-            ])
-            ->setNormalizer('logical_expression', function (Options $options, $value) {
+            ->setDefault('logical_expression', true)->setNormalizer('logical_expression', function (Options $options, $value) {
                 return (bool) $value;
             })
         ;

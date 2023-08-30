@@ -20,16 +20,10 @@ class GoNextStepEventAction extends AbstractStepEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefaults([
-                'condition' => true,
-                'path_index' => 1,
-            ])
-            ->setAllowedTypes('condition', ['bool', 'string'])
-            ->setAllowedTypes('path_index', ['int', 'string'])
-            ->setNormalizer('condition', function (Options $options, $value) {
+            ->setDefault('condition', true)->setAllowedTypes('condition', ['bool', 'string'])->setNormalizer('condition', function (Options $options, $value) {
                 return (bool) $value;
             })
-            ->setNormalizer('path_index', function (Options $options, $value) {
+            ->setDefault('path_index', 1)->setAllowedTypes('path_index', ['int', 'string'])->setNormalizer('path_index', function (Options $options, $value) {
                 return (int) $value;
             })
         ;
