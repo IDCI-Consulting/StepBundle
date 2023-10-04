@@ -53,6 +53,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('twig_merger')
+                    ->addDefaultsIfNotSet([])
                     ->children()
                         ->arrayNode('extensions')
                             ->defaultValue([])->prototype('variable')->end()
