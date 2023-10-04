@@ -181,10 +181,9 @@ idci_step:
 Use custom Twig extensions
 --------------------------
 
-If you want to use a extension written by you in your project that contains a map, you can add in your idci_step.yaml file in node `idci_step`:
-
+If you need to add twig extensions as part of the Step/Path Events provided by this bundle, you can declare them in the configuration file `config/packages/idci_step.yaml`:
 ```yaml
     twig_merger:
         extensions:
-            - 'namespaceOfYourCustomExtensionTwigFile\nameOfYourCustomExtensionTwigFile'
+            - 'App\Twig\MyCustomExtension'
 ```
