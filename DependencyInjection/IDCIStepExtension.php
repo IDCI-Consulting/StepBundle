@@ -31,6 +31,7 @@ class IDCIStepExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('idci_step.maps', $config['maps']);
+        $container->setParameter('idci_step.twig_merger', $config['twig_merger']);
         $container->setParameter('idci_step.serialization.mapping', $config['serialization']['mapping']);
         $container->setParameter('idci_step.step_types', $config['step_types']);
         $container->setParameter('idci_step.path_types', $config['path_types']);

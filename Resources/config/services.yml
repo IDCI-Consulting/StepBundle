@@ -237,6 +237,8 @@ services:
 
     # Twig
     IDCI\Bundle\StepBundle\Twig\Environment:
-        arguments: ['@twig.loader.chain']
+        arguments:
+            - '@twig.loader.chain'
+            - '%idci_step.twig_merger%'
 
     IDCI\Bundle\StepBundle\Twig\StepTwigExtension: ~
