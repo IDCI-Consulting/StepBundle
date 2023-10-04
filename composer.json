@@ -9,6 +9,10 @@
             "name": "Gabriel Bondaz",
             "email": "gabriel.bondaz@idci-consulting.fr",
             "homepage": "http://www.idci-consulting.fr"
+        },
+        {
+            "name": "Camille SCHWARZ",
+            "email": "camille54460@gmail.com"
         }
     ],
     "require": {
