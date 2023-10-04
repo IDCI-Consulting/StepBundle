@@ -183,6 +183,7 @@ Use custom Twig extensions
 
 If you need to add twig extensions as part of the Step/Path Events provided by this bundle, you can declare them in the configuration file `config/packages/idci_step.yaml`:
 ```yaml
+idci_step:
     twig_merger:
         extensions:
             - 'App\Twig\MyCustomExtension'
