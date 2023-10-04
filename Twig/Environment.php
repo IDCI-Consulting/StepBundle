@@ -12,7 +12,7 @@ use Twig\Loader\LoaderInterface;
 
 class Environment extends TwigEnvironment
 {
-    private array $extensionsList;
+    private array $extensionsList = [];
 
     public function __construct(LoaderInterface $loader, $options = [])
     {
