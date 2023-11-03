@@ -21,7 +21,7 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
         $form = $event->getForm();
 
         $form
-            ->add('_js_confirm', JsConfirmFormType::class, [
+            ->add(sprintf('_js_confirm_%d', $event->getPathIndex()), JsConfirmFormType::class, [
                 'message' => $parameters['message'],
                 'path_index' => $event->getPathIndex(),
                 'observed_fields' => $parameters['observed_fields'],
