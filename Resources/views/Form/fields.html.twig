@@ -39,19 +39,21 @@
     <script type="text/javascript">
         var observedItem = document.getElementById("{{ form.vars.observed_id }}");
         observedItem.addEventListener("click", function(event) {
-            {% if form.vars.observed_fields is defined %}
-            if (
-                {% for observedFieldId, expectedValue in form.vars.observed_fields %}
-                {% if not loop.first %}&& {% endif %}'{{ expectedValue }}' == document.getElementById("{{ observedFieldId }}").value
-                {% endfor %}
-            ) {
-            {% endif %}
-                if (!confirm("{{ form.vars.message }}")) {
-                    event.preventDefault();
-                }
-            {% if form.vars.observed_fields is defined %}
-            }
-            {% endif %}
+            {% for condition in form.vars.conditions %}
+                {% if condition.observed_fields is defined %}
+                    {% if not loop.first %}else{% endif %} if (
+                        {% for observedFieldId, expectedValue in condition.observed_fields %}
+                            {% if not loop.first %}&& {% endif %}'{{ expectedValue }}' == document.getElementById("{{ observedFieldId }}").value
+                        {% endfor %}
+                    ) {
+                {% endif %}
+                    if (!confirm("{{ condition.message }}")) {
+                        event.preventDefault();
+                    }
+                {% if condition.observed_fields is defined %}
+                    }
+                {% endif %}
+            {% endfor %}
         }, false);
     </script>
 {%- endblock idci_step_action_form_js_confirm_widget -%}
