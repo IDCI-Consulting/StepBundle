@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Camille SCHWARZ <camille54460@gmail.com>
  * @license: MIT
  */
 
@@ -30,15 +31,18 @@ class JsConfirmFormType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['observed_id'] = sprintf('idci_step_navigator__path_%s', $options['path_index']);
-        $view->vars['message'] = $options['message'];
 
-        if (!empty($options['observed_fields'])) {
-            $observedFields = [];
-            foreach ($options['observed_fields'] as $observedFieldPath => $expectedValue) {
-                $observedFields[self::guessObservedFieldId($observedFieldPath, $view->parent->children['_content'])] = $expectedValue;
+        $conditions = $options['conditions'];
+        foreach ($options['conditions'] as $i => $condition) {
+            if (!empty($condition['observed_fields'])) {
+                $observedFields = [];
+                foreach ($condition['observed_fields'] as $observedFieldPath => $expectedValue) {
+                    $observedFields[self::guessObservedFieldId($observedFieldPath, $view->parent->children['_content'])] = $expectedValue;
+                }
+                $conditions[$i]['observed_fields'] = $observedFields;
             }
-            $view->vars['observed_fields'] = $observedFields;
         }
+        $view->vars['conditions'] = $conditions;
     }
 
     /**
@@ -56,14 +60,13 @@ class JsConfirmFormType extends AbstractType
     {
         $resolver
             ->setRequired('path_index')->setAllowedTypes('path_index', ['integer'])
-            ->setDefault('message', null)->setAllowedTypes('message', ['null', 'string'])->setNormalizer('message', function (Options $options, $value) {
-                if (null === $value) {
-                    return 'Are you sure ?';
-                }
-
-                return $value;
+            ->setDefault('conditions', function (OptionsResolver $conditionsResolver): void {
+                $conditionsResolver
+                    ->setPrototype(true)
+                    ->setDefault('message', 'Are you sure ?')->setAllowedTypes('message', ['null', 'string'])
+                    ->setDefault('observed_fields', null)->setAllowedTypes('observed_fields', ['null', 'array'])
+                ;
             })
-            ->setDefault('observed_fields', [])
         ;
     }
 

@@ -197,3 +197,10 @@ Bind the event action to a step
         ...
     ;
 ```
+
+Here is a list of PathEventAction provided with this bundle:
+- AddUrlQueryParameterPathEventAction
+- ChangeDataPathEventAction
+- ChangeFinalDestinationPathEventAction
+- [JsConfirmPathEventAction](./path_event_action/js_confirm.md)
+- PurgeFlowDataPathEventAction

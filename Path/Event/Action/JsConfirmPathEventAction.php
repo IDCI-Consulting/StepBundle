@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ * @author:  Camille SCHWARZ <camille54460@gmail.com>
  * @license: MIT
  */
 
@@ -22,9 +23,8 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
 
         $form
             ->add(sprintf('_js_confirm_%d', $event->getPathIndex()), JsConfirmFormType::class, [
-                'message' => $parameters['message'],
                 'path_index' => $event->getPathIndex(),
-                'observed_fields' => $parameters['observed_fields'],
+                'conditions' => $parameters['conditions'],
             ])
         ;
     }
@@ -35,8 +35,13 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setDefault('message', null)->setAllowedTypes('message', ['null', 'string'])
-            ->setDefault('observed_fields', null)->setAllowedTypes('observed_fields', ['null', 'array'])
+            ->setDefault('conditions', function (OptionsResolver $conditionsResolver): void {
+                $conditionsResolver
+                    ->setPrototype(true)
+                    ->setDefault('message', null)->setAllowedTypes('message', ['null', 'string'])
+                    ->setDefault('observed_fields', null)->setAllowedTypes('observed_fields', ['null', 'array'])
+                ;
+            })
         ;
     }
 }
