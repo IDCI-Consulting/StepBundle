@@ -297,6 +297,16 @@ class Navigator implements NavigatorInterface
         if ($this->request->isMethod('POST')) {
             $form->handleRequest($this->request);
 
+            if ($this->getCurrentStep()->getName() !== $form->get('_current_step')->getData()) {
+                throw new \LogicException(sprintf(
+                    sprintf(
+                        'The flow current path "%s" doesn\'t match with the form current path "%s"',
+                        $this->getCurrentStep()->getName(),
+                        $form->get('_current_step')->getData()
+                    )
+                ));
+            }
+
             if (!$this->hasReturned() && $form->isSubmitted() && $form->isValid()) {
                 $path = $this->getChosenPath();
                 if (null === $path) {
