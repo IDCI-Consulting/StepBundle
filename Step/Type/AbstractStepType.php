@@ -28,6 +28,7 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setDefault('nav_title', null)->setAllowedTypes('nav_title', ['null', 'string'])
             ->setDefault('description', null)->setAllowedTypes('description', ['null', 'string'])
             ->setDefault('nav_description', null)->setAllowedTypes('nav_description', ['null', 'string'])
+            ->setDefault('translation_domain', null)->setAllowedTypes('translation_domain', ['null', 'string'])
             ->setDefault('is_first', false)->setAllowedTypes('is_first', ['bool', 'string'])->setNormalizer('is_first', function (Options $options, $value) {
                 return (bool) $value;
             })
@@ -44,7 +45,7 @@ abstract class AbstractStepType implements StepTypeInterface
             ->setDefault('attr', [])->setAllowedTypes('attr', ['array'])
             ->setDefault('events', [])->setAllowedTypes('events', ['array'])
             ->setDefault('serialization_mapping', null)->setAllowedTypes('serialization_mapping', ['null', 'array'])
-            ->setDefault('save_content', false)->setAllowedTypes('save_content',  ['bool', 'string'])
+            ->setDefault('save_content', false)->setAllowedTypes('save_content', ['bool', 'string'])
         ;
     }
 

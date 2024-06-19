@@ -37,7 +37,7 @@ class HtmlStepFormType extends AbstractStepFormType
         }
 
         if ($options['display_title']) {
-            $content = sprintf('<h1>%s</h1>%s', $this->translator->trans($options['label']), $content);
+            $content = sprintf('<h1>%s</h1>%s', $this->translator->trans($options['label'], [], $options['translation_domain']), $content);
         }
 
         $view->vars = array_merge($view->vars, [

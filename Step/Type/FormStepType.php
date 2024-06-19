@@ -50,6 +50,7 @@ class FormStepType extends AbstractStepType
     {
         $builder->add('_content', FormStepFormType::class, [
             'label' => $options['title'],
+            'translation_domain' => $options['translation_domain'],
             'display_title' => $options['display_title'],
             'builder' => $options['builder'],
             'error_bubbling' => false,

@@ -33,6 +33,7 @@ class HtmlStepType extends AbstractStepType
     {
         $builder->add('_content', HtmlStepFormType::class, [
             'label' => $options['title'],
+            'translation_domain' => $options['translation_domain'],
             'display_title' => $options['display_title'],
             'content' => $options['content'],
         ]);
