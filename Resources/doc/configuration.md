@@ -186,5 +186,6 @@ If you need to add twig extensions as part of the Step/Path Events provided by t
 idci_step:
     twig_merger:
         extensions:
-            - 'App\Twig\MyCustomExtension'
+            - 'twig.extension.routing'
+            - 'twig.extension.trans'
 ```

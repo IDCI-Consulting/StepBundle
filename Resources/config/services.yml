@@ -57,6 +57,10 @@ services:
     IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry: ~
     IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistryInterface: '@IDCI\Bundle\StepBundle\Configuration\Worker\ConfigurationWorkerRegistry'
 
+    IDCI\Bundle\StepBundle\Twig\EnvironmentExtensionRegistry:
+        autowire: false
+    IDCI\Bundle\StepBundle\Twig\EnvironmentExtensionRegistryInterface: '@IDCI\Bundle\StepBundle\Twig\EnvironmentExtensionRegistry'
+
 
     # Builder
     IDCI\Bundle\StepBundle\Path\PathBuilder: ~
@@ -239,6 +243,7 @@ services:
     IDCI\Bundle\StepBundle\Twig\Environment:
         arguments:
             - '@twig.loader.chain'
-            - '%idci_step.twig_merger%'
+            - '@IDCI\Bundle\StepBundle\Twig\EnvironmentExtensionRegistryInterface'
+            - []
 
     IDCI\Bundle\StepBundle\Twig\StepTwigExtension: ~

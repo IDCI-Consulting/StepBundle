@@ -10,8 +10,8 @@ namespace IDCI\Bundle\StepBundle;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConditionalRuleCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationFetcherCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\ConfigurationWorkerCompilerPass;
+use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\EnvironmentExtensionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\FlowDataStoreCompilerPass;
-use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\MergerEnvironmentCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathEventActionConfigurationCompilerPass;
 use IDCI\Bundle\StepBundle\DependencyInjection\Compiler\PathTypeCompilerPass;
@@ -41,6 +41,6 @@ class IDCIStepBundle extends Bundle
         $container->addCompilerPass(new FlowDataStoreCompilerPass());
         $container->addCompilerPass(new ConfigurationWorkerCompilerPass());
         $container->addCompilerPass(new ConfigurationFetcherCompilerPass());
-        $container->addCompilerPass(new MergerEnvironmentCompilerPass());
+        $container->addCompilerPass(new EnvironmentExtensionCompilerPass());
     }
 }
