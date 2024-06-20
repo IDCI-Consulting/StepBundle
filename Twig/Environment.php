@@ -12,17 +12,16 @@ use Twig\Loader\LoaderInterface;
 
 class Environment extends TwigEnvironment
 {
-    private array $extensionsList = [];
+    private EnvironmentExtensionRegistryInterface $environmentExtensionRegistry;
 
-    public function __construct(LoaderInterface $loader, $options = [])
-    {
-        if (isset($options['extensions'])) {
-            $this->extensionsList = $options['extensions'];
-            unset($options['extensions']);
-        }
+    public function __construct(
+        LoaderInterface $loader,
+        EnvironmentExtensionRegistryInterface $environmentExtensionRegistry,
+        $options = []
+    ) {
+        $this->environmentExtensionRegistry = $environmentExtensionRegistry;
 
         $options['autoescape'] = false;
-
         parent::__construct($loader, $options);
 
         $this->loadExtensions();
@@ -30,8 +29,8 @@ class Environment extends TwigEnvironment
 
     public function loadExtensions(): void
     {
-        foreach ($this->extensionsList as $extensionClassName) {
-            $this->addExtension(new $extensionClassName);
+        foreach ($this->environmentExtensionRegistry->getExtensions() as $extension) {
+            $this->addExtension($extension);
         }
     }
 }
