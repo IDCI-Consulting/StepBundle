@@ -53,7 +53,7 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
         }
 
         if ($event->getNavigator()->getCurrentStep()->getType() instanceof FormStepType) {
-            $newData = ['_content' => $newData];
+            $newData = array_merge_recursive($event->getData(), ['_content' => $newData]);
         }
 
         $event->setData($newData);
