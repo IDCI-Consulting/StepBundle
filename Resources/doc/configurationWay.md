@@ -85,7 +85,7 @@ class DefaultController extends AbstractController
         if ($navigator->hasFinished()) {
             $navigator->clear();
 
-            return $this->redirect($this->generateUrl('test, $navigator->getUrlQueryParameters()));
+            return $this->redirect($this->generateUrl('test', $navigator->getUrlQueryParameters()));
         }
 
         if ($navigator->hasNavigated()) {
