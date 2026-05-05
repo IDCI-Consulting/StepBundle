@@ -1,3 +1,22 @@
+{%- block idci_step_navigator_widget -%}
+    {{ form_widget(form) }}
+    {% if form.vars.prevent_multiple_submit is same as(true) %}
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('form[name="{{ form.vars.name }}"]').addEventListener('submit', function (e) {
+                if (form.classList.contains('submitted')) {
+                    e.preventDefault();
+
+                    return;
+                }
+
+                form.classList.add('submitted');
+            })
+        });
+    </script>
+    {% endif %}
+{%- endblock idci_step_navigator_widget -%}
+
 {%- block idci_step_step_form_row -%}
     {% if display_title %}
         {{- form_label(form) -}}

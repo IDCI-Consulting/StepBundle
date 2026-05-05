@@ -28,7 +28,7 @@ class GoNextFormType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['to_click_next_button_id'] = sprintf('idci_step_navigator__path_%s', $options['path_index']);
+        $view->vars['to_click_next_button_id'] = sprintf('%s__path_%s', $form->getParent()->getName(), $options['path_index']);
     }
 
     /**

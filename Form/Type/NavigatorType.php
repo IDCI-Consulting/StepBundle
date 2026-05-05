@@ -73,6 +73,7 @@ class NavigatorType extends AbstractType
         $stepOptions = $options['navigator']->getCurrentStep()->getOptions();
         $view->vars = array_merge($view->vars, [
             'attr' => $stepOptions['attr'],
+            'prevent_multiple_submit' => $stepOptions['prevent_multiple_submit'],
         ]);
     }
 
