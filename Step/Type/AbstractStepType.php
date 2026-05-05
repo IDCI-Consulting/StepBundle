@@ -33,6 +33,9 @@ abstract class AbstractStepType implements StepTypeInterface
                 return (bool) $value;
             })
             ->setDefault('data', null)->setAllowedTypes('data', ['null', 'array'])
+            ->setDefault('prevent_multiple_submit', true)->setAllowedTypes('prevent_multiple_submit', ['bool', 'string'])->setNormalizer('prevent_multiple_submit', function (Options $options, $value) {
+                return (bool) $value;
+            })
             ->setDefault('prevent_previous', false)->setAllowedTypes('prevent_previous', ['bool', 'string'])->setNormalizer('prevent_previous', function (Options $options, $value) {
                 return (bool) $value;
             })
