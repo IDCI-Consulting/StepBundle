@@ -3,7 +3,7 @@
     {% if form.vars.prevent_multiple_submit is same as(true) %}
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector('form[name="idci_step_navigator"]').addEventListener('submit', function (e) {
+            document.querySelector('form[name="{{ form.vars.name }}"]').addEventListener('submit', function (e) {
                 if (form.classList.contains('submitted')) {
                     e.preventDefault();
 

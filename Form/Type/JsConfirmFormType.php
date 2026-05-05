@@ -30,7 +30,7 @@ class JsConfirmFormType extends AbstractType
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['observed_id'] = sprintf('idci_step_navigator__path_%s', $options['path_index']);
+        $view->vars['observed_id'] = sprintf('%s__path_%s', $form->getParent()->getName(), $options['path_index']);
 
         $conditions = $options['conditions'];
         foreach ($options['conditions'] as $i => $condition) {
