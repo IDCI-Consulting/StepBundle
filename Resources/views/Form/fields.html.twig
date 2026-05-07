@@ -4,13 +4,13 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('form[name="{{ form.vars.name }}"]').addEventListener('submit', function (e) {
-                if (form.classList.contains('submitted')) {
+                if (this.classList.contains('submitted')) {
                     e.preventDefault();
 
                     return;
                 }
 
-                form.classList.add('submitted');
+                this.classList.add('submitted');
             })
         });
     </script>
