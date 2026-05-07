@@ -29,6 +29,8 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
         $resolvedParameters = $resolver->resolve($parameters);
 
         if ($resolvedParameters['logical_expression']) {
+            unset($resolvedParameters['logical_expression']);
+
             return $this->doExecute($event, $resolvedParameters);
         }
     }

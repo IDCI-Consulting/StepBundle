@@ -29,6 +29,8 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
         $resolvedParameters = $resolver->resolve($parameters);
 
         if ($resolvedParameters['logical_expression']) {
+            unset($resolvedParameters['logical_expression']);
+
             return $this->doExecute($event, $resolvedParameters);
         }
     }
