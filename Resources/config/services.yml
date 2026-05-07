@@ -101,6 +101,11 @@ services:
             - { name: idci_step.step_event_action, alias: add_link }
     IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\AddLinkStepEventAction'
 
+    IDCI\Bundle\StepBundle\Step\Event\Action\AddFlashMessageStepEventAction:
+        tags:
+            - { name: idci_step.step_event_action, alias: add_flash_message }
+    IDCI\Bundle\StepBundle\Step\Event\Action\AddFlashMessageStepEventActionInterface: '@IDCI\Bundle\StepBundle\Step\Event\Action\AddFlashMessageStepEventAction'
+
     IDCI\Bundle\StepBundle\Step\Event\Action\ChangeDataStepEventAction:
         tags:
             - { name: idci_step.step_event_action, alias: change_data }

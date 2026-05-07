@@ -49,6 +49,13 @@ idci_step:
             extra_form_options:
                 logical_expression: {extra_form_type: "text", options: {required: false}}
 
+        add_flash_message:
+            parent: abstract
+            description: ""
+            extra_form_options:
+                type: { extra_form_type: "text", options: { required: true } }
+                message: { extra_form_type: "text", options: { required: true } }
+
         add_link:
             parent:      abstract
             description: ""
