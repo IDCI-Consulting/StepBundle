@@ -29,6 +29,7 @@ class GoNextFormType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['to_click_next_button_id'] = sprintf('%s__path_%s', $form->getParent()->getName(), $options['path_index']);
+        $view->vars['hide_next_button'] = $options['hide_next_button'];
     }
 
     /**
@@ -46,6 +47,7 @@ class GoNextFormType extends AbstractType
     {
         $resolver
             ->setRequired('path_index')->setAllowedTypes('path_index', ['integer'])
+            ->setDefault('hide_next_button', false)->setAllowedTypes('hide_next_button', ['bool'])
         ;
     }
 

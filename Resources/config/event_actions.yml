@@ -82,6 +82,7 @@ idci_step:
             extra_form_options:
                 condition:         {extra_form_type: "text", options: {required: false}}
                 path_index:        {extra_form_type: "integer", options: {required: false}}
+                hide_next_button:  {extra_form_type: "bool", options: {required: false}}
 
         retrieve_request_data:
             parent:      abstract

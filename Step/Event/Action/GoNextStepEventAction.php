@@ -26,6 +26,7 @@ class GoNextStepEventAction extends AbstractStepEventAction
             ->setDefault('path_index', 1)->setAllowedTypes('path_index', ['int', 'string'])->setNormalizer('path_index', function (Options $options, $value) {
                 return (int) $value;
             })
+            ->setDefault('hide_next_button', false)->setAllowedTypes('hide_next_button', ['bool'])
         ;
     }
 
@@ -42,6 +43,7 @@ class GoNextStepEventAction extends AbstractStepEventAction
 
         $form->add('_go_next', GoNextFormType::class, [
             'path_index' => $parameters['path_index'],
+            'hide_next_button' => $parameters['hide_next_button'],
         ]);
 
         return true;
