@@ -104,6 +104,21 @@ interface NavigatorInterface
     public function hasUrlQueryParameters(): bool;
 
     /**
+     * Set redirection.
+     */
+    public function setRedirection(string $url = null): self;
+
+    /**
+     * Returns true if the navigator has a redirection.
+     */
+    public function hasRedirection(): bool;
+
+    /**
+     * Returns the redirection (as URL).
+     */
+    public function getRedirection(): ?string;
+
+    /**
      * Set the final destination.
      */
     public function setFinalDestination(string $url = null): self;
