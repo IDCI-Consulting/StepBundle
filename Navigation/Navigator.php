@@ -100,6 +100,11 @@ class Navigator implements NavigatorInterface
     /**
      * @var string
      */
+    protected $redirection;
+
+    /**
+     * @var string
+     */
     protected $finalDestination;
 
     /**
@@ -140,6 +145,7 @@ class Navigator implements NavigatorInterface
         $this->currentStep = null;
         $this->chosenPath = null;
         $this->urlQueryParameters = [];
+        $this->redirection = null;
         $this->finalDestination = null;
         $this->hasNavigated = false;
         $this->hasReturned = false;
@@ -475,6 +481,32 @@ class Navigator implements NavigatorInterface
     public function hasUrlQueryParameters(): bool
     {
         return !empty($this->urlQueryParameters);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRedirection(string $url = null): self
+    {
+        $this->redirection = $url;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasRedirection(): bool
+    {
+        return null !== $this->redirection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRedirection(): ?string
+    {
+        return $this->redirection;
     }
 
     /**
