@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -77,7 +79,7 @@ interface MapInterface
      *
      * @param string $source the identifier name of the source step
      */
-    public function getPaths(string $source = null): array;
+    public function getPaths(?string $source = null): array;
 
     /**
      * Returns a path.

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -29,8 +30,6 @@ interface StepEventInterface
 
     /**
      * Returns the data associated with this event.
-     *
-     * @return mixed
      */
     public function getData();
 
@@ -43,8 +42,6 @@ interface StepEventInterface
 
     /**
      * Returns the data created by this event.
-     *
-     * @return mixed
      */
     public function getStepEventData();
 

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -37,9 +38,6 @@ class MapConfigurationBuilder implements MapConfigurationBuilderInterface
         $this->workerRegistry = $workerRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(Request $request, array $parameters = []): MapInterface
     {
         $builder = $this

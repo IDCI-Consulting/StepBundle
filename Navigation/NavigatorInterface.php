@@ -2,8 +2,11 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -33,7 +36,7 @@ interface NavigatorInterface
      *
      * @throw LogicException if the navigation doesn't has a previous step.
      */
-    public function goBack(string $stepName = null);
+    public function goBack(?string $stepName = null);
 
     /**
      * Get the request.
@@ -83,7 +86,7 @@ interface NavigatorInterface
     /**
      * Returns the previous step.
      */
-    public function getPreviousStep(string $stepName = null): ?StepInterface;
+    public function getPreviousStep(?string $stepName = null): ?StepInterface;
 
     /**
      * Add URL query parameter.
@@ -106,7 +109,7 @@ interface NavigatorInterface
     /**
      * Set redirection.
      */
-    public function setRedirection(string $url = null): self;
+    public function setRedirection(?string $url = null): self;
 
     /**
      * Returns true if the navigator has a redirection.
@@ -121,7 +124,7 @@ interface NavigatorInterface
     /**
      * Set the final destination.
      */
-    public function setFinalDestination(string $url = null): self;
+    public function setFinalDestination(?string $url = null): self;
 
     /**
      * Returns true if the navigator has a final destination.
@@ -136,12 +139,12 @@ interface NavigatorInterface
     /**
      * Set current step data.
      */
-    public function setCurrentStepData(array $data, string $type = null);
+    public function setCurrentStepData(array $data, ?string $type = null);
 
     /**
      * Returns the current step data.
      */
-    public function getCurrentStepData(string $type = null): ?array;
+    public function getCurrentStepData(?string $type = null): ?array;
 
     /**
      * Returns the available paths.

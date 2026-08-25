@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -16,9 +17,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ConfigurationFetcherCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->has(ConfigurationFetcherRegistryInterface::class)) {

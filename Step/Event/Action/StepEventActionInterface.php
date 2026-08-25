@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -16,8 +17,6 @@ interface StepEventActionInterface
      *
      * @param StepEventInterface $event      the step event
      * @param array              $parameters the parameters
-     *
-     * @return mixed
      */
     public function execute(StepEventInterface $event, array $parameters = []);
 }

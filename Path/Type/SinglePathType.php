@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -13,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SinglePathType extends AbstractPathType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -27,9 +25,6 @@ class SinglePathType extends AbstractPathType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildPath(array $steps, array $options = []): PathInterface
     {
         $path = parent::buildPath($steps, $options);
@@ -40,9 +35,6 @@ class SinglePathType extends AbstractPathType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function doResolveDestination(array $options, NavigatorInterface $navigator): ?string
     {
         return $options['destination'];

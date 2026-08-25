@@ -2,8 +2,11 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -72,7 +75,7 @@ interface FlowInterface
      *
      * @return bool true if a data exists for the step, false otherwise
      */
-    public function hasStepData(StepInterface $step, string $type = null): bool;
+    public function hasStepData(StepInterface $step, ?string $type = null): bool;
 
     /**
      * Returns the flow navigation data for a given step.
@@ -80,7 +83,7 @@ interface FlowInterface
      * @param StepInterface $step the step
      * @param string|null   $type the data type (null, 'reminded' or 'retrieved')
      */
-    public function getStepData(StepInterface $step, string $type = null): array;
+    public function getStepData(StepInterface $step, ?string $type = null): array;
 
     /**
      * Set the flow navigation data for a given step.
@@ -89,7 +92,7 @@ interface FlowInterface
      * @param array         $data the data to store
      * @param string|null   $type the data type (null, 'reminded' or 'retrieved')
      */
-    public function setStepData(StepInterface $step, array $data, string $type = null): self;
+    public function setStepData(StepInterface $step, array $data, ?string $type = null): self;
 
     /**
      * Retrace the flow to a step.

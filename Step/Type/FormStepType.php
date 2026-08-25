@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -29,9 +30,6 @@ class FormStepType extends AbstractStepType
         $this->serializationMapper = $serializationMapper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -43,9 +41,6 @@ class FormStepType extends AbstractStepType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('_content', FormStepFormType::class, [
@@ -57,9 +52,6 @@ class FormStepType extends AbstractStepType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDataTypeMapping(array $options): array
     {
         $mapping = parent::getDataTypeMapping($options);

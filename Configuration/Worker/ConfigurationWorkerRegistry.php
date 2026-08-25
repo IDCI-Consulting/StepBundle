@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -14,17 +15,11 @@ class ConfigurationWorkerRegistry implements ConfigurationWorkerRegistryInterfac
      */
     protected $workers = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setWorker(string $alias, ConfigurationWorkerInterface $worker)
     {
         $this->workers[$alias] = $worker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getWorker(string $alias): ConfigurationWorkerInterface
     {
         if (!isset($this->workers[$alias])) {

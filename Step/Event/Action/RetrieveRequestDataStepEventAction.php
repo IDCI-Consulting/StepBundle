@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -12,9 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RetrieveRequestDataStepEventAction extends AbstractStepEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $requestData = get_object_vars($event->getNavigator()->getRequest());
@@ -27,9 +25,6 @@ class RetrieveRequestDataStepEventAction extends AbstractStepEventAction
         return $parameters['default'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver

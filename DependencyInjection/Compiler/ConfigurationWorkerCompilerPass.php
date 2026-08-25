@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -15,9 +17,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ConfigurationWorkerCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->has(ConfigurationWorkerRegistryInterface::class)) {

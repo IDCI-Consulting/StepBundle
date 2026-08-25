@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GoNextStepEventAction extends AbstractStepEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
@@ -30,9 +28,6 @@ class GoNextStepEventAction extends AbstractStepEventAction
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         if (!$parameters['condition']) {

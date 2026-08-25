@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -13,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         $event->getNavigator()->addUrlQueryParameter(
@@ -26,9 +24,6 @@ class AddUrlQueryParameterPathEventAction extends AbstractPathEventAction
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver

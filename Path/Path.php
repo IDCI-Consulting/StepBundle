@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -50,9 +51,6 @@ class Path implements PathInterface
         $this->options = $options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setOptions(array $options): PathInterface
     {
         $this->options = $options;
@@ -60,17 +58,11 @@ class Path implements PathInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSource(StepInterface $step): PathInterface
     {
         $this->source = $step;
@@ -78,17 +70,11 @@ class Path implements PathInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSource(): StepInterface
     {
         return $this->source;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addDestination(StepInterface $step): PathInterface
     {
         $this->destinations[$step->getName()] = $step;
@@ -96,25 +82,16 @@ class Path implements PathInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDestinations(): array
     {
         return $this->destinations;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasDestination(string $name): bool
     {
         return isset($this->destinations[$name]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDestination(string $name): ?StepInterface
     {
         return $this->hasDestination($name) ?
@@ -123,9 +100,6 @@ class Path implements PathInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resolveDestination(NavigatorInterface $navigator): ?StepInterface
     {
         $destinationName = $this
@@ -136,9 +110,6 @@ class Path implements PathInterface
         return null === $destinationName ? null : $this->getDestination($destinationName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): PathTypeInterface
     {
         return $this->type;

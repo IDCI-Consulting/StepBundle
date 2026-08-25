@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -38,9 +40,6 @@ class FlowRecorder implements FlowRecorderInterface
         $this->serializer = $serializer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFlow(MapInterface $map, Request $request): ?FlowInterface
     {
         if (!$this->hasFlow($map, $request)) {
@@ -57,57 +56,36 @@ class FlowRecorder implements FlowRecorderInterface
         return $flow;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setFlow(MapInterface $map, Request $request, FlowInterface $flow)
     {
         $request->getSession()->set(self::buildMapId($map), $this->serialize($flow));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasFlow(MapInterface $map, Request $request): bool
     {
         return $request->getSession()->has(self::buildMapId($map));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function removeFlow(MapInterface $map, Request $request)
     {
         $request->getSession()->remove(self::buildMapId($map));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear(Request $request)
     {
         $request->getSession()->remove(self::FLOW_NAMESPACE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(FlowInterface $flow): string
     {
         return $this->serializer->serialize($flow, 'json');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize($serializedFlow): FlowInterface
     {
         return $this->serializer->deserialize($serializedFlow, 'IDCI\Bundle\StepBundle\Flow\Flow', 'json');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reconstructFlowData(MapInterface $map, FlowInterface $flow)
     {
         foreach ($map->getSteps() as $stepName => $step) {

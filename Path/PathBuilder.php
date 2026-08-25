@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -26,9 +28,6 @@ class PathBuilder implements PathBuilderInterface
         $this->registry = $registry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(string $typeAlias, array $options = [], array $steps = []): PathInterface
     {
         $type = $this->registry->getType($typeAlias);

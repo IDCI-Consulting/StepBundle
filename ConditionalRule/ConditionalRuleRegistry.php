@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
      */
     private $rules = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRule(string $alias, ConditionalRuleInterface $rule): ConditionalRuleRegistryInterface
     {
         $this->rules[$alias] = $rule;
@@ -24,9 +22,6 @@ class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRule(string $alias): ConditionalRuleRegistryInterface
     {
         if (!isset($this->rules[$alias])) {
@@ -36,9 +31,6 @@ class ConditionalRuleRegistry implements ConditionalRuleRegistryInterface
         return $this->rules[$alias];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasRule(string $alias): bool
     {
         if (!isset($this->rules[$alias])) {

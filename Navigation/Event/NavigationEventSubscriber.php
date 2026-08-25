@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -64,7 +65,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         PathEventActionRegistryInterface $pathEventActionRegistry,
         Environment $merger,
         TokenStorageInterface $tokenStorage,
-        SessionInterface $session
+        SessionInterface $session,
     ) {
         $this->navigator = $navigator;
         $this->stepEventActionRegistry = $stepEventActionRegistry;
@@ -74,9 +75,6 @@ class NavigationEventSubscriber implements EventSubscriberInterface
         $this->session = $session;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -335,7 +333,7 @@ class NavigationEventSubscriber implements EventSubscriberInterface
             }
         }
 
-        if ($this->navigator->getCurrentStep()->getOptions()['save_content'] &&  $form->has('_content') && $form->isValid()) {
+        if ($this->navigator->getCurrentStep()->getOptions()['save_content'] && $form->has('_content') && $form->isValid()) {
             $this->navigator->setCurrentStepData($form->get('_content')->getData());
         }
     }

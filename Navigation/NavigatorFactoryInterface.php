@@ -2,8 +2,11 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -29,6 +32,6 @@ interface NavigatorFactoryInterface
         $configuration,
         array $fetcherParameters = [],
         array $data = [],
-        bool $navigate = true
+        bool $navigate = true,
     ): NavigatorInterface;
 }

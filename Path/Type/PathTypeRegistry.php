@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ class PathTypeRegistry implements PathTypeRegistryInterface
      */
     private $types = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setType(string $alias, PathTypeInterface $path): PathTypeRegistryInterface
     {
         $this->types[$alias] = $path;
@@ -24,9 +22,6 @@ class PathTypeRegistry implements PathTypeRegistryInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(string $alias): PathTypeInterface
     {
         if (!isset($this->types[$alias])) {
@@ -36,9 +31,6 @@ class PathTypeRegistry implements PathTypeRegistryInterface
         return $this->types[$alias];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasType(string $alias): bool
     {
         if (!isset($this->types[$alias])) {

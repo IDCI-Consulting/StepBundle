@@ -2,7 +2,9 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -29,15 +31,12 @@ class FlowHistory implements FlowHistoryInterface
     /**
      * Constructor.
      */
-    public function __construct(array $takenPaths = null, array $fullTakenPaths = null)
+    public function __construct(?array $takenPaths = null, ?array $fullTakenPaths = null)
     {
         $this->takenPaths = $takenPaths;
         $this->fullTakenPaths = $fullTakenPaths;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setCurrentStep(StepInterface $step): FlowHistoryInterface
     {
         if (empty($this->fullTakenPaths)) {
@@ -56,9 +55,6 @@ class FlowHistory implements FlowHistoryInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addTakenPath(StepInterface $step, int $pathId = 0)
     {
         $path = [
@@ -69,9 +65,6 @@ class FlowHistory implements FlowHistoryInterface
         $this->fullTakenPaths[] = $path;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function retraceTakenPath(string $sourceStepName, StepInterface $destinationStep)
     {
         $this->fullTakenPaths[] = [
@@ -94,9 +87,6 @@ class FlowHistory implements FlowHistoryInterface
         return $removedPaths;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLastTakenPath(): ?array
     {
         $i = count($this->takenPaths) - 1;
@@ -104,25 +94,16 @@ class FlowHistory implements FlowHistoryInterface
         return isset($this->takenPaths[$i]) ? $this->takenPaths[$i] : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTakenPaths(): array
     {
         return $this->takenPaths;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFullTakenPaths(): array
     {
         return $this->fullTakenPaths;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasDoneStep(StepInterface $step, bool $full = false): bool
     {
         $takenPaths = (bool) $full ? $this->fullTakenPaths : $this->takenPaths;
@@ -135,9 +116,6 @@ class FlowHistory implements FlowHistoryInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAll(): array
     {
         return [

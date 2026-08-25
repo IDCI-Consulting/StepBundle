@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ class StepTypeRegistry implements StepTypeRegistryInterface
      */
     private $types = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setType(string $alias, StepTypeInterface $step): StepTypeRegistryInterface
     {
         $this->types[$alias] = $step;
@@ -24,9 +22,6 @@ class StepTypeRegistry implements StepTypeRegistryInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(string $alias): StepTypeInterface
     {
         if (!isset($this->types[$alias])) {
@@ -36,9 +31,6 @@ class StepTypeRegistry implements StepTypeRegistryInterface
         return $this->types[$alias];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasType(string $alias): bool
     {
         if (!isset($this->types[$alias])) {

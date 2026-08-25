@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -36,8 +37,6 @@ interface MapBuilderInterface
      *
      * @param string $name    the searching option name
      * @param mixed  $default the default return value if the searching option not found
-     *
-     * @return mixed
      */
     public function getOption(string $name, $default = null);
 

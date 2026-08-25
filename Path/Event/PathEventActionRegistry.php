@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -16,9 +17,6 @@ class PathEventActionRegistry implements PathEventActionRegistryInterface
      */
     private $actions = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAction(string $alias, PathEventActionInterface $action): PathEventActionRegistryInterface
     {
         $this->actions[$alias] = $action;
@@ -26,9 +24,6 @@ class PathEventActionRegistry implements PathEventActionRegistryInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAction(string $alias): PathEventActionInterface
     {
         if (!isset($this->actions[$alias])) {
@@ -38,9 +33,6 @@ class PathEventActionRegistry implements PathEventActionRegistryInterface
         return $this->actions[$alias];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasAction(string $alias): bool
     {
         if (!isset($this->actions[$alias])) {

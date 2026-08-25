@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -63,25 +65,16 @@ class Map implements MapInterface
         return $this->configuration['options']['first_step_name'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return $this->configuration['name'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFootprint(): string
     {
         return $this->configuration['footprint'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         return isset($this->configuration['data']) ?
@@ -90,17 +83,11 @@ class Map implements MapInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(): array
     {
         return $this->configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addStep(string $name, StepInterface $step): MapInterface
     {
         $this->steps[$name] = $step;
@@ -117,9 +104,6 @@ class Map implements MapInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addPath(string $source, PathInterface $path): MapInterface
     {
         if (!isset($this->paths[$source])) {
@@ -131,17 +115,11 @@ class Map implements MapInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasStep(string $name): bool
     {
         return isset($this->steps[$name]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getStep(string $name): StepInterface
     {
         if (!$this->hasStep($name)) {
@@ -151,34 +129,22 @@ class Map implements MapInterface
         return $this->steps[$name];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSteps(): array
     {
         return $this->steps;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function countSteps(): int
     {
         return count($this->steps);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFirstStep(): ?StepInterface
     {
         return $this->getStep($this->getFirstStepName());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPaths(string $source = null): array
+    public function getPaths(?string $source = null): array
     {
         if (null === $source) {
             return $this->paths;
@@ -190,49 +156,31 @@ class Map implements MapInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath(string $source, int $index): PathInterface
     {
         return $this->paths[$source][$index];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFinalDestination(): ?string
     {
         return $this->configuration['options']['final_destination'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormAction(): ?string
     {
         return $this->configuration['options']['form_action'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isDisplayStepInUrlEnabled(): bool
     {
         return $this->configuration['options']['display_step_in_url'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isResetFlowDataOnInitEnabled(): bool
     {
         return $this->configuration['options']['reset_flow_data_on_init'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __sleep()
     {
         return ['configuration'];

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TransformDataStepEventAction extends AbstractStepEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $formData = $event->getData();
@@ -55,9 +53,6 @@ class TransformDataStepEventAction extends AbstractStepEventAction
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
@@ -70,8 +65,6 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      *
      * @param string $value   The value to transform
      * @param array  $options Options used to transform the given value
-     *
-     * @return mixed
      */
     public static function transformUpper($value, array $options = [])
     {
@@ -87,8 +80,6 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      *
      * @param string $value   The value to transform
      * @param array  $options Options used to transform the given value
-     *
-     * @return mixed
      */
     public static function transformLower($value, array $options = [])
     {
@@ -104,8 +95,6 @@ class TransformDataStepEventAction extends AbstractStepEventAction
      *
      * @param string $value   The value to transform
      * @param array  $options Options used to transform the given value
-     *
-     * @return mixed
      */
     public static function transformReplace($value, array $options = [])
     {

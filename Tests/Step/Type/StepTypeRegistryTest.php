@@ -2,6 +2,7 @@
 
 /**
  * @author:  Baptiste BOUCHEREAU <baptiste.bouchereau@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -18,9 +19,6 @@ class StepTypeRegistryTest extends WebTestCase
      */
     private $registry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUp()
     {
         require_once __DIR__.'/../../AppKernel.php';

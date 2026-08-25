@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -15,9 +16,6 @@ use Twig\TwigFunction;
 
 class StepTwigExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -62,7 +60,7 @@ class StepTwigExtension extends AbstractExtension
     {
         $options = $navigator->getCurrentStep()->getOptions();
 
-        if (null !== $options ['css']) {
+        if (null !== $options['css']) {
             return sprintf(
                 '<style type="text/css">%s</style>',
                 $options['css']
@@ -109,7 +107,7 @@ class StepTwigExtension extends AbstractExtension
     /**
      * Returns step.
      */
-    public function step(Environment $twig, NavigatorInterface $navigator, string $theme = null): string
+    public function step(Environment $twig, NavigatorInterface $navigator, ?string $theme = null): string
     {
         return $twig->render(
             '@IDCIStep/Step/default.html.twig',

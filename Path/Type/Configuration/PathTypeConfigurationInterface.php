@@ -2,6 +2,7 @@
 
 /**
  * @author:  Baptiste BOUCHEREAU <baptiste.bouchereau@idci-consulting.fr>
+ *
  * @license: MIT
  */
 

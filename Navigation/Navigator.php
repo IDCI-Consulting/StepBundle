@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -130,8 +132,8 @@ class Navigator implements NavigatorInterface
         FlowRecorderInterface $flowRecorder,
         MapInterface $map,
         Request $request,
-        NavigationLoggerInterface $logger = null,
-        array $data = []
+        ?NavigationLoggerInterface $logger = null,
+        array $data = [],
     ) {
         $this->form = null;
         $this->formView = null;
@@ -236,7 +238,7 @@ class Navigator implements NavigatorInterface
     protected function getFormBuilder(): FormBuilderInterface
     {
         return $this->formFactory->createBuilder(NavigatorType::class, null, [
-            'navigator' => $this
+            'navigator' => $this,
         ]);
     }
 
@@ -263,9 +265,6 @@ class Navigator implements NavigatorInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function navigate()
     {
         if ($this->logger) {
@@ -273,8 +272,8 @@ class Navigator implements NavigatorInterface
         }
 
         if (
-            null !== $this->request->query &&
-            $this->request->query->has(self::CLEAR_NAVIGATION_QUERY_PARAMETER_NAME)
+            null !== $this->request->query
+            && $this->request->query->has(self::CLEAR_NAVIGATION_QUERY_PARAMETER_NAME)
         ) {
             $this->clear();
         }
@@ -304,13 +303,7 @@ class Navigator implements NavigatorInterface
             $form->handleRequest($this->request);
 
             if ($this->getCurrentStep()->getName() !== $form->get('_current_step')->getData()) {
-                throw new \LogicException(sprintf(
-                    sprintf(
-                        'The flow current path "%s" doesn\'t match with the form current path "%s"',
-                        $this->getCurrentStep()->getName(),
-                        $form->get('_current_step')->getData()
-                    )
-                ));
+                throw new \LogicException(sprintf(sprintf('The flow current path "%s" doesn\'t match with the form current path "%s"', $this->getCurrentStep()->getName(), $form->get('_current_step')->getData())));
             }
 
             if (!$this->hasReturned() && $form->isSubmitted() && $form->isValid()) {
@@ -342,10 +335,7 @@ class Navigator implements NavigatorInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function goBack(string $stepName = null)
+    public function goBack(?string $stepName = null)
     {
         $destinationStep = $this->getPreviousStep($stepName);
 
@@ -362,65 +352,41 @@ class Navigator implements NavigatorInterface
         $this->form = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequest(): ?Request
     {
         return $this->request;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMap(): MapInterface
     {
         return $this->map;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFlow(): FlowInterface
     {
         return $this->flow;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFlowRecorder(): FlowRecorderInterface
     {
         return $this->flowRecorder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentStep(): StepInterface
     {
         return $this->currentStep;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrentPaths(): array
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setChosenPath(PathInterface $path): NavigatorInterface
     {
         $this->chosenPath = $path;
@@ -428,18 +394,12 @@ class Navigator implements NavigatorInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChosenPath(): ?PathInterface
     {
         return $this->chosenPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPreviousStep(string $stepName = null): ?StepInterface
+    public function getPreviousStep(?string $stepName = null): ?StepInterface
     {
         if (null === $stepName) {
             $stepName = $this->getFlow()->getPreviousStepName();
@@ -457,9 +417,6 @@ class Navigator implements NavigatorInterface
         return $previousStep;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addUrlQueryParameter(string $key, $value = null): NavigatorInterface
     {
         $this->urlQueryParameters[$key] = $value;
@@ -467,69 +424,45 @@ class Navigator implements NavigatorInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUrlQueryParameters(): array
     {
         return $this->urlQueryParameters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasUrlQueryParameters(): bool
     {
         return !empty($this->urlQueryParameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setRedirection(string $url = null): self
+    public function setRedirection(?string $url = null): self
     {
         $this->redirection = $url;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasRedirection(): bool
     {
         return null !== $this->redirection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRedirection(): ?string
     {
         return $this->redirection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setFinalDestination(string $url = null): NavigatorInterface
+    public function setFinalDestination(?string $url = null): NavigatorInterface
     {
         $this->finalDestination = $url;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasFinalDestination(): bool
     {
         return null !== $this->finalDestination;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFinalDestination(): ?string
     {
         if (!$this->hasUrlQueryParameters()) {
@@ -546,10 +479,7 @@ class Navigator implements NavigatorInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setCurrentStepData(array $data, string $type = null)
+    public function setCurrentStepData(array $data, ?string $type = null)
     {
         $this->getFlow()->setStepData(
             $this->getCurrentStep(),
@@ -558,65 +488,41 @@ class Navigator implements NavigatorInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentStepData(string $type = null): ?array
+    public function getCurrentStepData(?string $type = null): ?array
     {
         return $this->getFlow()->getStepData($this->getCurrentStep(), $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAvailablePaths(): array
     {
         return $this->getMap()->getPaths($this->getFlow()->getCurrentStepName());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTakenPaths(): array
     {
         return $this->getFlow()->getTakenPaths();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasNavigated(): bool
     {
         return $this->hasNavigated;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasReturned(): bool
     {
         return $this->hasReturned;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasFinished(): bool
     {
         return $this->hasFinished;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(): string
     {
         return $this->flowRecorder->serialize($this->getFlow());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save()
     {
         $this->flowRecorder->setFlow(
@@ -626,9 +532,6 @@ class Navigator implements NavigatorInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear()
     {
         $this->flowRecorder->removeFlow(
@@ -637,25 +540,16 @@ class Navigator implements NavigatorInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function stop()
     {
         $this->hasFinished = true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createStepView(): FormView
     {
         return $this->getForm()->createView();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormView(): FormView
     {
         if (null === $this->formView) {

@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -77,9 +79,9 @@ class MapBuilder implements MapBuilderInterface
         Environment $merger,
         TokenStorageInterface $tokenStorage,
         SessionInterface $session,
-        string $name = null,
+        ?string $name = null,
         array $data = [],
-        array $options = []
+        array $options = [],
     ) {
         $this->name = $name;
         $this->data = $data;
@@ -111,49 +113,31 @@ class MapBuilder implements MapBuilderInterface
         return $resolver->resolve($options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasOption(string $name): bool
     {
         return array_key_exists($name, $this->options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOption(string $name, $default = null)
     {
         return $this->hasOption($name) ? $this->options[$name] : $default;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addStep(string $name, string $type, array $options = []): MapBuilderInterface
     {
         $this->steps[$name] = [
@@ -164,9 +148,6 @@ class MapBuilder implements MapBuilderInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addPath(string $type, array $options = []): MapBuilderInterface
     {
         $this->paths[] = [
@@ -177,9 +158,6 @@ class MapBuilder implements MapBuilderInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMap(Request $request): MapInterface
     {
         return $this->build($request);
@@ -276,7 +254,7 @@ class MapBuilder implements MapBuilderInterface
                     $value[$k] = $this->mergeValue($v, $vars, $try);
                 }
             }
-            // Handle object case.
+        // Handle object case.
         } elseif (is_object($value)) {
             $class = new \ReflectionClass($value);
             $properties = $class->getProperties();
@@ -292,7 +270,7 @@ class MapBuilder implements MapBuilderInterface
                     )
                 );
             }
-            // Handle string case.
+        // Handle string case.
         } elseif (is_string($value)) {
             try {
                 $template = $this->merger->createTemplate($value);

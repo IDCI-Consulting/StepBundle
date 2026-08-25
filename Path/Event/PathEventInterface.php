@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -30,8 +32,6 @@ interface PathEventInterface
 
     /**
      * Returns the data associated with this event.
-     *
-     * @return mixed
      */
     public function getData();
 
@@ -44,8 +44,6 @@ interface PathEventInterface
 
     /**
      * Returns the data created by this event.
-     *
-     * @return mixed
      */
     public function getPathEventData();
 

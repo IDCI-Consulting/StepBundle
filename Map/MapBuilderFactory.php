@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -48,7 +49,7 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         PathBuilderInterface $pathBuilder,
         Environment $merger,
         TokenStorageInterface $tokenStorage,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->stepBuilder = $stepBuilder;
         $this->pathBuilder = $pathBuilder;
@@ -57,18 +58,12 @@ class MapBuilderFactory implements MapBuilderFactoryInterface
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createBuilder(array $data = [], array $options = []): MapBuilderInterface
     {
         return $this->createNamedBuilder('map', $data, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createNamedBuilder(string $name = null, array $data = [], array $options = []): MapBuilderInterface
+    public function createNamedBuilder(?string $name = null, array $data = [], array $options = []): MapBuilderInterface
     {
         return new MapBuilder(
             $this->stepBuilder,

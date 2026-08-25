@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -13,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractStepEventAction implements StepEventActionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function execute(StepEventInterface $event, array $parameters = [])
     {
         $resolver = new OptionsResolver();
@@ -45,8 +43,6 @@ abstract class AbstractStepEventAction implements StepEventActionInterface
      *
      * @param StepEventInterface $event      the step event
      * @param array              $parameters the resolved parameters
-     *
-     * @return mixed
      */
     abstract protected function doExecute(StepEventInterface $event, array $parameters = []);
 }

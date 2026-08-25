@@ -2,6 +2,7 @@
 
 /**
  * @author:  Benjamin TARDY  <benjamin.tardy@tessi.fr>
+ *
  * @license: MIT
  */
 
@@ -12,9 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         $event->getNavigator()->setFinalDestination($parameters['final_destination']);
@@ -22,9 +20,6 @@ class ChangeFinalDestinationPathEventAction extends AbstractPathEventAction
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver

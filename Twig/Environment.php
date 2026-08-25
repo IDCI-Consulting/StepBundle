@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -17,7 +18,7 @@ class Environment extends TwigEnvironment
     public function __construct(
         LoaderInterface $loader,
         EnvironmentExtensionRegistryInterface $environmentExtensionRegistry,
-        $options = []
+        $options = [],
     ) {
         $this->environmentExtensionRegistry = $environmentExtensionRegistry;
 
