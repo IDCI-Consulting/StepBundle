@@ -2,6 +2,7 @@
 
 /**
  * @author:  Baptiste BOUCHEREAU <baptiste.bouchereau@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ class StepEventActionConfigurationRegistry implements StepEventActionConfigurati
      */
     protected $configurations;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(string $alias, StepEventActionConfigurationInterface $configuration): StepEventActionConfigurationRegistryInterface
     {
         $this->configurations[$alias] = $configuration;
@@ -24,17 +22,11 @@ class StepEventActionConfigurationRegistry implements StepEventActionConfigurati
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfigurations(): array
     {
         return $this->configurations;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(string $alias): StepEventActionConfigurationInterface
     {
         if (!isset($this->configurations[$alias])) {
@@ -44,9 +36,6 @@ class StepEventActionConfigurationRegistry implements StepEventActionConfigurati
         return $this->configurations[$alias];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasConfiguration(string $alias): bool
     {
         if (!isset($this->configurations[$alias])) {

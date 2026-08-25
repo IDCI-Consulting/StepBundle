@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -30,15 +31,12 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
      */
     public function __construct(
         ConditionalRuleRegistryInterface $conditionalRuleRegistry,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
     ) {
         $this->conditionalRuleRegistry = $conditionalRuleRegistry;
         $this->router = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
@@ -54,9 +52,6 @@ class ConditionalStopNavigationStepEventAction extends AbstractStepEventAction
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         if (!$this->matchConditionalRules($parameters['rules'])) {

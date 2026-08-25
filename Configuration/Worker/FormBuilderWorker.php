@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -28,9 +29,6 @@ class FormBuilderWorker implements ConfigurationWorkerInterface
         $this->formFactory = $formFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function work(array $parameters = [])
     {
         $builder = $this->formFactory->createBuilder();

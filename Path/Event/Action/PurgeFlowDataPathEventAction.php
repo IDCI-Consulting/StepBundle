@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -40,9 +41,6 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
         return self::$flowDataTypeMapping[$type];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         foreach ($parameters['steps'] as $stepName => $dataTypes) {
@@ -84,9 +82,6 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver
@@ -94,12 +89,11 @@ class PurgeFlowDataPathEventAction extends AbstractPathEventAction
                 foreach ($value as $stepName => $dataTypes) {
                     if (!is_array($dataTypes)) {
                         throw new \UnexpectedValueException(sprintf('The data type of the step "%s" is not an array', $stepName));
-                    } else {
-                        foreach ($dataTypes as $type => $keys) {
-                            $this->getFlowDataType($type);
-                            if (!is_array($keys)) {
-                                throw new \UnexpectedValueException(sprintf('The purge defined field "%s:%s" must be an array', $stepName, $type));
-                            }
+                    }
+                    foreach ($dataTypes as $type => $keys) {
+                        $this->getFlowDataType($type);
+                        if (!is_array($keys)) {
+                            throw new \UnexpectedValueException(sprintf('The purge defined field "%s:%s" must be an array', $stepName, $type));
                         }
                     }
                 }

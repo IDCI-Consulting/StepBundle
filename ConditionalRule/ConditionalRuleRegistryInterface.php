@@ -2,13 +2,13 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
 namespace IDCI\Bundle\StepBundle\ConditionalRule;
-
-use IDCI\Bundle\StepBundle\Exception;
 
 interface ConditionalRuleRegistryInterface
 {

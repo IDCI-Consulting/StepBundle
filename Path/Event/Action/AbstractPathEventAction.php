@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -13,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractPathEventAction implements PathEventActionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function execute(PathEventInterface $event, array $parameters = [])
     {
         $resolver = new OptionsResolver();
@@ -45,8 +43,6 @@ abstract class AbstractPathEventAction implements PathEventActionInterface
      *
      * @param PathEventInterface $event      the path event
      * @param array              $parameters the resolved parameters
-     *
-     * @return mixed
      */
     abstract protected function doExecute(PathEventInterface $event, array $parameters = []);
 }

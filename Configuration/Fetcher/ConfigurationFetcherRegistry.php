@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -11,17 +12,11 @@ class ConfigurationFetcherRegistry implements ConfigurationFetcherRegistryInterf
 {
     protected $fetchers = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setFetcher(string $alias, ConfigurationFetcherInterface $fetcher)
     {
         $this->fetchers[$alias] = $fetcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFetcher(string $alias): ConfigurationFetcherInterface
     {
         if (!isset($this->fetchers[$alias])) {

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Baptiste BOUCHEREAU <baptiste.bouchereau@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -21,9 +22,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class StepEventActionConfigurationCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->has(StepEventActionConfigurationRegistryInterface::class)) {

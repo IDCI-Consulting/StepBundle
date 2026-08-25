@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -13,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class HtmlStepType extends AbstractStepType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -26,9 +24,6 @@ class HtmlStepType extends AbstractStepType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildNavigationStepForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('_content', HtmlStepFormType::class, [

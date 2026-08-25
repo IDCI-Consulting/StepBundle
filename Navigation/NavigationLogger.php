@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -51,9 +53,6 @@ class NavigationLogger implements NavigationLoggerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function startNavigation()
     {
         $this->start = microtime(true);
@@ -68,9 +67,6 @@ class NavigationLogger implements NavigationLoggerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function stopNavigation(NavigatorInterface $navigator)
     {
         if (null !== $this->stopwatch) {
@@ -94,17 +90,11 @@ class NavigationLogger implements NavigationLoggerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasNavigator(): bool
     {
         return isset($this->data['navigator']) && null !== $this->data['navigator'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNavigation(): ?array
     {
         if (!$this->hasNavigator()) {

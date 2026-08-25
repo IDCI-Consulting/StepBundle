@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Camille SCHWARZ <camille54460@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -14,9 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class JsConfirmPathEventAction extends AbstractPathEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         $form = $event->getForm();
@@ -29,9 +28,6 @@ class JsConfirmPathEventAction extends AbstractPathEventAction
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver

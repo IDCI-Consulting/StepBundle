@@ -2,6 +2,7 @@
 
 /**
  * @author:  Baptiste BOUCHEREAU <baptiste.bouchereau@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -46,41 +47,26 @@ class StepTypeConfiguration implements StepTypeConfigurationInterface
         $this->extraFormOptions = $configuration['extra_form_options'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): StepTypeConfigurationInterface
     {
         return $this->parent;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isAbstract(): bool
     {
         return $this->abstract;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExtraFormOptions(): array
     {
         if (null === $this->getParent()) {

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -11,8 +12,6 @@ interface ConfigurationWorkerInterface
 {
     /**
      * Build and return a value or object from the configuration.
-     *
-     * @return mixed
      */
     public function work(array $parameters = []);
 }

@@ -2,7 +2,9 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 

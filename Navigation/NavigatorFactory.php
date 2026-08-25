@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -51,7 +53,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         FlowRecorderInterface $flowRecorder,
         MapConfigurationBuilderInterface $mapConfigurationBuilder,
         ConfigurationFetcherRegistryInterface $configurationFetcherRegistry,
-        NavigationLoggerInterface $logger
+        NavigationLoggerInterface $logger,
     ) {
         $this->formFactory = $formFactory;
         $this->flowRecorder = $flowRecorder;
@@ -60,15 +62,12 @@ class NavigatorFactory implements NavigatorFactoryInterface
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createNavigator(
         Request $request,
         $configuration,
         array $fetcherParameters = [],
         array $data = [],
-        bool $navigate = true
+        bool $navigate = true,
     ): NavigatorInterface {
         if (is_string($configuration)) {
             $configuration = $this->configurationFetcherRegistry->getFetcher($configuration);
@@ -83,7 +82,7 @@ class NavigatorFactory implements NavigatorFactoryInterface
         }
 
         if (!$configuration instanceof MapInterface) {
-            throw new \InvalidArgumentException('The map must be an "array", a "reference to a fetcher", '.'an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" '.'or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"');
+            throw new \InvalidArgumentException('The map must be an "array", a "reference to a fetcher", an instance of "IDCI\Bundle\StepBundle\Map\MapInterface" or an instance of "IDCI\Bundle\StepBundle\Configuration\Fetcher\ConfigurationFetcherInterface"');
         }
 
         $navigator = new Navigator(

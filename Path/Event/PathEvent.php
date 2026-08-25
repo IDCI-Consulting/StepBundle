@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -28,9 +29,6 @@ class PathEvent implements PathEventInterface
      */
     private $formEvent;
 
-    /**
-     * @var mixed
-     */
     private $pathEventData;
 
     /**
@@ -50,7 +48,7 @@ class PathEvent implements PathEventInterface
         NavigatorInterface $navigator,
         FormEvent $formEvent,
         $pathEventData,
-        int $pathIndex
+        int $pathIndex,
     ) {
         $this->navigator = $navigator;
         $this->formEvent = $formEvent;
@@ -58,73 +56,46 @@ class PathEvent implements PathEventInterface
         $this->pathIndex = $pathIndex;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isPropagationStopped(): bool
     {
         return $this->propagationStopped;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function stopPropagation()
     {
         $this->propagationStopped = true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return $this->formEvent->getName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNavigator(): NavigatorInterface
     {
         return $this->navigator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getForm(): FormInterface
     {
         return $this->formEvent->getForm();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->formEvent->getData();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData($data)
     {
         $this->formEvent->setData($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPathEventData()
     {
         return $this->pathEventData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPathIndex(): int
     {
         return $this->pathIndex;

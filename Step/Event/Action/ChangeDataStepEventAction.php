@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -14,9 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeDataStepEventAction extends AbstractStepEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(StepEventInterface $event, array $parameters = [])
     {
         $flowData = $event->getData();
@@ -61,9 +59,6 @@ class ChangeDataStepEventAction extends AbstractStepEventAction
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver

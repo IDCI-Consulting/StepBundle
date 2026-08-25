@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -56,7 +57,7 @@ class NavigatorType extends AbstractType
         PathEventActionRegistryInterface $pathEventActionRegistry,
         Environment $merger,
         TokenStorageInterface $tokenStorage,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->stepEventActionRegistry = $stepEventActionRegistry;
         $this->pathEventActionRegistry = $pathEventActionRegistry;
@@ -65,9 +66,6 @@ class NavigatorType extends AbstractType
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $stepOptions = $options['navigator']->getCurrentStep()->getOptions();
@@ -77,9 +75,6 @@ class NavigatorType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -123,14 +118,11 @@ class NavigatorType extends AbstractType
     {
         $currentStep = $options['navigator']->getCurrentStep();
         $currentStepOptions = $currentStep->getOptions();
-        //$currentStepOptions['data'] = $options['navigator']->getCurrentStepData();
+        // $currentStepOptions['data'] = $options['navigator']->getCurrentStepData();
 
         $currentStep->getType()->buildNavigationStepForm($builder, $currentStepOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -138,17 +130,11 @@ class NavigatorType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'idci_step_navigator';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return $this->getName();

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -43,24 +44,18 @@ class FlowData implements FlowDataInterface
     public function __construct(
         array $data = [],
         array $remindedData = [],
-        array $retrievedData = []
+        array $retrievedData = [],
     ) {
         $this->data = $data;
         $this->remindedData = $remindedData;
         $this->retrievedData = $retrievedData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data): FlowDataInterface
     {
         $this->data = $data;
@@ -68,17 +63,11 @@ class FlowData implements FlowDataInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRemindedData(): array
     {
         return $this->remindedData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRemindedData(array $remindedData): FlowDataInterface
     {
         $this->remindedData = $remindedData;
@@ -86,17 +75,11 @@ class FlowData implements FlowDataInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRetrievedData(): array
     {
         return $this->retrievedData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRetrievedData(array $retrievedData): FlowDataInterface
     {
         $this->retrievedData = $retrievedData;
@@ -104,9 +87,6 @@ class FlowData implements FlowDataInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasStepData($name, $type = null): bool
     {
         if (null === $type) {
@@ -122,10 +102,7 @@ class FlowData implements FlowDataInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getStepData(string $name, string $type = null): array
+    public function getStepData(string $name, ?string $type = null): array
     {
         if (!$this->hasStepData($name, $type)) {
             throw new \InvalidArgumentException(sprintf('No step "%s" found (%s).', $name, null === $type ? 'data' : $type));
@@ -144,10 +121,7 @@ class FlowData implements FlowDataInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setStepData(string $name, array $data, string $type = null): FlowDataInterface
+    public function setStepData(string $name, array $data, ?string $type = null): FlowDataInterface
     {
         if (null === $type) {
             $this->data[$name] = $data;
@@ -164,10 +138,7 @@ class FlowData implements FlowDataInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unsetStepData(string $name, string $type = null): FlowDataInterface
+    public function unsetStepData(string $name, ?string $type = null): FlowDataInterface
     {
         if (null === $type) {
             unset($this->data[$name]);
@@ -184,9 +155,6 @@ class FlowData implements FlowDataInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAll(): array
     {
         $steps = array_merge(

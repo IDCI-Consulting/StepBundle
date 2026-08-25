@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Brahim BOUKOUFALLAH <brahim.boukoufallah@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -12,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConditionalRule implements ConditionalRuleInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function match(array $options = []): bool
     {
         $resolver = new OptionsResolver();

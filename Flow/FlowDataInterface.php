@@ -2,6 +2,7 @@
 
 /**
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -18,8 +19,6 @@ interface FlowDataInterface
      * Set data.
      *
      * @param array $data the data
-     *
-     * @return FlowDataInterface
      */
     public function setData(array $data): self;
 
@@ -51,7 +50,7 @@ interface FlowDataInterface
      *
      * @return bool true if a data exists for the step, false otherwise
      */
-    public function hasStepData(string $name, string $type = null): bool;
+    public function hasStepData(string $name, ?string $type = null): bool;
 
     /**
      * Returns the data of a step.
@@ -63,7 +62,7 @@ interface FlowDataInterface
      *
      * @throws \InvalidArgumentException if there is no associated data for the step
      */
-    public function getStepData(string $name, string $type = null): array;
+    public function getStepData(string $name, ?string $type = null): array;
 
     /**
      * Set the data of a step.
@@ -72,7 +71,7 @@ interface FlowDataInterface
      * @param array       $data the associated data
      * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      */
-    public function setStepData(string $name, array $data, string $type = null): FlowDataInterface;
+    public function setStepData(string $name, array $data, ?string $type = null): FlowDataInterface;
 
     /**
      * Unset the data for a step.
@@ -80,7 +79,7 @@ interface FlowDataInterface
      * @param string      $name the identifier name of the step
      * @param string|null $type the data type (null, 'reminded' or 'retrieved')
      */
-    public function unsetStepData(string $name, string $type = null): FlowDataInterface;
+    public function unsetStepData(string $name, ?string $type = null): FlowDataInterface;
 
     /**
      * Returns all data steps in an array.

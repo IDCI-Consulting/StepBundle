@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -13,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeDataPathEventAction extends AbstractPathEventAction
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function doExecute(PathEventInterface $event, array $parameters = [])
     {
         foreach ($parameters['fields'] as $field) {
@@ -30,9 +28,6 @@ class ChangeDataPathEventAction extends AbstractPathEventAction
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setDefaultParameters(OptionsResolver $resolver)
     {
         $resolver

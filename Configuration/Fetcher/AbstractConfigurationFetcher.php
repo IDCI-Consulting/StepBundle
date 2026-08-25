@@ -2,7 +2,9 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @author:  Thomas Prelot <tprelot@gmail.com>
+ *
  * @license: MIT
  */
 
@@ -12,9 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractConfigurationFetcher implements ConfigurationFetcherInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function fetch(array $parameters = []): array
     {
         $resolver = new OptionsResolver();

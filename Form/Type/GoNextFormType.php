@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -16,33 +17,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GoNextFormType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['to_click_next_button_id'] = sprintf('%s__path_%s', $form->getParent()->getName(), $options['path_index']);
         $view->vars['hide_next_button'] = $options['hide_next_button'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return HiddenType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -51,17 +40,11 @@ class GoNextFormType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'idci_step_action_form_go_next';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return $this->getName();

@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -16,9 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractStepType implements StepTypeInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -52,30 +50,18 @@ abstract class AbstractStepType implements StepTypeInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildStep(string $name, array $options = []): StepInterface
     {
         return new Step($name, $this, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepareNavigation(NavigatorInterface $navigator, array $options): array
     {
         return $options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     abstract public function buildNavigationStepForm(FormBuilderInterface $builder, array $options);
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDataTypeMapping(array $options): array
     {
         if (null === $options['serialization_mapping']) {

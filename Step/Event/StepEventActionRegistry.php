@@ -2,6 +2,7 @@
 
 /**
  * @author:  Gabriel BONDAZ <gabriel.bondaz@idci-consulting.fr>
+ *
  * @license: MIT
  */
 
@@ -16,9 +17,6 @@ class StepEventActionRegistry implements StepEventActionRegistryInterface
      */
     private $actions = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function setAction(string $alias, StepEventActionInterface $action): StepEventActionRegistryInterface
     {
         $this->actions[$alias] = $action;
@@ -26,9 +24,6 @@ class StepEventActionRegistry implements StepEventActionRegistryInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAction(string $alias): StepEventActionInterface
     {
         if (!isset($this->actions[$alias])) {
@@ -38,9 +33,6 @@ class StepEventActionRegistry implements StepEventActionRegistryInterface
         return $this->actions[$alias];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasAction(string $alias): bool
     {
         if (!isset($this->actions[$alias])) {
